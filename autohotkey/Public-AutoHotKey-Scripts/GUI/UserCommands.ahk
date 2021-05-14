@@ -98,6 +98,11 @@ else if Pedersen = syn%A_Space%  ; Find synonyms
     gui_search_title = Search synonyms
     gui_search("https://synonyms.reverso.net/synonyme/en/REPLACEME")
 }
+else if Pedersen = urba%A_Space% ; Search urbandictionary
+{
+    gui_search_title := "The dictionary which knows everything"
+    gui_search("https://www.urbandictionary.com/define.php?term=REPLACEME")
+}
 
 ;-------------------------------------------------------------------------------
 ;;; LAUNCH WEBSITES AND PROGRAMS ;;;
@@ -155,11 +160,11 @@ else if Pedersen = mes ; Opens Facebook unread messages
     gui_destroy()
     run https://www.facebook.com/messages?filter=unread&action=recent-messages
 }
-else if Pedersen = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
-{
-    gui_destroy()
-    run %ClipBoard%
-}
+; else if Pedersen = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
+; {
+;     gui_destroy()
+;     run % Trim(ClipBoard)
+; }
 ; custom programs
 else if Pedersen = vs  ; Open vsCode
 {
@@ -185,7 +190,7 @@ else if Pedersen = mpv  ; Open mpv
 }
 else if Pedersen = ch  ; Open Chrome
 {
-    gui_destroy()    
+    gui_destroy()
     IfWinNotExist, ahk_exe chrome.exe
         Run, chrome.exe
     else
@@ -242,7 +247,7 @@ else if Pedersen = syno   ; Find synonyms from a selected word
     Clipboard =
     SendInput, ^c
     ClipWait, 2
-    if ErrorLevel 
+    if ErrorLevel
     {
     ;MsgBox % "Failed attempt to copy text to clipboard."
     Run % "https://synonyms.reverso.net/synonyme/en/"
@@ -261,7 +266,7 @@ else if Pedersen = wias   ; wordsinasentence.com
     Clipboard =
     SendInput, ^c
     ClipWait, 2
-    if ErrorLevel 
+    if ErrorLevel
     {
     ;MsgBox % "Failed attempt to copy text to clipboard."
     Run % "https://wordsinasentence.com/"
@@ -273,6 +278,25 @@ else if Pedersen = wias   ; wordsinasentence.com
     }
     Clipboard := ClipSaved
 }
+else if Pedersen = url   ; wordsinasentence.com
+{
+    gui_destroy()
+    ClipSaved := ClipboardAll
+    Clipboard =
+    SendInput, ^c
+    ClipWait, 2
+    if ErrorLevel
+    {
+    ;MsgBox % "Failed attempt to copy text to clipboard."
+    Run % "https://google.com/"
+    }
+    else
+    {
+    TextSelected := Trim(Clipboard)
+    Run % TextSelected
+    }
+    Clipboard := ClipSaved
+}
 else if Pedersen = wcount ; Get a Word Count of Selected Text
 {
     gui_destroy()
@@ -280,7 +304,7 @@ else if Pedersen = wcount ; Get a Word Count of Selected Text
     Clipboard =
     SendInput, ^c
     ClipWait, 2
-    if ErrorLevel 
+    if ErrorLevel
     {
     MsgBox % "Failed attempt to read selected text."
     }
@@ -288,12 +312,12 @@ else if Pedersen = wcount ; Get a Word Count of Selected Text
     {
     NewClipboard := Trim(Clipboard)
     Count := 0
-    Position := 1 
+    Position := 1
     while, Position := RegExMatch(NewClipboard, "\S+", Out, Position+Strlen(Out))
         Count++
     MsgBox % "Words :" . Count
     }
-    Clipboard := ClipSaved 
+    Clipboard := ClipSaved
 }
 
 
@@ -375,15 +399,15 @@ else if Pedersen = down ; Downloads
     gui_destroy()
     run C:\Users\%A_Username%\Downloads
 }
-else if Pedersen = drop ; Dropbox folder (works when it is in the default directory)
-{
-    gui_destroy()
-    run, C:\Users\%A_Username%\Dropbox\
-}
 else if Pedersen = rec ; Recycle Bin
 {
     gui_destroy()
     Run ::{645FF040-5081-101B-9F08-00AA002F954E}
+}
+else if Pedersen = ss ; Screenshots folder
+{
+    gui_destroy()
+    Run, C:\Users\marzouk\Documents\ShareX\Screenshots
 }
 ; custom folders
 else if Pedersen = .    ; open home folder
@@ -429,7 +453,7 @@ else if Pedersen = ala   ; open ala folder
 else if Pedersen = ping ; Ping Google
 {
     gui_destroy()
-    Run, cmd /K "ping www.google.com"
+    Run, cmd /K "ping -t www.google.com"
 }
 else if Pedersen = hosts ; Open hosts file in Notepad
 {
@@ -442,17 +466,6 @@ else if Pedersen = date ; What is the date?
     FormatTime, date,, LongDate
     MsgBox %date%
     date =
-}
-else if Pedersen = week ; Which week is it?
-{
-    gui_destroy()
-    FormatTime, weeknumber,, YWeek
-    StringTrimLeft, weeknumbertrimmed, weeknumber, 4
-    if (weeknumbertrimmed = 53)
-        weeknumbertrimmed := 1
-    MsgBox It is currently week %weeknumbertrimmed%
-    weeknumber =
-    weeknumbertrimmed =
 }
 else if Pedersen = ? ; Tooltip with list of commands
 {
