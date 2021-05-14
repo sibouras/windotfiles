@@ -257,10 +257,6 @@
     "when": "textInputFocus && vim.mode == 'Insert'"
   },
   {
-    "key": "alt+i",
-    "command": "deleteInsideWord"
-  },
-  {
     "key": "shift+alt+w",
     "command": "editor.emmet.action.wrapWithAbbreviation"
   },

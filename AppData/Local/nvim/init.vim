@@ -11,43 +11,60 @@ Plug 'tpope/vim-commentary'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-highlightedyank'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ThePrimeagen/vim-be-good'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 
 set encoding=utf-8
+set fileencoding=utf-8      " The encoding written to file
 syntax on
 colorscheme onedark
 set background=dark
 
-set guifont=JetBrains\ Mono:h22
+" set guifont=JetBrains\ Mono\ for\ Powerline:h22
+set guifont=DejaVuSansMono\ nerd\ Font\ Mono:h23
 
+set nonumber norelativenumber
 " set lines=140
 " set columns=120
 
-set nowrap                              " Display long lines as just one line 
-set fileencoding=utf-8                  " The encoding written to file
-set ruler										            " Show the cursor position all the time
-set cmdheight=2                         " More space for displaying messages
-set mouse=a                             " Enable your mouse
-set smarttab                            " Makes tabbing smarter will realize you have 2 vs 4
-set expandtab                           " Converts tabs to spaces
-set updatetime=300                      " Faster completion
-set timeoutlen=200                      " By default timeoutlen is 1000 ms
+set splitbelow              " Horizontal splits will automatically be below
+set splitright              " Vertical splits will automatically be to the right
+set laststatus=0            " Always display the status line
+set showtabline=2           " Always show tabs
+set noshowmode              " We don't need to see things like -- INSERT -- anymore
+set cmdheight=2             " More space for displaying messages
+set t_Co=256                " Support 256 colors
+set formatoptions-=cro      " Stop newline continution of comments
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+set nowrap                  " Display long lines as just one line
+set ruler                   " Show the cursor position all the time
+set cmdheight=2             " More space for displaying messages
+set mouse=a                 " Enable your mouse
+set smarttab                " Makes tabbing smarter will realize you have 2 vs 4
+set expandtab               " Converts tabs to spaces
+set updatetime=300          " Faster completion
+set timeoutlen=200          " By default timeoutlen is 1000 ms
 set cursorline
 set scrolloff=4
 set sidescrolloff=5
-set number 		                          " Enable Line number
-set relativenumber                      " relative number
-set tabstop=2 softtabstop=2             " tab size
-set shiftwidth=2                        " shift width
-set hidden                              " Needed to keep multiple buffers open
-set nobackup                            " No auto backups
-set noswapfile                          " No swap
-set clipboard=unnamedplus               " Copy/paste between vim and other programs.
-set wildmenu                            " show wildmenu
-set linebreak                           " do not break words.
+set number                  " Enable Line number
+set relativenumber          " relative number
+set tabstop=2 softtabstop=2 " tab size
+set shiftwidth=2            " shift width
+set hidden                  " Needed to keep multiple buffers open
+set nobackup                " No auto backups
+set noswapfile              " No swap
+set clipboard=unnamedplus   " Copy/paste between vim and other programs.
+set wildmenu                " show wildmenu
+set linebreak               " do not break words.
 set incsearch
-set pastetoggle=<F2>                    " enable paste mode
+set pastetoggle=<F2>        " enable paste mode
 " indent
 set autoindent
 set smartindent
@@ -78,7 +95,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Improve scroll, credits: https://github.com/Shougo
-nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?	
+nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
 			\ 'zt' : (winline() == &scrolloff + 1) ? 'zb' : 'zz'
 noremap <expr> <C-f> max([winheight(0) - 2, 1])
 			\ ."\<C-d>".(line('w$') >= line('$') ? "L" : "H")
@@ -115,7 +132,7 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Now pressing \b will list the available buffers and prepare :b for you.
-nnoremap <leader>b :ls<CR>:b<Space>
+" nnoremap <leader>b :ls<CR>:b<Space>
 nnoremap <leader><tab> <C-^>
 
 " the following command maps the <F4> key to display the current date and time.
@@ -135,6 +152,10 @@ autocmd BufEnter * silent! lcd %:p:h
 
 " the following command maps the <F5> key to search for the keyword under the cursor in the current directory using the 'grep' command:
 :nnoremap <F5> :grep <C-R><C-W> *<CR>
+
+" Automatically removing all trailing whitespace on save
+autocmd BufWritePre * %s/\s\+$//e
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
@@ -174,3 +195,32 @@ highlight Number           guifg=#ff6c6b ctermfg=1    guibg=none    ctermbg=none
 highlight Function         guifg=#ff6c6b ctermfg=1    guibg=none    ctermbg=none  cterm=none
 " highlight Visual           guifg=#dfdfdf ctermfg=1    guibg=#1c1f24 ctermbg=none  cterm=none
 
+" Powerline config
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+
+" PLUGIN: FZF
+" from https://dev.to/iggredible/how-to-search-faster-in-vim-with-fzf-vim-36ko
+nnoremap <silent> <Leader>b  :Buffers<CR>
+nnoremap <silent> <C-f>      :Files<CR>
+nnoremap <silent> <Leader>f  :Rg<CR>
+nnoremap <silent> <Leader>/  :BLines<CR>
+nnoremap <silent> <Leader>'  :Marks<CR>
+nnoremap <silent> <Leader>g  :Commits<CR>
+nnoremap <silent> <Leader>H  :Helptags<CR>
+nnoremap <silent> <Leader>hh :History<CR>
+nnoremap <silent> <Leader>h: :History:<CR>
+nnoremap <silent> <Leader>h/ :History/<CR>
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+
+" Replacing grep with rg
+set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+
+" vim easy align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" easy align
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)

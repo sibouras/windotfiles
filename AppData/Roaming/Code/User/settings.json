@@ -219,8 +219,8 @@
   },
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
-  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
-  "terminal.integrated.shell.linux": "/bin/zsh",
+  // "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
+  // "terminal.integrated.shell.linux": "/bin/zsh",
   "code-runner.runInTerminal": true,
   /*   "sonarlint.rules": {
     "java:S106": {
@@ -274,5 +274,27 @@
   },
   "gitlens.hovers.currentLine.over": "line",
   "gitlens.currentLine.enabled": false,
-  "workbench.activityBar.visible": false
+  "workbench.activityBar.visible": false,
+  "terminal.integrated.tabs.enabled": true,
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [],
+      "icon": "terminal-cmd"
+    },
+    "Git Bash": {
+      "source": "Git Bash"
+    },
+    "Windows PowerShell": {
+      "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "Windows PowerShell"
 }
