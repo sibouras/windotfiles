@@ -1,5 +1,4 @@
 {
-
   /*
    ** Vim Settings
    */
@@ -13,68 +12,68 @@
   // create conflict with Vim.
   // https://github.com/stevenguh/spacecode/issues/3
   "vim.normalModeKeyBindingsNonRecursive": [
-      {
-          "before": ["<space>"],
-          "commands": ["vspacecode.space"]
-      },
-      // {
-      //     "before": [","],
-      //     "commands": [
-      //         "vspacecode.space",
-      //         {
-      //             "command": "whichkey.triggerKey",
-      //             "args": "m"
-      //         }
-      //     ]
-      // },
-      {
-        "before": ["Z", "Z"],
-        "commands": [":wq"]
-      },
-      {
-        "before": ["Z", "Q"],
-        "commands": [":q!"]
-      },
-      {
-        "before": ["<leader>", "t"],
-        "commands": ["workbench.action.toggleSidebarVisibility"]
-      },
-      {
-        "before": ["u"],
-        "after": [],
-        "commands": [
-            {
-                "command": "undo",
-                "args": []
-            }
-        ]
-      },
-      {
-        "before": ["<C-r>"],
-        "after": [],
-        "commands": [
-            {
-                "command": "redo",
-                "args": []
-            }
-        ]
-      }
+    {
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    },
+    // {
+    //     "before": [","],
+    //     "commands": [
+    //         "vspacecode.space",
+    //         {
+    //             "command": "whichkey.triggerKey",
+    //             "args": "m"
+    //         }
+    //     ]
+    // },
+    {
+      "before": ["Z", "Z"],
+      "commands": [":wq"]
+    },
+    {
+      "before": ["Z", "Q"],
+      "commands": [":q!"]
+    },
+    {
+      "before": ["<leader>", "t"],
+      "commands": ["workbench.action.toggleSidebarVisibility"]
+    },
+    {
+      "before": ["u"],
+      "after": [],
+      "commands": [
+        {
+          "command": "undo",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["<C-r>"],
+      "after": [],
+      "commands": [
+        {
+          "command": "redo",
+          "args": []
+        }
+      ]
+    }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
-      {
-          "before": ["<space>"],
-          "commands": ["vspacecode.space"]
-      },
-      // {
-      //     "before": [","],
-      //     "commands": [
-      //         "vspacecode.space",
-      //         {
-      //             "command": "whichkey.triggerKey",
-      //             "args": "m"
-      //         }
-      //     ]
-      // }
+    {
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    }
+    // {
+    //     "before": [","],
+    //     "commands": [
+    //         "vspacecode.space",
+    //         {
+    //             "command": "whichkey.triggerKey",
+    //             "args": "m"
+    //         }
+    //     ]
+    // }
   ],
 
   "vim.timeout": 200,
@@ -88,7 +87,7 @@
     {
       "before": ["d", "f"],
       "after": ["<Esc>"]
-    },
+    }
     // {
     //   "before": ["<C-a>"],
     //   "after": ["<Esc>", "^", "i"]
@@ -158,7 +157,7 @@
     {
       "before": ["<leader>", "8"],
       "after": ["8", "g", "t"]
-    },
+    }
   ],
 
   "vim.visualModeKeyBindings": [
@@ -171,7 +170,7 @@
       "commands": ["editor.action.outdentLines"]
     }
   ],
-  
+
   "editor.lineNumbers": "relative",
   "editor.smoothScrolling": true,
   "editor.cursorSurroundingLines": 5,
@@ -196,7 +195,6 @@
   // "vim.statusBarColors.insert": "#21252B",
   // "vim.statusBarColors.visual": "#2A384A",
   // ------------------ end vim --------------------
-
 
   // "workbench.settings.editor": "json",
   "editor.fontFamily": "'JetBrains Mono', Consolas, 'Fira Code', 'Courier New', monospace, 'CaskaydiaCove NF'",
@@ -238,14 +236,18 @@
   // "javascript.suggest.completeFunctionCalls": true,
   "editor.cursorBlinking": "solid",
   "workbench.colorCustomizations": {
+    // "editorCursor.foreground": "#146fd8",
+    "editorCursor.foreground": "#1F8AD2",
+    "editorCursor.background": "#fff",
+    "titleBar.activeBackground": "#212121"
     // "tab.activeBackground": "#1D2026",
     // "editor.background": "#1D2026",
     // "minimap.background": "#1D2026",
     // "editorGutter.background": "#1D2026",
     // "breadcrumb.background": "#1D2026",
-    // "editor.lineHighlightBackground": "#181b20",
-    // "terminal.background": "#1D2026",
-    "editor.findMatchHighlightBackground": "#114092",
+    // "editor.lineHighlightBackground": "#181b20"
+    // "terminal.background": "#1D2026"
+    // "editor.findMatchHighlightBackground": "#114092"
     // -- before ayu
     // "statusBar.background": "#1D2026",
     // "statusBar.noFolderBackground": "#1D2026",
@@ -256,7 +258,6 @@
   },
   // "editor.multiCursorModifier": "ctrlCmd",
   "whichkey.delay": 200,
-  "workbench.colorTheme": "Ayu Mirage",
   "joplin.token": "39bab0a9ea83c3e4d8c2f775cdd3501ab0efe7307b3f7dff4a5db87713824969c325889493c35a41ff2fbb2ac5d68ffc201284467bd445d7288dd1eec407ff50",
   "turboConsoleLog.includeFileNameAndLineNum": false,
   "turboConsoleLog.addSemicolonInTheEnd": true,
@@ -274,7 +275,6 @@
   },
   "gitlens.hovers.currentLine.over": "line",
   "gitlens.currentLine.enabled": false,
-  "workbench.activityBar.visible": false,
   "terminal.integrated.tabs.enabled": true,
   "terminal.integrated.profiles.windows": {
     "PowerShell": {
@@ -296,5 +296,10 @@
       "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
     }
   },
-  "terminal.integrated.defaultProfile.windows": "Windows PowerShell"
+  "terminal.integrated.defaultProfile.windows": "Windows PowerShell",
+  "workbench.activityBar.visible": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.colorTheme": "Material Dark Theme"
 }
