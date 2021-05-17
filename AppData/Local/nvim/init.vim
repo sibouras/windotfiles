@@ -11,12 +11,12 @@ Plug 'tpope/vim-commentary'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-highlightedyank'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'ThePrimeagen/vim-be-good'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
+Plug 'itchyny/lightline.vim'
+Plug 'ap/vim-css-color'
 
 call plug#end()
 
@@ -25,9 +25,12 @@ set fileencoding=utf-8      " The encoding written to file
 syntax on
 colorscheme onedark
 set background=dark
+if !has('gui_running')
+  set t_Co=256
+endif
 
-" set guifont=JetBrains\ Mono\ for\ Powerline:h22
-set guifont=DejaVuSansMono\ nerd\ Font\ Mono:h23
+set guifont=JetBrains\ Mono\ for\ Powerline:h22
+" set guifont=DejaVuSansMono\ nerd\ Font\ Mono:h23
 
 set nonumber norelativenumber
 " set lines=140
@@ -35,11 +38,8 @@ set nonumber norelativenumber
 
 set splitbelow              " Horizontal splits will automatically be below
 set splitright              " Vertical splits will automatically be to the right
-set laststatus=0            " Always display the status line
-set showtabline=2           " Always show tabs
-set noshowmode              " We don't need to see things like -- INSERT -- anymore
+" set showtabline=2           " Always show tabs
 set cmdheight=2             " More space for displaying messages
-set t_Co=256                " Support 256 colors
 set formatoptions-=cro      " Stop newline continution of comments
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 set nowrap                  " Display long lines as just one line
@@ -177,7 +177,7 @@ let g:highlightedyank_highlight_duration = 200
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 highlight Normal           guifg=#dfdfdf ctermfg=15   guibg=#282c34 ctermbg=none  cterm=none
 highlight LineNr           guifg=#5b6268 ctermfg=8    guibg=#282c34 ctermbg=none  cterm=none
-highlight CursorLineNr     guifg=#202328 ctermfg=7    guifg=#5b6268 ctermbg=8     cterm=none
+highlight CursorLineNr     guibg=#2c323c ctermfg=7    guifg=#aaaaaa ctermbg=8     cterm=none
 highlight VertSplit        guifg=#1c1f24 ctermfg=0    guifg=#5b6268 ctermbg=8     cterm=none
 highlight Statement        guifg=#98be65 ctermfg=2    guibg=none    ctermbg=none  cterm=none
 highlight Directory        guifg=#51afef ctermfg=4    guibg=none    ctermbg=none  cterm=none
@@ -195,11 +195,6 @@ highlight Number           guifg=#ff6c6b ctermfg=1    guibg=none    ctermbg=none
 highlight Function         guifg=#ff6c6b ctermfg=1    guibg=none    ctermbg=none  cterm=none
 " highlight Visual           guifg=#dfdfdf ctermfg=1    guibg=#1c1f24 ctermbg=none  cterm=none
 
-" Powerline config
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-
 " PLUGIN: FZF
 " from https://dev.to/iggredible/how-to-search-faster-in-vim-with-fzf-vim-36ko
 nnoremap <silent> <Leader>b  :Buffers<CR>
@@ -213,6 +208,8 @@ nnoremap <silent> <Leader>hh :History<CR>
 nnoremap <silent> <Leader>h: :History:<CR>
 nnoremap <silent> <Leader>h/ :History/<CR>
 command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
+" Empty value to disable preview window altogether
+let g:fzf_preview_window = []
 
 " Replacing grep with rg
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
@@ -224,3 +221,18 @@ xmap ga <Plug>(EasyAlign)
 " easy align
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Status Line
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" The lightline.vim theme
+let g:lightline = {
+      \ 'colorscheme': 'onedark',
+      \ }
+
+" Always show statusline
+set laststatus=2
+
+" Uncomment to prevent non-normal modes showing in powerline and below powerline.
+set noshowmode
