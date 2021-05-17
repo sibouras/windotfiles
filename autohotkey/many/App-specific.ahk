@@ -14,28 +14,10 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 	!3::Send, ^3
 	!4::Send, ^4
 	!5::Send, ^5
-
-  ; vim movement
-	^k::
-    Send, {Up}
-  return
-
-  ^j::
-    Send, {Down}
-  return
 #IfWinActive
 
 #IfWinActive, ahk_class CabinetWClass
 	+Backspace::Send !{Up}
-
-  ; vim movement
-	^k::
-    Send, {Up}
-  return
-
-  ^j::
-    Send, {Down}
-  return
 
   CapsLock & v::
     Send, !d neovide.exe --geometry=200x56{Enter}
@@ -47,7 +29,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
     ClipWait, 1
     Clipboard = %Clipboard%
   return
-
 #IfWinActive
 
 #IfWinActive, ahk_class #32770 Run
