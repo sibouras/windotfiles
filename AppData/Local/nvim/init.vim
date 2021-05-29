@@ -12,11 +12,11 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-highlightedyank'
 Plug 'ThePrimeagen/vim-be-good'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-css-color'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'psliwka/vim-smoothie'
 
 call plug#end()
 
@@ -156,6 +156,13 @@ autocmd BufEnter * silent! lcd %:p:h
 " Automatically removing all trailing whitespace on save
 autocmd BufWritePre * %s/\s\+$//e
 
+" line text object
+xnoremap il g_o^
+onoremap il :normal vil<CR>
+xnoremap al $o^
+onoremap al :normal val<CR>
+xnoremap i% GoggV
+onoremap i% :normal vi%<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
@@ -195,26 +202,13 @@ highlight Number           guifg=#ff6c6b ctermfg=1    guibg=none    ctermbg=none
 highlight Function         guifg=#ff6c6b ctermfg=1    guibg=none    ctermbg=none  cterm=none
 " highlight Visual           guifg=#dfdfdf ctermfg=1    guibg=#1c1f24 ctermbg=none  cterm=none
 
-" PLUGIN: FZF
-" from https://dev.to/iggredible/how-to-search-faster-in-vim-with-fzf-vim-36ko
-nnoremap <silent> <Leader>b  :Buffers<CR>
-nnoremap <silent> <C-f>      :Files<CR>
-nnoremap <silent> <Leader>f  :Rg<CR>
-nnoremap <silent> <Leader>/  :BLines<CR>
-nnoremap <silent> <Leader>'  :Marks<CR>
-nnoremap <silent> <Leader>g  :Commits<CR>
-nnoremap <silent> <Leader>H  :Helptags<CR>
-nnoremap <silent> <Leader>hh :History<CR>
-nnoremap <silent> <Leader>h: :History:<CR>
-nnoremap <silent> <Leader>h/ :History/<CR>
-command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
-" Empty value to disable preview window altogether
-let g:fzf_preview_window = []
 
 " Replacing grep with rg
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 
-" vim easy align
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vim Easy Align
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
@@ -236,3 +230,18 @@ set laststatus=2
 
 " Uncomment to prevent non-normal modes showing in powerline and below powerline.
 set noshowmode
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Ctrlp
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>b :CtrlPBuffer<CR>
+" Exclude files or directories using Vim's wildignore
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+" And/Or CtrlP's own g:ctrlp_custom_ignore
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+	\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+	\ 'file': '\v\.(exe|so|dll)$',
+	\ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+	\ }

@@ -299,10 +299,19 @@
       "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
     }
   },
-  "terminal.integrated.defaultProfile.windows": "Windows PowerShell",
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "workbench.colorTheme": "Material Dark Theme",
-  "workbench.activityBar.visible": false
+  "workbench.activityBar.visible": false,
+  "markdown-preview-enhanced.previewTheme": "monokai.css",
+  "markdown-pdf.styles": [
+    "C:\\Users\\marzouk\\Desktop\\ala\\vscode-markdown-style\\extension\\markdown-pdf.css"
+  ],
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "markdown-preview-enhanced.revealjsTheme": "beige.css",
+  "markdown-preview-enhanced.liveUpdate": true
 }
