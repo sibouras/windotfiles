@@ -17,6 +17,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-css-color'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'psliwka/vim-smoothie'
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -32,7 +33,7 @@ endif
 set guifont=JetBrains\ Mono\ for\ Powerline:h22
 " set guifont=DejaVuSansMono\ nerd\ Font\ Mono:h23
 
-set nonumber norelativenumber
+" set nonumber norelativenumber
 " set lines=140
 " set columns=120
 
@@ -65,6 +66,8 @@ set wildmenu                " show wildmenu
 set linebreak               " do not break words.
 set incsearch
 set pastetoggle=<F2>        " enable paste mode
+set ignorecase
+set smartcase
 " indent
 set autoindent
 set smartindent
@@ -163,6 +166,9 @@ xnoremap al $o^
 onoremap al :normal val<CR>
 xnoremap i% GoggV
 onoremap i% :normal vi%<CR>
+
+" shorter replace
+nnoremap <leader>s :%s//gI<Left><Left><Left>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree

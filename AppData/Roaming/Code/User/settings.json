@@ -185,7 +185,7 @@
   "vim.camelCaseMotion.enable": true,
   "vim.highlightedyank.enable": true,
   "vim.hlsearch": true,
-  "vim.ignorecase": false,
+  "vim.ignorecase": true,
   "vim.replaceWithRegister": true,
   // "vim.statusBarColorControl": false,
   // "vim.statusBarColors.normal": [
