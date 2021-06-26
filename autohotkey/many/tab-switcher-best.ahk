@@ -15,13 +15,31 @@ RAlt & t::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
 ToggleWindowVisibility(windowClass) {
 	IfWinExist, %windowClass%
 	{
-		IfWinActive, %windowClass% 
+		IfWinActive, %windowClass%
       WinMinimize, %windowClass%
 		else
       WinActivate, %windowClass%
-	} 
+	}
   ; else {
   ;   word_array := StrSplit(windowClass, A_Space, "") ; Omits periods.
   ;   MsgBox % word_array[2] " is not open!"
   ; }
-} 
+}
+
+; minimize active window and restore it
+RAlt & c::
+IfWinExist, ahk_id %lastWindow%
+{
+ WinGet, WinState, MinMax, ahk_id %lastWindow%
+ If WinState = -1
+   WinActivate
+ else
+   WinMinimize
+ lastWindow:=  ; remove this line if you want minimize/toggle only one window
+}
+else
+{
+ lastWindow:= WinExist("A")
+ WinMinimize, ahk_id %lastWindow%
+}
+return

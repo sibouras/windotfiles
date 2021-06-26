@@ -125,6 +125,7 @@ cnoremap <C-s> <C-u>w<CR>
 
 " Map Ctrl-Backspace to delete the previous word in insert mode.
 imap <C-BS> <C-W>
+cmap <C-BS> <C-W>
 
 "clears highlights
 nnoremap <leader>sc :noh<return>

@@ -216,6 +216,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
   "editor.formatOnSave": true,
   // "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
   // "terminal.integrated.shell.linux": "/bin/zsh",
@@ -313,5 +315,7 @@
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
   "markdown-preview-enhanced.revealjsTheme": "beige.css",
-  "markdown-preview-enhanced.liveUpdate": true
+  "markdown-preview-enhanced.liveUpdate": true,
+  "editor.cursorStyle": "line",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-"
 }
