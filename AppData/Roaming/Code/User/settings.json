@@ -238,13 +238,18 @@
   // "javascript.suggest.completeFunctionCalls": true,
   "editor.cursorBlinking": "solid",
   "workbench.colorCustomizations": {
+    "[Material Dark Theme]": {
+      "editorCursor.foreground": "#1F8AD2",
+      "editorCursor.background": "#fff",
+      "titleBar.activeBackground": "#212121",
+      "tab.activeBorderTop": "#1F8AD2",
+      "tab.inactiveBackground": "#252525"
+    },
+    "[Moonlight II]": {
+      "editorCursor.background": "#000"
+    }
     // "editorCursor.foreground": "#146fd8",
-    "editorCursor.foreground": "#1F8AD2",
-    "editorCursor.background": "#fff",
-    "titleBar.activeBackground": "#212121",
-    "tab.activeBorderTop": "#1F8AD2",
     // "tab.activeBackground": "#212121",
-    "tab.inactiveBackground": "#252525"
     // "tab.activeBackground": "#1D2026",
     // "editor.background": "#1D2026",
     // "minimap.background": "#1D2026",
@@ -305,7 +310,7 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "workbench.colorTheme": "Material Dark Theme",
+  "workbench.colorTheme": "Moonlight II",
   "workbench.activityBar.visible": false,
   "markdown-preview-enhanced.previewTheme": "monokai.css",
   "markdown-pdf.styles": [
