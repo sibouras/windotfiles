@@ -205,7 +205,6 @@
   "markdown.preview.fontSize": 18,
   "editor.wordWrap": "on",
   "workbench.iconTheme": "vscode-icons",
-  "diffEditor.ignoreTrimWhitespace": false,
   "code-runner.saveFileBeforeRun": true,
   "code-runner.saveAllFilesBeforeRun": true,
   "liveServer.settings.donotShowInfoMsg": true,

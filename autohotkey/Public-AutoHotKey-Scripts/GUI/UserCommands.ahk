@@ -78,7 +78,7 @@ else if Pedersen = t%A_Space% ; Search torrent networks
     gui_search_title = Sharing is caring
     gui_search("https://kickass.to/usearch/REPLACEME")
 }
-else if Pedersen = fr%A_Space% ; Translate English to Korean
+else if Pedersen = fr%A_Space% ; Translate English to French
 {
     gui_search_title = English to French
     gui_search("https://translate.google.as/#en/fr/REPLACEME")
@@ -208,6 +208,21 @@ else if Pedersen = fc ; Open calculator
     gui_destroy()
     Run, calc.exe
 }
+else if Pedersen = adr ; Open AppData/Roaming folder
+{
+    gui_destroy()
+    Run, %A_AppData%
+}
+else if Pedersen = adl ; Open Appdata/Local folder
+{
+    gui_destroy()
+    Run % StrReplace(A_AppData, "Roaming", "Local")
+}
+else if Pedersen = md ; Open Documents folder
+{
+    gui_destroy()
+    Run %A_MyDocuments%
+}
 else if Pedersen = center ; Center all top-level windows
 {
     gui_destroy()
@@ -318,6 +333,40 @@ else if Pedersen = wcount ; Get a Word Count of Selected Text
     MsgBox % "Words :" . Count
     }
     Clipboard := ClipSaved
+}
+else if Pedersen = wsl ; Convert Windows Path to WSL Path And Wise Versa
+{
+    gui_destroy()
+    replaceCount = 0
+    wslPath := RegExReplace(clipboard, "^([a-zA-Z]):(.*)", "/mnt/$L1$2", replaceCount)
+    if replaceCount <= 0
+    {
+        winPath := RegExReplace(clipboard, "^\/mnt\/([a-zA-Z])(.*)", "$U1:$2", replaceCount)
+
+        if replaceCount >= 1
+        {
+            StringReplace, winPath, winPath, /, \, All
+            clipboard := winPath
+        }
+    }
+    else
+    {
+        StringReplace, wslPath, wslPath, \, /, All
+        clipboard := wslPath
+    }
+    return
+}
+else if Pedersen = lh ; Open file path in browser(localhost)
+{
+    gui_destroy()
+    Clipboard =
+    Send, ^c
+    ClipWait, 1
+    ; Clipboard = %Clipboard% ; use this if path already in clipboard
+    wslPath := RegExReplace(clipboard, "C:\\xampp\\htdocs", "localhost")
+    StringReplace, wslPath, wslPath, \, /, All
+    clipboard := wslPath
+    Run % "http://" . Clipboard
 }
 
 
