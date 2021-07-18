@@ -285,7 +285,7 @@
     "command": "-workbench.action.terminal.toggleTerminal"
   },
   {
-    "key": "alt+j",
+    "key": "shift+alt+j",
     "command": "workbench.action.terminal.scrollDown",
     "when": "terminalFocus && terminalProcessSupported"
   },
@@ -305,7 +305,7 @@
     "when": "inKeybindings && inKeybindingsSearch"
   },
   {
-    "key": "alt+k",
+    "key": "shift+alt+k",
     "command": "workbench.action.terminal.scrollUp",
     "when": "terminalFocus && terminalProcessSupported"
   },
