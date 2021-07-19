@@ -20,7 +20,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 	+Backspace::Send !{Up}
 
   CapsLock & v::
-    Send, !d neovide.exe --geometry=200x56{Enter}
+    Send, !d neovide.exe --geometry=200x56 --multiGrid{Enter}
   Return
 
   F1::

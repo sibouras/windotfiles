@@ -16,7 +16,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-css-color'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'psliwka/vim-smoothie'
 Plug 'vimwiki/vimwiki'
 
 call plug#end()
