@@ -310,7 +310,7 @@
   },
   "workbench.colorTheme": "Moonlight II",
   "workbench.activityBar.visible": false,
-  "markdown-preview-enhanced.previewTheme": "one-dark.css",
+  "markdown-preview-enhanced.previewTheme": "github-light.css",
   "markdown-pdf.styles": [
     "C:\\Users\\marzouk\\Desktop\\ala\\vscode-markdown-style\\extension\\markdown-pdf.css"
   ],

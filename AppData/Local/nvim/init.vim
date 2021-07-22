@@ -267,3 +267,11 @@ endfunc
 noremap <silent> <C-+> :call Zoom(v:count1)<CR>
 noremap <silent> <C--> :call Zoom(-v:count1)<CR>
 noremap <silent> <C-0> :call ZoomSet(11)<CR>
+
+" Vimwiki syntax highlight in html
+
+let g:vimwiki_list = [{
+  \ 'path': '~/vimwiki',
+  \ 'template_path': '~/vimwiki/templates',
+  \ 'template_default': 'syntaxhl',
+  \ 'template_ext': '.tpl'}]
