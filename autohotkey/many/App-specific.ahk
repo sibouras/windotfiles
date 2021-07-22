@@ -14,6 +14,9 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 	!3::Send, ^3
 	!4::Send, ^4
 	!5::Send, ^5
+
+  ; tab picker
+  !w::Send, ^+a
 #IfWinActive
 
 #IfWinActive, ahk_class CabinetWClass
