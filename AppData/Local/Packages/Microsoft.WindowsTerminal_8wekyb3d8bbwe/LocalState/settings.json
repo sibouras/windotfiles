@@ -54,7 +54,7 @@
         "colorScheme": "hyper",
         "commandline": "powershell.exe",
         "cursorShape": "bar",
-        "fontFace": "Jetbrains Mono",
+        "fontFace": "JetBrains Mono",
         "fontSize": 18,
         "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
         "hidden": false,

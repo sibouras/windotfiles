@@ -317,5 +317,25 @@
   {
     "key": "alt+m",
     "command": "workbench.action.toggleMaximizedPanel"
+  },
+  {
+    "key": "ctrl+0",
+    "command": "workbench.action.lastEditorInGroup"
+  },
+  {
+    "key": "ctrl+9",
+    "command": "-workbench.action.lastEditorInGroup"
+  },
+  {
+    "key": "ctrl+9",
+    "command": "workbench.action.focusSideBar"
+  },
+  {
+    "key": "ctrl+0",
+    "command": "-workbench.action.focusSideBar"
+  },
+  {
+    "key": "alt+d",
+    "command": "workbench.panel.repl.view.focus"
   }
 ]
