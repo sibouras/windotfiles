@@ -17,6 +17,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-css-color'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vimwiki/vimwiki'
+Plug 'gelguy/wilder.nvim'
 
 call plug#end()
 
@@ -268,10 +269,51 @@ noremap <silent> <C-+> :call Zoom(v:count1)<CR>
 noremap <silent> <C--> :call Zoom(-v:count1)<CR>
 noremap <silent> <C-0> :call ZoomSet(11)<CR>
 
-" Vimwiki syntax highlight in html
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vimwiki
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:vimwiki_list = [{
   \ 'path': '~/vimwiki',
   \ 'template_path': '~/vimwiki/templates',
   \ 'template_default': 'syntaxhl',
   \ 'template_ext': '.tpl'}]
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Wilder.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" call wilder#enable_cmdline_enter()
+" set wildcharm=<Tab>
+" cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+" cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
+
+" " only / and ? are enabled by default
+" call wilder#set_option('modes', ['/', '?', ':'])
+
+
+call wilder#enable_cmdline_enter()
+set wildcharm=<Tab>
+cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
+call wilder#set_option('modes', ['/', '?', ':'])
+
+call wilder#set_option('pipeline', [
+      \   wilder#branch(
+      \     wilder#cmdline_pipeline({
+      \       'fuzzy': 1,
+      \     }),
+      \     wilder#python_search_pipeline({
+      \       'pattern': 'fuzzy',
+      \     }),
+      \   ),
+      \ ])
+
+let s:highlighters = [
+        \ wilder#pcre2_highlighter(),
+        \ wilder#basic_highlighter(),
+        \ ]
+
+" 'highlighter' : applies highlighting to the candidates
+call wilder#set_option('renderer', wilder#popupmenu_renderer({
+      \ 'highlighter': wilder#basic_highlighter(),
+      \ }))
