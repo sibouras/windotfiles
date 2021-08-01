@@ -21,6 +21,7 @@ Plug 'gelguy/wilder.nvim'
 
 call plug#end()
 
+
 set encoding=utf-8
 set fileencoding=utf-8      " The encoding written to file
 syntax on
@@ -170,6 +171,24 @@ onoremap i% :normal vi%<CR>
 
 " shorter replace
 nnoremap <leader>s :%s//gI<Left><Left><Left>
+
+" make Y behave like the rest of the capital letters
+nnoremap Y y$
+
+" undo break points
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+" jumplit mutations
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+
+" moving text
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
