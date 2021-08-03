@@ -31,6 +31,7 @@ IfWinExist, ahk_exe neovide.exe
   IfWinActive, ahk_exe neovide.exe
     WinMinimize, ahk_exe neovide.exe
   else
+    sleep 10
     WinActivate, ahk_exe neovide.exe
 }
 else {
