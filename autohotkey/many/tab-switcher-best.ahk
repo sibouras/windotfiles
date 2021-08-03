@@ -3,8 +3,7 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
-
-RAlt & v::ToggleWindowVisibility("ahk_exe neovide.exe")
+; RAlt & v::ToggleWindowVisibility("ahk_exe neovide.exe")
 RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
 RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
@@ -25,6 +24,27 @@ ToggleWindowVisibility(windowClass) {
   ;   MsgBox % word_array[2] " is not open!"
   ; }
 }
+
+RAlt & v::
+IfWinExist, ahk_exe neovide.exe
+{
+  IfWinActive, ahk_exe neovide.exe
+    WinMinimize, ahk_exe neovide.exe
+  else
+    WinActivate, ahk_exe neovide.exe
+}
+else {
+    Run, neovide.exe
+    WinWaitActive, ahk_exe neovide.exe,, 2
+    if ErrorLevel
+    {
+      MsgBox, WinWait timed out.
+      return
+    }
+    else
+      WinMove, ahk_exe neovide.exe,, 188, 40, 1600, 990
+}
+return
 
 ; minimize active window and restore it
 RAlt & c::

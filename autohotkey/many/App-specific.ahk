@@ -31,8 +31,16 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
     Clipboard =
     Send, ^c
     ClipWait, 0.1
-    Clipboard = neovide.exe --geometry=200x56 --multiGrid %Clipboard%
+    Clipboard = neovide.exe %Clipboard%
     Send, !d ^v{Enter}
+    WinWaitActive, ahk_exe neovide.exe,, 2
+    if ErrorLevel
+    {
+      MsgBox, WinWait timed out.
+      return
+    }
+    else
+      WinMove, ahk_exe neovide.exe,, 188, 40, 1600, 990
   Return
 
   F1::
