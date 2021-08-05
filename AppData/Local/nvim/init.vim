@@ -1,11 +1,13 @@
 call plug#begin(stdpath('data'))
 
 Plug 'scrooloose/nerdtree'
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/onedark.vim'
+Plug 'shaunsingh/moonlight.nvim'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
-Plug 'justinmk/vim-sneak'
+" Plug 'justinmk/vim-sneak'
+Plug 'ggandor/lightspeed.nvim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'michaeljsmith/vim-indent-object'
@@ -24,7 +26,7 @@ call plug#end()
 set encoding=utf-8
 set fileencoding=utf-8      " The encoding written to file
 syntax on
-colorscheme onedark
+colorscheme moonlight
 if !has('gui_running')
   set t_Co=256
 endif
@@ -246,7 +248,7 @@ xmap ga <Plug>(EasyAlign)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " The lightline.vim theme
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'ayu_mirage',
       \ }
 
 " Always show statusline
