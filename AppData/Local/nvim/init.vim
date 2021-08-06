@@ -1,8 +1,9 @@
 call plug#begin(stdpath('data'))
 
 Plug 'scrooloose/nerdtree'
-" Plug 'joshdick/onedark.vim'
-Plug 'shaunsingh/moonlight.nvim'
+Plug 'joshdick/onedark.vim'
+" Plug 'shaunsingh/moonlight.nvim'
+" Plug 'arcticicestudio/nord-vim'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
@@ -20,13 +21,14 @@ Plug 'ap/vim-css-color'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'dstein64/vim-startuptime'
+Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
 set encoding=utf-8
 set fileencoding=utf-8      " The encoding written to file
 syntax on
-colorscheme moonlight
+colorscheme onedark
 if !has('gui_running')
   set t_Co=256
 endif
@@ -208,6 +210,7 @@ let g:highlightedyank_highlight_duration = 200
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Theming
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+highlight Normal             guibg=#1e222a
 " highlight Normal           guifg=#dfdfdf ctermfg=15   guibg=#282c34 ctermbg=none  cterm=none
 " highlight LineNr           guifg=#5b6268 ctermfg=8    guibg=#282c34 ctermbg=none  cterm=none
 " highlight CursorLineNr     guibg=#2c323c ctermfg=7    guifg=#aaaaaa ctermbg=8     cterm=none
@@ -248,7 +251,7 @@ xmap ga <Plug>(EasyAlign)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " The lightline.vim theme
 let g:lightline = {
-      \ 'colorscheme': 'ayu_mirage',
+      \ 'colorscheme': 'onedark',
       \ }
 
 " Always show statusline
