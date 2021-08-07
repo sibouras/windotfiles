@@ -2,18 +2,14 @@ call plug#begin(stdpath('data'))
 
 Plug 'scrooloose/nerdtree'
 Plug 'joshdick/onedark.vim'
-" Plug 'shaunsingh/moonlight.nvim'
-" Plug 'arcticicestudio/nord-vim'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
-" Plug 'justinmk/vim-sneak'
 Plug 'ggandor/lightspeed.nvim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'jiangmiao/auto-pairs'
-Plug 'machakann/vim-highlightedyank'
 Plug 'ThePrimeagen/vim-be-good'
 Plug 'junegunn/vim-easy-align'
 Plug 'itchyny/lightline.vim'
@@ -25,6 +21,7 @@ Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
+cd ~
 set encoding=utf-8
 set fileencoding=utf-8      " The encoding written to file
 syntax on
@@ -71,10 +68,10 @@ set incsearch
 set pastetoggle=<F2>        " enable paste mode
 set ignorecase
 set smartcase
-" indent
 set autoindent
 set smartindent
 set cindent
+set inccommand=split        " live Substitution
 
 
 " set leader key
@@ -205,7 +202,11 @@ let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let g:NERDTreeWinSize=28
 
-let g:highlightedyank_highlight_duration = 200
+" neovim built in yank highlight
+augroup highlight_yank
+  autocmd!
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=200}
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Theming
@@ -274,6 +275,7 @@ let g:ctrlp_custom_ignore = {
 	\ 'file': '\v\.(exe|so|dll)$',
 	\ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
 	\ }
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
 
 " A simple function for zooming in GUI version of Vim/Neovim
