@@ -26,24 +26,24 @@ ToggleWindowVisibility(windowClass) {
 }
 
 RAlt & v::
-IfWinExist, ahk_exe neovide.exe
+IfWinExist, Neovide
 {
-  IfWinActive, ahk_exe neovide.exe
-    WinMinimize, ahk_exe neovide.exe
+  IfWinActive, Neovide
+    WinMinimize, Neovide
   else
-    sleep 10
-    WinActivate, ahk_exe neovide.exe
+    WinActivate, Neovide
 }
 else {
     Run, neovide.exe
-    WinWaitActive, ahk_exe neovide.exe,, 2
+    WinWaitActive, Neovide,, 2
     if ErrorLevel
     {
       MsgBox, WinWait timed out.
       return
     }
     else
-      WinMove, ahk_exe neovide.exe,, 188, 40, 1600, 990
+      WinMove, Neovide,, 188, 40, 1600, 990
+      WinSet, Style, ^0xC00000 ; toggle title bar
 }
 return
 
