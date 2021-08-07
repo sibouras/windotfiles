@@ -43,7 +43,7 @@ else {
     }
     else
       WinMove, Neovide,, 188, 40, 1600, 990
-      WinSet, Style, ^0xC00000 ; toggle title bar
+      WinSet, Style,  -0xC40000 , A ; remove frame and titlebar from current window
 }
 return
 
