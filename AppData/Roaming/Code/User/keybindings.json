@@ -337,5 +337,25 @@
   {
     "key": "alt+d",
     "command": "workbench.panel.repl.view.focus"
+  },
+  {
+    "key": "shift+alt+pageup",
+    "command": "extension.vim_ctrl+pageup",
+    "when": "editorTextFocus && vim.active && vim.use<C-pageup> && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+pageup",
+    "command": "-extension.vim_ctrl+pageup",
+    "when": "editorTextFocus && vim.active && vim.use<C-pageup> && !inDebugRepl"
+  },
+  {
+    "key": "shift+alt+pagedown",
+    "command": "extension.vim_ctrl+pagedown",
+    "when": "editorTextFocus && vim.active && vim.use<C-pagedown> && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+pagedown",
+    "command": "-extension.vim_ctrl+pagedown",
+    "when": "editorTextFocus && vim.active && vim.use<C-pagedown> && !inDebugRepl"
   }
 ]

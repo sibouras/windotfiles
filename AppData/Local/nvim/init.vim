@@ -18,6 +18,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'dstein64/vim-startuptime'
 Plug 'sheerun/vim-polyglot'
+Plug 'romainl/vim-cool'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
 call plug#end()
 
@@ -188,6 +190,13 @@ nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => neovim built in terminal
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>te :sp term://powershell<CR>
+tnoremap df <C-\><C-n>
+tnoremap <C-k> <C-\><C-n><C-w>k
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
@@ -289,9 +298,9 @@ function ZoomSet(font_size) abort
   let &guifont = substitute(&guifont, '\d\+$', a:font_size, '')
 endfunc
 
-noremap <silent> <C-+> :call Zoom(v:count1)<CR>
-noremap <silent> <C--> :call Zoom(-v:count1)<CR>
-noremap <silent> <C-0> :call ZoomSet(11)<CR>
+noremap <silent> <M-+> :call Zoom(v:count1)<CR>
+noremap <silent> <M--> :call Zoom(-v:count1)<CR>
+noremap <silent> <M-0> :call ZoomSet(11)<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vimwiki
@@ -301,3 +310,16 @@ let g:vimwiki_list = [{
   \ 'template_path': '~/vimwiki/templates',
   \ 'template_default': 'syntaxhl',
   \ 'template_ext': '.tpl'}]
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vimwiki
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <silent> <Leader>f  :Clap filer<CR>
+nnoremap <silent> <Leader>r  :Clap grep<CR>
+nnoremap <silent> <Leader>/  :Clap blines<CR>
+nnoremap <silent> <Leader>'  :Clap marks<CR>
+nnoremap <silent> <Leader>g  :Clap commits<CR>
+nnoremap <silent> <Leader>hh :Clap history<CR>
+nnoremap <silent> <Leader>h: :Clap hist:<CR>
+nnoremap <silent> <Leader>h/ :Clap hist/<CR>
