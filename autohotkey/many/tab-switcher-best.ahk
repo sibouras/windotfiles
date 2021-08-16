@@ -9,7 +9,7 @@ RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & s::ToggleWindowVisibility("ahk_exe brave.exe")
 RAlt & r::ToggleWindowVisibility("ahk_exe alacritty.exe")
-RAlt & t::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
+; RAlt & t::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
 
 ToggleWindowVisibility(windowClass) {
 	IfWinExist, %windowClass%

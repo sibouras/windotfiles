@@ -19,10 +19,10 @@ credits to ManaUser for isWindow() (http://www.autohotkey.com/community/viewtopi
 ; 3 = maximizes the window in the other direction (if snapped left 3 times, the window will occupy the half left of the workarea)
 {
 
-!k::winSnap("",-1)
-!j::winSnap("",1)
-!h::winSnap(-1,"")
-!l::winSnap(1,"")
+; !k::winSnap("",-1)
+; !j::winSnap("",1)
+; !h::winSnap(-1,"")
+; !l::winSnap(1,"")
 !o::winSnap(0,0,1)
 
 winSnap(seth, setv, forceset=0, reset=0)

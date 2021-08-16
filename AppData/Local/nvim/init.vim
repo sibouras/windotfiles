@@ -1,6 +1,6 @@
 call plug#begin(stdpath('data'))
 
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'joshdick/onedark.vim'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-unimpaired'
@@ -20,6 +20,8 @@ Plug 'dstein64/vim-startuptime'
 Plug 'sheerun/vim-polyglot'
 Plug 'romainl/vim-cool'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'honza/vim-snippets'
 
 call plug#end()
 
@@ -133,9 +135,9 @@ cmap <C-BS> <C-W>
 nnoremap <leader>sc :noh<return>
 
 " open vimrc in vertical split
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>mv :vsplit $MYVIMRC<cr>
 " update changes into current buffer
-nnoremap <leader>sv :source $MYVIMRC<cr>
+" nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Now pressing \b will list the available buffers and prepare :b for you.
 " nnoremap <leader>b :ls<CR>:b<Space>
@@ -286,7 +288,6 @@ let g:ctrlp_custom_ignore = {
 	\ }
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
-
 " A simple function for zooming in GUI version of Vim/Neovim
 " Increases the font size with `amount`
 function! Zoom(amount) abort
@@ -323,3 +324,10 @@ nnoremap <silent> <Leader>g  :Clap commits<CR>
 nnoremap <silent> <Leader>hh :Clap history<CR>
 nnoremap <silent> <Leader>h: :Clap hist:<CR>
 nnoremap <silent> <Leader>h/ :Clap hist/<CR>
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => coc.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source $HOME/AppData/Local/nvim/coc.vim
