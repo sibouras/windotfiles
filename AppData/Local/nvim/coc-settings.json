@@ -12,14 +12,8 @@
   "snippets.ultisnips.enable": false,
   "snippets.ultisnips.usePythonx": false,
   "snippets.extends": {
-    "javascriptreact": [
-      "javascript"
-    ],
-    "typescript": [
-      "javascript"
-    ],
-    "javascript": [
-      "typescript"
-    ]
+    "javascriptreact": ["javascript"],
+    "typescript": ["javascript"],
+    "javascript": ["typescript"]
   }
 }

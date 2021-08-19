@@ -33,7 +33,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
     ClipWait, 0.1
     Clipboard = neovide.exe %Clipboard%
     Send, !d ^v{Enter}
-    WinWaitActive, ahk_exe neovide.exe,, 2
+    WinWaitActive, ahk_exe neovide.exe,, 3
     if ErrorLevel
     {
       MsgBox, WinWait timed out.
@@ -41,7 +41,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
     }
     else
       WinMove, ahk_exe neovide.exe,, 188, 40, 1600, 990
-      WinSet, Style,  -0xC40000 , A ; remove frame and titlebar from current window
+      WinSet, Style, -0xC00000, A ; toggle titlebar
+      ; WinSet, Style,  -0xC40000 , A ; remove frame and titlebar from current window
   Return
 
   F1::
@@ -61,3 +62,17 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
   CapsLock & r::Send, ^{PgDn}
   CapsLock & e::Send, ^{Pgup}
 #IfWinActive
+
+
+#IfWinActive, Neovide
+  CapsLock & f::
+    Send {Esc}
+    sleep 2
+    Send :
+    sleep 2
+    Send w
+    sleep 2
+    Send {enter}
+  return
+#IfWinActive
+

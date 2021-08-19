@@ -30,15 +30,13 @@ endif
 
 let g:coc_global_extensions = [
       \'coc-eslint',
-      \'coc-git',
       \'coc-html',
+      \'coc-css',
       \'coc-json',
+      \'coc-prettier',
       \'coc-lists',
-      \'coc-pairs',
       \'coc-snippets',
-      \'coc-tag',
       \'coc-tsserver',
-      \'coc-vimlsp',
       \]
 
 " Use tab for trigger completion with characters ahead and navigate.

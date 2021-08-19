@@ -235,8 +235,8 @@ else if Pedersen = title ; Remove the title bar of My Computer window.
     WinGetTitle, currentWindow, A
     IfWinExist %currentWindow%
     {
-        ; WinSet, Style, ^0xC00000 ; toggle title bar
-        WinSet, Style,  ^0xC40000 , A ; remove frame and titlebar from current window
+        WinSet, Style, ^0xC00000, A ; toggle titlebar
+        ; WinSet, Style,  ^0xC40000 , A ; remove frame and titlebar from current window
     }
     return
 }

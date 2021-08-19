@@ -22,6 +22,7 @@ Plug 'romainl/vim-cool'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'honza/vim-snippets'
+Plug 'mattn/emmet-vim'
 
 call plug#end()
 
@@ -121,6 +122,9 @@ xnoremap > >gv|
 
 " I hate escape more than anything else
 inoremap df <Esc>
+
+" ctrl-z to undo
+inoremap <c-z> <c-o>:u<CR>
 
 " Fast saving
 nnoremap <C-s> :<C-u>w<CR>
@@ -326,8 +330,14 @@ nnoremap <silent> <Leader>h: :Clap hist:<CR>
 nnoremap <silent> <Leader>h/ :Clap hist/<CR>
 
 
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.nvim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 source $HOME/AppData/Local/nvim/coc.vim
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => emmet-vim
+let g:user_emmet_mode='a'    "enable all function in all mode.
+let g:user_emmet_leader_key=','

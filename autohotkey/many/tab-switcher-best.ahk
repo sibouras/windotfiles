@@ -9,7 +9,7 @@ RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & s::ToggleWindowVisibility("ahk_exe brave.exe")
 RAlt & r::ToggleWindowVisibility("ahk_exe alacritty.exe")
-; RAlt & t::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
+RAlt & w::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
 
 ToggleWindowVisibility(windowClass) {
 	IfWinExist, %windowClass%
@@ -43,7 +43,8 @@ else {
     }
     else
       WinMove, Neovide,, 188, 40, 1600, 990
-      WinSet, Style,  -0xC40000 , A ; remove frame and titlebar from current window
+      WinSet, Style, -0xC00000, A ; toggle titlebar
+      ; WinSet, Style, -0xC40000, A ; remove frame and titlebar from current window
 }
 return
 
