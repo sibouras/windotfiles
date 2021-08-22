@@ -63,6 +63,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
   CapsLock & e::Send, ^{Pgup}
 #IfWinActive
 
+#IfWinActive, ahk_exe azuredatastudio.exe
+  CapsLock & f::Send, {Esc}^s
+  CapsLock & r::Send, ^{PgDn}
+  CapsLock & e::Send, ^{Pgup}
+#IfWinActive
 
 #IfWinActive, Neovide
   CapsLock & f::

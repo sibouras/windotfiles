@@ -325,5 +325,11 @@
   "editor.mouseWheelZoom": true,
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
   "workbench.colorTheme": "Moonlight II",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/.git": true
+  },
   "workbench.activityBar.visible": false
 }
