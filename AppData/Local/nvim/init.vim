@@ -23,6 +23,9 @@ Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'honza/vim-snippets'
 Plug 'mattn/emmet-vim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'romgrk/barbar.nvim'
+
 
 call plug#end()
 
@@ -35,8 +38,9 @@ if !has('gui_running')
   set t_Co=256
 endif
 
-set guifont=JetBrains\ Mono\ for\ Powerline:h16
-" set guifont=DejaVuSansMono\ nerd\ Font\ Mono:h23
+" set guifont=JetBrains\ Mono\ for\ Powerline:h16
+set guifont=JetbrainsMono\ Nerd\ Font:h16
+" set guifont=DejaVuSansMono\ nerd\ Font\ Mono:h16
 
 " set nonumber norelativenumber
 " set lines=140
@@ -217,6 +221,9 @@ let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let g:NERDTreeWinSize=28
 
+" close netrw buffer
+let g:netrw_fastbrowse = 0
+
 " neovim built in yank highlight
 augroup highlight_yank
   autocmd!
@@ -340,7 +347,7 @@ source $HOME/AppData/Local/nvim/coc.vim
 " => emmet-vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:user_emmet_mode='a'    "enable all function in all mode.
-let g:user_emmet_leader_key='e'
+let g:user_emmet_leader_key=','
 " Enable just for html/css/js
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,javascript EmmetInstall
@@ -349,3 +356,48 @@ let g:user_emmet_settings = {
 \      'extends' : 'jsx',
 \  },
 \}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => barbar.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Move to previous/next
+nnoremap <silent>    <A-,> :BufferPrevious<CR>
+inoremap <silent>    <A-,> <esc>:BufferPrevious<CR>
+nnoremap <silent>    <A-.> :BufferNext<CR>
+inoremap <silent>    <A-.> <esc>:BufferNext<CR>
+" Re-order to previous/next
+nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
+nnoremap <silent>    <A->> :BufferMoveNext<CR>
+" Goto buffer in position...
+nnoremap <silent>    <A-1> :BufferGoto 1<CR>
+nnoremap <silent>    <A-2> :BufferGoto 2<CR>
+nnoremap <silent>    <A-3> :BufferGoto 3<CR>
+nnoremap <silent>    <A-4> :BufferGoto 4<CR>
+nnoremap <silent>    <A-5> :BufferGoto 5<CR>
+nnoremap <silent>    <A-6> :BufferGoto 6<CR>
+nnoremap <silent>    <A-7> :BufferGoto 7<CR>
+nnoremap <silent>    <A-8> :BufferGoto 8<CR>
+nnoremap <silent>    <A-9> :BufferLast<CR>
+" Pin/unpin buffer
+nnoremap <silent>    <A-p> :BufferPin<CR>
+" Close buffer
+nnoremap <silent>    <A-c> :BufferClose<CR>
+" Wipeout buffer
+"                          :BufferWipeout<CR>
+" Close commands
+"                          :BufferCloseAllButCurrent<CR>
+"                          :BufferCloseAllButPinned<CR>
+"                          :BufferCloseBuffersLeft<CR>
+"                          :BufferCloseBuffersRight<CR>
+" Magic buffer-picking mode
+nnoremap <silent> <A-s>    :BufferPick<CR>
+" Sort automatically by...
+nnoremap <silent> <Space>bb :BufferOrderByBufferNumber<CR>
+nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
+nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
+nnoremap <silent> <Space>bw :BufferOrderByWindowNumber<CR>
+
+" Other:
+" :BarbarEnable - enables barbar (enabled by default)
+" :BarbarDisable - very bad command, should never be used

@@ -357,5 +357,10 @@
     "key": "ctrl+pagedown",
     "command": "-extension.vim_ctrl+pagedown",
     "when": "editorTextFocus && vim.active && vim.use<C-pagedown> && !inDebugRepl"
+  },
+  {
+    "key": "space",
+    "command": "vspacecode.space",
+    "when": "sideBarFocus && !inputFocus && !whichkeyActive"
   }
 ]

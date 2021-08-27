@@ -5,7 +5,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 
 #Include %A_ScriptDir%\make-capslock-great.ahk
-#Include %A_ScriptDir%\drag-windows.ahk
+; #Include %A_ScriptDir%\drag-windows.ahk
 #Include %A_ScriptDir%\AppsKey.ahk
 #Include %A_ScriptDir%\Hotstrings.ahk
 #Include %A_ScriptDir%\App-specific.ahk

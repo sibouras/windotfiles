@@ -16,16 +16,6 @@
       "before": ["<space>"],
       "commands": ["vspacecode.space"]
     },
-    // {
-    //     "before": [","],
-    //     "commands": [
-    //         "vspacecode.space",
-    //         {
-    //             "command": "whichkey.triggerKey",
-    //             "args": "m"
-    //         }
-    //     ]
-    // },
     {
       "before": ["Z", "Z"],
       "commands": [":wq"]
@@ -58,22 +48,34 @@
         }
       ]
     }
+    // {
+    //   "before": [
+    //     ","
+    //   ],
+    //   "commands": [
+    //     "vspacecode.space",
+    //     {
+    //       "command": "whichkey.triggerKey",
+    //       "args": "m"
+    //     }
+    //   ]
+    // }
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
       "before": ["<space>"],
       "commands": ["vspacecode.space"]
+    },
+    {
+      "before": [","],
+      "commands": [
+        "vspacecode.space",
+        {
+          "command": "whichkey.triggerKey",
+          "args": "m"
+        }
+      ]
     }
-    // {
-    //     "before": [","],
-    //     "commands": [
-    //         "vspacecode.space",
-    //         {
-    //             "command": "whichkey.triggerKey",
-    //             "args": "m"
-    //         }
-    //     ]
-    // }
   ],
 
   "vim.timeout": 200,
