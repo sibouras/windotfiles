@@ -4,7 +4,8 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ; RAlt & v::ToggleWindowVisibility("ahk_exe neovide.exe")
-RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
+; RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
+RAlt & e::ToggleWindowVisibility("ahk_exe Koffee.exe")
 RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & s::ToggleWindowVisibility("ahk_exe brave.exe")

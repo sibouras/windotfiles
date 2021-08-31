@@ -362,6 +362,27 @@ nnoremap <silent> <Leader>h/ :Clap hist/<CR>
 " => startify
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <Leader>s  :Startify<CR>
+let g:startify_lists = [
+      \ { 'type': 'files',     'header': ['   MRU']            },
+      \ { 'type': 'dir',       'header': ['   Current Directory '] },
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ ]
+
+let g:startify_bookmarks = [
+      \ { 'i': '~/AppData/Local/nvim/init.vim' },
+      \ { 'v': '~/AppData/Roaming/code/User/settings.json' },
+      \ { 'h': '~/' },
+      \ { 'a': '~/autohotkey' },
+      \ { 'c': '~/code' },
+      \ '~/documents',
+      \ ]
+
+let g:startify_change_to_dir = 0
+let g:startify_session_autoload = 1
+let g:startify_fortune_use_unicode = 1
+let g:startify_change_to_vcs_root = 1
+let g:startify_session_persistence = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -475,8 +496,8 @@ require'lir'.setup {
   mappings = {
     ['l']     = actions.edit,
     ['<cr>']  = actions.edit,
-    ['s']     = actions.split,
-		['v']     = actions.vsplit,
+    ['<c-s>'] = actions.split,
+		['<c-v>'] = actions.vsplit,
     ['<C-t>'] = actions.tabedit,
 
     ['h']     = actions.up,
