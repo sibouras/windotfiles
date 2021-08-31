@@ -8,7 +8,7 @@ RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
 RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & s::ToggleWindowVisibility("ahk_exe brave.exe")
-; RAlt & r::ToggleWindowVisibility("ahk_exe alacritty.exe")
+RAlt & r::ToggleWindowVisibility("Alacritty")
 RAlt & w::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
 
 ToggleWindowVisibility(windowClass) {
@@ -26,6 +26,29 @@ ToggleWindowVisibility(windowClass) {
 }
 
 RAlt & v::
+nvy = ahk_exe nvy.exe
+IfWinExist, %nvy%
+{
+  IfWinActive, %nvy%
+    WinMinimize, %nvy%
+  else
+    WinActivate, %nvy%
+}
+else {
+    Run, "C:\tools\nvy\Nvy.exe"
+    WinWaitActive, %nvy%,, 0.5
+    if ErrorLevel
+    {
+      ; MsgBox, WinWait timed out.
+      return
+    }
+    else
+      WinMove, %nvy%,, 188, 33, 1600, 1000
+      WinSet, Style, -0xC00000, A ; toggle titlebar
+}
+return
+
+RAlt & t::
 IfWinExist, Neovide
 {
   IfWinActive, Neovide
@@ -45,17 +68,6 @@ else {
       WinMove, Neovide,, 188, 40, 1600, 990
       WinSet, Style, -0xC00000, A ; toggle titlebar
       ; WinSet, Style, -0xC40000, A ; remove frame and titlebar from current window
-}
-return
-
-
-RAlt & r::
-IfWinExist, Alacritty
-{
-  IfWinActive, Alacritty
-    WinMinimize, Alacritty
-  else
-    WinActivate, Alacritty
 }
 return
 

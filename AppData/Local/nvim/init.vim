@@ -1,6 +1,6 @@
 call plug#begin(stdpath('data'))
 
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'joshdick/onedark.vim'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-unimpaired'
@@ -25,7 +25,9 @@ Plug 'honza/vim-snippets'
 Plug 'mattn/emmet-vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'romgrk/barbar.nvim'
-
+Plug 'karb94/neoscroll.nvim'
+Plug 'tamago324/lir.nvim'
+Plug 'nvim-lua/plenary.nvim'
 
 call plug#end()
 
@@ -90,10 +92,16 @@ let mapleader = " "
 inoremap <S-Return> <C-o>o
 
 " Use alt + hjkl to resize windows
-nnoremap <M-j>    :resize -2<CR>
-nnoremap <M-k>    :resize +2<CR>
-nnoremap <M-h>    :vertical resize -2<CR>
-nnoremap <M-l>    :vertical resize +2<CR>
+" nnoremap <M-j>    :resize -2<CR>
+" nnoremap <M-k>    :resize +2<CR>
+" nnoremap <M-h>    :vertical resize -2<CR>
+" nnoremap <M-l>    :vertical resize +2<CR>
+
+" arrow keys resize windows
+nnoremap <Right> :vertical resize -2<CR>
+nnoremap <Left> :vertical resize +2<CR>
+nnoremap <Up> :resize -2<CR>
+nnoremap <Down> :resize +2<CR>
 
 " Alternate way to save
 nnoremap <C-s> :w<CR>
@@ -106,17 +114,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Improve scroll, credits: https://github.com/Shougo
-nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
-			\ 'zt' : (winline() == &scrolloff + 1) ? 'zb' : 'zz'
-noremap <expr> <C-f> max([winheight(0) - 2, 1])
-			\ ."\<C-d>".(line('w$') >= line('$') ? "L" : "H")
-noremap <expr> <C-b> max([winheight(0) - 2, 1])
-			\ ."\<C-u>".(line('w0') <= 1 ? "H" : "L")
-noremap <expr> <C-e> (line("w$") >= line('$') ? "j" : "2\<C-e>")
-noremap <expr> <C-y> (line("w0") <= 1         ? "k" : "2\<C-y>")
-
-
 " Select blocks after indenting
 xnoremap < <gv
 xnoremap > >gv|
@@ -126,6 +123,7 @@ xnoremap > >gv|
 
 " I hate escape more than anything else
 inoremap df <Esc>
+inoremap jf <Esc>
 
 " ctrl-z to undo
 inoremap <c-z> <c-o>:u<CR>
@@ -139,8 +137,8 @@ cnoremap <C-s> <C-u>w<CR>
 imap <C-BS> <C-W>
 cmap <C-BS> <C-W>
 
-"clears highlights
-nnoremap <leader>sc :noh<return>
+" clears highlights
+" nnoremap <leader>sc :noh<return>
 
 " open vimrc in vertical split
 nnoremap <leader>mv :vsplit $MYVIMRC<cr>
@@ -150,6 +148,8 @@ nnoremap <leader>mv :vsplit $MYVIMRC<cr>
 " Now pressing \b will list the available buffers and prepare :b for you.
 " nnoremap <leader>b :ls<CR>:b<Space>
 nnoremap <leader><tab> <C-^>
+nnoremap <M-w> <C-^>
+inoremap <M-w> <esc><C-^>
 
 " the following command maps the <F4> key to display the current date and time.
 :map <F4> :echo 'Current time is ' . strftime('%c')<CR>
@@ -181,7 +181,7 @@ xnoremap i% GoggV
 onoremap i% :normal vi%<CR>
 
 " shorter replace
-nnoremap <leader>s :%s//gI<Left><Left><Left>
+" nnoremap <leader>s :%s//gI<Left><Left><Left>
 
 " make Y behave like the rest of the capital letters
 nnoremap Y y$
@@ -200,6 +200,24 @@ nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+" keep the cursor in place
+nnoremap }   }zz
+nnoremap {   {zz
+nnoremap ]]  ]]zz
+nnoremap [[  [[zz
+nnoremap []  []zz
+nnoremap ][  ][zz
+
+nnoremap g;  g;zvzz
+nnoremap g,  g,zvzz
+
+" Keep the cursor in place while joining lines
+nnoremap J mzJ`z
+
+" Fix gx for URLs
+nmap <silent> gx yiW:!start brave <C-r>" & <CR><CR>
+vmap <silent> gx y:!start brave <C-r>" & <CR><CR>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => neovim built in terminal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -212,14 +230,14 @@ tnoremap <C-k> <C-\><C-n><C-w>k
 " => NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Uncomment to autostart the NERDTree
-" autocmd vimenter * NERDTree
-map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeDirArrowExpandable = '►'
-let g:NERDTreeDirArrowCollapsible = '▼'
-let NERDTreeShowLineNumbers=1
-let NERDTreeShowHidden=1
-let NERDTreeMinimalUI = 1
-let g:NERDTreeWinSize=28
+"" autocmd vimenter * NERDTree
+" map <C-n> :NERDTreeToggle<CR>
+" let g:NERDTreeDirArrowExpandable = '►'
+" let g:NERDTreeDirArrowCollapsible = '▼'
+" let NERDTreeShowLineNumbers=1
+" let NERDTreeShowHidden=1
+" let NERDTreeMinimalUI = 1
+" let g:NERDTreeWinSize=28
 
 " close netrw buffer
 let g:netrw_fastbrowse = 0
@@ -229,6 +247,7 @@ augroup highlight_yank
   autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=200}
 augroup END
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Theming
@@ -257,6 +276,7 @@ highlight Normal             guibg=#1e222a
 
 " Replacing grep with rg
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim Easy Align
@@ -310,7 +330,7 @@ function ZoomSet(font_size) abort
   let &guifont = substitute(&guifont, '\d\+$', a:font_size, '')
 endfunc
 
-noremap <silent> <M-+> :call Zoom(v:count1)<CR>
+noremap <silent> <M-=> :call Zoom(v:count1)<CR>
 noremap <silent> <M--> :call Zoom(-v:count1)<CR>
 noremap <silent> <M-0> :call ZoomSet(11)<CR>
 
@@ -327,7 +347,8 @@ let g:vimwiki_list = [{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Clap
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <Leader>f  :Clap filer<CR>
+let g:clap_theme = 'onedark'
+" nnoremap <silent> <Leader>f  :Clap filer<CR>
 nnoremap <silent> <Leader>r  :Clap grep<CR>
 nnoremap <silent> <Leader>/  :Clap blines<CR>
 nnoremap <silent> <Leader>'  :Clap marks<CR>
@@ -335,6 +356,12 @@ nnoremap <silent> <Leader>g  :Clap commits<CR>
 nnoremap <silent> <Leader>hh :Clap history<CR>
 nnoremap <silent> <Leader>h: :Clap hist:<CR>
 nnoremap <silent> <Leader>h/ :Clap hist/<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => startify
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <silent> <Leader>s  :Startify<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -367,8 +394,8 @@ inoremap <silent>    <A-,> <esc>:BufferPrevious<CR>
 nnoremap <silent>    <A-.> :BufferNext<CR>
 inoremap <silent>    <A-.> <esc>:BufferNext<CR>
 " Re-order to previous/next
-nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
-nnoremap <silent>    <A->> :BufferMoveNext<CR>
+nnoremap <silent>    <A-S-<> :BufferMovePrevious<CR>
+nnoremap <silent>    <A-S->> :BufferMoveNext<CR>
 " Goto buffer in position...
 nnoremap <silent>    <A-1> :BufferGoto 1<CR>
 nnoremap <silent>    <A-2> :BufferGoto 2<CR>
@@ -401,3 +428,121 @@ nnoremap <silent> <Space>bw :BufferOrderByWindowNumber<CR>
 " Other:
 " :BarbarEnable - enables barbar (enabled by default)
 " :BarbarDisable - very bad command, should never be used
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => neoscroll.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua << EOF
+require('neoscroll').setup({
+    hide_cursor = true,           -- Hide cursor while scrolling
+    easing_function = "quadratic" -- Default easing function
+    -- Set any other options as needed
+})
+
+local t = {}
+-- Syntax: t[keys] = {function, {function arguments}}
+-- Use the "sine" easing function
+t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '250', [['sine']]}}
+t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '250', [['sine']]}}
+-- Use the "shine" easing function
+t['<C-b>'] = {'scroll', {'-vim.api.nvim_win_get_height(0)', 'true', '400', [['shine']]}}
+t['<C-f>'] = {'scroll', { 'vim.api.nvim_win_get_height(0)', 'true', '400', [['shine']]}}
+-- Pass "nil" to disable the easing animation (constant scrolling speed)
+t['<C-y>'] = {'scroll', {'-0.10', 'false', '80', nil}}
+t['<C-e>'] = {'scroll', { '0.10', 'false', '80', nil}}
+-- When no easing function is provided the default easing function (in this case "quadratic") will be used
+t['zt']    = {'zt', {'100'}}
+t['zz']    = {'zz', {'100'}}
+t['zb']    = {'zb', {'100'}}
+
+require('neoscroll.config').set_mappings(t)
+EOF
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => lir.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <silent> <Leader>f :lua require'lir.float'.toggle()<CR>
+lua << EOF
+local actions = require'lir.actions'
+local mark_actions = require 'lir.mark.actions'
+local clipboard_actions = require'lir.clipboard.actions'
+
+require'lir'.setup {
+  show_hidden_files = false,
+  devicons_enable = true,
+  mappings = {
+    ['l']     = actions.edit,
+    ['<cr>']  = actions.edit,
+    ['s']     = actions.split,
+		['v']     = actions.vsplit,
+    ['<C-t>'] = actions.tabedit,
+
+    ['h']     = actions.up,
+    ['q']     = actions.quit,
+    ['<esc>'] = actions.quit,
+
+    ['A']     = actions.mkdir,
+    ['a']     = actions.newfile,
+    ['r']     = actions.rename,
+    ['@']     = actions.cd,
+    ['Y']     = actions.yank_path,
+    ['.']     = actions.toggle_show_hidden,
+    ['d']     = actions.delete,
+
+    ['J'] = function()
+      mark_actions.toggle_mark()
+      vim.cmd('normal! j')
+    end,
+    ['C'] = clipboard_actions.copy,
+    ['X'] = clipboard_actions.cut,
+    ['P'] = clipboard_actions.paste,
+  },
+  float = {
+    winblend = 0,
+
+    -- -- You can define a function that returns a table to be passed as the third
+    -- -- argument of nvim_open_win().
+    win_opts = function()
+    --   local width = math.floor(vim.o.columns * 0.8)
+    --   local height = math.floor(vim.o.lines * 0.8)
+      return {
+    --    border = "single",
+        border = require("lir.float.helper").make_border_opts({
+          "+", "─", "+", "│", "+", "─", "+", "│",
+        }, "Normal"),
+    --     width = width,
+    --     height = height,
+    --     row = 1,
+    --     col = math.floor((vim.o.columns - width) / 2),
+      }
+    end,
+  },
+  hide_cursor = true,
+}
+
+-- custom folder icon
+require'nvim-web-devicons'.setup({
+  override = {
+    lir_folder_icon = {
+      icon = "",
+      color = "#7ebae4",
+      name = "LirFolderNode"
+    },
+  }
+})
+
+-- use visual mode
+function _G.LirSettings()
+  vim.api.nvim_buf_set_keymap(0, 'x', 'J', ':<C-u>lua require"lir.mark.actions".toggle_mark("v")<CR>', {noremap = true, silent = true})
+
+  -- echo cwd
+  vim.api.nvim_echo({{vim.fn.expand('%:p'), 'Normal'}}, false, {})
+end
+
+vim.cmd [[augroup lir-settings]]
+vim.cmd [[  autocmd!]]
+vim.cmd [[  autocmd Filetype lir :lua LirSettings()]]
+vim.cmd [[augroup END]]
+EOF

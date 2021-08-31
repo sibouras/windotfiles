@@ -10,6 +10,9 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 	^XButton1::Send, ^+{Tab}
 	^XButton2::Send, ^{Tab}
 
+  !,::Send, ^+{Tab}
+  !.::Send, ^{Tab}
+
 	; KB shortcuts for specific tabs
 	!1::Send, ^1
 	!2::Send, ^2
@@ -18,10 +21,10 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 	!5::Send, ^5
 
   ; tab picker
-  !w::Send, ^+a
+  !e::Send, ^+a
 
   ; last used tab
-  !e::Send, ^6
+  !w::Send, ^6
 #IfWinActive
 
 #IfWinActive, ahk_class CabinetWClass
@@ -31,16 +34,16 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
     Clipboard =
     Send, ^c
     ClipWait, 0.1
-    Clipboard = neovide.exe %Clipboard%
+    Clipboard = nvy.exe %Clipboard%
     Send, !d ^v{Enter}
-    WinWaitActive, ahk_exe neovide.exe,, 3
+    WinWaitActive, ahk_exe nvy.exe,, 1
     if ErrorLevel
     {
-      MsgBox, WinWait timed out.
+      ; MsgBox, WinWait timed out.
       return
     }
     else
-      WinMove, ahk_exe neovide.exe,, 188, 40, 1600, 990
+      WinMove, ahk_exe nvy.exe,, 188, 33, 1600, 1000
       WinSet, Style, -0xC00000, A ; toggle titlebar
       ; WinSet, Style,  -0xC40000 , A ; remove frame and titlebar from current window
   Return
@@ -78,6 +81,12 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
     Send w
     sleep 2
     Send {enter}
+  return
+#IfWinActive
+
+#IfWinActive, Nvy
+  CapsLock & f::
+    Send {Esc}:w{enter}
   return
 #IfWinActive
 
