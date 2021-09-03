@@ -14,11 +14,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
   !.::Send, ^{Tab}
 
 	; KB shortcuts for specific tabs
-	!1::Send, ^1
-	!2::Send, ^2
-	!3::Send, ^3
-	!4::Send, ^4
-	!5::Send, ^5
+	; !1::Send, ^1
+	; !2::Send, ^2
+	; !3::Send, ^3
+	; !4::Send, ^4
+	; !5::Send, ^5
 
   ; tab picker
   !e::Send, ^+a

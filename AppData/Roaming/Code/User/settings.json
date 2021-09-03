@@ -101,6 +101,10 @@
       "commands": [":nohl"]
     },
     {
+      "before": ["<esc>"],
+      "commands": [":nohl"]
+    },
+    {
       "before": ["[", "b"],
       "commands": [":tabp"]
     },
@@ -173,7 +177,7 @@
     }
   ],
 
-  "editor.lineNumbers": "relative",
+  "editor.lineNumbers": "on",
   "editor.smoothScrolling": true,
   "editor.cursorSurroundingLines": 5,
   // "vim.smartRelativeLine": true,
@@ -333,5 +337,8 @@
     "**/*.code-search": true,
     "**/.git": true
   },
-  "workbench.activityBar.visible": false
+  "workbench.activityBar.visible": false,
+  "quokka.showCodeLensInOutputChannel": false,
+  "editor.minimap.enabled": false,
+  "editor.bracketPairColorization.enabled": true
 }

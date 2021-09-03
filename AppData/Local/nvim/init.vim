@@ -164,6 +164,7 @@ inoremap <M-w> <esc><C-^>
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " working directory is always the same as the file you are editing
+" startify conflict with session
 autocmd BufEnter * silent! lcd %:p:h
 
 " the following command maps the <F5> key to search for the keyword under the cursor in the current directory using the 'grep' command:
@@ -339,6 +340,7 @@ noremap <silent> <M-0> :call ZoomSet(11)<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:vimwiki_list = [{
   \ 'path': '~/vimwiki',
+  \ 'path_html': 'C:/Users/marzouk/vimwiki_html',
   \ 'template_path': '~/vimwiki/templates',
   \ 'template_default': 'syntaxhl',
   \ 'template_ext': '.tpl'}]
@@ -372,13 +374,14 @@ let g:startify_lists = [
 let g:startify_bookmarks = [
       \ { 'i': '~/AppData/Local/nvim/init.vim' },
       \ { 'v': '~/AppData/Roaming/code/User/settings.json' },
+      \ { 'w': 'C:/tools/komorebi/komorebi.ahk' },
       \ { 'h': '~/' },
       \ { 'a': '~/autohotkey' },
       \ { 'c': '~/code' },
       \ '~/documents',
       \ ]
 
-let g:startify_change_to_dir = 0
+let g:startify_change_to_dir = 1
 let g:startify_session_autoload = 1
 let g:startify_fortune_use_unicode = 1
 let g:startify_change_to_vcs_root = 1

@@ -6,12 +6,12 @@
 ; AppsKey & [::Send {Volume_Mute}
 
 ; AppsKey & h::
-; send hello 
-; return 
+; send hello
+; return
 
 ; AppsKey & r::
-; send é 
-; return 
+; send é
+; return
 
 
 RButton::
