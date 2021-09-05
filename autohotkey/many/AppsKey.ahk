@@ -1,24 +1,7 @@
-﻿; AppsKey & WheelUp::Send {Volume_Up}
-; AppsKey & WheelDown::Send {Volume_Down}
-; AppsKey & MButton::Send {Volume_Mute}
-; AppsKey & o::Send {Volume_Down}
-; AppsKey & p::Send {Volume_Up}
-; AppsKey & [::Send {Volume_Mute}
-
-; AppsKey & h::
-; send hello
-; return
-
-; AppsKey & r::
-; send é
-; return
-
-
-RButton::
+﻿RButton::
 ;Keep AppsKey working (mostly) normally.
 Send {RButton}
 Return
-
 
 RButton & WheelUp:: Send {Volume_Up}
 RButton & WheelDown:: Send {Volume_Down}
@@ -39,10 +22,7 @@ MouseIsOver(WinTitle) {
 }
 #If
 
-
 !q::Send !{f4}
-; Always on Top
-; ^SPACE:: Winset, Alwaysontop, , A ; ctrl + space
-; Return
+!BS::Send ^{BS}
 
 #a:: suspend
