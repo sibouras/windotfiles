@@ -14,17 +14,17 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
   !.::Send, ^{Tab}
 
 	; KB shortcuts for specific tabs
-	; !1::Send, ^1
-	; !2::Send, ^2
-	; !3::Send, ^3
-	; !4::Send, ^4
-	; !5::Send, ^5
+	!1::Send, ^1
+	!2::Send, ^2
+	!3::Send, ^3
+	!4::Send, ^4
+	!5::Send, ^5
 
   ; tab picker
   !e::Send, ^+a
 
   ; last used tab
-  !w::Send, ^6
+  ; !w::Send, ^6
 #IfWinActive
 
 #IfWinActive, ahk_class CabinetWClass
@@ -36,7 +36,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
     ClipWait, 0.1
     Clipboard = nvy.exe %Clipboard%
     Send, !d ^v{Enter}
-    WinWaitActive, ahk_exe nvy.exe,, 1
+    WinWaitActive, ahk_exe nvy.exe
     if ErrorLevel
     {
       ; MsgBox, WinWait timed out.
@@ -90,3 +90,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
   return
 #IfWinActive
 
+#IfWinNotActive, ahk_exe WindowsTerminal.exe
+  !BS::Send ^{BS}
+#IfWinActive

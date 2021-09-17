@@ -3,6 +3,9 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
+Alt & j::AltTab
+Alt & k::ShiftAltTab
+
 ; RAlt & v::ToggleWindowVisibility("ahk_exe neovide.exe")
 ; RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
 RAlt & e::ToggleWindowVisibility("ahk_exe Koffee.exe")
@@ -37,7 +40,7 @@ IfWinExist, %nvy%
 }
 else {
     Run, "C:\tools\nvy\Nvy.exe"
-    WinWaitActive, %nvy%,, 0.5
+    WinWaitActive, %nvy%,, 1
     if ErrorLevel
     {
       ; MsgBox, WinWait timed out.

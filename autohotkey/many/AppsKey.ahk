@@ -23,6 +23,5 @@ MouseIsOver(WinTitle) {
 #If
 
 !q::Send !{f4}
-!BS::Send ^{BS}
 
 #a:: suspend
