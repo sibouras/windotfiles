@@ -30,23 +30,24 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #IfWinActive, ahk_class CabinetWClass
 	+Backspace::Send !{Up}
 
-  CapsLock & v::
-    Clipboard =
-    Send, ^c
-    ClipWait, 0.1
-    Clipboard = nvy.exe %Clipboard%
-    Send, !d ^v{Enter}
-    WinWaitActive, ahk_exe nvy.exe
-    if ErrorLevel
-    {
-      ; MsgBox, WinWait timed out.
-      return
-    }
-    else
-      WinMove, ahk_exe nvy.exe,, 188, 33, 1600, 1000
-      WinSet, Style, -0xC00000, A ; toggle titlebar
-      ; WinSet, Style,  -0xC40000 , A ; remove frame and titlebar from current window
-  Return
+;   CapsLock & v::
+;     Clipboard =
+;     Send, ^c
+;     ClipWait, 0.1
+;     Clipboard = nvy.exe %Clipboard%
+;     Send, !d ^v{Enter}
+;     WinWait, ahk_exe nvy.exe
+;     if ErrorLevel
+;     {
+;       ; MsgBox, WinWait timed out.
+;       return
+;     }
+;     else
+;       WinActivate, ahk_exe nvy.exe
+;       WinMove, ahk_exe nvy.exe,, 188, 33, 1600, 1000
+;       WinSet, Style, -0xC00000, A ; toggle titlebar
+;       ; WinSet, Style,  -0xC40000 , A ; remove frame and titlebar from current window
+;   Return
 
   F1::
     Clipboard =
@@ -87,6 +88,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #IfWinActive, Nvy
   CapsLock & f::
     Send {Esc}:w{enter}
+  return
+  !q::
+    Send {Esc}:q!
+    sleep 2
+    Send {enter}
   return
 #IfWinActive
 

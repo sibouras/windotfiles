@@ -6,7 +6,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 Alt & j::AltTab
 Alt & k::ShiftAltTab
 
-; RAlt & v::ToggleWindowVisibility("ahk_exe neovide.exe")
+RAlt & v::ToggleWindowVisibility("ahk_exe nvy.exe")
 ; RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
 RAlt & e::ToggleWindowVisibility("ahk_exe Koffee.exe")
 RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
@@ -29,26 +29,14 @@ ToggleWindowVisibility(windowClass) {
   ; }
 }
 
-RAlt & v::
+RAlt & b::
 nvy = ahk_exe nvy.exe
-IfWinExist, %nvy%
+Loop
 {
-  IfWinActive, %nvy%
-    WinMinimize, %nvy%
-  else
-    WinActivate, %nvy%
-}
-else {
-    Run, "C:\tools\nvy\Nvy.exe"
-    WinWaitActive, %nvy%,, 1
-    if ErrorLevel
-    {
-      ; MsgBox, WinWait timed out.
-      return
-    }
-    else
-      WinMove, %nvy%,, 188, 33, 1600, 1000
-      WinSet, Style, -0xC00000, A ; toggle titlebar
+  WinWait, %nvy%
+    WinMove, %nvy%,, 188, 33, 1600, 1000
+    WinSet, Style, -0xC00000, A ; toggle titlebar
+  WinWaitClose
 }
 return
 
@@ -62,13 +50,14 @@ IfWinExist, Neovide
 }
 else {
     Run, neovide.exe
-    WinWaitActive, Neovide,, 2
+    WinWait, Neovide,, 1
     if ErrorLevel
     {
       MsgBox, WinWait timed out.
       return
     }
     else
+      WinActivate,Neovide
       WinMove, Neovide,, 188, 40, 1600, 990
       WinSet, Style, -0xC00000, A ; toggle titlebar
       ; WinSet, Style, -0xC40000, A ; remove frame and titlebar from current window
@@ -92,3 +81,15 @@ else
  WinMinimize, ahk_id %lastWindow%
 }
 return
+
+; run everytime nvy opens
+; nvy = ahk_exe nvy.exe
+; Loop
+; {
+  ; WinWait, %nvy%
+    ; WinActivate %nvy%
+    ; WinMove, %nvy%,, 188, 33, 1600, 1000
+    ; WinSet, Style, -0xC00000, A ; toggle titlebar
+  ; WinWaitClose
+; }
+

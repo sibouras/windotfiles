@@ -177,7 +177,7 @@
     }
   ],
 
-  "editor.lineNumbers": "on",
+  "editor.lineNumbers": "relative",
   "editor.smoothScrolling": true,
   "editor.cursorSurroundingLines": 5,
   // "vim.smartRelativeLine": true,
