@@ -8,7 +8,7 @@ Alt & k::ShiftAltTab
 
 RAlt & v::ToggleWindowVisibility("ahk_exe nvy.exe")
 ; RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
-RAlt & e::ToggleWindowVisibility("ahk_exe Koffee.exe")
+RAlt & e::ToggleWindowVisibility("ahk_exe fman.exe")
 RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & s::ToggleWindowVisibility("ahk_exe brave.exe")
