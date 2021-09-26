@@ -309,6 +309,7 @@ CapsLock & z:: Run nircmd.exe mutesysvolume 2 microphone             ;|
 CapsLock & y:: Send, ^y                                              ;|
 CapsLock & w:: Send, ^{Right}                                        ;|
 CapsLock & b:: Send, ^{Left}                                         ;|
+CapsLock & [:: Send, {insert}
 ;---------------------------------------------------------------------o
 
 

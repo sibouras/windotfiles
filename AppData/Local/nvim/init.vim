@@ -28,6 +28,7 @@ Plug 'romgrk/barbar.nvim'
 Plug 'karb94/neoscroll.nvim'
 Plug 'tamago324/lir.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'jdhao/better-escape.vim'
 
 call plug#end()
 
@@ -61,7 +62,7 @@ set mouse=a                 " Enable your mouse
 set smarttab                " Makes tabbing smarter will realize you have 2 vs 4
 set expandtab               " Converts tabs to spaces
 set updatetime=300          " Faster completion
-set timeoutlen=200          " By default timeoutlen is 1000 ms
+set timeoutlen=300          " By default timeoutlen is 1000 ms
 set cursorline
 set scrolloff=4
 set sidescrolloff=5
@@ -122,8 +123,10 @@ xnoremap > >gv|
 " nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
 
 " I hate escape more than anything else
-inoremap df <Esc>
-inoremap jf <Esc>
+" inoremap df <Esc>
+" inoremadp jf <Esc>
+let g:better_escape_interval = 150
+let g:better_escape_shortcut = 'df'
 
 " ctrl-z to undo
 inoremap <c-z> <c-o>:u<CR>
