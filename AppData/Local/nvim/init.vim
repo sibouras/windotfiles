@@ -19,10 +19,10 @@ Plug 'vimwiki/vimwiki'
 Plug 'dstein64/vim-startuptime'
 Plug 'sheerun/vim-polyglot'
 Plug 'romainl/vim-cool'
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-Plug 'honza/vim-snippets'
-Plug 'mattn/emmet-vim'
+" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+" Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'honza/vim-snippets'
+" Plug 'mattn/emmet-vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'romgrk/barbar.nvim'
 Plug 'karb94/neoscroll.nvim'
@@ -222,6 +222,11 @@ nnoremap J mzJ`z
 nmap <silent> gx yiW:!start brave <C-r>" & <CR><CR>
 vmap <silent> gx y:!start brave <C-r>" & <CR><CR>
 
+" Make tab and shift tab navigate autocomplete menus
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => neovim built in terminal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -352,15 +357,15 @@ let g:vimwiki_list = [{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Clap
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:clap_theme = 'onedark'
-" nnoremap <silent> <Leader>f  :Clap filer<CR>
-nnoremap <silent> <Leader>r  :Clap grep<CR>
-nnoremap <silent> <Leader>/  :Clap blines<CR>
-nnoremap <silent> <Leader>'  :Clap marks<CR>
-nnoremap <silent> <Leader>g  :Clap commits<CR>
-nnoremap <silent> <Leader>hh :Clap history<CR>
-nnoremap <silent> <Leader>h: :Clap hist:<CR>
-nnoremap <silent> <Leader>h/ :Clap hist/<CR>
+" let g:clap_theme = 'onedark'
+" " nnoremap <silent> <Leader>f  :Clap filer<CR>
+" nnoremap <silent> <Leader>r  :Clap grep<CR>
+" nnoremap <silent> <Leader>/  :Clap blines<CR>
+" nnoremap <silent> <Leader>'  :Clap marks<CR>
+" nnoremap <silent> <Leader>g  :Clap commits<CR>
+" nnoremap <silent> <Leader>hh :Clap history<CR>
+" nnoremap <silent> <Leader>h: :Clap hist:<CR>
+" nnoremap <silent> <Leader>h/ :Clap hist/<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -394,22 +399,22 @@ let g:startify_session_persistence = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source $HOME/AppData/Local/nvim/coc.vim
+" source $HOME/AppData/Local/nvim/coc.vim
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => emmet-vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:user_emmet_mode='a'    "enable all function in all mode.
-let g:user_emmet_leader_key=','
-" Enable just for html/css/js
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,javascript EmmetInstall
-let g:user_emmet_settings = {
-\  'javascript' : {
-\      'extends' : 'jsx',
-\  },
-\}
+" let g:user_emmet_mode='a'    "enable all function in all mode.
+" let g:user_emmet_leader_key=','
+" " Enable just for html/css/js
+" let g:user_emmet_install_global = 0
+" autocmd FileType html,css,javascript EmmetInstall
+" let g:user_emmet_settings = {
+" \  'javascript' : {
+" \      'extends' : 'jsx',
+" \  },
+" \}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

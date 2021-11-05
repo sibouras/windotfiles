@@ -337,8 +337,9 @@
     "**/*.code-search": true,
     "**/.git": true
   },
-  "workbench.activityBar.visible": false,
   "quokka.showCodeLensInOutputChannel": false,
   "editor.minimap.enabled": false,
-  "editor.bracketPairColorization.enabled": true
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": false,
+  "workbench.activityBar.visible": false
 }

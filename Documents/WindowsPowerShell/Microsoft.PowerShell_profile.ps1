@@ -356,3 +356,9 @@ Set-PSReadLineKeyHandler -Key Alt+e `
 # Prerequisites: A Powerline font installed and enabled in your terminal.
 # 'starship' suggests installing 'extras/vcredist2019'.
 Invoke-Expression (&starship init powershell)
+
+# Chocolatey profile
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
