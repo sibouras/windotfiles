@@ -98,4 +98,9 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #IfWinNotActive, ahk_exe WindowsTerminal.exe
   !BS::Send ^{BS}
+#IfWinNotActive
+
+#IfWinActive, ahk_exe WindowsTerminal.exe
+  !,::Send, ^+{Tab}
+  !.::Send, ^{Tab}
 #IfWinActive

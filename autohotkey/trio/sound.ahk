@@ -16,5 +16,7 @@ NumpadRight::Send {Media_Next}
 NumpadIns::send {Volume_Mute}
 NumpadDel::Send {Media_Play_Pause}
 
+!F1::Send {Volume_Down}
+!F2::Send {Volume_Up}
 
 ;+NumpadClear::suspend

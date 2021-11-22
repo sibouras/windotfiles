@@ -72,23 +72,33 @@ CapsLock::Send, {ESC}                                                ;|
 ;                      CapsLock + j |  Down                          ;|
 ;                      CapsLock + k |  Up                            ;|
 ;                      CapsLock + l |  Right                         ;|
-;                      Ctrl, Alt Swapped                             ;|
+;-----------------------------------o---------------------------------o
+; this needs to be above CapsLock & j and CapsLock & k               ;|
+!j::                                                                 ;|
+if (not GetKeyState("Control") and not getKeyState("Shift"))         ;|
+  Send, {ALTDOWN}{TAB}ALTUP}                                         ;|
+return                                                               ;|
+                                                                     ;|
+!k::                                                                 ;|
+if (not GetKeyState("Control") and not getKeyState("Shift"))         ;|
+  Send, {ALTDOWN}{SHIFTDOWN}{TAB}{SHIFTUP}ALTUP}                     ;|
+return                                                               ;|
 ;-----------------------------------o---------------------------------o
 CapsLock & k::                                                       ;|
 if GetKeyState("Shift", "D")                                         ;|
     if GetKeyState("Alt", "D")                                       ;|
-        Send +^{Up}                                                  ;|
-    else if GetKeyState("Ctrl", "D")                                 ;|
         Send +!{Up}                                                  ;|
+    else if GetKeyState("Ctrl", "D")                                 ;|
+        Send +^{Up}                                                  ;|
     else                                                             ;|
         Send +{Up}                                                   ;|
 else if GetKeyState("Ctrl", "D")                                     ;|
     if (GetKeyState("Alt", "D"))                                     ;|
         Send !^{Up}                                                  ;|
     else                                                             ;|
-        Send !{Up}                                                   ;|
+        Send ^{Up}                                                   ;|
 else if GetKeyState("Alt", "D")                                      ;|
-    Send ^{Up}                                                       ;|
+    Send !{Up}                                                       ;|
 else                                                                 ;|
     Send {Up}                                                        ;|
 return                                                               ;|
@@ -96,18 +106,18 @@ return                                                               ;|
 CapsLock & j::                                                       ;|
 if GetKeyState("Shift", "D")                                         ;|
     if GetKeyState("Alt", "D")                                       ;|
-        Send +^{Down}                                                ;|
-    else if GetKeyState("Ctrl", "D")                                 ;|
         Send +!{Down}                                                ;|
+    else if GetKeyState("Ctrl", "D")                                 ;|
+        Send +^{Down}                                                ;|
     else                                                             ;|
         Send +{Down}                                                 ;|
 else if GetKeyState("Ctrl", "D")                                     ;|
     if (GetKeyState("Alt", "D"))                                     ;|
         Send !^{Down}                                                ;|
     else                                                             ;|
-        Send !{Down}                                                 ;|
+        Send ^{Down}                                                 ;|
 else if GetKeyState("Alt", "D")                                      ;|
-    Send ^{Down}                                                     ;|
+    Send !{Down}                                                     ;|
 else                                                                 ;|
     Send {Down}                                                      ;|
 return                                                               ;|
@@ -115,18 +125,18 @@ return                                                               ;|
 CapsLock & h::                                                       ;|
 if GetKeyState("Shift", "D")                                         ;|
     if GetKeyState("Alt", "D")                                       ;|
-        Send +^{Left}                                                ;|
-    else if GetKeyState("Ctrl", "D")                                 ;|
         Send +!{Left}                                                ;|
+    else if GetKeyState("Ctrl", "D")                                 ;|
+        Send +^{Left}                                                ;|
     else                                                             ;|
         Send +{Left}                                                 ;|
 else if GetKeyState("Ctrl", "D")                                     ;|
     if (GetKeyState("Alt", "D"))                                     ;|
         Send !^{Left}                                                ;|
     else                                                             ;|
-        Send !{Left}                                                 ;|
+        Send ^{Left}                                                 ;|
 else if GetKeyState("Alt", "D")                                      ;|
-    Send ^{Left}                                                     ;|
+    Send !{Left}                                                     ;|
 else                                                                 ;|
     Send {Left}                                                      ;|
 return                                                               ;|
@@ -134,18 +144,18 @@ return                                                               ;|
 CapsLock & l::                                                       ;|
 if GetKeyState("Shift", "D")                                         ;|
     if GetKeyState("Alt", "D")                                       ;|
-        Send +^{Right}                                               ;|
-    else if GetKeyState("Ctrl", "D")                                 ;|
         Send +!{Right}                                               ;|
+    else if GetKeyState("Ctrl", "D")                                 ;|
+        Send +^{Right}                                               ;|
     else                                                             ;|
         Send +{Right}                                                ;|
 else if GetKeyState("Ctrl", "D")                                     ;|
     if (GetKeyState("Alt", "D"))                                     ;|
         Send !^{Right}                                               ;|
     else                                                             ;|
-        Send !{Right}                                                ;|
+        Send ^{Right}                                                ;|
 else if GetKeyState("Alt", "D")                                      ;|
-    Send ^{Right}                                                    ;|
+    Send !{Right}                                                    ;|
 else                                                                 ;|
     Send {Right}                                                     ;|
 return                                                               ;|
@@ -157,23 +167,22 @@ return                                                               ;|
 ;-----------------------------------o---------------------------------o
 ;                      CapsLock + i |  Home                          ;|
 ;                      CapsLock + o |  End                           ;|
-;                      Ctrl, Alt Swapped
 ;-----------------------------------o---------------------------------o
 CapsLock & i::                                                       ;|
 if GetKeyState("Shift", "D")                                         ;|
     if GetKeyState("Alt", "D")                                       ;|
-        Send +^{Home}                                                ;|
-    else if GetKeyState("Ctrl", "D")                                 ;|
         Send +!{Home}                                                ;|
+    else if GetKeyState("Ctrl", "D")                                 ;|
+        Send +^{Home}                                                ;|
     else                                                             ;|
         Send +{Home}                                                 ;|
 else if GetKeyState("Ctrl", "D")                                     ;|
     if (GetKeyState("Alt", "D"))                                     ;|
         Send !^{Home}                                                ;|
     else                                                             ;|
-        Send !{Home}                                                 ;|
+        Send ^{Home}                                                 ;|
 else if GetKeyState("Alt", "D")                                      ;|
-    Send ^{Home}                                                     ;|
+    Send !{Home}                                                     ;|
 else                                                                 ;|
     Send {Home}                                                      ;|
 return                                                               ;|
@@ -181,18 +190,18 @@ return                                                               ;|
 CapsLock & o::                                                       ;|
 if GetKeyState("Shift", "D")                                         ;|
     if GetKeyState("Alt", "D")                                       ;|
-        Send +^{End}                                                 ;|
-    else if GetKeyState("Ctrl", "D")                                 ;|
         Send +!{End}                                                 ;|
+    else if GetKeyState("Ctrl", "D")                                 ;|
+        Send +^{End}                                                 ;|
     else                                                             ;|
         Send +{End}                                                  ;|
 else if GetKeyState("Ctrl", "D")                                     ;|
     if (GetKeyState("Alt", "D"))                                     ;|
         Send !^{End}                                                 ;|
     else                                                             ;|
-        Send !{End}                                                  ;|
+        Send ^{End}                                                  ;|
 else if GetKeyState("Alt", "D")                                      ;|
-    Send ^{End}                                                      ;|
+    Send !{End}                                                      ;|
 else                                                                 ;|
     Send {End}                                                       ;|
 return                                                               ;|
@@ -240,28 +249,6 @@ else {                                                               ;|
         Send, +^{PgDn}                                               ;|
     return                                                           ;|
 }                                                                    ;|
-return                                                               ;|
-;---------------------------------------------------------------------o
-
-
-;=====================================================================o
-;                     CapsLock Mouse Controller                      ;|
-;-----------------------------------o---------------------------------o
-;                   CapsLock + Up   |  Mouse Up                      ;|
-;                   CapsLock + Down |  Mouse Down                    ;|
-;                   CapsLock + Left |  Mouse Left                    ;|
-;                  CapsLock + Right |  Mouse Right                   ;|
-;    CapsLock + Enter(Push Release) |  Mouse Left Push(Release)      ;|
-;-----------------------------------o---------------------------------o
-; CapsLock & Up::    MouseMove, 0, -10, 0, R                         ;|
-; CapsLock & Down::  MouseMove, 0, 10, 0, R                          ;|
-; CapsLock & Left::  MouseMove, -10, 0, 0, R                         ;|
-; CapsLock & Right:: MouseMove, 10, 0, 0, R                          ;|
-;-----------------------------------o                                ;|
-CapsLock & Enter::                                                   ;|
-SendEvent {Blind}{LButton down}                                      ;|
-KeyWait Enter                                                        ;|
-SendEvent {Blind}{LButton up}                                        ;|
 return                                                               ;|
 ;---------------------------------------------------------------------o
 

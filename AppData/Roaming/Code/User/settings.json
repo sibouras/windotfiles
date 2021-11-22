@@ -341,5 +341,6 @@
   "editor.minimap.enabled": false,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": false,
-  "workbench.activityBar.visible": false
+  "workbench.activityBar.visible": false,
+  "quokka.showStartViewOnFeatureRelease": true
 }
