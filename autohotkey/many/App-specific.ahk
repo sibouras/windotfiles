@@ -5,7 +5,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #Space::^!+1
 
-#IfWinActive, ahk_exe brave.exe
+; #IfWinActive, ahk_exe brave.exe
+#If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe")
 	; Mouse shortcuts for changing tabs
 	^XButton1::Send, ^+{Tab}
 	^XButton2::Send, ^{Tab}
@@ -30,24 +31,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #IfWinActive, ahk_class CabinetWClass
 	+Backspace::Send !{Up}
 
-;   CapsLock & v::
-;     Clipboard =
-;     Send, ^c
-;     ClipWait, 0.1
-;     Clipboard = nvy.exe %Clipboard%
-;     Send, !d ^v{Enter}
-;     WinWait, ahk_exe nvy.exe
-;     if ErrorLevel
-;     {
-;       ; MsgBox, WinWait timed out.
-;       return
-;     }
-;     else
-;       WinActivate, ahk_exe nvy.exe
-;       WinMove, ahk_exe nvy.exe,, 188, 33, 1600, 1000
-;       WinSet, Style, -0xC00000, A ; toggle titlebar
-;       ; WinSet, Style,  -0xC40000 , A ; remove frame and titlebar from current window
-;   Return
+  !,::Send, ^+{Tab}
+  !.::Send, ^{Tab}
 
   F1::
     Clipboard =

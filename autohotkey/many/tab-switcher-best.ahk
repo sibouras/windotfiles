@@ -8,7 +8,6 @@ RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
 ; RAlt & e::ToggleWindowVisibility("ahk_exe fman.exe")
 RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
-RAlt & s::ToggleWindowVisibility("ahk_exe brave.exe")
 RAlt & r::ToggleWindowVisibility("Alacritty")
 RAlt & w::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
 RAlt & x::ToggleWindowVisibility("ahk_exe joplin.exe")
@@ -26,6 +25,21 @@ ToggleWindowVisibility(windowClass) {
   ;   MsgBox % word_array[2] " is not open!"
   ; }
 }
+
+RAlt & s::
+brave = ahk_exe brave.exe
+edge = ahk_exe msedge.exe
+if WinExist(brave)
+  IfWinActive, %brave%
+    WinMinimize, %brave%
+  else
+    WinActivate, %brave%
+else if WinExist(edge)
+  IfWinActive, %edge%
+    WinMinimize, %edge%
+  else
+    WinActivate, %edge%
+return
 
 RAlt & b::
 nvy = ahk_exe nvy.exe
