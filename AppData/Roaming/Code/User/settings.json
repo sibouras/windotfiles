@@ -179,7 +179,10 @@
 
   "editor.lineNumbers": "relative",
   "editor.smoothScrolling": true,
-  "editor.cursorSurroundingLines": 5,
+  "editor.cursorSurroundingLines": 10,
+  "editor.mouseWheelScrollSensitivity": 2,
+  "editor.fastScrollSensitivity": 2,
+  "editor.multiCursorModifier": "ctrlCmd",
   // "vim.smartRelativeLine": true,
   // "vim.easymotion": true,
   "vim.easymotionMarkerForegroundColorOneChar": "yellow",
@@ -216,10 +219,27 @@
   "liveServer.settings.donotShowInfoMsg": true,
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.defaultFormatter": "vscode.html-language-features"
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[sql]": {
+    "editor.defaultFormatter": "mtxr.sqltools"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "prettier.singleQuote": true,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
@@ -241,7 +261,7 @@
   "editor.renderWhitespace": "none",
   // "typescript.suggest.completeFunctionCalls": true,
   // "javascript.suggest.completeFunctionCalls": true,
-  "editor.cursorBlinking": "solid",
+  "editor.cursorBlinking": "phase",
   "workbench.colorCustomizations": {
     "[Material Dark Theme]": {
       "editorCursor.foreground": "#1F8AD2",
@@ -276,18 +296,11 @@
   "joplin.token": "39bab0a9ea83c3e4d8c2f775cdd3501ab0efe7307b3f7dff4a5db87713824969c325889493c35a41ff2fbb2ac5d68ffc201284467bd445d7288dd1eec407ff50",
   "turboConsoleLog.includeFileNameAndLineNum": false,
   "turboConsoleLog.addSemicolonInTheEnd": true,
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "prettier.singleQuote": true,
   "turboConsoleLog.quote": "'",
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
   },
   "tabnine.experimentalAutoImports": true,
-  "[sql]": {
-    "editor.defaultFormatter": "mtxr.sqltools"
-  },
   "gitlens.hovers.currentLine.over": "line",
   "terminal.integrated.tabs.enabled": false,
   "terminal.integrated.profiles.windows": {
@@ -311,16 +324,10 @@
     }
   },
   "terminal.integrated.defaultProfile.windows": "Git Bash",
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "markdown-preview-enhanced.previewTheme": "github-light.css",
   "markdown-pdf.styles": [
     "C:\\Users\\marzouk\\Desktop\\ala\\vscode-markdown-style\\extension\\markdown-pdf.css"
   ],
-  "[markdown]": {
-    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
-  },
   "markdown-preview-enhanced.revealjsTheme": "beige.css",
   "markdown-preview-enhanced.liveUpdate": true,
   "editor.cursorStyle": "line",
