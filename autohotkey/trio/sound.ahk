@@ -1,10 +1,7 @@
-﻿;+up::Send {Volume_Up}
-;+down::Send {Volume_Down}
-;+left::Send {Media_Prev}
-;+right::Send {Media_Next}
-
-;Numpad0::Send {Media_Play_Pause}
-;Numpad1::send {Volume_Mute}
+﻿#NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
+; #Warn  ; Enable warnings to assist with detecting common errors.
+SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 
 NumpadUp::Send {Volume_Up}
 NumpadClear::Send {Volume_Up}
@@ -18,4 +15,4 @@ NumpadDel::Send {Media_Play_Pause}
 !F1::Send {Volume_Down}
 !F2::Send {Volume_Up}
 
-;+NumpadClear::suspend
++NumpadClear::suspend

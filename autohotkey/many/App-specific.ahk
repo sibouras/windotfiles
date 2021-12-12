@@ -1,31 +1,22 @@
-﻿#NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
-
-#Space::^!+1
-
-; #IfWinActive, ahk_exe brave.exe
-#If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe")
+﻿#If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe")
+{
   ; Mouse shortcuts for changing tabs
-^XButton1::Send, ^+{Tab}
-^XButton2::Send, ^{Tab}
+  ^XButton1::Send, ^+{Tab}
+  ^XButton2::Send, ^{Tab}
 
-!,::Send, ^+{Tab}
-!.::Send, ^{Tab}
+  !,::Send, ^+{Tab}
+  !.::Send, ^{Tab}
 
-; KB shortcuts for specific tabs
-!1::Send, ^1
-!2::Send, ^2
-!3::Send, ^3
-!4::Send, ^4
-!5::Send, ^5
+  ; KB shortcuts for specific tabs
+  !1::Send, ^1
+  !2::Send, ^2
+  !3::Send, ^3
+  !4::Send, ^4
+  !5::Send, ^5
 
-; tab picker
-!e::Send, ^+a
-
-; last used tab
-; !w::Send, ^6
+  ; tab picker
+  !e::Send, ^+a
+}
 #IfWinActive
 
 #IfWinActive, ahk_class CabinetWClass

@@ -29,6 +29,7 @@ Plug 'karb94/neoscroll.nvim'
 Plug 'tamago324/lir.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'jdhao/better-escape.vim'
+Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
 
 call plug#end()
 
@@ -93,16 +94,10 @@ let mapleader = " "
 inoremap <S-Return> <C-o>o
 
 " Use alt + hjkl to resize windows
-" nnoremap <M-j>    :resize -2<CR>
-" nnoremap <M-k>    :resize +2<CR>
-" nnoremap <M-h>    :vertical resize -2<CR>
-" nnoremap <M-l>    :vertical resize +2<CR>
-
-" arrow keys resize windows
-nnoremap <Right> :vertical resize -2<CR>
-nnoremap <Left> :vertical resize +2<CR>
-nnoremap <Up> :resize -2<CR>
-nnoremap <Down> :resize +2<CR>
+nnoremap <M-S-j>    :resize -2<CR>
+nnoremap <M-S-k>    :resize +2<CR>
+nnoremap <M-S-h>    :vertical resize -2<CR>
+nnoremap <M-S-l>    :vertical resize +2<CR>
 
 " Alternate way to save
 nnoremap <C-s> :w<CR>

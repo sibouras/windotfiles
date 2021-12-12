@@ -20,19 +20,6 @@ return
 :*:ahk;::AutoHotkey
 :*:js;::javascript
 
-/*
-::currdate::
-	FormatTime, today, A_Now, M/d/yyyy
-	Sleep, 100 ; Needed for VS Code
-	SendInput, %today%
-	Return
-::currtime::
-	FormatTime, now, A_Now, h:mmtt
-	Sleep, 100 ; Needed for VS Code
-	Send % now
-	Return
-*/
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;; File Paths ;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

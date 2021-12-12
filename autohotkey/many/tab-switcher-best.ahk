@@ -1,9 +1,4 @@
-﻿#NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
-
-RAlt & v::ToggleWindowVisibility("ahk_exe nvy.exe")
+﻿RAlt & v::ToggleWindowVisibility("ahk_exe nvy.exe")
 RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
 ; RAlt & e::ToggleWindowVisibility("ahk_exe fman.exe")
 RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
@@ -29,22 +24,23 @@ ToggleWindowVisibility(windowClass) {
 RAlt & s::
   brave = ahk_exe brave.exe
   edge = ahk_exe msedge.exe
-  if WinExist(brave)
+  if WinExist(brave) {
     IfWinActive, %brave%
-    WinMinimize, %brave%
-  else
-    WinActivate, %brave%
-  else if WinExist(edge)
+      WinMinimize, %brave%
+    else
+      WinActivate, %brave%
+  }
+  else if WinExist(edge) {
     IfWinActive, %edge%
-    WinMinimize, %edge%
-  else
-    WinActivate, %edge%
+      WinMinimize, %edge%
+    else
+      WinActivate, %edge%
+  }
 return
 
 RAlt & b::
   nvy = ahk_exe nvy.exe
-  Loop
-  {
+  Loop {
     WinWait, %nvy%
     WinMove, %nvy%,, 188, 33, 1600, 1000
     WinSet, Style, -0xC00000, A ; toggle titlebar
@@ -93,15 +89,3 @@ RAlt & c::
     WinMinimize, ahk_id %lastWindow%
   }
 return
-
-; run everytime nvy opens
-; nvy = ahk_exe nvy.exe
-; Loop
-; {
-; WinWait, %nvy%
-; WinActivate %nvy%
-; WinMove, %nvy%,, 188, 33, 1600, 1000
-; WinSet, Style, -0xC00000, A ; toggle titlebar
-; WinWaitClose
-; }
-

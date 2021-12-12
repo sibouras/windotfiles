@@ -182,7 +182,7 @@
   "editor.cursorSurroundingLines": 10,
   "editor.mouseWheelScrollSensitivity": 2,
   "editor.fastScrollSensitivity": 2,
-  "editor.multiCursorModifier": "ctrlCmd",
+  // "editor.multiCursorModifier": "ctrlCmd",
   // "vim.smartRelativeLine": true,
   // "vim.easymotion": true,
   "vim.easymotionMarkerForegroundColorOneChar": "yellow",
