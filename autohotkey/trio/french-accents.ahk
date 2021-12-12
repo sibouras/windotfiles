@@ -1,7 +1,7 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿#NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 
 /*
 Easy accents on a qwerty keyboard including french ç as well as spanish ñ and ¿ 1nd ¡
@@ -35,7 +35,7 @@ This is just a personal lazy solution, the real ` key could be used as well.
 :C*?:a^::{U+00E2} ; a followed by ^ => â
 :C*?:a"::{U+00E4} ; a followed by " => ä
 
-;; e ::
+  ;; e ::
 :C*?:E\::{U+00C8} ; E followed by \ => È
 :C*?:E'::{U+00C9} ; E followed by ' => É
 :C*?:E^::{U+00CA} ; E followed by ^ => Ê
@@ -45,7 +45,7 @@ This is just a personal lazy solution, the real ` key could be used as well.
 :C*?:e^::{U+00EA} ; e followed by ^ => ê
 :C*?:e"::{U+00EB} ; é followed by " => ë
 
-;; i ;;
+  ;; i ;;
 :C*?:I\::{U+00CC} ; I followed by \ => Ì
 :C*?:I'::{U+00CD} ; I followed by ' => Í
 :C*?:I^::{U+00CE} ; I followed by ^ => Î
@@ -55,7 +55,7 @@ This is just a personal lazy solution, the real ` key could be used as well.
 :C*?:i^::{U+00EE} ; i followed by ^ => î
 :C*?:i"::{U+00EF} ; i followed by " => ï
 
-;; o ;;
+  ;; o ;;
 :C*?:O\::{U+00D2} ; O followed by \ => Ò
 :C*?:O'::{U+00D3} ; O followed by ' => Ó
 :C*?:O^::{U+00D4} ; O followed by ^ => Ô
@@ -65,40 +65,39 @@ This is just a personal lazy solution, the real ` key could be used as well.
 :C*?:o^::{U+00F4} ; o followed by ^ => ô
 :C*?:o"::{U+00F6} ; o followed by " => ö
 
-;; u ;;
+  ;; u ;;
 :C*?:U\::{U+00D9} ; U followed by \ => Ù
 :C*?:U'::{U+00DA} ; U followed by ' => Ú
 :C*?:U^::{U+00DB} ; U followed by ^ => Û
 :C*?:U"::{U+00DC} ; U followed by " => Ü
 :C*?:u\::{U+00F9} ; u followed by \ => ù
-; :C*?:u'::{U+00FA} ; u followed by ' => ú
+  ; :C*?:u'::{U+00FA} ; u followed by ' => ú
 :C*?:u^::{U+00FB} ; u followed by ^ => û
 :C*?:u"::{U+00FC} ; u followed by " => ü
 
-;; c ;;
+  ;; c ;;
 :C*?:C,::{U+00C7} ; C followed by ' => Ç
 :C*?:c,::{U+00E7} ; c followed by ' => ç
 
-;; n ;;
-; :C*?:N'::{U+00D1} ; N followed by ' => N
-; :C*?:n'::{U+00F1} ; n followed by ' => ñ
-; :C*?:N|::{U+00D1} ; N followed by | => N
-; :C*?:n|::{U+00F1} ; n followed by | => ñ
+  ;; n ;;
+  ; :C*?:N'::{U+00D1} ; N followed by ' => N
+  ; :C*?:n'::{U+00F1} ; n followed by ' => ñ
+  ; :C*?:N|::{U+00D1} ; N followed by | => N
+  ; :C*?:n|::{U+00F1} ; n followed by | => ñ
 
-;; ! ;;
+  ;; ! ;;
 :*?:!'::{U+00A1} ; ! followed by ' => ¡
 
-;; ? ;;
+  ;; ? ;;
 :*?:?'::{U+00BF} ; ? followed by ' => ¿
 
-;; {space} followed by single quote removes the space and issues a ' (allows a quote after e, o...);;
-:*?: '::' ; '
+  ;; {space} followed by single quote removes the space and issues a ' (allows a quote after e, o...);;
+  :*?: '::' ; '
 
-;; {space} followed by double quote removes the space and issues a " (allows a " after e, o...);;
-:*?: "::" ; "
+  ;; {space} followed by double quote removes the space and issues a " (allows a " after e, o...);;
+  :*?: "::" ; "
 
-;; Thanks for comments and or corrections to Guido Van Hoecke <guivho@gmail.com>
+  ;; Thanks for comments and or corrections to Guido Van Hoecke <guivho@gmail.com>
 
-
-#f::suspend
+  #f::suspend
 #k::ExitApp

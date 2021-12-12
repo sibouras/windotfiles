@@ -6,7 +6,6 @@
 ;Numpad0::Send {Media_Play_Pause}
 ;Numpad1::send {Volume_Mute}
 
-
 NumpadUp::Send {Volume_Up}
 NumpadClear::Send {Volume_Up}
 NumpadDown::Send {Volume_Down}

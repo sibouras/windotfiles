@@ -212,7 +212,7 @@
   "terminal.integrated.fontSize": 18,
   "debug.console.fontSize": 18,
   "markdown.preview.fontSize": 18,
-  "editor.wordWrap": "on",
+  "editor.wordWrap": "off",
   "workbench.iconTheme": "vscode-icons",
   "code-runner.saveFileBeforeRun": true,
   "code-runner.saveAllFilesBeforeRun": true,
@@ -261,7 +261,7 @@
   "editor.renderWhitespace": "none",
   // "typescript.suggest.completeFunctionCalls": true,
   // "javascript.suggest.completeFunctionCalls": true,
-  "editor.cursorBlinking": "phase",
+  "editor.cursorBlinking": "solid",
   "workbench.colorCustomizations": {
     "[Material Dark Theme]": {
       "editorCursor.foreground": "#1F8AD2",
@@ -349,5 +349,6 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": false,
   "workbench.activityBar.visible": false,
-  "quokka.showStartViewOnFeatureRelease": true
+  "quokka.showStartViewOnFeatureRelease": true,
+  "javascript.preferences.jsxAttributeCompletionStyle": "auto"
 }

@@ -1,7 +1,7 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿#NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 
 RAlt & v::ToggleWindowVisibility("ahk_exe nvy.exe")
 RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
@@ -13,13 +13,13 @@ RAlt & w::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
 RAlt & x::ToggleWindowVisibility("ahk_exe joplin.exe")
 
 ToggleWindowVisibility(windowClass) {
-	IfWinExist, %windowClass%
-	{
-		IfWinActive, %windowClass%
+  IfWinExist, %windowClass%
+  {
+    IfWinActive, %windowClass%
       WinMinimize, %windowClass%
-		else
+    else
       WinActivate, %windowClass%
-	}
+  }
   ; else {
   ;   word_array := StrSplit(windowClass, A_Space, "") ; Omits periods.
   ;   MsgBox % word_array[2] " is not open!"
@@ -27,40 +27,40 @@ ToggleWindowVisibility(windowClass) {
 }
 
 RAlt & s::
-brave = ahk_exe brave.exe
-edge = ahk_exe msedge.exe
-if WinExist(brave)
-  IfWinActive, %brave%
+  brave = ahk_exe brave.exe
+  edge = ahk_exe msedge.exe
+  if WinExist(brave)
+    IfWinActive, %brave%
     WinMinimize, %brave%
   else
     WinActivate, %brave%
-else if WinExist(edge)
-  IfWinActive, %edge%
+  else if WinExist(edge)
+    IfWinActive, %edge%
     WinMinimize, %edge%
   else
     WinActivate, %edge%
 return
 
 RAlt & b::
-nvy = ahk_exe nvy.exe
-Loop
-{
-  WinWait, %nvy%
+  nvy = ahk_exe nvy.exe
+  Loop
+  {
+    WinWait, %nvy%
     WinMove, %nvy%,, 188, 33, 1600, 1000
     WinSet, Style, -0xC00000, A ; toggle titlebar
-  WinWaitClose
-}
+    WinWaitClose
+  }
 return
 
 RAlt & t::
-IfWinExist, Neovide
-{
-  IfWinActive, Neovide
-    WinMinimize, Neovide
-  else
-    WinActivate, Neovide
-}
-else {
+  IfWinExist, Neovide
+  {
+    IfWinActive, Neovide
+      WinMinimize, Neovide
+    else
+      WinActivate, Neovide
+  }
+  else {
     Run, neovide.exe
     WinWait, Neovide,, 1
     if ErrorLevel
@@ -70,38 +70,38 @@ else {
     }
     else
       WinActivate,Neovide
-      WinMove, Neovide,, 188, 40, 1600, 990
-      WinSet, Style, -0xC00000, A ; toggle titlebar
-      ; WinSet, Style, -0xC40000, A ; remove frame and titlebar from current window
-}
+    WinMove, Neovide,, 188, 40, 1600, 990
+    WinSet, Style, -0xC00000, A ; toggle titlebar
+    ; WinSet, Style, -0xC40000, A ; remove frame and titlebar from current window
+  }
 return
 
 ; minimize active window and restore it
 RAlt & c::
-IfWinExist, ahk_id %lastWindow%
-{
- WinGet, WinState, MinMax, ahk_id %lastWindow%
- If WinState = -1
-   WinActivate
- else
-   WinMinimize
- lastWindow:=  ; remove this line if you want minimize/toggle only one window
-}
-else
-{
- lastWindow:= WinExist("A")
- WinMinimize, ahk_id %lastWindow%
-}
+  IfWinExist, ahk_id %lastWindow%
+  {
+    WinGet, WinState, MinMax, ahk_id %lastWindow%
+    If WinState = -1
+      WinActivate
+    else
+      WinMinimize
+    lastWindow:= ; remove this line if you want minimize/toggle only one window
+  }
+  else
+  {
+    lastWindow:= WinExist("A")
+    WinMinimize, ahk_id %lastWindow%
+  }
 return
 
 ; run everytime nvy opens
 ; nvy = ahk_exe nvy.exe
 ; Loop
 ; {
-  ; WinWait, %nvy%
-    ; WinActivate %nvy%
-    ; WinMove, %nvy%,, 188, 33, 1600, 1000
-    ; WinSet, Style, -0xC00000, A ; toggle titlebar
-  ; WinWaitClose
+; WinWait, %nvy%
+; WinActivate %nvy%
+; WinMove, %nvy%,, 188, 33, 1600, 1000
+; WinSet, Style, -0xC00000, A ; toggle titlebar
+; WinWaitClose
 ; }
 
