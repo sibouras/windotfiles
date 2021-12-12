@@ -54,7 +54,6 @@ return
 ;----------------------------------o----------------------------------o
 CapsLock::Send, {ESC}
 +CapsLock::Send, +{ESC}
-^CapsLock::Send, ^{ESC}
 ;---------------------------------------------------------------------o
 
 ;=====================================================================o
@@ -65,16 +64,30 @@ CapsLock::Send, {ESC}
 ;                      CapsLock + k |  Up                            ;|
 ;                      CapsLock + l |  Right                         ;|
 ;-----------------------------------o---------------------------------o
-; this needs to be above CapsLock & j and CapsLock & k               ;|
-!j::
-  if (not GetKeyState("Control") and not getKeyState("Shift"))
-    Send, {ALTDOWN}{TAB}ALTUP}
-return
+; this needs to be above CapsLock & j and CapsLock & k
+; !j::
+;   if (not GetKeyState("Control") and not getKeyState("Shift"))
+;     Send, {ALTDOWN}{TAB}ALTUP}
+; return
 
-!k::
-  if (not GetKeyState("Control") and not getKeyState("Shift"))
-    Send, {ALTDOWN}{SHIFTDOWN}{TAB}{SHIFTUP}ALTUP}
-return
+; !k::
+;   if (not GetKeyState("Control") and not getKeyState("Shift"))
+;     Send, {ALTDOWN}{SHIFTDOWN}{TAB}{SHIFTUP}ALTUP}
+; return
+
+; switch to previous window
+!j::
+  winNumber = 0
+  WinGet, win, List
+  Loop, %win% {
+    WinGetTitle, ttitle, % winTitle := "ahk_id " win%A_Index% ; Window title
+    WinGet, proc, ProcessName, %winTitle% ; Window process
+    WinGetClass, class, %winTitle% ; Window class
+    winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > ""
+    && (ttitle != "Program Manager" || proc != "Explorer.exe")
+  } Until (winNumber = 2)
+  WinActivate, %winTitle%
+Return
 
 CapsLock & k::
   if GetKeyState("Shift", "D")
