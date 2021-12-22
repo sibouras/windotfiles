@@ -38,13 +38,8 @@ set encoding=utf-8
 set fileencoding=utf-8      " The encoding written to file
 syntax on
 colorscheme onedark
-if !has('gui_running')
-  set t_Co=256
-endif
 
-" set guifont=JetBrains\ Mono\ for\ Powerline:h16
 set guifont=JetbrainsMono\ Nerd\ Font:h16
-" set guifont=DejaVuSansMono\ nerd\ Font\ Mono:h16
 
 " set nonumber norelativenumber
 " set lines=140
@@ -220,6 +215,9 @@ vmap <silent> gx y:!start brave <C-r>" & <CR><CR>
 " Make tab and shift tab navigate autocomplete menus
 inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+" Paste from beeftext
+inoremap <S-Insert> <C-r>+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -572,4 +570,15 @@ vim.cmd [[augroup lir-settings]]
 vim.cmd [[  autocmd!]]
 vim.cmd [[  autocmd Filetype lir :lua LirSettings()]]
 vim.cmd [[augroup END]]
+EOF
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => lightspeed.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua << EOF
+require'lightspeed'.setup {
+  ignore_case = true,
+  grey_out_search_area = false,
+}
 EOF

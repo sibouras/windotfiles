@@ -48,30 +48,6 @@ RAlt & b::
   }
 return
 
-RAlt & t::
-  IfWinExist, Neovide
-  {
-    IfWinActive, Neovide
-      WinMinimize, Neovide
-    else
-      WinActivate, Neovide
-  }
-  else {
-    Run, neovide.exe
-    WinWait, Neovide,, 1
-    if ErrorLevel
-    {
-      MsgBox, WinWait timed out.
-      return
-    }
-    else
-      WinActivate,Neovide
-    WinMove, Neovide,, 188, 40, 1600, 990
-    WinSet, Style, -0xC00000, A ; toggle titlebar
-    ; WinSet, Style, -0xC40000, A ; remove frame and titlebar from current window
-  }
-return
-
 ; minimize active window and restore it
 RAlt & c::
   IfWinExist, ahk_id %lastWindow%
@@ -87,5 +63,48 @@ RAlt & c::
   {
     lastWindow:= WinExist("A")
     WinMinimize, ahk_id %lastWindow%
+  }
+return
+
+; switch to previous window
+!j::
+  winNumber = 0
+  WinGet, win, List
+  Loop, %win% {
+    WinGetTitle, ttitle, % winTitle := "ahk_id " win%A_Index% ; Window title
+    WinGet, proc, ProcessName, %winTitle% ; Window process
+    WinGetClass, class, %winTitle% ; Window class
+    winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > ""
+    && (ttitle != "Program Manager" || proc != "Explorer.exe")
+  } Until (winNumber = 2)
+  WinActivate, %winTitle%
+Return
+
+; switch between all windows of the current window class
+listIndex = 1
+#WinActivateForce
+!k::
+Beginning:
+  WinGetClass, activeWindowClass, A
+  WinGet, activeWindowID, ID, A
+  ; get window list
+  WinGet, List, List, ahk_class %activeWindowClass%,, Program Manager
+  listIndex++
+  if (listIndex > List)
+    listIndex = %List%
+
+  Id := List%listIndex%
+  if (activeWindowID != Id) {
+    WinGetTitle, title, ahk_id %Id%
+    if (title) {
+      ; exclude windows without a size
+      WinGetPos,,,W,H,ahk_id %Id%
+      if (W AND H) {
+        WinActivate, ahk_id %Id%
+        return
+      }
+    }
+    WinActivate, ahk_id %Id%
+    Goto, Beginning
   }
 return

@@ -5,19 +5,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 :R*?:date;::
-FormatTime, CurrentDateTime,, MM-dd-yy
+FormatTime, CurrentDateTime,, yyyy-MM-dd
 SendInput %CurrentDateTime%
 return
 :R*?:time;::
 FormatTime, CurrentDateTime,, HH:mm
 SendInput %CurrentDateTime%
 return
-:R*?:dtime;::
-FormatTime, CurrentDateTime,, dd-MM-yy HH:mm
+:R*?:dt;::
+FormatTime, CurrentDateTime,, yyyy-MM-dd HH:mm
 SendInput %CurrentDateTime%
 return
 
-:*:ahk;::AutoHotkey
+:*:ak;::autohotkey
 :*:js;::javascript
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

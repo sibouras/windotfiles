@@ -433,12 +433,12 @@
   },
   {
     "key": "shift+alt+w",
-    "command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
-    "when": "inEditorsPicker && inQuickOpen"
+    "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup"
   },
   {
     "key": "shift+alt+w",
-    "command": "workbench.action.quickOpenLeastRecentlyUsedEditorInGroup"
+    "command": "workbench.action.quickOpenNavigatePreviousInEditorPicker",
+    "when": "inEditorsPicker && inQuickOpen"
   },
   {
     "key": "alt+v",

@@ -39,10 +39,7 @@
 
 #IfWinActive, ahk_exe Code.exe
   CapsLock & f::Send, {Esc}^s
-  CapsLock & r::Send, ^{PgDn}
-  CapsLock & e::Send, ^{Pgup}
-
-  XButton2::Alt
+  !w::Send, ^{Tab}
 #IfWinActive
 
 #IfWinActive, ahk_exe azuredatastudio.exe
@@ -82,3 +79,13 @@
   !,::Send, ^+{Tab}
   !.::Send, ^{Tab}
 #IfWinActive
+
+; CapsLock & Space::^!+1 ; launch switcheroo
+#IfWinNotActive, ahk_exe keypirinha-x64.exe
+  CapsLock & Space::
+    Send, !{Space}
+    sleep 30
+    Send, ..
+    Send, {tab}
+  return
+#IfWinNotActive
