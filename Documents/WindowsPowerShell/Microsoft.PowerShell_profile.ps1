@@ -1,10 +1,9 @@
 $scripts = "$(split-path $profile)\Scripts"
 $env:path += ";$scripts"
 
-function openNvy {
-  nvy.exe
-}
-Set-Alias v openNvy
+
+Set-Alias l list-folder
+Set-Alias v nvy.exe
 
 function openProfileInNvy {
   nvy.exe --geometry=100x36 $PROFILE
@@ -58,10 +57,10 @@ Function fs($path) {
   Select-Object Count, @{Name = "Size(MB)"; Expression = { '{0:N2}' -f ($_.Sum / 1MB) } }
 }
 
-# Zoxide config
+# For zoxide v0.8.0+
 Invoke-Expression (& {
     $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
-    (zoxide init --hook $hook powershell) -join "`n"
+    (zoxide init --hook $hook powershell | Out-String)
   })
 
 # cd-extras config
@@ -341,14 +340,26 @@ Set-PSReadLineKeyHandler -Key Alt+e `
   [Microsoft.PowerShell.PSConsoleReadLine]::SelectForwardChar($null, ($nextAst.Extent.EndOffset - $nextAst.Extent.StartOffset) - $endOffsetAdjustment)
 }
 
+### Chocolatey profile
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
 
+### fzf config
+$env:FZF_DEFAULT_COMMAND='fd --type f'
+$env:FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+$env:FZF_ALT_C_COMMAND="fd --type d"
+
+### PSFzf config: https://github.com/kelleyma49/PSFzf
+# replace 'Ctrl+t' and 'Ctrl+r' with your preferred bindings:
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+Set-Alias -Name fe -Value Invoke-FuzzyEdit
+
+
+### starship config
 # Usage: Add 'Invoke-Expression (&starship init powershell)' to the end of your PowerShell $PROFILE.
 # Prerequisites: A Powerline font installed and enabled in your terminal.
 # 'starship' suggests installing 'extras/vcredist2019'.
 Invoke-Expression (&starship init powershell)
 
-# Chocolatey profile
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
-}

@@ -177,7 +177,7 @@
     }
   ],
 
-  "editor.lineNumbers": "relative",
+  "editor.lineNumbers": "on",
   "editor.smoothScrolling": true,
   "editor.cursorSurroundingLines": 10,
   "editor.mouseWheelScrollSensitivity": 2,

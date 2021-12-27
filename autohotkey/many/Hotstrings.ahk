@@ -19,6 +19,7 @@ return
 
 :*:ak;::autohotkey
 :*:js;::javascript
+:*:so;::stackoverflow
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;; File Paths ;;;;;;;;;
