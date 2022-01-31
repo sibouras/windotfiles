@@ -12,7 +12,7 @@ return
 FormatTime, CurrentDateTime,, HH:mm
 SendInput %CurrentDateTime%
 return
-:R*?:dt;::
+:R*?:dtm;::
 FormatTime, CurrentDateTime,, yyyy-MM-dd HH:mm
 SendInput %CurrentDateTime%
 return

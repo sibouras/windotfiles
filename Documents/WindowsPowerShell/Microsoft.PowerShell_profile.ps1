@@ -1,14 +1,19 @@
 $scripts = "$(split-path $profile)\Scripts"
 $env:path += ";$scripts"
+$ENV:EDITOR = "nvim"
+$ENV:PAGER = "bat"
 
-
-Set-Alias l list-folder
+Set-Alias l lsd
 Set-Alias v nvy.exe
+Set-Alias grep findstr
 
-function openProfileInNvy {
-  nvy.exe --geometry=100x36 $PROFILE
+function ll {
+  lsd -l
 }
-set-Alias profile openProfileInNvy
+
+function profile {
+  nvim $PROFILE
+}
 
 function goToTuts {
   Set-Location C:\xampp\htdocs\tuts\
@@ -34,7 +39,6 @@ function getProcess {
           Measure-Object WorkingSet -Sum).Sum / 1MB) }
   }
 }
-Set-Alias gprocess getProcess
 
 # Get-MyProcess brave, neovide, explorer
 Function Get-MyProcess {
@@ -57,11 +61,19 @@ Function fs($path) {
   Select-Object Count, @{Name = "Size(MB)"; Expression = { '{0:N2}' -f ($_.Sum / 1MB) } }
 }
 
+Function which ($command) {
+  Get-Command -Name $command -ErrorAction SilentlyContinue |
+  Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
+}
+
 # For zoxide v0.8.0+
 Invoke-Expression (& {
     $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
     (zoxide init --hook $hook powershell | Out-String)
   })
+
+# adds 400ms to startup time
+# Import-Module -Name Terminal-Icons
 
 # cd-extras config
 Import-Module cd-extras

@@ -177,7 +177,7 @@
     }
   ],
 
-  "editor.lineNumbers": "on",
+  "editor.lineNumbers": "relative",
   "editor.smoothScrolling": true,
   "editor.cursorSurroundingLines": 10,
   "editor.mouseWheelScrollSensitivity": 2,
@@ -240,6 +240,7 @@
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
   "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
@@ -271,25 +272,9 @@
       "tab.inactiveBackground": "#252525"
     },
     "[Moonlight II]": {
-      "editorCursor.background": "#000"
+      "editorCursor.background": "#000",
+      "editor.lineHighlightBackground": "#1b1d2b"
     }
-    // "editorCursor.foreground": "#146fd8",
-    // "tab.activeBackground": "#212121",
-    // "tab.activeBackground": "#1D2026",
-    // "editor.background": "#1D2026",
-    // "minimap.background": "#1D2026",
-    // "editorGutter.background": "#1D2026",
-    // "breadcrumb.background": "#1D2026",
-    // "editor.lineHighlightBackground": "#181b20"
-    // "terminal.background": "#1D2026"
-    // "editor.findMatchHighlightBackground": "#114092"
-    // -- before ayu
-    // "statusBar.background": "#1D2026",
-    // "statusBar.noFolderBackground": "#1D2026",
-    // "statusBar.debuggingBackground": "#1D2026",
-    // "statusBar.foreground": "#ddd",
-    // "textLink.foreground": "#ff0000"
-    // "editor.foreground": "#bdbdbd"
   },
   // "editor.multiCursorModifier": "ctrlCmd",
   "whichkey.delay": 200,
