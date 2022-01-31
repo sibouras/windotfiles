@@ -29,7 +29,8 @@ Plug 'karb94/neoscroll.nvim'
 Plug 'tamago324/lir.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'jdhao/better-escape.vim'
-Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
+" Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
+Plug 'junegunn/vim-peekaboo'
 
 call plug#end()
 
