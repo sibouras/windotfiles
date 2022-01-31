@@ -66,45 +66,46 @@ RAlt & c::
   }
 return
 
-; switch to previous window
-!j::
-  winNumber = 0
-  WinGet, win, List
-  Loop, %win% {
-    WinGetTitle, ttitle, % winTitle := "ahk_id " win%A_Index% ; Window title
-    WinGet, proc, ProcessName, %winTitle% ; Window process
-    WinGetClass, class, %winTitle% ; Window class
-    winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > ""
-    && (ttitle != "Program Manager" || proc != "Explorer.exe")
-  } Until (winNumber = 2)
-  WinActivate, %winTitle%
-Return
-
-; switch between all windows of the current window class
-listIndex = 1
-#WinActivateForce
-!k::
-Beginning:
-  WinGetClass, activeWindowClass, A
-  WinGet, activeWindowID, ID, A
-  ; get window list
-  WinGet, List, List, ahk_class %activeWindowClass%,, Program Manager
-  listIndex++
-  if (listIndex > List)
-    listIndex = %List%
-
-  Id := List%listIndex%
-  if (activeWindowID != Id) {
-    WinGetTitle, title, ahk_id %Id%
-    if (title) {
-      ; exclude windows without a size
-      WinGetPos,,,W,H,ahk_id %Id%
-      if (W AND H) {
-        WinActivate, ahk_id %Id%
-        return
-      }
-    }
-    WinActivate, ahk_id %Id%
-    Goto, Beginning
-  }
-return
+; using komorebic right now
+; ; switch to previous window
+; !j::
+;   winNumber = 0
+;   WinGet, win, List
+;   Loop, %win% {
+;     WinGetTitle, ttitle, % winTitle := "ahk_id " win%A_Index% ; Window title
+;     WinGet, proc, ProcessName, %winTitle% ; Window process
+;     WinGetClass, class, %winTitle% ; Window class
+;     winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > ""
+;     && (ttitle != "Program Manager" || proc != "Explorer.exe")
+;   } Until (winNumber = 2)
+;   WinActivate, %winTitle%
+; Return
+;
+; ; switch between all windows of the current window class
+; listIndex = 1
+; #WinActivateForce
+; !k::
+; Beginning:
+;   WinGetClass, activeWindowClass, A
+;   WinGet, activeWindowID, ID, A
+;   ; get window list
+;   WinGet, List, List, ahk_class %activeWindowClass%,, Program Manager
+;   listIndex++
+;   if (listIndex > List)
+;     listIndex = %List%
+;
+;   Id := List%listIndex%
+;   if (activeWindowID != Id) {
+;     WinGetTitle, title, ahk_id %Id%
+;     if (title) {
+;       ; exclude windows without a size
+;       WinGetPos,,,W,H,ahk_id %Id%
+;       if (W AND H) {
+;         WinActivate, ahk_id %Id%
+;         return
+;       }
+;     }
+;     WinActivate, ahk_id %Id%
+;     Goto, Beginning
+;   }
+; return
