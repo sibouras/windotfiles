@@ -1,0 +1,59 @@
+{
+  "name": "nvim-snippets",
+  "author": "ala",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": "lua",
+        "path": "./lua.json"
+      },
+      {
+        "language": "html",
+        "path": "./html.json"
+      },
+      {
+        "language": "json",
+        "path": "./json.json"
+      },
+      {
+        "language": "markdown",
+        "path": "./markdown.json"
+      },
+      {
+        "language": [
+          "javascript",
+          "javascriptreact",
+          "vue",
+          "svelte"
+        ],
+        "path": "./javascript/javascript.json"
+      },
+      {
+        "language": [
+          "typescript",
+          "typescriptreact"
+        ],
+        "path": "./javascript/typescript.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./javascript/react.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./javascript/react-native.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./javascript/react-ts.json"
+      },
+      {
+        "language": "typescriptreact",
+        "path": "./javascript/react-native-ts.json"
+      }
+    ]
+  }
+}

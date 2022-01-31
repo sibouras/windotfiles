@@ -1,0 +1,223 @@
+{
+  "reactFunctionalComponent": {
+    "prefix": "rfc",
+    "body": [
+      "function ${1:${TM_FILENAME_BASE}}() {",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t$0",
+      "\t\t</div>",
+      "\t)",
+      "}",
+      ""
+    ],
+    "description": "Creates a React Functional Component"
+  },
+  "reactFunctionalExportComponent": {
+    "prefix": "rfce",
+    "body": [
+      "export function ${1:${TM_FILENAME_BASE}}() {",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t$0",
+      "\t\t</div>",
+      "\t)",
+      "}"
+    ],
+    "description": "Creates a React Functional Component Export"
+  },
+  "reactFunctionalExportDefaultComponent": {
+    "prefix": "rfced",
+    "body": [
+      "export default function ${1:${TM_FILENAME_BASE}}() {",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t$0",
+      "\t\t</div>",
+      "\t)",
+      "}"
+    ],
+    "description": "Creates a React Functional Component Export Default"
+  },
+  "reactArrowFunctionComponent": {
+    "prefix": "rafc",
+    "body": [
+      "export const ${1:${TM_FILENAME_BASE}} = () => {",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t$0",
+      "\t\t</div>",
+      "\t)",
+      "}"
+    ],
+    "description": "Creates a React Arrow Function Component"
+  },
+  "reactArrowFunctionComponentExport": {
+    "prefix": "rafce",
+    "body": [
+      "const ${1:${TM_FILENAME_BASE}} = () => {",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t$0",
+      "\t\t</div>",
+      "\t)",
+      "}",
+      "",
+      "export default ${1:${TM_FILENAME_BASE}}"
+    ],
+    "description": "Creates a React Arrow Function Component Export"
+  },
+  "reactFunctionMemoComponent": {
+    "prefix": "rmc",
+    "body": [
+      "import { memo } from 'react'",
+      "",
+      "export default memo(function ${1:${TM_FILENAME_BASE}}() {",
+      "\treturn (",
+      "\t\t<div>",
+      "\t\t\t$0",
+      "\t\t</div>",
+      "\t)",
+      "})"
+    ],
+    "description": "Creates a React Memo Function Component"
+  },
+  "reactCustomHook": {
+    "prefix": "rch",
+    "body": [
+      "export const ${1:${TM_FILENAME_BASE}} = (${2}) => {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Creates a React Custom Hook with ES7 module system"
+  },
+  "useState": {
+    "prefix": "us",
+    "body": [
+      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = useState(${0});"
+    ],
+    "description": "useState hook"
+  },
+  "useRef": {
+    "prefix": "ur",
+    "body": ["const ${1:ref} = useRef(${0})"],
+    "description": "useRef hook"
+  },
+  "useEffect": {
+    "prefix": "ue",
+    "body": ["useEffect(() => {", "  ${0}", "}, [${1}])"],
+    "description": "useEffect hook"
+  },
+  "useEffect with return": {
+    "prefix": "uer",
+    "body": [
+      "useEffect(() => {",
+      "\t$2",
+      "\n\treturn () => {",
+      "\t\t$0",
+      "\t}",
+      "}, [${1}])"
+    ],
+    "description": "React useEffect hook with return statement"
+  },
+  "useContext": {
+    "prefix": "uc",
+    "body": ["const ${1:context} = useContext(${0})"],
+    "description": "useContext hook"
+  },
+  "useReducer": {
+    "prefix": "useReducer",
+    "body": [
+      "const [state, dispatch] = useReducer(${1:reducer}, ${2:initialState}, ${0:init})"
+    ]
+  },
+  "useCallback": {
+    "prefix": "ucb",
+    "body": [
+      "useCallback(",
+      "\t() => {",
+      "\t\t${1:callback}",
+      "\t},",
+      "\t[${0:input}],",
+      ")"
+    ],
+    "description": "useCallback hook"
+  },
+  "useMemo": {
+    "prefix": "useMemo",
+    "body": ["useMemo(() => ${1:function}, ${0:input})"]
+  },
+  "useMemo2": {
+    "prefix": "ume",
+    "body": [
+      "const ${1:memoizedValue} = useMemo(() => ${2:computeExpensiveValue}(${3:a}, ${4:b}), [${5:a}, ${6:b}])$0"
+    ],
+    "description": "React useMemo() hook"
+  },
+  "useImperativeHandle": {
+    "prefix": "useImperativeHandle",
+    "body": [
+      "useImperativeHandle(",
+      "\t${1:ref},",
+      "\t() => {",
+      "\t\t${2:handler}",
+      "\t},",
+      "\t[${3:input}],",
+      ")"
+    ]
+  },
+  "useDebugValue": {
+    "prefix": "useDebugValue",
+    "body": ["useDebugValue(${1:value})"],
+    "description": "useDebugValue hook"
+  },
+  "useLayoutEffect": {
+    "prefix": "useLayoutEffect",
+    "body": [
+      "useLayoutEffect(() => {",
+      "\t${1:effect}",
+      "\treturn () => {",
+      "\t\t${2:cleanup}",
+      "\t};",
+      "}, [${3:input}])"
+    ]
+  },
+  "useSelector": {
+    "prefix": "useSelector",
+    "body": ["const ${1:state} = useSelector(state => state.${1:state})"]
+  },
+  "useDispatch": {
+    "prefix": "useDispatch",
+    "body": ["const dispatch = useDispatch()"]
+  },
+  "jsx element": {
+    "prefix": "j",
+    "body": "<${1}>\n\t$0\n</${1}>",
+    "description": "an element"
+  },
+  "jsx element self closed": {
+    "prefix": "jc",
+    "body": "<${0:elementName} />",
+    "description": "an element self closed"
+  },
+  "jsx return element": {
+    "prefix": "jr",
+    "body": ["return (", "  <>", "    ${0}", "  </>", ")"],
+    "description": "return an element"
+  },
+  "jsx elements map": {
+    "prefix": "jm",
+    "body": "{${1:array}.map((item) => <${2:elementName} key={item.id}>\n\t$0\n</${2}>)}",
+    "description": "an element self closed"
+  },
+  "jsx elements map with return": {
+    "prefix": "jmr",
+    "body": "{${1:array}.map((item) => {\n\treturn <${2:elementName} key={item.id}>\n\t$0\n</${2}>\n})}",
+    "description": "an element self closed"
+  },
+  "jsx element wrap selection": {
+    "prefix": "jsx wrap selection with element",
+    "body": "<${1:elementName}>\n\t{$TM_SELECTED_TEXT}\n</${1}>",
+    "description": "an element"
+  }
+}
