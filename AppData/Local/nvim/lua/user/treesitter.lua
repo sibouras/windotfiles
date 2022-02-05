@@ -50,10 +50,10 @@ configs.setup({
     swap = {
       enable = true,
       swap_next = {
-        ["<leader>a"] = "@parameter.inner",
+        ["]a"] = "@parameter.inner",
       },
       swap_previous = {
-        ["<leader>A"] = "@parameter.inner",
+        ["[a"] = "@parameter.inner",
       },
     },
     move = {
@@ -86,3 +86,7 @@ configs.setup({
     },
   },
 })
+
+-- folding
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'

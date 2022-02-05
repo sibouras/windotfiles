@@ -76,6 +76,7 @@ return packer.startup(function(use)
   use("michaeljsmith/vim-indent-object")
   use("vim-scripts/ReplaceWithRegister")
   use("svban/YankAssassin.vim")
+  use("akinsho/toggleterm.nvim")
 
   -- Colorschemes
   use("folke/tokyonight.nvim")
@@ -97,18 +98,22 @@ return packer.startup(function(use)
   use("williamboman/nvim-lsp-installer") -- simple to use language server installer
   use("tamago324/nlsp-settings.nvim") -- language server settings defined in json for
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
-  use("ray-x/lsp_signature.nvim") --LSP signature hint as you type
-  use("RRethy/vim-illuminate")
+  use("ray-x/lsp_signature.nvim") -- LSP signature hint as you type
+  use("RRethy/vim-illuminate") -- highlight symbols under cursor and cycle through
+  use("kosayoda/nvim-lightbulb") -- VSCode 💡 for neovim's built-in LSP.
 
   -- Telescope
   use("nvim-telescope/telescope.nvim")
   use("AckslD/nvim-neoclip.lua")
-  -- use("rmagatti/session-lens")
+  use({
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = "mingw32-make",
+  })
 
   -- Treesitter
   use({
     "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
+    -- run = ":TSUpdate",
   })
   use("JoosepAlviste/nvim-ts-context-commentstring")
   use("nvim-treesitter/nvim-treesitter-textobjects")

@@ -54,16 +54,16 @@ function! Spawn_note_window() abort
   " Now we can actually open or create the note for the day?
   if filereadable(expand(file_name))
     execute "e ".fnameescape(file_name)
-    execute "norm Go "
-    execute "norm zz"
-    execute "startinsert"
+    execute "norm G"
+    " execute "norm zz"
+    " execute "startinsert"
   else
     execute "e ".fnameescape(file_name)
     execute "norm Gi## Notes for ".strftime("%Y-%m-%d")
     execute "norm Go\n"
     execute "norm Gi-  " 
     execute "norm zz"
-    execute "startinsert"
+    " execute "startinsert"
   endif
 endfunction
 

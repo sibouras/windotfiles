@@ -35,6 +35,7 @@ local options = {
   wrap = false, -- display lines as one long line
   scrolloff = 5, -- is one of my fav
   sidescrolloff = 10,
+  foldlevelstart = 99,
   guifont = "JetbrainsMono Nerd Font:h16", -- the font used in graphical neovim applications
 }
 
@@ -47,10 +48,12 @@ end
 -- vim.cmd([[set formatoptions-=cro]]) -- TODO: this doesn't seem to work
 vim.cmd([[
   cd $home
+  set path+=**  "find files recursively
   set whichwrap+=<,>,[,],h,l
   " set iskeyword+=-
+  set sessionoptions+=globals "persist bufferline buffers order(doesn't work)
   set concealcursor=nc
   hi Underlined guisp=#7aa2f7 " change vimwiki link color
-  set grepprg=rg\ --vimgrep\ --smart-case\ --follow " Replacing grep with rg
+  set grepprg=rg\ --vimgrep\ --smart-case " Replacing grep with rg
   set grepformat=%f:%l:%c:%m
 ]])

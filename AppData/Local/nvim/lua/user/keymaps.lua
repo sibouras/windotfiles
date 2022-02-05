@@ -34,6 +34,8 @@ keymap("n", "<C-Left>", ":vertical resize +2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
 
 -- Navigate buffers
+keymap("n", "]b", ":BufferLineCycleNext<CR>", opts)
+keymap("n", "[b", ":BufferLineCyclePrev<CR>", opts)
 keymap("n", "<M-.>", ":BufferLineCycleNext<CR>", opts)
 keymap("n", "<M-,>", ":BufferLineCyclePrev<CR>", opts)
 keymap("i", "<M-w>", "<esc><C-^>", opts)
@@ -46,8 +48,12 @@ keymap("n", "Q", ":Bdelete!<CR>", opts)
 -- keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
 -- keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
--- fd to esacpe
-keymap("i", "df", "<ESC>", opts)
+-- df to escape
+-- keymap("i", "df", "<ESC>", opts)
+
+-- quick save
+keymap("n", "<M-s>", ":w<CR>", opts)
+keymap("i", "<M-s>", "<Esc>:w<CR>", opts)
 
 -- Ctrl-Backspace to delete the previous word
 keymap("i", "<C-BS>", "<C-W>", opts)
@@ -64,8 +70,8 @@ keymap("i", "?", "?<c-g>u", opts)
 
 -- jumplit mutations
 vim.cmd([[
- nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j' 
- nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k' 
+ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+ nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
 ]])
 
 -- Keep the cursor in place while joining lines
@@ -89,12 +95,15 @@ vim.cmd([[
   onoremap gl :normal vgl<CR>
 ]])
 
--- Redirect change operations to the blackhole
-keymap("n", "c", '"_c', opts)
-keymap("n", "C", '"_C', opts)
--- x and X won't alter the register
-keymap("n", "x", '"_x', opts)
-keymap("n", "X", '"_X', opts)
+-- -- Redirect change operations to the blackhole
+-- keymap("n", "c", '"_c', opts)
+-- keymap("n", "C", '"_C', opts)
+-- -- x and X won't alter the register
+-- keymap("n", "x", '"_x', opts)
+-- keymap("n", "X", '"_X', opts)
+
+-- search for visually selected text
+keymap("v", "//", [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], {})
 
 -- use . to repeat a regular c-prefixed command as if it were perforced using cgn.
 keymap("n", "g.", '/\\V<C-r>"<CR>cgn<C-a><Esc>', {})
@@ -115,7 +124,7 @@ keymap("x", "<leader>rc", ":s///gc<Left><left><Left>", {})
 keymap("n", "<F5>", ":setlocal spell!<CR>", opts)
 
 -- delete all trailing whitespace
-vim.cmd([[nnoremap <silent> <F6> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]])
+keymap("n", "<F6>", [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]], opts)
 
 -- Toggle visually showing all whitespace characters.
 keymap("n", "<F7>", ":set list!<CR>", opts)
@@ -152,6 +161,9 @@ vim.cmd([[
   endfunction
 ]])
 
+-- Quickly edit your macros(from vim-galore)
+keymap("n", "<leader>m", ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>", opts)
+
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
@@ -179,7 +191,7 @@ keymap("n", "<leader>cs", ":let @*=expand('%')<CR>:echo expand('%')<CR>", opts)
 keymap("n", "<leader>cl", ":let @*=expand('%:p')<CR>:echo expand('%:p')<CR>", opts)
 
 -- Terminal --
-keymap("n", "<leader>te", ":sp term://powershell<CR>", {})
+keymap("n", "<leader>te", ":sp term://pwsh<CR>", {})
 keymap("t", "df", "<C-\\><C-n>", term_opts)
 -- Better terminal navigation
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
@@ -243,14 +255,14 @@ keymap("x", "<M-S-Right>", "<Plug>GoVSDRight", {})
 ---------------------------------------------------------------
 -- => harpoon.nvim
 ---------------------------------------------------------------
-keymap("n", "<Bslash>a", ":lua require('harpoon.mark').add_file()<CR>", opts)
-keymap("n", "<Bslash>w", ":lua require('harpoon.ui').toggle_quick_menu()<CR>", opts)
-keymap("n", "<Bslash>t", ":lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>", opts)
-keymap("n", "<Bslash>1", ":lua require('harpoon.ui').nav_file(1)<CR>", opts)
-keymap("n", "<Bslash>2", ":lua require('harpoon.ui').nav_file(2)<CR>", opts)
-keymap("n", "<Bslash>3", ":lua require('harpoon.ui').nav_file(3)<CR>", opts)
-keymap("n", "<Bslash>4", ":lua require('harpoon.ui').nav_file(4)<CR>", opts)
-keymap("n", "<Bslash>5", ":lua require('harpoon.ui').nav_file(5)<CR>", opts)
+keymap("n", "[a", ":lua require('harpoon.mark').add_file()<CR>", opts)
+keymap("n", "[w", ":lua require('harpoon.ui').toggle_quick_menu()<CR>", opts)
+keymap("n", "[t", ":lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>", opts)
+keymap("n", "[1", ":lua require('harpoon.ui').nav_file(1)<CR>", opts)
+keymap("n", "[2", ":lua require('harpoon.ui').nav_file(2)<CR>", opts)
+keymap("n", "[3", ":lua require('harpoon.ui').nav_file(3)<CR>", opts)
+keymap("n", "[4", ":lua require('harpoon.ui').nav_file(4)<CR>", opts)
+keymap("n", "[5", ":lua require('harpoon.ui').nav_file(5)<CR>", opts)
 
 ---------------------------------------------------------------
 -- => auto-session, session-lens
