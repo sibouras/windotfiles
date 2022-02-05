@@ -1,5 +1,8 @@
 #SingleInstance Force
 
+Run, komorebic.exe start
+sleep, 2000
+
 ; Enable hot reloading of changes to this file
 Run, komorebic.exe watch-configuration enable, , Hide
 
@@ -198,11 +201,6 @@ return
 Run, komorebic.exe toggle-float, , Hide
 return
 
-; Reload ~/komorebi.ahk, Alt + O
-!+o::
-Run, komorebic.exe reload-configuration, , Hide
-return
-
 ; Pause responding to any window events or komorebic commands, Ctrl + Alt P
 ^!p::
 Run, komorebic.exe toggle-pause, , Hide
@@ -255,8 +253,21 @@ return
 Run, komorebic.exe move-to-workspace 4, , Hide
 return
 
+!+i::
+Run, komorebic.exe save ~/.config/komorebi/layouts/primary.json
+return
+
+!+m::
+Run, komorebic.exe load ~/.config/komorebi/layouts/primary.json
+return
+
+#+o::
+Run, komorebic.exe reload-configuration, , Hide
+return
+
 #+k:: Reload
 return
 
-^#+k:: exitapp
-
+^#+k::
+Run, komorebic.exe stop
+exitapp
