@@ -11,14 +11,21 @@ function ll {
   lsd -l @args
 }
 
+function cpath {
+  Get-Location | Set-Clipboard
+}
+
 function profile {
   nvim "$HOME\.config\powershell\profile.ps1"
 }
 
-function openDotfiles {
+function winconfig {
+  git --git-dir=$HOME/.dotfiles --work-tree=$HOME @args
+}
+
+function dotfiles {
   lazygit --git-dir=$HOME/.dotfiles --work-tree=$HOME
 }
-set-Alias dotfiles openDotfiles
 
 function gst {
   git status @args
