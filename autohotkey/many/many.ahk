@@ -6,11 +6,12 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 #Include %A_ScriptDir%\make-capslock-great.ahk
 ; #Include %A_ScriptDir%\drag-windows.ahk
 #Include %A_ScriptDir%\AppsKey.ahk
-#Include %A_ScriptDir%\Hotstrings.ahk
+; #Include %A_ScriptDir%\Hotstrings.ahk
 #Include %A_ScriptDir%\App-specific.ahk
 #Include %A_ScriptDir%\tab-switcher-best.ahk
 #Include %A_ScriptDir%\restore-maximize.ahk
 #Include %A_ScriptDir%\window-moving-vim.ahk
+#Include %A_ScriptDir%\google-selection.ahk
 
 !+r::reload
 !+a::suspend
