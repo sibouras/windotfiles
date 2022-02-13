@@ -190,15 +190,6 @@ keymap("n", "<leader>cd", ":cd %:p:h<CR>:pwd<CR>", opts)
 keymap("n", "<leader>cs", ":let @*=expand('%')<CR>:echo expand('%')<CR>", opts)
 keymap("n", "<leader>cl", ":let @*=expand('%:p')<CR>:echo expand('%:p')<CR>", opts)
 
--- Terminal --
-keymap("n", "<leader>te", ":sp term://pwsh<CR>", {})
-keymap("t", "df", "<C-\\><C-n>", term_opts)
--- Better terminal navigation
-keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
-keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
-keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
-
 ---------------------------------------------------------------
 -- => telescope.nvim
 ---------------------------------------------------------------
@@ -264,7 +255,7 @@ keymap("n", "[3", ":lua require('harpoon.ui').nav_file(3)<CR>", opts)
 keymap("n", "[4", ":lua require('harpoon.ui').nav_file(4)<CR>", opts)
 keymap("n", "[5", ":lua require('harpoon.ui').nav_file(5)<CR>", opts)
 
----------------------------------------------------------------
+--------------------------------------------------------------
 -- => auto-session, session-lens
 ---------------------------------------------------------------
 keymap("n", "<leader>sl", ":SessionsLoad<CR>", opts)
@@ -276,3 +267,13 @@ keymap("n", "<leader>sd", ":SessionsStop<CR>", opts)
 ---------------------------------------------------------------
 keymap("n", "<M-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
 keymap("n", "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
+keymap("v", "<M-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
+keymap("v", "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
+
+---------------------------------------------------------------
+-- => hop.nvim
+---------------------------------------------------------------
+keymap("", "sf", "<cmd>HopChar2<CR>", opts)
+keymap("", "sj", "<cmd>HopLineStartAC<CR>", opts)
+keymap("", "sk", "<cmd>HopLineStartBC<CR>", opts)
+keymap("", "s/", "<cmd>HopPattern<CR>", opts)

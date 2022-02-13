@@ -38,37 +38,7 @@
 #IfWinActive
 
 #IfWinActive, ahk_exe Code.exe
-  CapsLock & f::Send, {Esc}^s
   !w::Send, ^{Tab}
-#IfWinActive
-
-#IfWinActive, ahk_exe azuredatastudio.exe
-  CapsLock & f::Send, {Esc}^s
-  CapsLock & r::Send, ^{PgDn}
-  CapsLock & e::Send, ^{Pgup}
-#IfWinActive
-
-#IfWinActive, Neovide
-  CapsLock & f::
-    Send {Esc}
-    sleep 2
-  Send :
-    sleep 2
-    Send w
-    sleep 2
-    Send {enter}
-  return
-#IfWinActive
-
-#IfWinActive, Nvy
-  CapsLock & f::
-    Send {Esc}:w{enter}
-  return
-;   !q::
-;     Send {Esc}:q!
-;     sleep 2
-;     Send {enter}
-;   return
 #IfWinActive
 
 #IfWinNotActive, ahk_exe WindowsTerminal.exe

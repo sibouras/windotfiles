@@ -58,6 +58,10 @@ CapsLock::Send, {ESC}
 ;                      CapsLock + j |  Down                          ;|
 ;                      CapsLock + k |  Up                            ;|
 ;                      CapsLock + l |  Right                         ;|
+;                      CapsLock + i |  Home                          ;|
+;                      CapsLock + o |  End                           ;|
+;                      CapsLock + u |  PageUp                        ;|
+;                      CapsLock + p |  PageDown                      ;|
 ;-----------------------------------o---------------------------------o
 ; this needs to be above CapsLock & j and CapsLock & k
 ; !j::
@@ -70,170 +74,14 @@ CapsLock::Send, {ESC}
 ;     Send, {ALTDOWN}{SHIFTDOWN}{TAB}{SHIFTUP}ALTUP}
 ; return
 
-CapsLock & k::
-  if GetKeyState("Shift", "D")
-    if GetKeyState("Alt", "D")
-    Send +!{Up}
-  else if GetKeyState("Ctrl", "D")
-    Send +^{Up}
-  else
-    Send +{Up}
-  else if GetKeyState("Ctrl", "D")
-    if (GetKeyState("Alt", "D"))
-    Send !^{Up}
-  else
-    Send ^{Up}
-  else if GetKeyState("Alt", "D")
-    Send !{Up}
-  else
-    Send {Up}
-return
-
-CapsLock & j::
-  if GetKeyState("Shift", "D")
-    if GetKeyState("Alt", "D")
-    Send +!{Down}
-  else if GetKeyState("Ctrl", "D")
-    Send +^{Down}
-  else
-    Send +{Down}
-  else if GetKeyState("Ctrl", "D")
-    if (GetKeyState("Alt", "D"))
-    Send !^{Down}
-  else
-    Send ^{Down}
-  else if GetKeyState("Alt", "D")
-    Send !{Down}
-  else
-    Send {Down}
-return
-
-CapsLock & h::
-  if GetKeyState("Shift", "D")
-    if GetKeyState("Alt", "D")
-    Send +!{Left}
-  else if GetKeyState("Ctrl", "D")
-    Send +^{Left}
-  else
-    Send +{Left}
-  else if GetKeyState("Ctrl", "D")
-    if (GetKeyState("Alt", "D"))
-    Send !^{Left}
-  else
-    Send ^{Left}
-  else if GetKeyState("Alt", "D")
-    Send !{Left}
-  else
-    Send {Left}
-return
-
-CapsLock & l::
-  if GetKeyState("Shift", "D")
-    if GetKeyState("Alt", "D")
-    Send +!{Right}
-  else if GetKeyState("Ctrl", "D")
-    Send +^{Right}
-  else
-    Send +{Right}
-  else if GetKeyState("Ctrl", "D")
-    if (GetKeyState("Alt", "D"))
-    Send !^{Right}
-  else
-    Send ^{Right}
-  else if GetKeyState("Alt", "D")
-    Send !{Right}
-  else
-    Send {Right}
-return
-;---------------------------------------------------------------------o
-
-;=====================================================================o
-;                     CapsLock Home/End Navigator                    ;|
-;-----------------------------------o---------------------------------o
-;                      CapsLock + i |  Home                          ;|
-;                      CapsLock + o |  End                           ;|
-;-----------------------------------o---------------------------------o
-CapsLock & i::
-  if GetKeyState("Shift", "D")
-    if GetKeyState("Alt", "D")
-    Send +!{Home}
-  else if GetKeyState("Ctrl", "D")
-    Send +^{Home}
-  else
-    Send +{Home}
-  else if GetKeyState("Ctrl", "D")
-    if (GetKeyState("Alt", "D"))
-    Send !^{Home}
-  else
-    Send ^{Home}
-  else if GetKeyState("Alt", "D")
-    Send !{Home}
-  else
-    Send {Home}
-return
-
-CapsLock & o::
-  if GetKeyState("Shift", "D")
-    if GetKeyState("Alt", "D")
-    Send +!{End}
-  else if GetKeyState("Ctrl", "D")
-    Send +^{End}
-  else
-    Send +{End}
-  else if GetKeyState("Ctrl", "D")
-    if (GetKeyState("Alt", "D"))
-    Send !^{End}
-  else
-    Send ^{End}
-  else if GetKeyState("Alt", "D")
-    Send !{End}
-  else
-    Send {End}
-return
-;---------------------------------------------------------------------o
-
-;=====================================================================o
-;                      CapsLock Page Navigator                       ;|
-;-----------------------------------o---------------------------------o
-;                      CapsLock + u |  PageUp                        ;|
-;                      CapsLock + p |  PageDown                      ;|
-;                      Ctrl, Alt Compatible                          ;|
-;-----------------------------------o---------------------------------o
-CapsLock & u::
-  if GetKeyState("control") = 0
-  {
-    if GetKeyState("alt") = 0
-      Send, {PgUp}
-    else
-      Send, +{PgUp}
-    return
-  }
-  else {
-    if GetKeyState("alt") = 0
-      Send, ^{PgUp}
-    else
-      Send, +^{PgUp}
-    return
-  }
-return
-
-CapsLock & p::
-  if GetKeyState("control") = 0
-  {
-    if GetKeyState("alt") = 0
-      Send, {PgDn}
-    else
-      Send, +{PgDn}
-    return
-  }
-  else {
-    if GetKeyState("alt") = 0
-      Send, ^{PgDn}
-    else
-      Send, +^{PgDn}
-    return
-  }
-return
+CapsLock & k::Up
+CapsLock & j::Down
+CapsLock & h::Left
+CapsLock & l::Right
+CapsLock & i::Home
+CapsLock & o::End
+CapsLock & u::PgUp
+CapsLock & p::PgDn
 ;---------------------------------------------------------------------o
 
 ;=====================================================================o
@@ -271,14 +119,19 @@ CapsLock & n:: Send, ^{BS}
 ; Toggle
 CapsLock & z:: Run nircmd.exe mutesysvolume 2 microphone
 Return
-;CapsLock & v:: Send, ^v
 ;CapsLock & v:: Send, !d neovide.exe --geometry=200x56{Enter}
 ;               Return
-; CapsLock & a:: Send, ^a
+CapsLock & a:: Send, ^a
 CapsLock & y:: Send, ^y
 CapsLock & w:: Send, ^{Right}
 CapsLock & b:: Send, ^{Left}
-CapsLock & [:: Send, {insert}
+CapsLock & c:: Send, ^{c}
+CapsLock & v:: Send, ^{v}
+CapsLock & s:: Shift
+CapsLock & d:: Ctrl
+CapsLock & f:: Send, {Esc}
+CapsLock & [:: Send, {Esc}
+CapsLock & ]:: Send, {insert}
 ;---------------------------------------------------------------------o
 
 ;=====================================================================o

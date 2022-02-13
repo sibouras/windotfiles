@@ -22,7 +22,7 @@ credits to ManaUser for isWindow() (http://www.autohotkey.com/community/viewtopi
   ; !j::winSnap("",1)
   ; !h::winSnap(-1,"")
   ; !l::winSnap(1,"")
-  !o::winSnap(0,0,1)
+  ^!o::winSnap(0,0,1)
 
   winSnap(seth, setv, forceset=0, reset=0)
   {
@@ -150,7 +150,7 @@ credits to ManaUser for isWindow() (http://www.autohotkey.com/community/viewtopi
 ; modifiers: Ctrl=resize window ; Shift = uses smaller offset to move or resize.
 {
 
-  !i::winMoveModeSet("start")
+  ^!i::winMoveModeSet("start")
 
   winMoveModeSet(cmd) {
     if (cmd = "start")
