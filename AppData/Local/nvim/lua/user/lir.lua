@@ -100,7 +100,11 @@ local b_actions = require("lir.bookmark.actions")
 require("lir.bookmark").setup({
   bookmark_path = "~/.lir_bookmark",
   mappings = {
-    ["l"] = b_actions.edit,
+    ["<CR>"] = b_actions.edit,
+    ["l"] = function()
+      b_actions.edit()
+      vim.cmd("bd .lir_bookmark")
+    end,
     ["<C-s>"] = b_actions.split,
     ["<C-v>"] = b_actions.vsplit,
     ["<C-t>"] = b_actions.tabedit,

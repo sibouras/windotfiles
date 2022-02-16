@@ -4,6 +4,14 @@ require("nvim-treesitter.install").compilers = { "clang", "gcc" }
 
 configs.setup({
   -- ensure_installed = "maintained",
+  ensure_installed = {
+    "lua",
+    "html",
+    "css",
+    "javascript",
+    "tsx",
+    "typescript",
+  },
   sync_install = false,
   ignore_install = { "tlaplus" }, -- List of parsers to ignore installing
   autopairs = {
@@ -88,5 +96,5 @@ configs.setup({
 })
 
 -- folding
-vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.wo.foldmethod = "expr"
+vim.wo.foldexpr = "nvim_treesitter#foldexpr()"

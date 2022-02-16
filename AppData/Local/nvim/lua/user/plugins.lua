@@ -47,26 +47,36 @@ require("packer_compiled")
 return packer.startup(function(use)
   -- My plugins here
   use("wbthomason/packer.nvim") -- Have packer manage itself
-  -- use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
+  use({
+    "lewis6991/impatient.nvim",
+    config = function()
+      require("impatient")
+    end,
+  })
+  use("nathom/filetype.nvim")
   use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
+  -- use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
+  -- use("MunifTanjim/nui.nvim")
   use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
   use("numToStr/Comment.nvim") -- Easily comment stuff
   use("kyazdani42/nvim-web-devicons")
-  use("natecraddock/workspaces.nvim")
   use("natecraddock/sessions.nvim")
+  use("natecraddock/workspaces.nvim")
   use("kyazdani42/nvim-tree.lua")
-  use("tamago324/lir.nvim")
-  use("tamago324/lir-bookmark.nvim")
-  use("akinsho/bufferline.nvim")
-  use("moll/vim-bbye")
+  use("nanotee/zoxide.vim")
+  -- use("tamago324/lir.nvim")
+  -- use("tamago324/lir-bookmark.nvim")
+  use("elihunter173/dirbuf.nvim")
+  -- use("akinsho/bufferline.nvim")
+  -- use("moll/vim-bbye")
+  use("kazhala/close-buffers.nvim")
   use("nvim-lualine/lualine.nvim")
   use("karb94/neoscroll.nvim")
   use("booperlv/nvim-gomove")
   use("goolord/alpha-nvim")
-  use("lewis6991/impatient.nvim")
   use("lukas-reineke/indent-blankline.nvim")
   use("tpope/vim-repeat")
-  use("blackCauldron7/surround.nvim")
+  use("ur4ltz/surround.nvim")
   use({ "phaazon/hop.nvim", branch = "v1" })
   use("ThePrimeagen/harpoon")
   use("mattn/emmet-vim")
@@ -77,6 +87,8 @@ return packer.startup(function(use)
   use("vim-scripts/ReplaceWithRegister")
   use("svban/YankAssassin.vim")
   use("akinsho/toggleterm.nvim")
+  use("dstein64/vim-startuptime")
+  use("norcalli/nvim-colorizer.lua")
 
   -- Colorschemes
   use("folke/tokyonight.nvim")
@@ -98,9 +110,10 @@ return packer.startup(function(use)
   use("williamboman/nvim-lsp-installer") -- simple to use language server installer
   use("tamago324/nlsp-settings.nvim") -- language server settings defined in json for
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
-  use("ray-x/lsp_signature.nvim") -- LSP signature hint as you type
+  -- use("ray-x/lsp_signature.nvim") -- LSP signature hint as you type
   use("RRethy/vim-illuminate") -- highlight symbols under cursor and cycle through
-  use("kosayoda/nvim-lightbulb") -- VSCode 💡 for neovim's built-in LSP.
+  -- use("kosayoda/nvim-lightbulb") -- VSCode 💡 for neovim's built-in LSP.
+  use("b0o/SchemaStore.nvim")
 
   -- Telescope
   use("nvim-telescope/telescope.nvim")

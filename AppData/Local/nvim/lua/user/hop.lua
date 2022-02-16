@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 hop.setup({
-  keys = "wertovxqpdygfblzhckisuan",
+  keys = "sdfwerhjklaoiuvcxgntqpybz",
 })
 
 vim.cmd([[

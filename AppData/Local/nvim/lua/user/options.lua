@@ -8,12 +8,13 @@ local options = {
   fileencoding = "utf-8", -- the encoding written to a file
   fileformat = "unix",
   fileformats = "unix,dos",
+  -- shellslash = true, -- breaks neo-tree and lir and maybe more
   hlsearch = true, -- highlight all matches on previous search pattern
   ignorecase = true, -- ignore case in search patterns
   mouse = "a", -- allow the mouse to be used in neovim
   pumheight = 10, -- pop up menu height
   showmode = false, -- we don't need to see things like -- INSERT -- anymore
-  showtabline = 2, -- always show tabs
+  showtabline = 1, -- always show tabs
   smartcase = true, -- smart case
   smartindent = true, -- make indenting smarter again
   splitbelow = true, -- force all horizontal splits to go below current window
@@ -36,6 +37,7 @@ local options = {
   scrolloff = 5, -- is one of my fav
   sidescrolloff = 10,
   foldlevelstart = 99,
+  sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal",
   guifont = "JetbrainsMono Nerd Font:h16", -- the font used in graphical neovim applications
 }
 
@@ -47,7 +49,9 @@ end
 
 -- vim.cmd([[set formatoptions-=cro]]) -- TODO: this doesn't seem to work
 vim.cmd([[
-  cd $home
+  if exists("g:nvy")
+    cd $home
+  endif
   set path+=**  "find files recursively
   set whichwrap+=<,>,[,],h,l
   " set iskeyword+=-
@@ -57,3 +61,21 @@ vim.cmd([[
   set grepprg=rg\ --vimgrep\ --smart-case " Replacing grep with rg
   set grepformat=%f:%l:%c:%m
 ]])
+
+-- prettier folding
+function _G.MyFoldText()
+  return vim.fn.getline(vim.v.foldstart) .. " ... " .. vim.fn.getline(vim.v.foldend):gsub("^%s*", "")
+end
+vim.opt.foldtext = "v:lua.MyFoldText()"
+vim.opt.fillchars:append({ fold = " " })
+
+vim.g.python3_host_prog = "python3"
+
+-- disable builtin plugins
+vim.g.loaded_gzip = false
+vim.g.loaded_tar = false
+vim.g.loaded_tarPlugin = false
+vim.g.zipPlugin = false
+vim.g.loaded_zipPlugin = false
+vim.g.loaded_2html_plugin = false
+vim.g.loaded_remote_plugins = false

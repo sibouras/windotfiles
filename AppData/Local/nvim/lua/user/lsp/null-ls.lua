@@ -14,10 +14,10 @@ null_ls.setup({
   sources = {
     -- formatting.prettier.with({ extra_args = { "--single-quote", "--jsx-single-quote" } }),
     formatting.prettierd,
-    formatting.black.with({ extra_args = { "--fast" } }),
+    -- formatting.black.with({ extra_args = { "--fast" } }),
     formatting.stylua.with({ extra_args = { "--indent-type=Spaces", "--indent-width=2" } }),
     -- diagnostics.flake8
-    diagnostics.eslint,
-    code_actions.eslint,
+    -- diagnostics.eslint,
+    -- code_actions.eslint,
   },
 })

@@ -9,7 +9,6 @@ workspaces.setup({
     open_pre = {
       -- If recording, save current session state and stop recording
       "SessionsStop",
-
       -- delete all buffers (does not save changes)
       "silent %bdelete!",
     },

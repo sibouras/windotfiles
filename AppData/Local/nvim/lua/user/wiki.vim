@@ -12,6 +12,10 @@ let g:wiki_export = {
   \ 'output': fnamemodify(tempname(), ':h'),
   \}
 
+" let g:wiki_mappings_global = {
+"   \ '<plug>(wiki-journal-index)': '<leader>wi',
+"   \ }
+
 let g:wiki_mappings_local = {
   \ '<plug>(wiki-journal-prev)' : '[w',
   \ '<plug>(wiki-journal-next)' : ']w',
