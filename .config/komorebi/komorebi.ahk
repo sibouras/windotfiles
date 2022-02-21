@@ -71,6 +71,7 @@ Run, komorebic.exe manage-rule exe TIM.exe, , Hide
 
 ; Identify applications that close to the tray
 Run, komorebic.exe identify-tray-application exe Discord.exe, , Hide
+Run, komorebic.exe identify-tray-application exe ShareX.exe, , Hide
 
 ; Identify applications that have overflowing borders
 Run, komorebic.exe identify-border-overflow exe Discord.exe, , Hide

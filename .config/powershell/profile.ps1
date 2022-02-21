@@ -19,6 +19,21 @@ function profile {
   nvim "$HOME\.config\powershell\profile.ps1"
 }
 
+function br {
+  $TempFile = New-TemporaryFile
+  broot.exe --outcmd $TempFile $Args
+
+  if (!$?)
+  {
+    Remove-Item -Force $TempFile
+    return $LASTEXITCODE
+  }
+
+  $CommandToExecute = Get-Content $TempFile
+  Remove-Item -Force $TempFile
+  Invoke-Expression $CommandToExecute
+}
+
 function winconfig {
   git --git-dir=$HOME/.dotfiles --work-tree=$HOME @args
 }
@@ -74,7 +89,7 @@ Function fs($path) {
   Select-Object Count, @{Name = "Size(MB)"; Expression = { '{0:N2}' -f ($_.Sum / 1MB) } }
 }
 
-Function which ($command) {
+Function whichh ($command) {
   Get-Command -Name $command -ErrorAction SilentlyContinue |
   Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
 }
