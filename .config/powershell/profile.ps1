@@ -2,10 +2,18 @@ $scripts = "$HOME\.config\powershell\Scripts"
 $env:path += ";$scripts"
 $env:EDITOR = "nvim"
 $env:PAGER = "bat"
+. "$HOME\.config\powershell\lf_icons.ps1"
 
 Set-Alias l lsd
 Set-Alias v nvim
 Set-Alias grep findstr
+Set-Alias -Name sed -Value C:\"Program Files"\Git\usr\bin\sed.exe
+Set-Alias -Name awk -Value C:\"Program Files"\Git\usr\bin\awk.exe
+Set-Alias -Name wc -Value C:\"Program Files"\Git\usr\bin\wc.exe
+Set-Alias -Name ln -Value C:\"Program Files"\Git\usr\bin\ln.exe
+Set-Alias -Name touch -Value C:\"Program Files"\Git\usr\bin\touch.exe
+Set-Alias -Name dirname -Value C:\"Program Files"\Git\usr\bin\dirname.exe
+Set-Alias -Name uniq -Value C:\"Program Files"\Git\usr\bin\uniq.exe
 
 function ll {
   lsd -l @args
@@ -17,21 +25,6 @@ function cpath {
 
 function profile {
   nvim "$HOME\.config\powershell\profile.ps1"
-}
-
-function br {
-  $TempFile = New-TemporaryFile
-  broot.exe --outcmd $TempFile $Args
-
-  if (!$?)
-  {
-    Remove-Item -Force $TempFile
-    return $LASTEXITCODE
-  }
-
-  $CommandToExecute = Get-Content $TempFile
-  Remove-Item -Force $TempFile
-  Invoke-Expression $CommandToExecute
 }
 
 function winconfig {
@@ -89,7 +82,7 @@ Function fs($path) {
   Select-Object Count, @{Name = "Size(MB)"; Expression = { '{0:N2}' -f ($_.Sum / 1MB) } }
 }
 
-Function whichh ($command) {
+Function which ($command) {
   Get-Command -Name $command -ErrorAction SilentlyContinue |
   Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
 }
@@ -126,84 +119,6 @@ Set-PSReadLineKeyHandler -Key Ctrl+Backspace -Function BackwardKillWord
 # swap tab and ctrl+space
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadLineKeyHandler -Key Ctrl+Spacebar -Function Complete
-
-# This key handler shows the entire or filtered history using Out-GridView. The
-# typed text is used as the substring pattern for filtering. A selected command
-# is inserted to the command line without invoking. Multiple command selection
-# is supported, e.g. selected by Ctrl + Click.
-Set-PSReadLineKeyHandler -Key F7 `
-  -BriefDescription History `
-  -LongDescription 'Show command history' `
-  -ScriptBlock {
-  $pattern = $null
-  [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$pattern, [ref]$null)
-  if ($pattern) {
-    $pattern = [regex]::Escape($pattern)
-  }
-
-  $history = [System.Collections.ArrayList]@(
-    $last = ''
-    $lines = ''
-    foreach ($line in [System.IO.File]::ReadLines((Get-PSReadLineOption).HistorySavePath)) {
-      if ($line.EndsWith('`')) {
-        $line = $line.Substring(0, $line.Length - 1)
-        $lines = if ($lines) {
-          "$lines`n$line"
-        }
-        else {
-          $line
-        }
-        continue
-      }
-
-      if ($lines) {
-        $line = "$lines`n$line"
-        $lines = ''
-      }
-
-      if (($line -cne $last) -and (!$pattern -or ($line -match $pattern))) {
-        $last = $line
-        $line
-      }
-    }
-  )
-  $history.Reverse()
-
-  $command = $history | Out-GridView -Title History -PassThru
-  if ($command) {
-    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-    [Microsoft.PowerShell.PSConsoleReadLine]::Insert(($command -join "`n"))
-  }
-}
-
-# Ctrl+Shift+j then type a key to mark the current directory. Ctrj+j then the
-# same key will change back to that directory without needing to type cd and
-# won't change the command line.
-$global:PSReadLineMarks = @{}
-
-Set-PSReadLineKeyHandler -Key Ctrl+J `
-  -BriefDescription MarkDirectory `
-  -LongDescription "Mark the current directory" `
-  -ScriptBlock {
-  param($key, $arg)
-
-  $key = [Console]::ReadKey($true)
-  $global:PSReadLineMarks[$key.KeyChar] = $pwd
-}
-
-Set-PSReadLineKeyHandler -Key Ctrl+j `
-  -BriefDescription JumpDirectory `
-  -LongDescription "Goto the marked directory" `
-  -ScriptBlock {
-  param($key, $arg)
-
-  $key = [Console]::ReadKey()
-  $dir = $global:PSReadLineMarks[$key.KeyChar]
-  if ($dir) {
-    Set-Location $dir
-    [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
-  }
-}
 
 Set-PSReadLineKeyHandler -Key Alt+i `
   -BriefDescription ShowDirectoryMarks `
@@ -434,7 +349,6 @@ $env:FZF_ALT_C_COMMAND = "fd --type d"
 Set-Alias -Name fe -Value Invoke-FuzzyEdit
 Set-Alias -Name fh -Value Invoke-FuzzyHistory
 Set-Alias -Name fk -Value Invoke-FuzzyKillProcess
-
 
 ### starship config
 # Usage: Add 'Invoke-Expression (&starship init powershell)' to the end of your
