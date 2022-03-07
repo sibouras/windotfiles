@@ -67,10 +67,13 @@ RAlt & c::
 return
 
 !i::Send, ^!{Tab}
-<!l::AltTab
->!l::AltTab
-<!h::ShiftAltTab
->!h::ShiftAltTab
+#IfWinActive, ahk_class MultitaskingViewFrame
+  h::Left
+  j::Down
+  k::Up
+  l::Right
+  q::Delete
+#IfWinActive
 
 ; switch to previous window
 !j::
