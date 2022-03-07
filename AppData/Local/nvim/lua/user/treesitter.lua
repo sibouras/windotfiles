@@ -18,7 +18,7 @@ configs.setup({
     enable = true,
   },
   autotag = {
-    enable = false,
+    enable = true,
   },
   highlight = {
     enable = true, -- false will disable the whole extension

@@ -18,7 +18,7 @@ local colors = {
 }
 
 local hide_in_width = function()
-  return vim.fn.winwidth(0) > 60
+  return vim.fn.winwidth(0) > 80
 end
 
 local diff = {

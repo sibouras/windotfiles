@@ -28,7 +28,7 @@ toggleterm.setup({
 
 function _G.set_terminal_keymaps()
   local opts = { noremap = true }
-  -- vim.api.nvim_buf_set_keymap(0, "t", "<esc>", [[<C-\><C-n>]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "df", [[<C-\><C-n>]], opts)
   vim.api.nvim_buf_set_keymap(0, "t", "`", [[<C-\><C-n>]], opts)
   vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
   vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
@@ -45,7 +45,7 @@ function _LAZYGIT_TOGGLE()
   lazygit:toggle()
 end
 
-vim.api.nvim_set_keymap("n", "<M-'>", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", {noremap = true, silent = true})
+vim.api.nvim_set_keymap("n", "<M-'>", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { noremap = true, silent = true })
 
 local node = Terminal:new({ cmd = "node", hidden = true })
 
@@ -58,3 +58,7 @@ local python = Terminal:new({ cmd = "python", hidden = true })
 function _PYTHON_TOGGLE()
   python:toggle()
 end
+
+vim.cmd([[
+command! -count=1 Node lua require'toggleterm'.exec("node " .. vim.fn.expand('%'), <count>, 12)
+]])

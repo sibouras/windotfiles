@@ -30,3 +30,11 @@ vim.cmd([[
 
 -- automatically open quickfix window and don't jump to first match
 vim.cmd([[command! -nargs=+ Grep execute 'silent grep! <args>' | copen]])
+
+-- create new file with :e even if directory doesn't exist
+vim.cmd([[
+augroup Mkdir
+  autocmd!
+  autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
+augroup END
+]])

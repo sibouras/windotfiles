@@ -34,7 +34,7 @@ keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
 -- Navigate buffers
 keymap("i", "<M-w>", "<esc><C-^>", opts)
 keymap("n", "<M-w>", "<C-^>", opts)
-keymap("n", "<M-d>", ":BDelete this<CR>", opts)
+keymap("n", "<M-d>", ":BDelete! this<CR>", opts)
 keymap("n", "]b", ":bnext", opts)
 keymap("n", "[b", ":bprevious<CR>", opts)
 keymap("n", "<M-.>", ":bnext<CR>", opts)
@@ -48,7 +48,7 @@ keymap("n", "Q", ":BDelete hidden<CR>", opts)
 -- keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- df to escape
--- keymap("i", "df", "<ESC>", opts)
+keymap("i", "df", "<ESC>", opts)
 
 -- quick save
 keymap("n", "<M-s>", ":w<CR>", opts)
@@ -102,14 +102,17 @@ keymap("n", "g.", '/\\V<C-r>"<CR>cgn<C-a><Esc>', {})
 -- search for the word under the cursor and perform cgn on it
 keymap("n", "cg*", "*Ncgn", {})
 
+-- Double space over word to find and replace.
+keymap("n", "<leader>rw", [[:%s/\<<C-r>=expand("<cword>")<CR>\>//g<Left><Left>]], {})
+
 -- Press * to search for the term under the cursor or a visual selection and
 -- then press a key below to replace all instances of it in the current file.
-keymap("n", "<leader>r", ":%s///g<Left><Left>", {})
+keymap("n", "<leader>rr", ":%s///g<Left><Left>", {})
 keymap("n", "<leader>rc", ":%s///gc<Left><left><Left>", {})
 
 -- The same as above but instead of acting on the whole file it will be
 -- restricted to the previously visually selected range.
-keymap("x", "<leader>r", ":s///g<Left><Left>", {})
+keymap("x", "<leader>rr", ":s///g<Left><Left>", {})
 keymap("x", "<leader>rc", ":s///gc<Left><left><Left>", {})
 
 -- Toggle spell check.
@@ -155,7 +158,8 @@ keymap("n", "<leader>D", '"_D', opts)
 keymap("n", "<leader>cd", ":cd %:p:h<CR>:pwd<CR>", opts)
 
 -- Copy filename to clipboard
-keymap("n", "<leader>cs", ":let @*=expand('%')<CR>:echo expand('%')<CR>", opts)
+-- keymap("n", "<leader>cs", ":let @*=expand('%')<CR>:echo expand('%')<CR>", opts)
+keymap("n", "<leader>cs", ":echo expand('%')<CR>", opts)
 keymap("n", "<leader>cl", ":let @*=expand('%:p')<CR>:echo expand('%:p')<CR>", opts)
 -- nnoremap <silent> <leader>yf :call setreg(v:register, expand('%:p'))<CR>
 
@@ -166,17 +170,6 @@ keymap("i", "<S-Insert>", "<C-r>+", opts)
 
 -- reselect pasted text
 keymap("n", "sp", "`[v`]", opts)
-
--- visual-at from: You don’t need more than one cursor in vim
--- https://medium.com/@schtoeffel/you-don-t-need-more-than-one-cursor-in-vim-2c44117d51db#.mrcxaaybf
-vim.cmd([[
-  xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
-  function! ExecuteMacroOverVisualRange()
-    echo "@".getcmdline()
-    execute ":'<,'>normal @".nr2char(getchar())
-  endfunction
-]])
 
 -- Quickly edit your macros(from vim-galore)
 keymap("n", "<leader>m", ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>", opts)
@@ -204,75 +197,49 @@ keymap("n", "]<space>", "o<Esc>", {})
 keymap("n", "zl", "10zl", opts)
 keymap("n", "zh", "10zh", opts)
 
--- rename current file
-vim.cmd([[
-function! s:RenameFile()
-  let old_name = expand('%')
-  let new_name = input('Rename: ', expand('%'), 'file')
-  if new_name != '' && new_name != old_name
-    exec ':saveas ' . new_name
-    call delete(expand('#:p')) | bd # | redraw!
-  endif
-endfunction
-" map <leader>n :call RenameFile()<cr>
-command! Rename call <SID>RenameFile()
-]])
-
--- remove current file
-vim.cmd([[
-function! s:RemoveFile()
-  let choice = confirm("Remove file?", "&Yes!\n&No", 1)
-  if choice == 1
-    call delete(expand('%:p')) | bdelete!
-  endif
-endfunction
-command! Remove call <SID>RemoveFile()
-]])
-
--- Redirect the output of a Vim or external command into a scratch buffer
--- source: https://gist.github.com/romainl/eae0a260ab9c135390c30cd370c20cd7
-vim.cmd([[
-function! Redir(cmd, rng, start, end)
-  for win in range(1, winnr('$'))
-    if getwinvar(win, 'scratch')
-      execute win . 'windo close'
-    endif
-  endfor
-  if a:cmd =~ '^!'
-    let cmd = a:cmd =~' %'
-      \ ? matchstr(substitute(a:cmd, ' %', ' ' . expand('%:p'), ''), '^!\zs.*')
-      \ : matchstr(a:cmd, '^!\zs.*')
-    if a:rng == 0
-      let output = systemlist(cmd)
-    else
-      let joined_lines = join(getline(a:start, a:end), '\n')
-      let cleaned_lines = substitute(shellescape(joined_lines), "'\\\\''", "\\\\'", 'g')
-      let output = systemlist(cmd . " <<< $" . cleaned_lines)
-    endif
-  else
-    redir => output
-    execute a:cmd
-    redir END
-    let output = split(output, "\n")
-  endif
-  vnew
-  let w:scratch = 1
-  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
-  call setline(1, output)
-endfunction
-
-command! -nargs=1 -complete=command -bar -range Redir silent call Redir(<q-args>, <range>, <line1>, <line2>)
-]])
-
---  %% expands to the path of the directory that contains the current file.
+-- %% expands to the path of the directory that contains the current file.
 -- works with with :cd, :grep etc.
 vim.cmd("cabbr <expr> %% expand('%:h')")
 
 -- type \e  to enter :e /some/path/ on the command line.
 keymap("n", "<Bslash>e", ":e <C-R>=expand('%:h') . '/'<CR>", {})
 
---------------------------- Plugins ---------------------------
----------------------------------------------------------------
+-- Use curl to upload visual selection to ix.io to easily share it: http://ix.io/3QMC
+keymap("v", "<Bslash>c", [[:w !curl -F "f:1=<-" ix.io<CR>]], opts)
+
+-- Append ; at end of line
+keymap("n", "<leader>;", [[:execute "normal! mqA;\<lt>esc>`q"<enter>]], opts)
+
+-- open window in new tab
+keymap("n", "<leader>tn", "<C-w>T", opts)
+
+-- edit keymaps in new tab
+keymap("n", "<leader>tk", ":tabe $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>", opts)
+
+vim.cmd([[
+iab <expr> t/ strftime('TODO(' . '%Y-%m-%d):')
+" Open help and man pages in a tab:
+cab help tab help
+]])
+
+keymap("v", "<leader>cy", ":call functions#CompleteYank()<CR>", opts)
+keymap("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>", {})
+
+----------------------------------
+--- definition of new commands ---
+----------------------------------
+vim.cmd([[
+command! TS silent! call functions#T2S()
+command! ST silent! call functions#S2T()
+command! Rf silent! call functions#ReplaceFile()
+command! Rename call functions#RenameFile()
+command! Remove call functions#RemoveFile()
+command! -nargs=1 -complete=command -bar -range Redir silent call functions#Redir(<q-args>, <range>, <line1>, <line2>)
+]])
+
+-----------------------------------
+------------- Plugins -------------
+-----------------------------------
 -- => telescope.nvim
 ---------------------------------------------------------------
 -- keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
@@ -285,12 +252,23 @@ keymap("n", "<Bslash>e", ":e <C-R>=expand('%:h') . '/'<CR>", {})
 keymap(
   "n",
   "<leader>fd",
-  "<cmd>lua require'telescope.builtin'.find_files({ cwd='~/.config/symlinks', prompt_title='dotfiles' })<cr>",
+  "<cmd>lua require'telescope.builtin'.find_files({ cwd = '~/.config/symlinks', prompt_title = 'Dotfiles' })<cr>",
   opts
 )
-keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-keymap("n", "<leader>fr", ":Telescope resume<CR>", opts)
-keymap("n", "<leader>b", ":Telescope buffers<CR>", opts)
+keymap(
+  "n",
+  "<leader>ff",
+  "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h'), prompt_title = 'From Current Buffer' })<cr>",
+  opts
+)
+keymap("n", "<leader>fs", ":Telescope find_files<CR>", opts)
+keymap("n", "<leader>fe", ":Telescope resume<CR>", opts)
+keymap(
+  "n",
+  "<leader>b",
+  ":lua require'telescope.builtin'.buffers{ sort_lastused = true, ignore_current_buffer = true }<CR>",
+  opts
+)
 keymap("n", "<leader>fo", ":Telescope oldfiles<CR>", opts)
 keymap("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
 keymap("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>", opts)
@@ -363,11 +341,17 @@ keymap("v", "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true
 ---------------------------------------------------------------
 -- => hop.nvim
 ---------------------------------------------------------------
-keymap("", "sf", "<cmd>HopChar2<CR>", opts)
-keymap("", "sg", "<cmd>HopChar1<CR>", opts)
-keymap("", "sj", "<cmd>HopLineStartAC<CR>", opts)
-keymap("", "sk", "<cmd>HopLineStartBC<CR>", opts)
-keymap("", "s/", "<cmd>HopPattern<CR>", opts)
+-- keymap("", "sf", "<cmd>HopChar2<CR>", opts)
+-- keymap("", "sg", "<cmd>HopChar1<CR>", opts)
+-- keymap("", "sj", "<cmd>HopLineStartAC<CR>", opts)
+-- keymap("", "sk", "<cmd>HopLineStartBC<CR>", opts)
+-- keymap("", "s/", "<cmd>HopPattern<CR>", opts)
+
+---------------------------------------------------------------
+-- => pounce.nvim
+---------------------------------------------------------------
+keymap("", "sf", "<cmd>Pounce<CR>", opts)
+keymap("", "S", "<cmd>PounceRepeat<CR>", opts)
 
 ---------------------------------------------------------------
 -- => bufferline.nvim
