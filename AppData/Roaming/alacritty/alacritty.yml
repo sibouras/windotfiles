@@ -182,7 +182,8 @@ schemes:
   tokyo-night: &tokyo-night # Default colors
     primary:
       background: "0x1a1b26"
-      foreground: "0xa9b1d6"
+      # foreground: "0xa9b1d6"
+      foreground: "0xc0caf5"
 
     # Normal colors
     normal:
@@ -471,7 +472,7 @@ shell:
   #  program: /bin/bash
   #  program: "C:\\Windows\\System32\\wsl.exe"
   # program: "C:\\archlinux\\Arch.exe"
-  program: "pwsh"
+  program: "nu"
 #  args:
 #    - --login
 
@@ -751,7 +752,7 @@ working_directory: /users/marzouk
 # in the order they were defined in.
 key_bindings:
   - { key: Back, mods: Control, chars: "\x1b\x7f" }
-  - { key: Key0, mods: Control, action: CreateNewWindow }
+  - { key: Backslash, mods: Control, action: CreateNewWindow }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
