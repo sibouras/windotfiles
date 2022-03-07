@@ -16,10 +16,16 @@
 
   ; tab picker
   !e::Send, ^+a
+
+  ; No single alt
+  Alt::KeyWait Alt
 }
 #IfWinActive
 
 #IfWinActive, ahk_class CabinetWClass
+  ^BS::Send ^+{Left}{del}
+  ^u:: Send +{home}{del}
+
   +Backspace::Send !{Up}
 
   !,::Send, ^+{Tab}
@@ -59,3 +65,8 @@
     Send, {tab}
   return
 #IfWinNotActive
+
+#IfWinActive ahk_class AutoHotkeyGUI
+  ^BS:: Send ^+{left}{del}
+  ^u:: Send +{home}{del}
+#IfWinActive
