@@ -71,11 +71,28 @@ vim.opt.fillchars:append({ fold = " " })
 
 vim.g.python3_host_prog = "python3"
 
--- disable builtin plugins
-vim.g.loaded_gzip = false
-vim.g.loaded_tar = false
-vim.g.loaded_tarPlugin = false
-vim.g.zipPlugin = false
-vim.g.loaded_zipPlugin = false
-vim.g.loaded_2html_plugin = false
-vim.g.loaded_remote_plugins = false
+-- Disable builtin plugins
+local disabled_built_ins = {
+  -- "netrw", -- keep it for enter key to work in wiki.vim
+  -- "netrwPlugin", -- keep it for gx to work
+  "netrwSettings",
+  "netrwFileHandlers",
+  "gzip",
+  "zip",
+  "zipPlugin",
+  "tar",
+  "tarPlugin",
+  "getscript",
+  "getscriptPlugin",
+  "vimball",
+  "vimballPlugin",
+  "2html_plugin",
+  "logipat",
+  "rrhelper",
+  "spellfile_plugin",
+  -- "matchit"
+}
+
+for _, plugin in pairs(disabled_built_ins) do
+  vim.g["loaded_" .. plugin] = 1
+end

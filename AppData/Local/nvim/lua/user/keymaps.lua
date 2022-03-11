@@ -1,71 +1,72 @@
-local opts = { noremap = true, silent = true }
-
--- Shorten function name
-local keymap = vim.api.nvim_set_keymap
+local function map(mode, lhs, rhs, opts)
+  local options = { noremap = true, silent = true }
+  if opts then
+    options = vim.tbl_extend("force", options, opts)
+  end
+  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
 
 --Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts)
+map("", "<Space>", "<Nop>")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Modes
---   normal_mode = "n",
---   insert_mode = "i",
---   visual_mode = "v",
---   visual_block_mode = "x",
---   term_mode = "t",
---   command_mode = "c",
-
 -- Quit vim
-keymap("n", "<M-F4>", ":qa!<CR>", opts)
+map("n", "<M-F4>", ":qa!<CR>")
 
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+map("n", "<C-h>", "<C-w>h")
+map("n", "<C-j>", "<C-w>j")
+map("n", "<C-k>", "<C-w>k")
+map("n", "<C-l>", "<C-w>l")
 
 -- Resize with arrows
-keymap("n", "<C-Up>", ":resize -2<CR>", opts)
-keymap("n", "<C-Down>", ":resize +2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize +2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize -2<CR>", opts)
+map("n", "<C-Up>", ":resize -2<CR>")
+map("n", "<C-Down>", ":resize +2<CR>")
+map("n", "<C-Left>", ":vertical resize +2<CR>")
+map("n", "<C-Right>", ":vertical resize -2<CR>")
 
 -- Navigate buffers
-keymap("i", "<M-w>", "<esc><C-^>", opts)
-keymap("n", "<M-w>", "<C-^>", opts)
-keymap("n", "<M-d>", ":BDelete! this<CR>", opts)
-keymap("n", "]b", ":bnext", opts)
-keymap("n", "[b", ":bprevious<CR>", opts)
-keymap("n", "<M-.>", ":bnext<CR>", opts)
-keymap("i", "<M-.>", "<Esc>:bnext<CR>", opts)
-keymap("n", "<M-,>", ":bprevious<CR>", opts)
-keymap("i", "<M-,>", "<Esc>:bprevious<CR>", opts)
-keymap("n", "Q", ":BDelete hidden<CR>", opts)
+map("i", "<M-w>", "<esc><C-^>")
+map("n", "<M-w>", "<C-^>")
+map("n", "<M-d>", ":BDelete! this<CR>")
+map("n", "]b", ":bnext")
+map("n", "[b", ":bprevious<CR>")
+map("n", "<M-.>", ":bnext<CR>")
+map("i", "<M-.>", "<Esc>:bnext<CR>")
+map("n", "<M-,>", ":bprevious<CR>")
+map("i", "<M-,>", "<Esc>:bprevious<CR>")
+map("n", "Q", ":BDelete hidden<CR>")
+
+-- Navigate tabs
+-- Number + , to select a tab, i.e. type 1, to select the first tab.
+for i = 1, 5 do
+  map("n", i .. ",", i .. "gt")
+end
 
 -- Move text up and down(using nvim-gomove instead)
--- keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
--- keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
+-- map("n", "<A-j>", "<Esc>:m .+1<CR>==gi")
+-- map("n", "<A-k>", "<Esc>:m .-2<CR>==gi")
 
 -- df to escape
-keymap("i", "df", "<ESC>", opts)
+map("i", "df", "<ESC>")
 
 -- quick save
-keymap("n", "<M-s>", ":w<CR>", opts)
-keymap("i", "<M-s>", "<Esc>:w<CR>", opts)
+map("n", "<M-s>", ":w<CR>")
+map("i", "<M-s>", "<Esc>:w<CR>")
 
 -- Ctrl-Backspace to delete the previous word
-keymap("i", "<C-BS>", "<C-W>", opts)
-keymap("c", "<C-BS>", "<C-W>", {})
+map("i", "<C-BS>", "<C-W>")
+map("c", "<C-BS>", "<C-W>", { silent = false })
 
 -- ctrl-z to undo
-keymap("i", "<C-z>", "<C-o>:u<CR>", opts)
+map("i", "<C-z>", "<C-o>:u<CR>")
 
 -- undo break points
-keymap("i", ",", ",<c-g>u", opts)
-keymap("i", ".", ".<c-g>u", opts)
-keymap("i", "!", "!<c-g>u", opts)
-keymap("i", "?", "?<c-g>u", opts)
+map("i", ",", ",<c-g>u")
+map("i", ".", ".<c-g>u")
+map("i", "!", "!<c-g>u")
+map("i", "?", "?<c-g>u")
 
 -- jumplit mutations
 vim.cmd([[
@@ -74,7 +75,7 @@ vim.cmd([[
 ]])
 
 -- Keep the cursor in place while joining lines
-keymap("n", "J", "mzJ`z", opts)
+map("n", "J", "mzJ`z")
 
 vim.cmd([[
   " line text object
@@ -95,126 +96,126 @@ vim.cmd([[
 ]])
 
 -- search for visually selected text
-keymap("v", "//", [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], {})
+map("v", "//", [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], { silent = false })
 
 -- use . to repeat a regular c-prefixed command as if it were perforced using cgn.
-keymap("n", "g.", '/\\V<C-r>"<CR>cgn<C-a><Esc>', {})
+map("n", "g.", '/\\V<C-r>"<CR>cgn<C-a><Esc>', { silent = false })
 -- search for the word under the cursor and perform cgn on it
-keymap("n", "cg*", "*Ncgn", {})
+map("n", "cg*", "*Ncgn", { silent = false })
 
 -- Double space over word to find and replace.
-keymap("n", "<leader>rw", [[:%s/\<<C-r>=expand("<cword>")<CR>\>//g<Left><Left>]], {})
+map("n", "<leader>rw", [[:%s/\<<C-r>=expand("<cword>")<CR>\>//g<Left><Left>]], { silent = false })
 
 -- Press * to search for the term under the cursor or a visual selection and
 -- then press a key below to replace all instances of it in the current file.
-keymap("n", "<leader>rr", ":%s///g<Left><Left>", {})
-keymap("n", "<leader>rc", ":%s///gc<Left><left><Left>", {})
+map("n", "<leader>rr", ":%s///g<Left><Left>", { silent = false })
+map("n", "<leader>rc", ":%s///gc<Left><left><Left>", { silent = false })
 
 -- The same as above but instead of acting on the whole file it will be
 -- restricted to the previously visually selected range.
-keymap("x", "<leader>rr", ":s///g<Left><Left>", {})
-keymap("x", "<leader>rc", ":s///gc<Left><left><Left>", {})
+map("x", "<leader>rr", ":s///g<Left><Left>", { silent = false })
+map("x", "<leader>rc", ":s///gc<Left><left><Left>", { silent = false })
 
 -- Toggle spell check.
-keymap("n", "<F5>", ":setlocal spell!<CR>", opts)
+map("n", "<F5>", ":setlocal spell!<CR>")
 
 -- delete all trailing whitespace
-keymap("n", "<F6>", [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]], opts)
+map("n", "<F6>", [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]])
 
 -- Toggle visually showing all whitespace characters.
-keymap("n", "<F7>", ":set list!<CR>", opts)
-keymap("i", "<F7>", "<C-o>:set list!<CR>", opts)
+map("n", "<F7>", ":set list!<CR>")
+map("i", "<F7>", "<C-o>:set list!<CR>")
 
 -- Toggle relative line numbers and regular line numbers.
-keymap("n", "<F8>", ":set invrelativenumber<CR>", opts)
+map("n", "<F8>", ":set invrelativenumber<CR>")
 
 -- Navigate quickfix list
-keymap("n", "[q", ":cprevious<CR>", opts)
-keymap("n", "]q", ":cnext<CR>", opts)
+map("n", "[q", ":cprevious<CR>")
+map("n", "]q", ":cnext<CR>")
 
 -- yank to system clipboard
-keymap("n", "<M-y>", '"+y', opts)
-keymap("v", "<M-y>", '"+y', opts)
-keymap("n", "<M-p>", '"+p', opts)
-keymap("v", "<M-p>", '"+p', opts)
-keymap("i", "<M-p>", "<C-r>+", opts)
-keymap("c", "<M-p>", "<C-r>+", {})
-keymap("n", "<M-S-p>", '"+P', opts)
-keymap("v", "<M-S-p>", '"+P', opts)
+map("n", "<M-y>", '"+y')
+map("v", "<M-y>", '"+y')
+map("n", "<M-p>", '"+p')
+map("v", "<M-p>", '"+p')
+map("i", "<M-p>", "<C-r>+")
+map("c", "<M-p>", "<C-r>+")
+map("n", "<M-S-p>", '"+P')
+map("v", "<M-S-p>", '"+P')
 
 -- Copies last yank/cut to clipboard register
-keymap("n", "<leader>cp", ':let @*=@"<CR>', opts)
+map("n", "<leader>cp", ':let @*=@"<CR>')
 
 -- Redirect change/delete operations to the blackhole
-keymap("n", "<leader>c", '"_c', opts)
-keymap("n", "<leader>C", '"_C', opts)
-keymap("n", "<leader>d", '"_d', opts)
-keymap("n", "<leader>D", '"_D', opts)
+map("n", "<leader>c", '"_c')
+map("n", "<leader>C", '"_C')
+map("n", "<leader>d", '"_d')
+map("n", "<leader>D", '"_D')
 -- -- x and X won't alter the register
--- keymap("n", "x", '"_x', opts)
--- keymap("n", "X", '"_X', opts)
+-- map("n", "x", '"_x')
+-- map("n", "X", '"_X')
 
 -- change directory to the file being edited and print the directory after changing
-keymap("n", "<leader>cd", ":cd %:p:h<CR>:pwd<CR>", opts)
+map("n", "<leader>cd", ":cd %:p:h<CR>:pwd<CR>")
 
 -- Copy filename to clipboard
--- keymap("n", "<leader>cs", ":let @*=expand('%')<CR>:echo expand('%')<CR>", opts)
-keymap("n", "<leader>cs", ":echo expand('%')<CR>", opts)
-keymap("n", "<leader>cl", ":let @*=expand('%:p')<CR>:echo expand('%:p')<CR>", opts)
+-- map("n", "<leader>cs", ":let @*=expand('%')<CR>:echo expand('%')<CR>")
+map("n", "<leader>cs", ":echo expand('%')<CR>")
+map("n", "<leader>cl", ":let @*=expand('%:p')<CR>:echo expand('%:p')<CR>")
 -- nnoremap <silent> <leader>yf :call setreg(v:register, expand('%:p'))<CR>
 
 -- paste from ditto
-keymap("n", "<S-Insert>", '"+p', opts)
-keymap("v", "<S-Insert>", '"+p', opts)
-keymap("i", "<S-Insert>", "<C-r>+", opts)
+map("n", "<S-Insert>", '"+p')
+map("v", "<S-Insert>", '"+p')
+map("i", "<S-Insert>", "<C-r>+")
 
 -- reselect pasted text
-keymap("n", "sp", "`[v`]", opts)
+map("n", "sp", "`[v`]")
 
 -- Quickly edit your macros(from vim-galore)
-keymap("n", "<leader>m", ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>", opts)
+map("n", "<leader>m", ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>")
 
 -- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+map("v", "<", "<gv")
+map("v", ">", ">gv")
 
 -- unexpected behavior when pasting above highlighted text(broken mapping)
--- keymap("v", "p", '"_dP', opts)
+-- map("v", "p", '"_dP')
 
 -- format
-keymap("n", "<M-S-f>", ":Format<cr>", opts)
+map("n", "<M-S-f>", ":Format<cr>")
 
 -- remove highlight
-keymap("n", "<esc>", ":noh<cr>", opts)
+map("n", "<esc>", ":noh<cr>")
 
 -- Quickly add empty lines
--- keymap("n", "[<space>", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[", opts)
--- keymap("n", "]<space>", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>", opts)
-keymap("n", "[<space>", "O<Esc>", {})
-keymap("n", "]<space>", "o<Esc>", {})
+-- map("n", "[<space>", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[")
+-- map("n", "]<space>", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>")
+map("n", "[<space>", "O<Esc>")
+map("n", "]<space>", "o<Esc>")
 
 -- faster horizontal navigation
-keymap("n", "zl", "10zl", opts)
-keymap("n", "zh", "10zh", opts)
+map("n", "zl", "10zl")
+map("n", "zh", "10zh")
 
 -- %% expands to the path of the directory that contains the current file.
 -- works with with :cd, :grep etc.
 vim.cmd("cabbr <expr> %% expand('%:h')")
 
 -- type \e  to enter :e /some/path/ on the command line.
-keymap("n", "<Bslash>e", ":e <C-R>=expand('%:h') . '/'<CR>", {})
+map("n", "<Bslash>e", ":e <C-R>=expand('%:h') . '\\'<CR>", { silent = false })
 
 -- Use curl to upload visual selection to ix.io to easily share it: http://ix.io/3QMC
-keymap("v", "<Bslash>c", [[:w !curl -F "f:1=<-" ix.io<CR>]], opts)
+map("v", "<Bslash>c", [[:w !curl -F "f:1=<-" ix.io<CR>]])
 
 -- Append ; at end of line
-keymap("n", "<leader>;", [[:execute "normal! mqA;\<lt>esc>`q"<enter>]], opts)
+map("n", "<leader>;", [[:execute "normal! mqA;\<lt>esc>`q"<enter>]])
 
 -- open window in new tab
-keymap("n", "<leader>tn", "<C-w>T", opts)
+map("n", "<leader>tn", "<C-w>T")
 
 -- edit keymaps in new tab
-keymap("n", "<leader>tk", ":tabe $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>", opts)
+map("n", "<leader>tk", ":tabe $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>")
 
 vim.cmd([[
 iab <expr> t/ strftime('TODO(' . '%Y-%m-%d):')
@@ -222,8 +223,8 @@ iab <expr> t/ strftime('TODO(' . '%Y-%m-%d):')
 cab help tab help
 ]])
 
-keymap("v", "<leader>cy", ":call functions#CompleteYank()<CR>", opts)
-keymap("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>", {})
+map("v", "<leader>cy", ":call functions#CompleteYank()<CR>")
+map("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>")
 
 ----------------------------------
 --- definition of new commands ---
@@ -240,128 +241,126 @@ command! -nargs=1 -complete=command -bar -range Redir silent call functions#Redi
 -----------------------------------
 ------------- Plugins -------------
 -----------------------------------
+
+---------------------------------------------------------------
 -- => telescope.nvim
 ---------------------------------------------------------------
--- keymap("n", "<leader>f", "<cmd>Telescope find_files<cr>", opts)
--- keymap(
+-- map("n", "<leader>f", "<cmd>Telescope find_files<cr>")
+-- map(
 --   "n",
 --   "<leader>f",
---   "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
---   opts
+--   "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>"
 -- )
-keymap(
+map(
   "n",
   "<leader>fd",
-  "<cmd>lua require'telescope.builtin'.find_files({ cwd = '~/.config/symlinks', prompt_title = 'Dotfiles' })<cr>",
-  opts
+  "<cmd>lua require'telescope.builtin'.find_files({ cwd = '~/.config/symlinks', prompt_title = 'Dotfiles' })<cr>"
 )
-keymap(
+map(
   "n",
   "<leader>ff",
-  "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h'), prompt_title = 'From Current Buffer' })<cr>",
-  opts
+  "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h'), prompt_title = 'From Current Buffer' })<cr>"
 )
-keymap("n", "<leader>fs", ":Telescope find_files<CR>", opts)
-keymap("n", "<leader>fe", ":Telescope resume<CR>", opts)
-keymap(
-  "n",
-  "<leader>b",
-  ":lua require'telescope.builtin'.buffers{ sort_lastused = true, ignore_current_buffer = true }<CR>",
-  opts
-)
-keymap("n", "<leader>fo", ":Telescope oldfiles<CR>", opts)
-keymap("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
-keymap("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>", opts)
-keymap("n", "q/", ":Telescope search_history<CR>", opts)
-keymap("n", "q:", ":Telescope command_history<CR>", opts)
-keymap("n", "<leader>p", ":Telescope workspaces<CR>", opts)
-keymap("n", "<leader>fn", ":Telescope neoclip<CR>", opts)
-keymap("n", "<leader>lr", ":Telescope lsp_references<CR>", opts)
-keymap("n", "<leader>ld", ":Telescope lsp_definitions<CR>", opts)
-keymap("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>", opts)
-keymap("n", "<leader>lt", ":Telescope treesitter<CR>", opts)
+map("n", "<leader>fs", ":Telescope find_files<CR>")
+map("n", "<leader>fe", ":Telescope resume<CR>")
+-- map(
+--   "n",
+--   "<leader>b",
+--   ":lua require'telescope.builtin'.buffers{ sort_lastused = true, ignore_current_buffer = false }<CR>"
+-- )
+map("n", "<leader>b", ":Telescope buffers<CR>")
+map("n", "<leader>fo", ":Telescope oldfiles<CR>")
+map("n", "<leader>fg", ":Telescope live_grep<CR>")
+map("n", "<leader>fk", ":Telescope keymaps<CR>")
+map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>")
+map("n", "q/", ":Telescope search_history<CR>")
+map("n", "q:", ":Telescope command_history<CR>")
+map("n", "<leader>p", ":Telescope workspaces<CR>")
+map("n", "<leader>fn", ":Telescope neoclip<CR>")
+map("n", "<leader>lr", ":Telescope lsp_references<CR>")
+map("n", "<leader>ld", ":Telescope lsp_definitions<CR>")
+map("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>")
+map("n", "<leader>lt", ":Telescope treesitter<CR>")
 
 ---------------------------------------------------------------
 -- => lir.nvim, nvim-tree.nvim
 ---------------------------------------------------------------
--- keymap("n", "<leader>e", ":lua require'lir.float'.toggle()<CR>", opts)
-keymap("n", "<M-e>", ":NvimTreeToggle<CR>", opts)
-keymap("n", "<leader>e", ":NvimTreeFindFileToggle<CR>", opts)
+-- map("n", "<leader>e", ":lua require'lir.float'.toggle()<CR>")
+map("n", "<M-e>", ":NvimTreeToggle<CR>")
+map("n", "<leader>e", ":NvimTreeFindFileToggle<CR>")
 
 ---------------------------------------------------------------
 -- => gomove.nvim
 ---------------------------------------------------------------
-keymap("n", "<M-Left>", "<Plug>GoNSMLeft", {})
-keymap("n", "<M-Down>", "<Plug>GoNSMDown", {})
-keymap("n", "<M-Up>", "<Plug>GoNSMUp", {})
-keymap("n", "<M-Right>", "<Plug>GoNSMRight", {})
+map("n", "<M-Left>", "<Plug>GoNSMLeft", { noremap = false })
+map("n", "<M-Down>", "<Plug>GoNSMDown", { noremap = false })
+map("n", "<M-Up>", "<Plug>GoNSMUp", { noremap = false })
+map("n", "<M-Right>", "<Plug>GoNSMRight", { noremap = false })
 
-keymap("x", "<M-Left>", "<Plug>GoVSMLeft", {})
-keymap("x", "<M-Down>", "<Plug>GoVSMDown", {})
-keymap("x", "<M-Up>", "<Plug>GoVSMUp", {})
-keymap("x", "<M-Right>", "<Plug>GoVSMRight", {})
+map("x", "<M-Left>", "<Plug>GoVSMLeft", { noremap = false })
+map("x", "<M-Down>", "<Plug>GoVSMDown", { noremap = false })
+map("x", "<M-Up>", "<Plug>GoVSMUp", { noremap = false })
+map("x", "<M-Right>", "<Plug>GoVSMRight", { noremap = false })
 
-keymap("n", "<M-S-Left>", "<Plug>GoNSDLeft", {})
-keymap("n", "<M-S-Down>", "<Plug>GoNSDDown", {})
-keymap("n", "<M-S-Up>", "<Plug>GoNSDUp", {})
-keymap("n", "<M-S-Right>", "<Plug>GoNSDRight", {})
+map("n", "<M-S-Left>", "<Plug>GoNSDLeft", { noremap = false })
+map("n", "<M-S-Down>", "<Plug>GoNSDDown", { noremap = false })
+map("n", "<M-S-Up>", "<Plug>GoNSDUp", { noremap = false })
+map("n", "<M-S-Right>", "<Plug>GoNSDRight", { noremap = false })
 
-keymap("x", "<M-S-Left>", "<Plug>GoVSDLeft", {})
-keymap("x", "<M-S-Down>", "<Plug>GoVSDDown", {})
-keymap("x", "<M-S-Up>", "<Plug>GoVSDUp", {})
-keymap("x", "<M-S-Right>", "<Plug>GoVSDRight", {})
+map("x", "<M-S-Left>", "<Plug>GoVSDLeft", { noremap = false })
+map("x", "<M-S-Down>", "<Plug>GoVSDDown", { noremap = false })
+map("x", "<M-S-Up>", "<Plug>GoVSDUp", { noremap = false })
+map("x", "<M-S-Right>", "<Plug>GoVSDRight", { noremap = false })
 
 ---------------------------------------------------------------
 -- => harpoon.nvim
 ---------------------------------------------------------------
-keymap("n", "<leader>ha", ":lua require('harpoon.mark').add_file()<CR>", opts)
-keymap("n", "<M-f>", ":lua require('harpoon.ui').toggle_quick_menu()<CR>", opts)
--- keymap("n", "<leader>hc", ":lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>", opts)
-keymap("n", "<leader>1", ":lua require('harpoon.ui').nav_file(1)<CR>", opts)
-keymap("n", "<leader>2", ":lua require('harpoon.ui').nav_file(2)<CR>", opts)
-keymap("n", "<leader>3", ":lua require('harpoon.ui').nav_file(3)<CR>", opts)
-keymap("n", "<leader>4", ":lua require('harpoon.ui').nav_file(4)<CR>", opts)
-keymap("n", "<leader>5", ":lua require('harpoon.ui').nav_file(5)<CR>", opts)
+map("n", "<leader>ha", ":lua require('harpoon.mark').add_file()<CR>")
+map("n", "<M-f>", ":lua require('harpoon.ui').toggle_quick_menu()<CR>")
+-- map("n", "<leader>hc", ":lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>")
+for i = 1, 5 do
+  map("n", "<leader>" .. i, ":lua require('harpoon.ui').nav_file(" .. i .. ")<CR>")
+end
 
 --------------------------------------------------------------
 -- => auto-session, session-lens
 ---------------------------------------------------------------
-keymap("n", "<leader>sl", ":SessionsLoad<CR>", opts)
-keymap("n", "<leader>ss", ":SessionsSave<CR>", opts)
-keymap("n", "<leader>sd", ":SessionsStop<CR>", opts)
+map("n", "<leader>sl", ":SessionsLoad<CR>")
+map("n", "<leader>ss", ":SessionsSave<CR>")
+map("n", "<leader>sd", ":SessionsStop<CR>")
 
 ---------------------------------------------------------------
 -- => vim-illuminate
 ---------------------------------------------------------------
-keymap("n", "<M-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
-keymap("n", "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
-keymap("v", "<M-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
-keymap("v", "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
+map("n", "<M-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>')
+map("n", "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
+map("v", "<M-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>')
+map("v", "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
 
 ---------------------------------------------------------------
 -- => hop.nvim
 ---------------------------------------------------------------
--- keymap("", "sf", "<cmd>HopChar2<CR>", opts)
--- keymap("", "sg", "<cmd>HopChar1<CR>", opts)
--- keymap("", "sj", "<cmd>HopLineStartAC<CR>", opts)
--- keymap("", "sk", "<cmd>HopLineStartBC<CR>", opts)
--- keymap("", "s/", "<cmd>HopPattern<CR>", opts)
+-- map("", "sf", "<cmd>HopChar2<CR>")
+-- map("", "sg", "<cmd>HopChar1<CR>")
+-- map("", "sj", "<cmd>HopLineStartAC<CR>")
+-- map("", "sk", "<cmd>HopLineStartBC<CR>")
+-- map("", "s/", "<cmd>HopPattern<CR>")
 
 ---------------------------------------------------------------
 -- => pounce.nvim
 ---------------------------------------------------------------
-keymap("", "sf", "<cmd>Pounce<CR>", opts)
-keymap("", "S", "<cmd>PounceRepeat<CR>", opts)
+map("", "sf", "<cmd>Pounce<CR>")
+map("", "S", "<cmd>PounceRepeat<CR>")
 
 ---------------------------------------------------------------
 -- => bufferline.nvim
 ---------------------------------------------------------------
--- keymap("n", "]b", ":BufferLineCycleNext<CR>", opts)
--- keymap("n", "[b", ":BufferLineCyclePrev<CR>", opts)
--- keymap("n", "<M-.>", ":BufferLineCycleNext<CR>", opts)
--- keymap("i", "<M-.>", "<Esc>:BufferLineCycleNext<CR>", opts)
--- keymap("n", "<M-,>", ":BufferLineCyclePrev<CR>", opts)
--- keymap("i", "<M-,>", "<Esc>:BufferLineCyclePrev<CR>", opts)
--- keymap("n", "<A-S->>", ":BufferLineMoveNext<CR>", opts)
--- keymap("n", "<A-S-<>", ":BufferLineMovePrev<CR>", opts)
--- keymap("n", "Q", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>", opts)
+-- map("n", "]b", ":BufferLineCycleNext<CR>")
+-- map("n", "[b", ":BufferLineCyclePrev<CR>")
+-- map("n", "<M-.>", ":BufferLineCycleNext<CR>")
+-- map("i", "<M-.>", "<Esc>:BufferLineCycleNext<CR>")
+-- map("n", "<M-,>", ":BufferLineCyclePrev<CR>")
+-- map("i", "<M-,>", "<Esc>:BufferLineCyclePrev<CR>")
+-- map("n", "<A-S->>", ":BufferLineMoveNext<CR>")
+-- map("n", "<A-S-<>", ":BufferLineMovePrev<CR>")
+-- map("n", "Q", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>")
