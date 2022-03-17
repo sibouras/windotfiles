@@ -3,15 +3,21 @@
     if there are 0 files in the playlist), or if the correct command is sent via script-messages.
     It remembers the playlist position the player was in when shutdown and reloads the playlist at that entry.
     This can be disabled with script-opts
+
     The script saves a text file containing the previous session playlist in the watch_later directory (changeable via opts)
     This file is saved in plaintext with the exact file paths of each playlist entry.
     Note that since it uses the same file, only the latest mpv window to be closed will be saved
+
     The script attempts to correct relative playlist paths using the utils.join_path function. I've tried to automatically
     detect when any non-files are loaded (if it has the sequence :// in the path), so that it'll work with URLs
+
     You can disable the automatic stuff and use script messages to load/save playlists as well
+
     script-message save-session [session-file]
     script-message reload-session [session-file]
+
     If not included `session-file` will use the default file specified in script-opts
+
     available at: https://github.com/CogentRedTester/mpv-scripts
 ]]--
 

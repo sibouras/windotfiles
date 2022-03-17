@@ -1,3 +1,4 @@
+-- source: https://github.com/zenyd/mpv-scripts
 function trim(s)
    return (s:gsub("^%s*(%S+)%s*", "%1"))
 end
