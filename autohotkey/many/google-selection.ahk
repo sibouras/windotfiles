@@ -25,7 +25,7 @@ SetTitleMatchMode 2
   }
   if RegExMatch(Clipboard, "^[^ ]*\.[^ ]*$")
   {
-    Run "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" %Clipboard%
+    Run "brave.exe" %Clipboard%
   }
   else
   {

@@ -1,2 +1,3 @@
 !+f  open C:\ProgramData\chocolatey\lib\mpv.install\tools\mpv.exe
 !+v  open C:\tools\nvy\Nvy.exe
+!+l  open C:\tools\lite-xl\lite-xl.exe

@@ -5,7 +5,7 @@ RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & r::ToggleWindowVisibility("Alacritty")
 RAlt & w::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
-RAlt & x::ToggleWindowVisibility("ahk_exe joplin.exe")
+; RAlt & x::ToggleWindowVisibility("ahk_exe joplin.exe")
 
 ToggleWindowVisibility(windowClass) {
   IfWinExist, %windowClass%
@@ -117,3 +117,11 @@ Beginning:
     Goto, Beginning
   }
 return
+
+; Alt+Tab with mouse wheel
+XButton2 & WheelDown::AltTab
+XButton2 & WheelUp::ShiftAltTab
+; Alt+Tab menu
+XButton2 & LButton::Send, ^!{Tab}
+XButton2 & RButton::Send, #{Tab}
+XButton2 UP::return
