@@ -37,29 +37,29 @@ local options = {
   scrolloff = 5, -- is one of my fav
   sidescrolloff = 10,
   foldlevelstart = 99,
-  sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal",
+  sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,globals",
   guifont = "JetbrainsMono Nerd Font:h16", -- the font used in graphical neovim applications
 }
-
-vim.opt.shortmess:append("c")
 
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+-- vim.opt.iskeyword:append("-")
+vim.opt.whichwrap:append("<,>,[,],h,l") -- let movement keys reach the previous line
+vim.opt.shortmess:append("c") -- don't show the dumb matching stuff
+vim.opt.path:append("**") -- find files recursively
+vim.opt.concealcursor:append("nc") -- find files recursively
 
 -- vim.cmd([[set formatoptions-=cro]]) -- TODO: this doesn't seem to work
 vim.cmd([[
   if exists("g:nvy")
     cd $home
   endif
-  set path+=**  "find files recursively
-  set whichwrap+=<,>,[,],h,l
-  " set iskeyword+=-
-  set sessionoptions+=globals "persist bufferline buffers order(doesn't work)
-  set concealcursor=nc
-  hi Underlined guisp=#7aa2f7 " change vimwiki link color
   set grepprg=rg\ --vimgrep\ --smart-case " Replacing grep with rg
   set grepformat=%f:%l:%c:%m
+  highlight Underlined guisp=#7aa2f7 " change vimwiki link color
+  highlight WinSeparator guifg=#3b4261
 ]])
 
 -- prettier folding
@@ -90,7 +90,7 @@ local disabled_built_ins = {
   "logipat",
   "rrhelper",
   "spellfile_plugin",
-  -- "matchit"
+  "matchit",
 }
 
 for _, plugin in pairs(disabled_built_ins) do

@@ -53,7 +53,7 @@ return packer.startup(function(use)
       require("impatient")
     end,
   })
-  use("nathom/filetype.nvim")
+  -- use("nathom/filetype.nvim")
   use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
   -- use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
   -- use("MunifTanjim/nui.nvim")
@@ -83,14 +83,14 @@ return packer.startup(function(use)
   use("ThePrimeagen/harpoon")
   use("mattn/emmet-vim")
   use("lervag/wiki.vim")
-  use("dkarter/bullets.vim")
+  -- use("dkarter/bullets.vim")
   use("tommcdo/vim-exchange")
   use("michaeljsmith/vim-indent-object")
   use("vim-scripts/ReplaceWithRegister")
   use("svban/YankAssassin.vim")
   use("akinsho/toggleterm.nvim")
   use("dstein64/vim-startuptime")
-  use("norcalli/nvim-colorizer.lua")
+  use("br1anchen/nvim-colorizer.lua")
 
   -- Colorschemes
   use("folke/tokyonight.nvim")
@@ -110,7 +110,7 @@ return packer.startup(function(use)
   -- LSP
   use("neovim/nvim-lspconfig") -- enable LSP
   use("williamboman/nvim-lsp-installer") -- simple to use language server installer
-  use("tamago324/nlsp-settings.nvim") -- language server settings defined in json for
+  -- use("tamago324/nlsp-settings.nvim") -- language server settings for json
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
   -- use("ray-x/lsp_signature.nvim") -- LSP signature hint as you type
   use("RRethy/vim-illuminate") -- highlight symbols under cursor and cycle through

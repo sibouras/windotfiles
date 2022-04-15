@@ -13,8 +13,8 @@ neoscroll.setup({
 local t = {}
 -- Syntax: t[keys] = {function, {function arguments}}
 -- Use the "sine" easing function
-t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "200", [['sine']] } }
-t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "200", [['sine']] } }
+t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "100", [['sine']] } }
+t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "100", [['sine']] } }
 -- Pass "nil" to disable the easing animation (constant scrolling speed)
 t["<C-y>"] = { "scroll", { "-0.10", "false", "100", nil } }
 t["<C-e>"] = { "scroll", { "0.10", "false", "100", nil } }

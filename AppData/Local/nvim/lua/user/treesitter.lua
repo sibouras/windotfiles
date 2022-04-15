@@ -3,7 +3,6 @@ local configs = require("nvim-treesitter.configs")
 require("nvim-treesitter.install").compilers = { "clang", "gcc" }
 
 configs.setup({
-  -- ensure_installed = "maintained",
   ensure_installed = {
     "lua",
     "html",

@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 local colors = {
-  bg = "#202328",
+  bg = "#2F354D",
   fg = "#bbc2cf",
   yellow = "#ECBE7B",
   cyan = "#008080",
@@ -18,7 +18,7 @@ local colors = {
 }
 
 local hide_in_width = function()
-  return vim.fn.winwidth(0) > 80
+  return vim.fn.winwidth(0) > 40
 end
 
 local diff = {
@@ -46,6 +46,9 @@ local fileformat = {
 
 local filetype = {
   "filetype",
+  colored = true,
+  icon_only = true,
+  padding = { right = 2, left = 1 },
   cond = hide_in_width,
 }
 
@@ -57,15 +60,20 @@ lualine.setup({
     -- section_separators = { left = "", right = "" },
     component_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },
-    disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
+    disabled_filetypes = { "alpha", "dashboard", "Outline" },
     always_divide_middle = true,
+    globalstatus = true,
   },
   sections = {
     lualine_a = { "mode" },
-    lualine_b = { "branch", diff, "diagnostics" },
-    lualine_c = { "filename" },
-    lualine_x = { encoding, fileformat, filetype },
-    lualine_y = { "progress" },
+    lualine_b = { { "filename", color = { bg = colors.bg } } },
+    lualine_c = { "branch", diff, "diagnostics" },
+    lualine_x = {
+      -- encoding,
+      fileformat,
+      filetype,
+    },
+    lualine_y = { { "progress", color = { bg = colors.bg } } },
     lualine_z = { "location" },
   },
   inactive_sections = {

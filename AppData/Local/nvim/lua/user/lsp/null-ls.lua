@@ -13,11 +13,14 @@ null_ls.setup({
   debug = false,
   sources = {
     -- formatting.prettier.with({ extra_args = { "--single-quote", "--jsx-single-quote" } }),
+    -- formatting.prettierd.with({
+    --   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "html", "css", "markdown" },
+    -- }),
     formatting.prettierd,
     -- formatting.black.with({ extra_args = { "--fast" } }),
     formatting.stylua.with({ extra_args = { "--indent-type=Spaces", "--indent-width=2" } }),
     -- diagnostics.flake8
-    -- diagnostics.eslint,
-    -- code_actions.eslint,
+    -- code_actions.eslint_d,
+    -- diagnostics.eslint_d,
   },
 })

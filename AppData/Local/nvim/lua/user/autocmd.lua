@@ -38,3 +38,10 @@ augroup Mkdir
   autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
 augroup END
 ]])
+
+-- keep window position when switching buffers
+-- https://stackoverflow.com/questions/4251533/vim-keep-window-position-when-switching-buffers
+vim.cmd([[
+  au BufLeave * let b:winview = winsaveview()
+  au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+]])

@@ -40,7 +40,7 @@ map("n", "Q", ":BDelete hidden<CR>")
 
 -- Navigate tabs
 -- Number + , to select a tab, i.e. type 1, to select the first tab.
-for i = 1, 5 do
+for i = 1, 9 do
   map("n", i .. ",", i .. "gt")
 end
 
@@ -56,7 +56,7 @@ map("n", "<M-s>", ":w<CR>")
 map("i", "<M-s>", "<Esc>:w<CR>")
 
 -- Ctrl-Backspace to delete the previous word
-map("i", "<C-BS>", "<C-W>")
+map("i", "<C-BS>", "<C-W>", { noremap = false })
 map("c", "<C-BS>", "<C-W>", { silent = false })
 
 -- ctrl-z to undo
@@ -139,7 +139,7 @@ map("v", "<M-y>", '"+y')
 map("n", "<M-p>", '"+p')
 map("v", "<M-p>", '"+p')
 map("i", "<M-p>", "<C-r>+")
-map("c", "<M-p>", "<C-r>+")
+map("c", "<M-p>", "<C-r>+", { silent = false })
 map("n", "<M-S-p>", '"+P')
 map("v", "<M-S-p>", '"+P')
 
@@ -215,7 +215,7 @@ map("n", "<leader>;", [[:execute "normal! mqA;\<lt>esc>`q"<enter>]])
 map("n", "<leader>tn", "<C-w>T")
 
 -- edit keymaps in new tab
-map("n", "<leader>tk", ":tabe $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>")
+map("n", "<leader>tk", ":tabe $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>:Tz nvim<CR>")
 
 vim.cmd([[
 iab <expr> t/ strftime('TODO(' . '%Y-%m-%d):')
@@ -223,8 +223,24 @@ iab <expr> t/ strftime('TODO(' . '%Y-%m-%d):')
 cab help tab help
 ]])
 
+-- Quickly change font size in GUI
+vim.cmd([[
+command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
+command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
+]])
+map("n", "<M-=>", ":Bigger<CR>")
+map("n", "<M-->", ":Smaller<CR>")
+map("n", "<M-S-_>", ":set guifont=:h16<CR>")
+
 map("v", "<leader>cy", ":call functions#CompleteYank()<CR>")
 map("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>")
+
+-- essentials.lua functions
+map("n", "<F2>", ":lua require('user.essentials').rename()<CR>")
+map("n", "<leader>rn", ":lua require('user.essentials').lspRename()<CR>")
+map("n", "<F3>", ":lua require('user.essentials').cheat_sh()<CR>")
+map("n", "gcm", ":lua require('user.essentials').toggle_comment()<CR>")
+map("n", "<leader>ru", ":lua require('user.essentials').run_file()<CR>")
 
 ----------------------------------
 --- definition of new commands ---
@@ -263,12 +279,8 @@ map(
 )
 map("n", "<leader>fs", ":Telescope find_files<CR>")
 map("n", "<leader>fe", ":Telescope resume<CR>")
--- map(
---   "n",
---   "<leader>b",
---   ":lua require'telescope.builtin'.buffers{ sort_lastused = true, ignore_current_buffer = false }<CR>"
--- )
-map("n", "<leader>b", ":Telescope buffers<CR>")
+map("n", "<leader>b", ":lua require'telescope.builtin'.buffers{ path_display = {'shorten'} }<CR>")
+-- map("n", "<leader>b", ":Telescope buffers<CR>")
 map("n", "<leader>fo", ":Telescope oldfiles<CR>")
 map("n", "<leader>fg", ":Telescope live_grep<CR>")
 map("n", "<leader>fk", ":Telescope keymaps<CR>")
@@ -276,11 +288,12 @@ map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>")
 map("n", "q/", ":Telescope search_history<CR>")
 map("n", "q:", ":Telescope command_history<CR>")
 map("n", "<leader>p", ":Telescope workspaces<CR>")
-map("n", "<leader>fn", ":Telescope neoclip<CR>")
 map("n", "<leader>lr", ":Telescope lsp_references<CR>")
 map("n", "<leader>ld", ":Telescope lsp_definitions<CR>")
 map("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>")
 map("n", "<leader>lt", ":Telescope treesitter<CR>")
+map("n", "<leader>fn", ":Telescope neoclip<CR>")
+map("n", "<leader>fm", ":lua require('telescope').extensions.macroscope.default()<CR>")
 
 ---------------------------------------------------------------
 -- => lir.nvim, nvim-tree.nvim
@@ -318,12 +331,12 @@ map("x", "<M-S-Right>", "<Plug>GoVSDRight", { noremap = false })
 map("n", "<leader>ha", ":lua require('harpoon.mark').add_file()<CR>")
 map("n", "<M-f>", ":lua require('harpoon.ui').toggle_quick_menu()<CR>")
 -- map("n", "<leader>hc", ":lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>")
-for i = 1, 5 do
-  map("n", "<leader>" .. i, ":lua require('harpoon.ui').nav_file(" .. i .. ")<CR>")
+for i = 1, 9 do
+  map("n", i .. "<leader>", ":lua require('harpoon.ui').nav_file(" .. i .. ")<CR>")
 end
 
 --------------------------------------------------------------
--- => auto-session, session-lens
+-- => sessions.nvim
 ---------------------------------------------------------------
 map("n", "<leader>sl", ":SessionsLoad<CR>")
 map("n", "<leader>ss", ":SessionsSave<CR>")
