@@ -350,6 +350,19 @@ Set-Alias -Name fe -Value Invoke-FuzzyEdit
 Set-Alias -Name fh -Value Invoke-FuzzyHistory
 Set-Alias -Name fk -Value Invoke-FuzzyKillProcess
 
+# PSFzf can replace the standard tab completion.
+# Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
+
+$ps = [Microsoft.PowerShell.PSConsoleReadline]
+Set-PSReadlineKeyHandler `
+  -Chord 'Ctrl+f' `
+  -BriefDescription "InsertFzfPathInCommandLine" `
+  -LongDescription "Run Fzf in the PWD, appending any selected paths to the current command" `
+  -ScriptBlock {
+  $choices = Invoke-Fzf
+  $ps::Insert($choices -join " ")
+}
+
 ### starship config
 # Usage: Add 'Invoke-Expression (&starship init powershell)' to the end of your
 # PowerShell $PROFILE. Prerequisites: A Powerline font installed and enabled in
