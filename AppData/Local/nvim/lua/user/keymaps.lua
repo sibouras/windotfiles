@@ -49,11 +49,11 @@ end
 -- map("n", "<A-k>", "<Esc>:m .-2<CR>==gi")
 
 -- df to escape
-map("i", "df", "<ESC>")
+-- map("i", "df", "<ESC>")
 
 -- quick save
-map("n", "<M-s>", ":w<CR>")
-map("i", "<M-s>", "<Esc>:w<CR>")
+map("n", "<M-s>", ":silent w<CR>")
+map("i", "<M-s>", "<Esc>:silent w<CR>")
 
 -- Ctrl-Backspace to delete the previous word
 map("i", "<C-BS>", "<C-W>", { noremap = false })
@@ -232,6 +232,9 @@ map("n", "<M-=>", ":Bigger<CR>")
 map("n", "<M-->", ":Smaller<CR>")
 map("n", "<M-S-_>", ":set guifont=:h16<CR>")
 
+----------------------------------
+--- functions
+----------------------------------
 map("v", "<leader>cy", ":call functions#CompleteYank()<CR>")
 map("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>")
 
@@ -377,3 +380,14 @@ map("", "S", "<cmd>PounceRepeat<CR>")
 -- map("n", "<A-S->>", ":BufferLineMoveNext<CR>")
 -- map("n", "<A-S-<>", ":BufferLineMovePrev<CR>")
 -- map("n", "Q", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>")
+
+-- toggle LSP diagnostics
+vim.g.diagnostics_active = true
+vim.keymap.set("n", "<leader>dt", function()
+  vim.g.diagnostics_active = not vim.g.diagnostics_active
+  if vim.g.diagnostics_active then
+    vim.diagnostic.show()
+  else
+    vim.diagnostic.hide()
+  end
+end)

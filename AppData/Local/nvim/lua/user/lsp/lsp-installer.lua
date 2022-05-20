@@ -3,30 +3,52 @@ if not status_ok then
   return
 end
 
+local servers = {
+  "cssls",
+  -- "cssmodules_ls",
+  -- "emmet_ls",
+  "html",
+  "tailwindcss",
+  "jsonls",
+  "sumneko_lua",
+  "tsserver",
+}
+
+local settings = {
+  ensure_installed = servers,
+}
+
+lsp_installer.setup(settings)
+
+local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
+if not lspconfig_status_ok then
+  return
+end
+
+local opts = {}
+
 -- Register a handler that will be called for all installed servers.
 -- Alternatively, you may also register handlers on specific server instances instead (see example below).
-lsp_installer.on_server_ready(function(server)
-  local opts = {
+for _, server in pairs(servers) do
+  opts = {
     on_attach = require("user.lsp.handlers").on_attach,
     capabilities = require("user.lsp.handlers").capabilities,
   }
 
-  if server.name == "jsonls" then
+  if server == "jsonls" then
     local jsonls_opts = require("user.lsp.settings.jsonls")
     opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
   end
 
-  if server.name == "sumneko_lua" then
+  if server == "sumneko_lua" then
     local sumneko_opts = require("user.lsp.settings.sumneko_lua")
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
   end
 
-  if server.name == "tailwindcss" then
+  if server == "tailwindcss" then
     local tailwindcss_opts = require("user.lsp.settings.tailwindcss")
     opts = vim.tbl_deep_extend("force", tailwindcss_opts, opts)
   end
 
-  -- This setup() function is exactly the same as lspconfig's setup function.
-  -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-  server:setup(opts)
-end)
+  lspconfig[server].setup(opts)
+end

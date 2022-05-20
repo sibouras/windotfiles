@@ -53,13 +53,17 @@ vim.opt.concealcursor:append("nc") -- find files recursively
 
 -- vim.cmd([[set formatoptions-=cro]]) -- TODO: this doesn't seem to work
 vim.cmd([[
-  if exists("g:nvy")
+  if exists("g:nvy") || exists("g:neovide")
     cd $home
+  endif
+  if exists("g:neovide")
+    " let g:neovide_refresh_rate=140
   endif
   set grepprg=rg\ --vimgrep\ --smart-case " Replacing grep with rg
   set grepformat=%f:%l:%c:%m
-  highlight Underlined guisp=#7aa2f7 " change vimwiki link color
-  highlight WinSeparator guifg=#3b4261
+  " https://gpanders.com/blog/whats-new-in-neovim-0-7/#filetypelua
+  let g:do_filetype_lua = 1
+  let g:did_load_filetypes = 0
 ]])
 
 -- prettier folding

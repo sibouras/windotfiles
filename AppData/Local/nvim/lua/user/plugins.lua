@@ -77,7 +77,8 @@ return packer.startup(function(use)
   use("goolord/alpha-nvim")
   use("lukas-reineke/indent-blankline.nvim")
   use("tpope/vim-repeat")
-  use("ur4ltz/surround.nvim")
+  -- use("ur4ltz/surround.nvim")
+  use("echasnovski/mini.nvim")
   -- use({ "phaazon/hop.nvim", branch = "v1" })
   use("rlane/pounce.nvim")
   use("ThePrimeagen/harpoon")
@@ -91,6 +92,7 @@ return packer.startup(function(use)
   use("akinsho/toggleterm.nvim")
   use("dstein64/vim-startuptime")
   use("br1anchen/nvim-colorizer.lua")
+  use("stevearc/dressing.nvim")
 
   -- Colorschemes
   use("folke/tokyonight.nvim")
@@ -99,7 +101,7 @@ return packer.startup(function(use)
   use("hrsh7th/nvim-cmp") -- The completion plugin
   use("hrsh7th/cmp-buffer") -- buffer completions
   use("hrsh7th/cmp-path") -- path completions
-  use("hrsh7th/cmp-cmdline") -- cmdline completions
+  -- use("hrsh7th/cmp-cmdline") -- cmdline completions
   use("saadparwaiz1/cmp_luasnip") -- snippet completions
   use("hrsh7th/cmp-nvim-lsp")
   use("hrsh7th/cmp-nvim-lua")
@@ -124,6 +126,7 @@ return packer.startup(function(use)
     "nvim-telescope/telescope-fzf-native.nvim",
     run = "mingw32-make",
   })
+  -- use("nvim-telescope/telescope-ui-select.nvim")
 
   -- Treesitter
   use({
