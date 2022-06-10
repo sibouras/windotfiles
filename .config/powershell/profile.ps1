@@ -2,10 +2,12 @@ $scripts = "$HOME\.config\powershell\Scripts"
 $env:path += ";$scripts"
 $env:EDITOR = "nvim"
 $env:PAGER = "bat"
+$env:FX_SHOW_SIZE = "true"
 . "$HOME\.config\powershell\lf_icons.ps1"
 
 Set-Alias l lsd
 Set-Alias v nvim
+Set-Alias lg lazygit
 Set-Alias grep findstr
 Set-Alias -Name sed -Value C:\"Program Files"\Git\usr\bin\sed.exe
 Set-Alias -Name awk -Value C:\"Program Files"\Git\usr\bin\awk.exe

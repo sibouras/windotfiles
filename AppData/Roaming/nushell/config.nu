@@ -127,7 +127,8 @@ let default_theme = {
 }
 
 # The default config record. This is where much of your global configuration is setup.
-let $config = {
+let-env config = {
+  buffer_editor: nvim
   filesize_metric: false
   table_mode: rounded # basic, compact, compact_double, light, thin, with_love, rounded, reinforced, heavy, none, other
   use_ls_colors: true
@@ -335,7 +336,7 @@ let $config = {
 # Aliases
 alias pwd = $env.PWD
 alias v = nvim
-alias l = lsd
+alias l = lsd -l
 alias ll = lsd -l
 alias lg = lazygit
 alias ga = git add
@@ -343,6 +344,7 @@ alias gst = git status
 alias gss = git status -s
 alias gb = git branch
 alias gd = git diff
+alias gr = cd (git rev-parse --show-toplevel)
 alias gg = git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold green)%d%Creset %s %C(bold yellow)(%cr) %C(blue)%ad%Creset' --abbrev-commit --date=short
 alias gloo = git log --pretty=format:'%C(yellow)%h %Cred%ad %Cgreen%d %Creset%s' --date=short
 alias winconfig = git --git-dir=C:/Users/marzouk/.dotfiles --work-tree=C:/Users/marzouk
