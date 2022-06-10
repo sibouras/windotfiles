@@ -77,6 +77,7 @@ return packer.startup(function(use)
   use("goolord/alpha-nvim")
   use("lukas-reineke/indent-blankline.nvim")
   use("tpope/vim-repeat")
+  use("tpope/vim-abolish")
   -- use("ur4ltz/surround.nvim")
   use("echasnovski/mini.nvim")
   -- use({ "phaazon/hop.nvim", branch = "v1" })
@@ -93,6 +94,7 @@ return packer.startup(function(use)
   use("dstein64/vim-startuptime")
   use("br1anchen/nvim-colorizer.lua")
   use("stevearc/dressing.nvim")
+  use("Djancyp/cheat-sheet")
 
   -- Colorschemes
   use("folke/tokyonight.nvim")
@@ -116,8 +118,8 @@ return packer.startup(function(use)
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
   -- use("ray-x/lsp_signature.nvim") -- LSP signature hint as you type
   use("RRethy/vim-illuminate") -- highlight symbols under cursor and cycle through
-  -- use("kosayoda/nvim-lightbulb") -- VSCode 💡 for neovim's built-in LSP.
   use("b0o/SchemaStore.nvim")
+  use("jose-elias-alvarez/typescript.nvim")
 
   -- Telescope
   use("nvim-telescope/telescope.nvim")
@@ -137,6 +139,7 @@ return packer.startup(function(use)
   use("nvim-treesitter/nvim-treesitter-textobjects")
   use("RRethy/nvim-treesitter-textsubjects")
   use("windwp/nvim-ts-autotag")
+  -- use("p00f/nvim-ts-rainbow")
 
   -- Git
   use("lewis6991/gitsigns.nvim")

@@ -11,6 +11,9 @@ map("", "<Space>", "<Nop>")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- de-tab
+map("i", "<S-Tab>", "<C-d>")
+
 -- Quit vim
 map("n", "<M-F4>", ":qa!<CR>")
 
@@ -184,6 +187,7 @@ map("v", ">", ">gv")
 
 -- format
 map("n", "<M-S-f>", ":Format<cr>")
+map("v", "<M-S-f>", "<cmd>lua vim.lsp.buf.range_formatting()<cr>")
 
 -- remove highlight
 map("n", "<esc>", ":noh<cr>")
@@ -215,7 +219,7 @@ map("n", "<leader>;", [[:execute "normal! mqA;\<lt>esc>`q"<enter>]])
 map("n", "<leader>tn", "<C-w>T")
 
 -- edit keymaps in new tab
-map("n", "<leader>tk", ":tabe $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>:Tz nvim<CR>")
+map("n", "<leader>tk", ":tab drop $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>:Tz nvim<CR>")
 
 vim.cmd([[
 iab <expr> t/ strftime('TODO(' . '%Y-%m-%d):')
@@ -241,7 +245,6 @@ map("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>")
 -- essentials.lua functions
 map("n", "<F2>", ":lua require('user.essentials').rename()<CR>")
 map("n", "<leader>rn", ":lua require('user.essentials').lspRename()<CR>")
-map("n", "<F3>", ":lua require('user.essentials').cheat_sh()<CR>")
 map("n", "gcm", ":lua require('user.essentials').toggle_comment()<CR>")
 map("n", "<leader>ru", ":lua require('user.essentials').run_file()<CR>")
 

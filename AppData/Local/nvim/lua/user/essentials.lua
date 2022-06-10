@@ -234,38 +234,4 @@ function M.go_to_url(cmd)
 end
 ----------------------------
 
--------- cht.sh function --------------
-function M.get_word()
-  local query = vim.api.nvim_get_current_line()
-  query = vim.fn.join(vim.split(query, " "), "+")
-  vim.cmd([[q | stopinsert]])
-
-  local cmd = ("curl cht.sh/%s/%s"):format(vim.bo.ft, query)
-  vim.cmd("split | term " .. cmd)
-
-  map(0, "n", "q", ":bd!<CR>", { noremap = true, silent = true })
-  map(0, "n", "<Esc>", ":bd!<CR>", { noremap = true, silent = true })
-end
-
-function M.cheat_sh()
-  local buf = vim.api.nvim_create_buf(false, true)
-
-  local height, width = vim.o.lines, vim.o.columns
-  local w = math.ceil(width * 0.6)
-  local row = math.ceil(height / 2 - 5)
-  local col = math.ceil((width - w) / 2)
-  vim.api.nvim_open_win(buf, true, {
-    relative = "win",
-    style = "minimal",
-    border = "rounded",
-    row = row,
-    col = col,
-    width = w,
-    height = 1,
-  })
-  map(0, "i", "<CR>", '<cmd>lua require("user.essentials").get_word()<CR>', { noremap = true })
-  vim.cmd([[startinsert]])
-end
----------------------------------------
-
 return M

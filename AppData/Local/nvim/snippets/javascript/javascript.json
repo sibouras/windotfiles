@@ -413,7 +413,7 @@
   },
   "arrow function with body": {
     "prefix": "f",
-    "body": "(${1:arguments}) => {\n\t${0}\n}"
+    "body": "(${1}) => {\n\t${0}\n}"
   },
   "arrow function with return": {
     "prefix": "fr",

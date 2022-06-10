@@ -3,10 +3,10 @@ local M = {}
 -- TODO: backfill this to template
 M.setup = function()
   local signs = {
-    { name = "DiagnosticSignError", text = "" },
-    { name = "DiagnosticSignWarn", text = "" },
-    { name = "DiagnosticSignHint", text = "" },
-    { name = "DiagnosticSignInfo", text = "" },
+    { name = "DiagnosticSignError", text = "✘" },
+    { name = "DiagnosticSignWarn", text = "▲" },
+    { name = "DiagnosticSignHint", text = "⚑" },
+    { name = "DiagnosticSignInfo", text = "" },
   }
 
   for _, sign in ipairs(signs) do
@@ -20,7 +20,7 @@ M.setup = function()
     signs = {
       active = signs,
     },
-    update_in_insert = true,
+    update_in_insert = false,
     underline = true,
     severity_sort = true,
     float = {
@@ -85,6 +85,10 @@ M.on_attach = function(client, bufnr)
   end
   if client.name == "html" then
     client.resolved_capabilities.document_formatting = false
+  end
+  if client.name == "sumneko_lua" then
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
   end
   lsp_keymaps(bufnr)
   -- lsp_highlight_document(client) -- use illuminate instead

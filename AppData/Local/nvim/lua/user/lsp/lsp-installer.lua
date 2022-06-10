@@ -12,6 +12,7 @@ local servers = {
   "jsonls",
   "sumneko_lua",
   "tsserver",
+  "eslint",
 }
 
 local settings = {
@@ -46,9 +47,18 @@ for _, server in pairs(servers) do
   end
 
   if server == "tailwindcss" then
-    local tailwindcss_opts = require("user.lsp.settings.tailwindcss")
+    opts = require("user.lsp.settings.tailwindcss")
+  end
+
+  if server == "cssls" then
+    local tailwindcss_opts = require("user.lsp.settings.cssls")
     opts = vim.tbl_deep_extend("force", tailwindcss_opts, opts)
   end
+
+  -- if server == "tsserver" then
+  --   local tsserver_opts = require("user.lsp.settings.tsserver")
+  --   opts = vim.tbl_deep_extend("force", tsserver_opts, opts)
+  -- end
 
   lspconfig[server].setup(opts)
 end

@@ -11,10 +11,7 @@ end
 -- uncomment this if friendly snippets is installed
 -- require("luasnip/loaders/from_vscode").lazy_load()
 
-local check_backspace = function()
-  local col = vim.fn.col(".") - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
-end
+local select_opts = { behavior = cmp.SelectBehavior.Select }
 
 --   פּ ﯟ   some other good icons
 local kind_icons = {
@@ -55,8 +52,6 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ["<Up>"] = cmp.mapping.select_prev_item(),
     ["<Down>"] = cmp.mapping.select_next_item(),
-    ["<C-k>"] = cmp.mapping.select_prev_item(),
-    ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
@@ -65,34 +60,47 @@ cmp.setup({
     -- Accept currently selected item. If none selected, `select` first item.
     -- Set `select` to `false` to only confirm explicitly selected items.
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expandable() then
+    ["<C-j>"] = cmp.mapping(function(fallback)
+      if luasnip.expandable() then
         luasnip.expand()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif check_backspace() then
-        fallback()
+      elseif luasnip.jumpable(1) then
+        luasnip.jump(1)
       else
         fallback()
       end
-    end, {
-      "i",
-      "s",
-    }),
+    end, { "i", "s" }),
+    ["<C-k>"] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    -- source: https://vonheikemen.github.io/devlog/tools/setup-nvim-lspconfig-plus-nvim-cmp/
+    -- If the completion menu is visible, move to the next item. If the line is
+    -- "empty", insert a Tab character. If the cursor is inside a word, trigger
+    -- the completion menu.
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      local col = vim.fn.col(".") - 1
+      if cmp.visible() then
+        cmp.select_next_item(select_opts)
+      elseif luasnip.jumpable(1) then
+        luasnip.jump(1)
+      elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
+        fallback()
+      else
+        cmp.complete()
+      end
+    end, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_prev_item()
+        cmp.select_prev_item(select_opts)
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
       else
         fallback()
       end
-    end, {
-      "i",
-      "s",
-    }),
+    end, { "i", "s" }),
   }),
   formatting = {
     fields = { "kind", "abbr", "menu" },

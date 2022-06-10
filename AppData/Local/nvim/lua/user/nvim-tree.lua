@@ -1,48 +1,15 @@
 -- following options are the default
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
-vim.g.nvim_tree_icons = {
-  -- default = "",
-  default = "",
-  symlink = "",
-  git = {
-    -- unstaged = "",
-    -- staged = "S",
-    unstaged = "✗",
-    staged = "✓",
-    unmerged = "",
-    renamed = "➜",
-    deleted = "",
-    untracked = "U",
-    ignored = "◌",
-  },
-  folder = {
-    arrow_open = "",
-    arrow_closed = "",
-    default = "",
-    open = "",
-    empty = "",
-    empty_open = "",
-    symlink = "",
-    symlink_open = "",
-  },
-}
-vim.g.nvim_tree_respect_buf_cwd = 1
 
 local status_ok, nvim_tree = pcall(require, "nvim-tree")
 if not status_ok then
   return
 end
 
-local config_status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
-if not config_status_ok then
-  return
-end
-
-local tree_cb = nvim_tree_config.nvim_tree_callback
-
 nvim_tree.setup({
   disable_netrw = false,
   hijack_netrw = true,
+  hijack_cursor = false,
   open_on_setup = false,
   ignore_ft_on_setup = {
     "startify",
@@ -50,9 +17,15 @@ nvim_tree.setup({
     "alpha",
   },
   open_on_tab = false,
-  hijack_cursor = false,
+  update_cwd = true,
+  respect_buf_cwd = false,
+  update_focused_file = {
+    enable = false,
+    update_cwd = false,
+    ignore_list = {},
+  },
   diagnostics = {
-    enable = true,
+    enable = false,
     icons = {
       hint = "",
       info = "",
@@ -60,19 +33,9 @@ nvim_tree.setup({
       error = "",
     },
   },
-  update_cwd = false,
-  update_focused_file = {
-    enable = false,
-    update_cwd = false,
-    ignore_list = {},
-  },
-  system_open = {
-    cmd = nil,
-    args = {},
-  },
-  filters = {
-    dotfiles = false,
-    custom = {},
+  filesystem_watchers = {
+    enable = true,
+    interval = 100,
   },
   git = {
     enable = true,
@@ -96,6 +59,24 @@ nvim_tree.setup({
     },
     number = false,
     relativenumber = false,
+  },
+  renderer = {
+    full_name = true,
+    icons = {
+      glyphs = {
+        git = {
+          -- unstaged = "",
+          -- staged = "S",
+          unstaged = "✗",
+          staged = "✓",
+          unmerged = "",
+          renamed = "➜",
+          deleted = "",
+          untracked = "U",
+          ignored = "◌",
+        },
+      },
+    },
   },
   trash = {
     cmd = "trash",
