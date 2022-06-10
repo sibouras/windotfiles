@@ -45,6 +45,7 @@
 
 #IfWinActive, ahk_exe Code.exe
   !w::Send, ^{Tab}
+  !s::Send, {Esc}^s
 #IfWinActive
 
 #IfWinNotActive, ahk_exe WindowsTerminal.exe

@@ -125,3 +125,6 @@ XButton2 & WheelUp::ShiftAltTab
 XButton2 & LButton::Send, ^!{Tab}
 XButton2 & RButton::Send, #{Tab}
 XButton2 UP::return
+#IfWinActive ahk_exe mpv.exe
+  XButton2 UP::Send, {XButton2}
+#IfWinActive
