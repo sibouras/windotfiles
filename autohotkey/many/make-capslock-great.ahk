@@ -54,6 +54,8 @@ CapsLock & d:: Ctrl
 CapsLock & f:: Send, {Esc}
 CapsLock & [:: Send, {Esc}
 CapsLock & ]:: Send, {insert}
+CapsLock & 9:: Send, #^{Left}
+CapsLock & 0:: Send, #^{Right}
 
 CapsLock & F2:: Send, {Volume_Down}
 CapsLock & F3:: Send, {Volume_Up}
@@ -75,14 +77,6 @@ CapsLock & q::
   }
 return
 CapsLock & g:: Send, {AppsKey}
-
-CapsLock & 0:: ; switch to next desktop
-  Send, #^{Right}
-Return
-
-CapsLock & 9:: ; switch to previous desktop
-  Send, #^{Left}
-Return
 
 CapsLock & m::
   Input Key, L1 M

@@ -1,4 +1,7 @@
-﻿#If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe")
+﻿!9:: ControlClick,, A,, WheelUp
+!0:: ControlClick,, A,, WheelDown
+
+#If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe")
 {
   ; Mouse shortcuts for changing tabs
   ^XButton1::Send, ^+{Tab}
@@ -70,4 +73,11 @@
 #IfWinActive ahk_class AutoHotkeyGUI
   ^BS:: Send ^+{left}{del}
   ^u:: Send +{home}{del}
+#IfWinActive
+
+#IfWinActive ahk_class SUMATRA_PDF_FRAME
+  j:: Send {WheelDown}
+  k:: Send {WheelUp}
+  !WheelDown:: Send, !{WheelDown}
+  !WheelUp:: Send, !{WheelUp}
 #IfWinActive
