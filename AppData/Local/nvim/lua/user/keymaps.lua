@@ -17,23 +17,11 @@ map("i", "<S-Tab>", "<C-d>")
 -- Quit vim
 map("n", "<M-F4>", ":qa!<CR>")
 
--- Better window navigation
-map("n", "<C-h>", "<C-w>h")
-map("n", "<C-j>", "<C-w>j")
-map("n", "<C-k>", "<C-w>k")
-map("n", "<C-l>", "<C-w>l")
-
--- Resize with arrows
-map("n", "<C-Up>", ":resize -2<CR>")
-map("n", "<C-Down>", ":resize +2<CR>")
-map("n", "<C-Left>", ":vertical resize +2<CR>")
-map("n", "<C-Right>", ":vertical resize -2<CR>")
-
 -- Navigate buffers
 map("i", "<M-w>", "<esc><C-^>")
 map("n", "<M-w>", "<C-^>")
 map("n", "<M-d>", ":BDelete! this<CR>")
-map("n", "]b", ":bnext")
+map("n", "]b", ":bnext<CR>")
 map("n", "[b", ":bprevious<CR>")
 map("n", "<M-.>", ":bnext<CR>")
 map("i", "<M-.>", "<Esc>:bnext<CR>")
@@ -185,10 +173,6 @@ map("v", ">", ">gv")
 -- unexpected behavior when pasting above highlighted text(broken mapping)
 -- map("v", "p", '"_dP')
 
--- format
-map("n", "<M-S-f>", ":Format<cr>")
-map("v", "<M-S-f>", "<cmd>lua vim.lsp.buf.range_formatting()<cr>")
-
 -- remove highlight
 map("n", "<esc>", ":noh<cr>")
 
@@ -197,10 +181,6 @@ map("n", "<esc>", ":noh<cr>")
 -- map("n", "]<space>", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>")
 map("n", "[<space>", "O<Esc>")
 map("n", "]<space>", "o<Esc>")
-
--- faster horizontal navigation
-map("n", "zl", "10zl")
-map("n", "zh", "10zh")
 
 -- %% expands to the path of the directory that contains the current file.
 -- works with with :cd, :grep etc.
@@ -235,6 +215,18 @@ command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1'
 map("n", "<M-=>", ":Bigger<CR>")
 map("n", "<M-->", ":Smaller<CR>")
 map("n", "<M-S-_>", ":set guifont=:h16<CR>")
+
+-- search for regex pattern
+-- map("n", "<M-l>", "<Cmd>call search('[([{<]')<CR>")
+
+-- When the :keepjumps command modifier is used, jumps are not stored in the jumplist.
+map("n", "{", ":execute 'keepjumps norm! ' . v:count1 . '{'<CR>")
+map("n", "}", ":execute 'keepjumps norm! ' . v:count1 . '}'<CR>")
+map("n", "(", ":execute 'keepjumps norm! ' . v:count1 . '('<CR>")
+map("n", ")", ":execute 'keepjumps norm! ' . v:count1 . ')'<CR>")
+
+-- open current file in explorer
+map("n", "<leader>fl", ":silent !start %:p:h<CR>")
 
 ----------------------------------
 --- functions
@@ -287,19 +279,19 @@ map("n", "<leader>fs", ":Telescope find_files<CR>")
 map("n", "<leader>fe", ":Telescope resume<CR>")
 map("n", "<leader>b", ":lua require'telescope.builtin'.buffers{ path_display = {'shorten'} }<CR>")
 -- map("n", "<leader>b", ":Telescope buffers<CR>")
+map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>")
 map("n", "<leader>fo", ":Telescope oldfiles<CR>")
 map("n", "<leader>fg", ":Telescope live_grep<CR>")
 map("n", "<leader>fk", ":Telescope keymaps<CR>")
-map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>")
-map("n", "q/", ":Telescope search_history<CR>")
-map("n", "q:", ":Telescope command_history<CR>")
+map("n", "<leader>f/", ":Telescope search_history<CR>")
+map("n", "<leader>f;", ":Telescope command_history<CR>")
+map("n", "<leader>fn", ":Telescope neoclip<CR>")
+map("n", "<leader>fm", ":lua require('telescope').extensions.macroscope.default()<CR>")
 map("n", "<leader>p", ":Telescope workspaces<CR>")
 map("n", "<leader>lr", ":Telescope lsp_references<CR>")
 map("n", "<leader>ld", ":Telescope lsp_definitions<CR>")
 map("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>")
 map("n", "<leader>lt", ":Telescope treesitter<CR>")
-map("n", "<leader>fn", ":Telescope neoclip<CR>")
-map("n", "<leader>fm", ":lua require('telescope').extensions.macroscope.default()<CR>")
 
 ---------------------------------------------------------------
 -- => lir.nvim, nvim-tree.nvim
@@ -394,3 +386,16 @@ vim.keymap.set("n", "<leader>dt", function()
     vim.diagnostic.hide()
   end
 end)
+
+-- toggle conceal
+vim.cmd([[
+  function! ToggleConcealLevel()
+    if &conceallevel == 0
+      setlocal conceallevel=3
+    else
+      setlocal conceallevel=0
+    endif
+  endfunction
+
+  nnoremap <silent> <C-c><C-y> :call ToggleConcealLevel()<CR>
+]])

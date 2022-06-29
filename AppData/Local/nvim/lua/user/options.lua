@@ -4,7 +4,7 @@ local options = {
   cmdheight = 1, -- more space in the neovim command line for displaying messages
   completeopt = { "menuone", "noselect" }, -- mostly just for cmp
   -- conceallevel = 0,                        -- so that `` is visible in markdown files
-  conceallevel = 2, -- conceal links in vimwiki
+  conceallevel = 3, -- conceal links in vimwiki
   fileencoding = "utf-8", -- the encoding written to a file
   fileformat = "unix",
   fileformats = "unix,dos",
@@ -49,7 +49,7 @@ end
 vim.opt.whichwrap:append("<,>,[,],h,l") -- let movement keys reach the previous line
 vim.opt.shortmess:append("c") -- don't show the dumb matching stuff
 vim.opt.path:append("**") -- find files recursively
-vim.opt.concealcursor:append("nc") -- find files recursively
+-- vim.opt.concealcursor:append("nc")
 
 -- vim.cmd([[set formatoptions-=cro]]) -- TODO: this doesn't seem to work
 vim.cmd([[

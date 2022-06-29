@@ -38,7 +38,7 @@ endfunction
 function! functions#RemoveFile()
   let choice = confirm("Remove " . expand('%') . "?", "&Yes!\n&No", 1)
   if choice == 1
-    call delete(expand('%:p')) | bdelete!
+    call delete(expand('%:p')) | bwipeout!
   endif
 endfunction
 
@@ -69,6 +69,6 @@ function! functions#Redir(cmd, rng, start, end)
   endif
   vnew
   let w:scratch = 1
-  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
+  setlocal buftype=nofile filetype=Redir bufhidden=wipe nobuflisted noswapfile
   call setline(1, output)
 endfunction

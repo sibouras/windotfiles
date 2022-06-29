@@ -90,11 +90,18 @@ return packer.startup(function(use)
   use("michaeljsmith/vim-indent-object")
   use("vim-scripts/ReplaceWithRegister")
   use("svban/YankAssassin.vim")
-  use("akinsho/toggleterm.nvim")
+  -- use("akinsho/toggleterm.nvim")
+  use("numToStr/FTerm.nvim")
   use("dstein64/vim-startuptime")
   use("br1anchen/nvim-colorizer.lua")
   use("stevearc/dressing.nvim")
   use("Djancyp/cheat-sheet")
+  -- use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
+  use("mrjones2014/smart-splits.nvim")
+  use({
+    "anuvyklack/hydra.nvim",
+    requires = "anuvyklack/keymap-layer.nvim", -- needed only for pink hydras
+  })
 
   -- Colorschemes
   use("folke/tokyonight.nvim")
@@ -120,6 +127,7 @@ return packer.startup(function(use)
   use("RRethy/vim-illuminate") -- highlight symbols under cursor and cycle through
   use("b0o/SchemaStore.nvim")
   use("jose-elias-alvarez/typescript.nvim")
+  -- use("j-hui/fidget.nvim")
 
   -- Telescope
   use("nvim-telescope/telescope.nvim")
