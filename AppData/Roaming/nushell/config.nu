@@ -73,6 +73,8 @@ module completions {
 # Get just the extern definitions without the custom completion commands
 use completions *
 
+# use C:\Users\marzouk\AppData\Roaming\nushell\winget-completions.nu *
+
 # for more information on themes see
 # https://www.nushell.sh/book/coloring_and_theming.html
 let default_theme = {
@@ -128,6 +130,7 @@ let default_theme = {
 
 # The default config record. This is where much of your global configuration is setup.
 let-env config = {
+  # completion_algorithm: "fuzzy"
   buffer_editor: nvim
   filesize_metric: false
   table_mode: rounded # basic, compact, compact_double, light, thin, with_love, rounded, reinforced, heavy, none, other
@@ -145,6 +148,7 @@ let-env config = {
   edit_mode: emacs # emacs, vi
   max_history_size: 10000 # Session has to be reloaded for this to take effect
   sync_history_on_enter: true # Enable to share the history between multiple sessions, else you have to close the session to persist history to file
+
   menus: [
       # Configuration for default nushell menus
       # Note the lack of souce parameter
@@ -223,7 +227,7 @@ let-env config = {
       {
         name: vars_menu
         only_buffer_difference: true
-        marker: "# "
+        marker: "V "
         type: {
             layout: list
             page_size: 10
@@ -263,7 +267,28 @@ let-env config = {
             | each { |it| {value: $it.command description: $it.usage} }
         }
       }
+      {
+        name: get_file_menu_nu_ui
+        only_buffer_difference: true
+        marker: "# "
+        type: {
+            layout: list
+            page_size: 30
+        }
+        style: {
+            text: "#000"
+            selected_text: { fg: "#800000" attr: r }
+            description_text: #66ff66
+        }
+        source: { |buffer, position|
+          # ls | get name | where $it =~ $buffer
+          fd --strip-cwd-prefix -H -t f -E .git -E node_modules | lines
+          | where $it =~ $buffer
+          | each { |it| { value: ($it | str trim) }}
+        }
+      }
   ]
+
   keybindings: [
     {
       name: completion_menu
@@ -285,19 +310,31 @@ let-env config = {
       event: { send: menuprevious }
     }
     {
-      name: history_menu
+      name: redo_or_next_page
       modifier: control
-      keycode: char_x
+      keycode: char_y
       mode: emacs
       event: {
         until: [
-          { send: menu name: history_menu }
           { send: menupagenext }
+          { edit: redo }
         ]
       }
     }
     {
-      name: history_previous
+      name: redo_or_next_page
+      modifier: 'control | shift'
+      keycode: char_z
+      mode: emacs
+      event: {
+        until: [
+          { send: menupagenext }
+          { edit: redo }
+        ]
+      }
+    }
+    {
+      name: undo_or_previous_page
       modifier: control
       keycode: char_z
       mode: emacs
@@ -308,6 +345,7 @@ let-env config = {
         ]
       }
     }
+
     # Keybindings used to trigger the user defined menus
     {
       name: commands_menu
@@ -319,7 +357,7 @@ let-env config = {
     {
       name: vars_menu
       modifier: control
-      keycode: char_y
+      keycode: char_x
       mode: [emacs, vi_normal, vi_insert]
       event: { send: menu name: vars_menu }
     }
@@ -330,11 +368,43 @@ let-env config = {
       mode: [emacs, vi_normal, vi_insert]
       event: { send: menu name: commands_with_description }
     }
+    {
+      name: change_dir_with_fzf
+      modifier: control
+      keycode: char_d
+      mode: emacs
+      event:{
+        send: executehostcommand,
+        # cmd: "cd (ls | where type == dir | each { |it| $it.name} | str collect (char nl) | fzf | decode utf-8 | str trim)"
+        cmd: "cd (fd --strip-cwd-prefix --hidden --type directory --exclude .git --exclude node_modules | fzf)"
+      }
+    }
+    {
+      name: get_file_with_fzf
+      modifier: 'control | shift'
+      keycode: char_e
+      mode: emacs
+      event:[
+        {
+          edit: InsertString,
+          value: "(fd --strip-cwd-prefix --hidden --type file --exclude .git --exclude node_modules | fzf | decode utf-8 | str trim)"
+        }
+        # { send: Enter }
+      ]
+    }
+    {
+      name: get_file_menu_nu_ui
+      modifier: control
+      keycode: char_f
+      mode: [emacs, vi_normal, vi_insert]
+      event: { send: menu name: get_file_menu_nu_ui }
+    }
   ]
 }
 
 # Aliases
 alias pwd = $env.PWD
+alias pwds = ($env.PWD | str replace $nu.home-path '~' -s)
 alias v = nvim
 alias l = lsd -l
 alias ll = lsd -l
@@ -349,6 +419,52 @@ alias gg = git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold green
 alias gloo = git log --pretty=format:'%C(yellow)%h %Cred%ad %Cgreen%d %Creset%s' --date=short
 alias winconfig = git --git-dir=C:/Users/marzouk/.dotfiles --work-tree=C:/Users/marzouk
 alias dotfiles = lazygit --git-dir=C:/Users/marzouk/.dotfiles --work-tree=C:/Users/marzouk
+alias uptime = (sys).host.uptime
+alias fs = (fd --strip-cwd-prefix -H -t f -E .git | fzf | str trim)
+alias fp = (fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim)
+
+def fh [] {
+  let text = (history | reverse | get command | str collect (char nl) | fzf)
+  kbsend -text $text -currentWindow -charDelay 0
+}
+
+def fe [] {
+  # let file = (fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim)
+  let file = (fd --strip-cwd-prefix -H -e txt -e json -e js -e jsx -e ts -e tsx -e css -e html -e md -e lua | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim)
+  if ($file != '') {
+    nvim $file
+  }
+}
+
+def fm [] {
+  let file = (fd --strip-cwd-prefix -e mp4 -e webm -e mkv -e gif | fzf | decode utf-8 | str trim)
+  if ($file != '') {
+    mpv $file
+  }
+}
+
+# get aliases
+def get-aliases [] {
+  open $nu.config-path | lines | find alias | find -v aliases | split column '=' | select column1 column2 | rename Alias Command | update Alias {|f| $f.Alias | split row ' ' | last} | sort-by Alias
+}
+
+# search for specific process
+def psn [name: string] {
+  ps | find $name
+}
+
+# kill specified process in name
+def killn [name: string] {
+  ps | find $name | each {kill -f $in.pid}
+}
+
+# push to git
+def git-push [m: string] {
+  git add -A
+  git status
+  git commit -am $"($m)"
+  git push origin main
+}
 
 ### starship config
 source ~/.cache/starship/init.nu
