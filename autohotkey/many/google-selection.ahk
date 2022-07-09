@@ -25,7 +25,7 @@ SetTitleMatchMode 2
   }
   if RegExMatch(Clipboard, "^[^ ]*\.[^ ]*$")
   {
-    Run "brave.exe" %Clipboard%
+    Run %Clipboard%
   }
   else
   {

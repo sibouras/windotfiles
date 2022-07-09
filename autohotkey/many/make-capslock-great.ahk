@@ -1,4 +1,4 @@
-﻿SetCapsLockState, AlwaysOff
+SetCapsLockState, AlwaysOff
 
 CapsLock & `;::
 GetKeyState, CapsLockState, CapsLock, T
@@ -91,7 +91,7 @@ CapsLock & m::
   }
   else if Key = s
   {
-    Run brave.exe
+    Run firefox.exe
   }
   else if Key = d
   {

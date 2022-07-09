@@ -9,7 +9,7 @@
     WinRestore, ahk_id %active_id%
   } else {
     WinGetClass, class, ahk_id %active_id%
-    If class not in ahk_class WorkerW,Shell_TrayWnd, Button, SysListView32,Progman,#32768 
+    If class not in ahk_class WorkerW,Shell_TrayWnd, Button, SysListView32,Progman,#32768
       WinMaximize, ahk_id %active_id%
   }
 return

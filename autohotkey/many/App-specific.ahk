@@ -1,12 +1,9 @@
-﻿!9:: ControlClick,, A,, WheelUp
-!0:: ControlClick,, A,, WheelDown
+!q::Send, !{f4}
+!9::ControlClick,, A,, WheelUp
+!0::ControlClick,, A,, WheelDown
 
 #If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe")
 {
-  ; Mouse shortcuts for changing tabs
-  ^XButton1::Send, ^+{Tab}
-  ^XButton2::Send, ^{Tab}
-
   !,::Send, ^+{Tab}
   !.::Send, ^{Tab}
 
@@ -23,7 +20,23 @@
   ; No single alt
   Alt::KeyWait Alt
 }
-#IfWinActive
+
+
+#If WinActive("ahk_exe firefox.exe")
+{
+  !,::Send, ^{PgUp}
+  !.::Send, ^{PgDn}
+  !+,::Send, ^+{PgUp}
+  !+.::Send, ^+{PgDn}
+  !w::Send, ^{Tab}
+
+  ; KB shortcuts for specific tabs
+  !1::Send, ^1
+  !2::Send, ^2
+  !3::Send, ^3
+  !4::Send, ^4
+  !5::Send, ^5
+}
 
 #IfWinActive, ahk_class CabinetWClass
   ^BS::Send ^+{Left}{del}
@@ -47,7 +60,6 @@
 #IfWinActive
 
 #IfWinActive, ahk_exe Code.exe
-  !w::Send, ^{Tab}
   !s::Send, {Esc}^s
 #IfWinActive
 
