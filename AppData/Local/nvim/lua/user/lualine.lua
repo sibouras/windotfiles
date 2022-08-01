@@ -61,6 +61,7 @@ lualine.setup({
     component_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },
     disabled_filetypes = { "alpha", "dashboard", "Outline" },
+    ignore_focus = { "", "NvimTree", "TelescopePrompt" },
     always_divide_middle = true,
     globalstatus = true,
   },

@@ -14,7 +14,7 @@ fterm.setup({
 
 vim.keymap.set("n", "<M-;>", '<CMD>lua require("FTerm").toggle()<CR>')
 vim.keymap.set("t", "<M-;>", "<C-\\><C-n>")
--- vim.keymap.set("n", "<M-'>", ":lua require('FTerm').run({'node', vim.fn.expand('%')})<CR>")
+-- vim.keymap.set("n", "<M-/>", ":lua require('FTerm').run({'node', vim.fn.expand('%')})<CR>")
 
 local lazygit = fterm:new({
   ft = "fterm_lazygit",

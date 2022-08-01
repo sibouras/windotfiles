@@ -64,6 +64,7 @@ vim.cmd([[
   " https://gpanders.com/blog/whats-new-in-neovim-0-7/#filetypelua
   let g:do_filetype_lua = 1
   let g:did_load_filetypes = 0
+  set listchars=tab:¦\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
 ]])
 
 -- prettier folding

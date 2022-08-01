@@ -177,4 +177,4 @@ ls.add_snippets("typescriptreact", {
 --   end
 -- end)
 
-vim.keymap.set("n", "<leader>s", ":source $LOCALAPPDATA/nvim/lua/user/luasnip.lua<CR>")
+-- vim.keymap.set("n", "<leader>s", ":source $LOCALAPPDATA/nvim/lua/user/luasnip.lua<CR>")

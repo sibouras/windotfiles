@@ -6,6 +6,9 @@ end
 toggleterm.setup({
   size = 20,
   open_mapping = [[<M-;>]],
+  on_open = function(term)
+    vim.cmd("startinsert!")
+  end,
   hide_numbers = true,
   shade_filetypes = {},
   shade_terminals = true,
@@ -15,7 +18,7 @@ toggleterm.setup({
   persist_size = true,
   direction = "float",
   close_on_exit = true,
-  shell = "pwsh",
+  shell = "nu",
   float_opts = {
     border = "curved",
     winblend = 0,
@@ -27,13 +30,15 @@ toggleterm.setup({
 })
 
 function _G.set_terminal_keymaps()
-  local opts = { noremap = true }
-  -- vim.api.nvim_buf_set_keymap(0, "t", "df", [[<C-\><C-n>]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "`", [[<C-\><C-n>]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+  local opts = { buffer = 0 }
+  local map = vim.keymap.set
+
+  map("t", "`", [[<C-\><C-n>]], opts)
+  map("n", ";", ":close<CR>", opts)
+  map("t", "<C-w><C-h>", [[<Cmd>wincmd h<CR>]], opts)
+  map("t", "<C-w><C-j>", [[<Cmd>wincmd j<CR>]], opts)
+  map("t", "<C-w><C-k>", [[<Cmd>wincmd k<CR>]], opts)
+  map("t", "<C-w><C-l>", [[<Cmd>wincmd l<CR>]], opts)
 end
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
@@ -62,3 +67,17 @@ end
 vim.cmd([[
 command! -count=1 Node lua require'toggleterm'.exec("node " .. vim.fn.expand('%'), <count>, 12)
 ]])
+
+local map = vim.keymap.set
+
+map("n", "<m-1>", "<cmd>1ToggleTerm direction=float<cr>")
+map("t", "<m-1>", "<cmd>1ToggleTerm direction=float<cr>")
+map("i", "<m-1>", "<cmd>1ToggleTerm direction=float<cr>")
+
+map("n", "<m-2>", "<cmd>2ToggleTerm size=60 direction=vertical<cr>")
+map("t", "<m-2>", "<cmd>2ToggleTerm size=60 direction=vertical<cr>")
+map("i", "<m-2>", "<cmd>2ToggleTerm size=60 direction=vertical<cr>")
+
+map("n", "<m-3>", "<cmd>3ToggleTerm size=10 direction=horizontal | set cmdheight=1<cr>")
+map("t", "<m-3>", "<cmd>3ToggleTerm size=10 direction=horizontal | set cmdheight=1<cr>")
+map("i", "<m-3>", "<cmd>3ToggleTerm size=10 direction=horizontal | set cmdheight=1<cr>")

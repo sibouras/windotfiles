@@ -1,9 +1,9 @@
 local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
+  local options = { silent = true }
   if opts then
     options = vim.tbl_extend("force", options, opts)
   end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  vim.keymap.set(mode, lhs, rhs, options)
 end
 
 --Remap space as leader key
@@ -21,13 +21,13 @@ map("n", "<M-F4>", ":qa!<CR>")
 map("i", "<M-w>", "<esc><C-^>")
 map("n", "<M-w>", "<C-^>")
 map("n", "<M-d>", ":BDelete! this<CR>")
+map("n", "<M-D>", ":BDelete hidden<CR>")
 map("n", "]b", ":bnext<CR>")
 map("n", "[b", ":bprevious<CR>")
 map("n", "<M-.>", ":bnext<CR>")
 map("i", "<M-.>", "<Esc>:bnext<CR>")
 map("n", "<M-,>", ":bprevious<CR>")
 map("i", "<M-,>", "<Esc>:bprevious<CR>")
-map("n", "Q", ":BDelete hidden<CR>")
 
 -- Navigate tabs
 -- Number + , to select a tab, i.e. type 1, to select the first tab.
@@ -94,9 +94,6 @@ map("n", "g.", '/\\V<C-r>"<CR>cgn<C-a><Esc>', { silent = false })
 -- search for the word under the cursor and perform cgn on it
 map("n", "cg*", "*Ncgn", { silent = false })
 
--- Double space over word to find and replace.
-map("n", "<leader>rw", [[:%s/\<<C-r>=expand("<cword>")<CR>\>//g<Left><Left>]], { silent = false })
-
 -- Press * to search for the term under the cursor or a visual selection and
 -- then press a key below to replace all instances of it in the current file.
 map("n", "<leader>rr", ":%s///g<Left><Left>", { silent = false })
@@ -107,32 +104,38 @@ map("n", "<leader>rc", ":%s///gc<Left><left><Left>", { silent = false })
 map("x", "<leader>rr", ":s///g<Left><Left>", { silent = false })
 map("x", "<leader>rc", ":s///gc<Left><left><Left>", { silent = false })
 
--- Toggle spell check.
-map("n", "<F5>", ":setlocal spell!<CR>")
+-- <leader>rw over word to find and replace all occurrences.
+map("n", "<leader>ra", [[:%s/\<<C-r>=expand("<cword>")<CR>\>//g<Left><Left>]], { silent = false })
+
+-- Replace selected characters, saving the word to which they belong(use dot to replace next occurrence)
+map("x", "<leader>rw", [["sy:let @w='\<'.expand('<cword>').'\>' <bar> let @/=@s<CR>cgn]])
+
+-- Replace full word
+map("n", "<leader>rw", [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn]])
+
+-- Append to the end of a word
+map("n", "<leader>sa", [[:let @/='\<'.expand('<cword>').'\>'<CR>cgn<C-r>"]])
+
+-- from: https://old.reddit.com/r/neovim/comments/w59a4m/do_you_really_need_multiple_cursors_for_the/ih747rt/
+-- Begin a "searchable" macro
+map("x", "qi", [[y<cmd>let @/=substitute(escape(@", '/'), '\n', '\\n', 'g')<cr>gvqi]])
+
+-- Apply macro in the next instance of the search
+map("n", "<F9>", "gn@i")
 
 -- delete all trailing whitespace
 map("n", "<F6>", [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]])
-
--- Toggle visually showing all whitespace characters.
-map("n", "<F7>", ":set list!<CR>")
-map("i", "<F7>", "<C-o>:set list!<CR>")
-
--- Toggle relative line numbers and regular line numbers.
-map("n", "<F8>", ":set invrelativenumber<CR>")
 
 -- Navigate quickfix list
 map("n", "[q", ":cprevious<CR>")
 map("n", "]q", ":cnext<CR>")
 
 -- yank to system clipboard
-map("n", "<M-y>", '"+y')
-map("v", "<M-y>", '"+y')
-map("n", "<M-p>", '"+p')
-map("v", "<M-p>", '"+p')
-map("i", "<M-p>", "<C-r>+")
+map({ "n", "v" }, "<M-y>", '"+y')
+map({ "n", "v" }, "<M-p>", '"+p')
+map("i", "<M-p>", '<C-o>"+p')
 map("c", "<M-p>", "<C-r>+", { silent = false })
-map("n", "<M-S-p>", '"+P')
-map("v", "<M-S-p>", '"+P')
+map({ "n", "v" }, "<M-S-p>", '"+P')
 
 -- Copies last yank/cut to clipboard register
 map("n", "<leader>cp", ':let @*=@"<CR>')
@@ -187,7 +190,7 @@ map("n", "]<space>", "o<Esc>")
 vim.cmd("cabbr <expr> %% expand('%:h')")
 
 -- type \e  to enter :e /some/path/ on the command line.
-map("n", "<Bslash>e", ":e <C-R>=expand('%:h') . '\\'<CR>", { silent = false })
+map("n", "<Bslash>e", ":e <C-R>=expand('%:h') . '/'<CR>", { silent = false })
 
 -- Use curl to upload visual selection to ix.io to easily share it: http://ix.io/3QMC
 map("v", "<Bslash>c", [[:w !curl -F "f:1=<-" ix.io<CR>]])
@@ -228,6 +231,17 @@ map("n", ")", ":execute 'keepjumps norm! ' . v:count1 . ')'<CR>")
 -- open current file in explorer
 map("n", "<leader>fl", ":silent !start %:p:h<CR>")
 
+-- use black hole register when deleting empty line
+local function smart_dd()
+  if vim.api.nvim_get_current_line():match("^%s*$") then
+    return '"_dd'
+  else
+    return "dd"
+  end
+end
+
+map("n", "dd", smart_dd, { expr = true })
+
 ----------------------------------
 --- functions
 ----------------------------------
@@ -235,9 +249,10 @@ map("v", "<leader>cy", ":call functions#CompleteYank()<CR>")
 map("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>")
 
 -- essentials.lua functions
-map("n", "<F2>", ":lua require('user.essentials').rename()<CR>")
+-- map("n", "<F2>", ":lua require('user.essentials').rename()<CR>")
 map("n", "<leader>rn", ":lua require('user.essentials').lspRename()<CR>")
-map("n", "gcm", ":lua require('user.essentials').toggle_comment()<CR>")
+map("n", "gm", ":lua require('user.essentials').toggle_comment()<CR>")
+map("v", "gm", ":lua require('user.essentials').toggle_comment(true)<CR>")
 map("n", "<leader>ru", ":lua require('user.essentials').run_file()<CR>")
 
 ----------------------------------
@@ -277,7 +292,12 @@ map(
 )
 map("n", "<leader>fs", ":Telescope find_files<CR>")
 map("n", "<leader>fe", ":Telescope resume<CR>")
-map("n", "<leader>b", ":lua require'telescope.builtin'.buffers{ path_display = {'shorten'} }<CR>")
+-- map("n", "<leader>b", ":lua require'telescope.builtin'.buffers{ path_display = {'shorten'} }<CR>")
+map(
+  "n",
+  "<leader>b",
+  "<cmd>lua require('telescope.builtin').buffers({ previewer = false, initial_mode = 'insert', path_display = {'shorten'} })<cr>"
+)
 -- map("n", "<leader>b", ":Telescope buffers<CR>")
 map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>")
 map("n", "<leader>fo", ":Telescope oldfiles<CR>")
@@ -343,10 +363,8 @@ map("n", "<leader>sd", ":SessionsStop<CR>")
 ---------------------------------------------------------------
 -- => vim-illuminate
 ---------------------------------------------------------------
-map("n", "<M-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>')
-map("n", "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
-map("v", "<M-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>')
-map("v", "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
+map({ "n", "v" }, "<M-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>')
+map({ "n", "v" }, "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
 
 ---------------------------------------------------------------
 -- => hop.nvim

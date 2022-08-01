@@ -8,19 +8,13 @@ function M.run_file(height)
   local fts = {
     rust = "cargo run",
     python = "python %",
-    javascript = "npm start",
+    javascript = "node %",
     c = "make",
     cpp = "make",
   }
 
   local cmd = fts[vim.bo.ft]
-  if cmd ~= nil then
-    vim.cmd("w")
-    local ht = type(height) == "number" and height or math.floor(vim.api.nvim_win_get_height(0) / 3)
-    vim.cmd(ht .. "split | terminal " .. cmd)
-  else
-    -- vim.notify("No command Specified for this filetype!")
-  end
+  vim.cmd(cmd and ("w | " .. (height or "") .. "sp | term " .. cmd) or "echo 'No command for this filetype'")
 end
 --------------------------------------------------
 

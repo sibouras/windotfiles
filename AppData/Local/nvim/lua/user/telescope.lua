@@ -15,17 +15,17 @@ telescope.setup({
     selection_caret = " ",
     path_display = { "smart" },
     file_ignore_patterns = { ".git\\", "node_modules", "^.nvim" },
-
     sorting_strategy = "ascending",
     layout_config = {
       -- height = 25,
       prompt_position = "top",
     },
-
+    preview = {
+      hide_on_startup = true, -- hide previewer when picker starts
+    },
     mappings = {
       i = {
-        ["<C-n>"] = actions.cycle_history_next,
-        ["<C-p>"] = actions.cycle_history_prev,
+        ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
         ["<C-c>"] = actions.close,
@@ -50,7 +50,9 @@ telescope.setup({
       },
       n = {
         ["<esc>"] = actions.close,
+        ["q"] = actions.close,
         ["<CR>"] = actions.select_default,
+        ["l"] = actions.select_default,
         ["<C-h>"] = actions.select_horizontal,
         ["<C-v>"] = actions.select_vertical,
         ["<C-t>"] = actions.select_tab,

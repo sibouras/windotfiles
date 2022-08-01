@@ -90,8 +90,8 @@ return packer.startup(function(use)
   use("michaeljsmith/vim-indent-object")
   use("vim-scripts/ReplaceWithRegister")
   use("svban/YankAssassin.vim")
-  -- use("akinsho/toggleterm.nvim")
-  use("numToStr/FTerm.nvim")
+  use("akinsho/toggleterm.nvim")
+  -- use("numToStr/FTerm.nvim")
   use("dstein64/vim-startuptime")
   use("br1anchen/nvim-colorizer.lua")
   use("stevearc/dressing.nvim")
@@ -114,6 +114,7 @@ return packer.startup(function(use)
   use("saadparwaiz1/cmp_luasnip") -- snippet completions
   use("hrsh7th/cmp-nvim-lsp")
   use("hrsh7th/cmp-nvim-lua")
+  use("onsails/lspkind.nvim")
 
   -- snippets
   use("L3MON4D3/LuaSnip") --snippet engine
