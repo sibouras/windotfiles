@@ -86,10 +86,10 @@
     "<C-c>": false
   },
   "vim.insertModeKeyBindings": [
-    {
-      "before": ["d", "f"],
-      "after": ["<Esc>"]
-    }
+    // {
+    //   "before": ["d", "f"],
+    //   "after": ["<Esc>"]
+    // }
     // {
     //   "before": ["<C-a>"],
     //   "after": ["<Esc>", "^", "i"]
@@ -179,9 +179,9 @@
 
   "editor.lineNumbers": "relative",
   "editor.smoothScrolling": true,
-  "editor.cursorSurroundingLines": 10,
+  "editor.cursorSurroundingLines": 5,
   "editor.mouseWheelScrollSensitivity": 2,
-  "editor.fastScrollSensitivity": 2,
+  "editor.fastScrollSensitivity": 1,
   // "editor.multiCursorModifier": "ctrlCmd",
   // "vim.smartRelativeLine": true,
   // "vim.easymotion": true,
@@ -221,6 +221,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
     // "editor.defaultFormatter": "vscode.html-language-features"
   },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -258,11 +261,13 @@
 
   // "window.menuBarVisibility": "default",
   "workbench.editor.enablePreview": false,
-  "workbench.statusBar.visible": true,
   "editor.renderWhitespace": "none",
   // "typescript.suggest.completeFunctionCalls": true,
   // "javascript.suggest.completeFunctionCalls": true,
   "editor.cursorBlinking": "solid",
+  // "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
+  "window.commandCenter": true,
+  "workbench.colorTheme": "Moonlight II",
   "workbench.colorCustomizations": {
     "[Material Dark Theme]": {
       "editorCursor.foreground": "#1F8AD2",
@@ -273,7 +278,74 @@
     },
     "[Moonlight II]": {
       "editorCursor.background": "#000",
-      "editor.lineHighlightBackground": "#1b1d2b"
+      "editor.lineHighlightBackground": "#222437",
+      "editor.background": "#1a1c2a",
+      "sideBar.background": "#181926",
+      "sideBarSectionHeader.background": "#181926",
+      "terminal.background": "#181926",
+      "panel.background": "#181926",
+      "statusBar.background": "#181926",
+      "titleBar.activeBackground": "#181926",
+      "editorGroupHeader.tabsBackground": "#181926",
+      "tab.inactiveBackground": "#181926",
+      "editorHoverWidget.background": "#181926"
+    },
+    "[One Dark Pro Darker]": {
+      "titleBar.activeBackground": "#061115",
+      "panel.border": "#0f2934",
+      "activityBar.background": "#000a0e",
+      "breadcrumb.background": "#061115",
+      "breadcrumbPicker.background": "#0d181c",
+      "button.background": "#0d181c",
+      "button.hoverBackground": "#1a202c",
+      "debugToolBar.background": "#061115",
+      "editor.background": "#061115",
+      "editor.lineHighlightBackground": "#1a202c",
+      "editorBracketMatch.background": "#061115",
+      "editorGroupHeader.tabsBackground": "#000a0e",
+      "editorHoverWidget.background": "#061115",
+      "editorOverviewRuler.border": "#061115",
+      "editorSuggestWidget.background": "#061115",
+      "editorWidget.background": "#0d181c",
+      "input.background": "#061115",
+      "list.activeSelectionBackground": "#0d181c",
+      "list.focusBackground": "#061115",
+      "list.focusOutline": "#061115",
+      "list.hoverBackground": "#1a202c",
+      "list.inactiveSelectionBackground": "#061115",
+      "notifications.background": "#061115",
+      "panel.background": "#000a0e",
+      "quickInput.background": "#061115",
+      "scrollbarSlider.activeBackground": "#000a0e",
+      "settings.checkboxBackground": "#0d181c",
+      "settings.dropdownBackground": "#0d181c",
+      "settings.numberInputBackground": "#0d181c",
+      "settings.textInputBackground": "#0d181c",
+      "sideBar.background": "#000a0e",
+      "sideBarSectionHeader.background": "#000a0e",
+      "statusBar.background": "#000a0e",
+      "statusBar.noFolderBackground": "#000a0e",
+      "tab.activeBackground": "#061115",
+      // "tab.activeBorder": "#06111500",
+      "tab.border": "#061115",
+      "tab.hoverBackground": "#1a202c",
+      "tab.inactiveBackground": "#000a0e",
+      "terminal.background": "#061115",
+      "terminal.border": "#061115",
+      "terminal.tab.activeBorder": "#061115"
+    }
+  },
+  "editor.tokenColorCustomizations": {
+    "[One Dark Pro Darker]": {
+      "variables": "#dedede",
+      "textMateRules": [
+        {
+          "scope": ["variable.other.constant"],
+          "settings": {
+            // "foreground": "#dedede"
+          }
+        }
+      ]
     }
   },
   // "editor.multiCursorModifier": "ctrlCmd",
@@ -306,9 +378,12 @@
     },
     "Windows PowerShell": {
       "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    },
+    "Nushell": {
+      "path": "C:\\Users\\marzouk\\scoop\\shims\\nu.exe"
     }
   },
-  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.defaultProfile.windows": "Nushell",
   "markdown-preview-enhanced.previewTheme": "github-light.css",
   "markdown-pdf.styles": [
     "C:\\Users\\marzouk\\Desktop\\ala\\vscode-markdown-style\\extension\\markdown-pdf.css"
@@ -321,19 +396,19 @@
   "gitlens.codeLens.enabled": false,
   "gitlens.hovers.enabled": false,
   "editor.mouseWheelZoom": true,
-  "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
-  "workbench.colorTheme": "Moonlight II",
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/bower_components": true,
-    "**/*.code-search": true,
-    "**/.git": true
-  },
+  // "search.exclude": {
+  //   "**/node_modules": true,
+  //   "**/bower_components": true,
+  //   "**/*.code-search": true,
+  //   "**/.git": true
+  // },
   "quokka.showCodeLensInOutputChannel": false,
   "editor.minimap.enabled": false,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": false,
-  "workbench.activityBar.visible": false,
   "quokka.showStartViewOnFeatureRelease": true,
-  "javascript.preferences.jsxAttributeCompletionStyle": "auto"
+  "javascript.preferences.jsxAttributeCompletionStyle": "auto",
+  "explorer.excludeGitIgnore": true,
+  "vsicons.dontShowNewVersionMessage": true,
+  "window.restoreWindows": "none"
 }

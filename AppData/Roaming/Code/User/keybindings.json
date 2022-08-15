@@ -265,15 +265,7 @@
     "command": "search.action.focusSearchList"
   },
   {
-    "key": "alt+n",
-    "command": "editor.emmet.action.nextEditPoint"
-  },
-  {
-    "key": "shift+alt+n",
-    "command": "editor.emmet.action.prevEditPoint"
-  },
-  {
-    "key": "ctrl+'",
+    "key": "alt+;",
     "command": "workbench.action.terminal.toggleTerminal"
   },
   {
@@ -303,22 +295,6 @@
   {
     "key": "ctrl+alt+m",
     "command": "workbench.action.toggleMaximizedPanel"
-  },
-  {
-    "key": "ctrl+0",
-    "command": "workbench.action.lastEditorInGroup"
-  },
-  {
-    "key": "ctrl+9",
-    "command": "-workbench.action.lastEditorInGroup"
-  },
-  {
-    "key": "ctrl+9",
-    "command": "workbench.action.focusSideBar"
-  },
-  {
-    "key": "ctrl+0",
-    "command": "-workbench.action.focusSideBar"
   },
   {
     "key": "alt+d",
@@ -469,5 +445,58 @@
     "key": "shift+alt+up",
     "command": "-editor.action.copyLinesUpAction",
     "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "alt+e",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "alt+d",
+    "command": "workbench.action.closeActiveEditor"
+  },
+  {
+    "key": "ctrl+w",
+    "command": "-workbench.action.closeActiveEditor"
+  },
+  {
+    "key": "alt+n",
+    "command": "editor.action.wordHighlight.next",
+    "when": "editorTextFocus && hasWordHighlights"
+  },
+  {
+    "key": "shift+alt+n",
+    "command": "editor.action.wordHighlight.prev",
+    "when": "editorTextFocus && hasWordHighlights"
+  },
+  {
+    "key": "alt+f",
+    "command": "editor.action.addSelectionToNextFindMatch",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+d",
+    "command": "-editor.action.addSelectionToNextFindMatch",
+    "when": "editorFocus"
+  },
+  {
+    "key": "alt+o alt+f",
+    "command": "editor.action.moveSelectionToNextFindMatch",
+    "when": "editorFocus"
+  },
+  {
+    "key": "alt+o shift+alt+f",
+    "command": "editor.action.moveSelectionToPreviousFindMatch"
+  },
+  {
+    "key": "alt+o alt+w",
+    "command": "editor.emmet.action.wrapWithAbbreviation"
+  },
+  {
+    "key": "ctrl+0",
+    "command": "workbench.action.zoomReset"
+  },
+  {
+    "key": "ctrl+numpad0",
+    "command": "-workbench.action.zoomReset"
   }
 ]
