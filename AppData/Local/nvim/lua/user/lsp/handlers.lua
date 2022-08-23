@@ -70,7 +70,7 @@ map("n", "<leader>q", vim.diagnostic.setloclist, opts)
 map("n", "<M-S-f>", vim.lsp.buf.formatting, opts)
 map("v", "<M-S-f>", vim.lsp.buf.range_formatting, opts)
 map("n", "<leader>li", "<cmd>LspInfo<cr>")
-map("n", "<leader>lI", "<cmd>LspInstallInfo<cr>")
+map("n", "<leader>lI", "<cmd>Mason<cr>")
 
 -- toggle LSP diagnostics
 vim.g.diagnostics_active = true

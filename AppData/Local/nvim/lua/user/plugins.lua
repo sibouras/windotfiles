@@ -121,14 +121,13 @@ return packer.startup(function(use)
   use("L3MON4D3/LuaSnip") --snippet engine
 
   -- LSP
-  use("neovim/nvim-lspconfig") -- enable LSP
-  use("williamboman/nvim-lsp-installer") -- simple to use language server installer
-  -- use("tamago324/nlsp-settings.nvim") -- language server settings for json
+  use("williamboman/mason.nvim")
+  use("williamboman/mason-lspconfig.nvim")
+  use("neovim/nvim-lspconfig")
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
   -- use("ray-x/lsp_signature.nvim") -- LSP signature hint as you type
   use("RRethy/vim-illuminate") -- highlight symbols under cursor and cycle through
   use("b0o/SchemaStore.nvim")
-  use("jose-elias-alvarez/typescript.nvim")
   -- use("j-hui/fidget.nvim")
 
   -- Telescope
