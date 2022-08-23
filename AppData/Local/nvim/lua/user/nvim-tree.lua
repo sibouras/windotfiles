@@ -58,6 +58,9 @@ nvim_tree.setup({
     },
     number = false,
     relativenumber = false,
+    float = {
+      enable = false,
+    },
   },
   renderer = {
     full_name = true,

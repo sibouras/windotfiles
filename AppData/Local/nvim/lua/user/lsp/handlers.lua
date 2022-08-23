@@ -61,31 +61,50 @@ end
 --   end
 -- end
 
+local opts = { noremap = true, silent = true }
+local map = vim.keymap.set
+map("n", "<leader>di", vim.diagnostic.open_float, opts)
+map("n", "[d", vim.diagnostic.goto_prev, opts)
+map("n", "]d", vim.diagnostic.goto_next, opts)
+map("n", "<leader>q", vim.diagnostic.setloclist, opts)
+map("n", "<M-S-f>", vim.lsp.buf.formatting, opts)
+map("v", "<M-S-f>", vim.lsp.buf.range_formatting, opts)
+map("n", "<leader>li", "<cmd>LspInfo<cr>")
+map("n", "<leader>lI", "<cmd>LspInstallInfo<cr>")
+
+-- toggle LSP diagnostics
+vim.g.diagnostics_active = true
+vim.keymap.set("n", "<leader>dt", function()
+  vim.g.diagnostics_active = not vim.g.diagnostics_active
+  if vim.g.diagnostics_active then
+    vim.diagnostic.show()
+  else
+    vim.diagnostic.hide()
+  end
+end)
+
 local function lsp_keymaps(bufnr)
-  local opts = { noremap = true, silent = true }
-  local map = vim.api.nvim_buf_set_keymap
-  map(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  map(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  map(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  map(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  map(bufnr, "n", "<M-m>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  map(bufnr, "i", "<M-m>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  -- map(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  map(bufnr, "n", "gR", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  map(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  map(bufnr, "v", "<leader>ca", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
-  map(bufnr, "n", "<leader>di", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-  map(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-  map(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-  map(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-  map(bufnr, "n", "<M-S-f>", "<cmd>lua vim.lsp.buf.formatting()<cr>", opts)
-  map(bufnr, "v", "<M-S-f>", "<cmd>lua vim.lsp.buf.range_formatting()<cr>", opts)
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+
+  map("n", "gD", vim.lsp.buf.declaration, bufopts)
+  map("n", "gd", vim.lsp.buf.definition, bufopts)
+  map("n", "K", vim.lsp.buf.hover, bufopts)
+  map("n", "gI", vim.lsp.buf.implementation, bufopts)
+  map({ "n", "i" }, "<M-m>", vim.lsp.buf.signature_help, bufopts)
+  -- map("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+  map("n", "<leader>rn", ":lua require('user.essentials').lspRename()<CR>", bufopts)
+  map("n", "gR", vim.lsp.buf.references, bufopts)
+  map("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+  map("v", "<leader>ca", vim.lsp.buf.range_code_action, bufopts)
+  map("n", "<leader>ld", vim.lsp.buf.type_definition, bufopts)
+  map("n", "<leader>wl", function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+  map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
   -- vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
   vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
   -- vim.api.nvim_buf_create_user_command(bufnr, "Format", vim.lsp.buf.formatting, {})
-  map(bufnr, "n", "<leader>li", "<cmd>LspInfo<cr>", opts)
-  map(bufnr, "n", "<leader>lI", "<cmd>LspInstallInfo<cr>", opts)
-  map(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 end
 
 M.on_attach = function(client, bufnr)
@@ -101,7 +120,6 @@ M.on_attach = function(client, bufnr)
   end
   lsp_keymaps(bufnr)
   -- lsp_highlight_document(client) -- use illuminate instead
-  require("illuminate").on_attach(client)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

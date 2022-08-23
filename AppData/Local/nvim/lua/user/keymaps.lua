@@ -133,7 +133,7 @@ map("n", "]q", ":cnext<CR>")
 -- yank to system clipboard
 map({ "n", "v" }, "<M-y>", '"+y')
 map({ "n", "v" }, "<M-p>", '"+p')
-map("i", "<M-p>", '<C-o>"+p')
+map("i", "<M-p>", "<C-r>+")
 map("c", "<M-p>", "<C-r>+", { silent = false })
 map({ "n", "v" }, "<M-S-p>", '"+P')
 
@@ -164,7 +164,7 @@ map("v", "<S-Insert>", '"+p')
 map("i", "<S-Insert>", "<C-r>+")
 
 -- reselect pasted text
-map("n", "sp", "`[v`]")
+-- map("n", "sp", "`[v`]")
 
 -- Quickly edit your macros(from vim-galore)
 map("n", "<leader>m", ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>")
@@ -250,7 +250,6 @@ map("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>")
 
 -- essentials.lua functions
 -- map("n", "<F2>", ":lua require('user.essentials').rename()<CR>")
-map("n", "<leader>rn", ":lua require('user.essentials').lspRename()<CR>")
 map("n", "gm", ":lua require('user.essentials').toggle_comment()<CR>")
 map("v", "gm", ":lua require('user.essentials').toggle_comment(true)<CR>")
 map("n", "<leader>ru", ":lua require('user.essentials').run_file()<CR>")
@@ -363,8 +362,8 @@ map("n", "<leader>sd", ":SessionsStop<CR>")
 ---------------------------------------------------------------
 -- => vim-illuminate
 ---------------------------------------------------------------
-map({ "n", "v" }, "<M-n>", '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>')
-map({ "n", "v" }, "<M-S-n>", '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>')
+map({ "n", "v" }, "<M-n>", '<cmd>lua require"illuminate".goto_next_reference()<cr>')
+map({ "n", "v" }, "<M-S-n>", '<cmd>lua require"illuminate".goto_prev_reference()<cr>')
 
 ---------------------------------------------------------------
 -- => hop.nvim
@@ -378,7 +377,7 @@ map({ "n", "v" }, "<M-S-n>", '<cmd>lua require"illuminate".next_reference{revers
 ---------------------------------------------------------------
 -- => pounce.nvim
 ---------------------------------------------------------------
-map("", "sf", "<cmd>Pounce<CR>")
+map("", "s", "<cmd>Pounce<CR>")
 map("", "S", "<cmd>PounceRepeat<CR>")
 
 ---------------------------------------------------------------
@@ -393,17 +392,6 @@ map("", "S", "<cmd>PounceRepeat<CR>")
 -- map("n", "<A-S->>", ":BufferLineMoveNext<CR>")
 -- map("n", "<A-S-<>", ":BufferLineMovePrev<CR>")
 -- map("n", "Q", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>")
-
--- toggle LSP diagnostics
-vim.g.diagnostics_active = true
-vim.keymap.set("n", "<leader>dt", function()
-  vim.g.diagnostics_active = not vim.g.diagnostics_active
-  if vim.g.diagnostics_active then
-    vim.diagnostic.show()
-  else
-    vim.diagnostic.hide()
-  end
-end)
 
 -- toggle conceal
 vim.cmd([[

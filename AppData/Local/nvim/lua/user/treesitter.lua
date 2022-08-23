@@ -10,6 +10,8 @@ configs.setup({
     "javascript",
     "tsx",
     "typescript",
+    "markdown",
+    "markdown_inline",
   },
   sync_install = false,
   ignore_install = { "tlaplus" }, -- List of parsers to ignore installing
