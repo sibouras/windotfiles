@@ -63,35 +63,45 @@ configs.setup({
         ["ib"] = "@block.inner",
         ["aa"] = "@parameter.outer",
         ["ia"] = "@parameter.inner",
+        ["ae"] = "@call.outer",
+        ["ie"] = "@call.inner",
       },
     },
     swap = {
       enable = true,
       swap_next = {
-        ["]a"] = "@parameter.inner",
+        ["]r"] = "@parameter.inner",
       },
       swap_previous = {
-        ["[a"] = "@parameter.inner",
+        ["[r"] = "@parameter.inner",
       },
     },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
+        ["]f"] = "@function.outer",
+        ["]c"] = "@class.outer",
+        ["]a"] = "@parameter.inner",
+        ["]e"] = "@call.outer",
       },
       goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
+        ["]F"] = "@function.outer",
+        ["]C"] = "@class.outer",
+        ["]A"] = "@parameter.inner",
+        ["]E"] = "@call.outer",
       },
       goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
+        ["[f"] = "@function.outer",
+        ["[c"] = "@class.outer",
+        ["[a"] = "@parameter.inner",
+        ["[e"] = "@call.outer",
       },
       goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
+        ["[F"] = "@function.outer",
+        ["[C"] = "@class.outer",
+        ["[A"] = "@parameter.inner",
+        ["[E"] = "@call.outer",
       },
     },
     lsp_interop = {

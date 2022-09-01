@@ -69,9 +69,12 @@ mason_lspconfig.setup_handlers({
     lspconfig.sumneko_lua.setup({
       on_attach = opts.on_attach,
       capabilities = opts.capabilities,
+      single_file_support = false,
       settings = {
         Lua = {
-          -- Tells Lua that a global variable named vim exists to not have warnings when configuring neovim
+          runtime = {
+            version = "LuaJIT",
+          },
           diagnostics = {
             globals = { "vim" },
           },
@@ -80,6 +83,9 @@ mason_lspconfig.setup_handlers({
               [vim.fn.expand("$VIMRUNTIME/lua")] = true,
               [vim.fn.stdpath("config") .. "/lua"] = true,
             },
+          },
+          telemetry = {
+            enable = false,
           },
         },
       },
@@ -133,6 +139,14 @@ mason_lspconfig.setup_handlers({
           validate = true,
         },
       },
+    })
+  end,
+
+  ["marksman"] = function()
+    lspconfig.marksman.setup({
+      on_attach = opts.on_attach,
+      capabilities = opts.capabilities,
+      cmd = { "marksman.cmd", "server" },
     })
   end,
 

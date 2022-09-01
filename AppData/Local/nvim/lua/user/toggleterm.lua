@@ -36,6 +36,7 @@ function _G.set_terminal_keymaps()
 
   map("t", "`", [[<C-\><C-n>]], opts)
   map("n", ";", ":close<CR>", opts)
+  map("t", "<C-BS>", "<C-w>", opts)
   map("t", "<C-w><C-h>", [[<Cmd>wincmd h<CR>]], opts)
   map("t", "<C-w><C-j>", [[<Cmd>wincmd j<CR>]], opts)
   map("t", "<C-w><C-k>", [[<Cmd>wincmd k<CR>]], opts)

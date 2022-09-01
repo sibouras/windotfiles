@@ -25,7 +25,6 @@ telescope.setup({
     },
     mappings = {
       i = {
-        ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
         ["<C-c>"] = actions.close,
@@ -47,6 +46,8 @@ telescope.setup({
         ["<C-l>"] = actions.complete_tag,
         ["<C-_>"] = actions.which_key, -- keys from pressing <C-/>
         ["<C-x>"] = actions.delete_buffer,
+        ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
+        ["<C-BS>"] = { "<C-w>", type = "command", opts = { noremap = false } },
       },
       n = {
         ["<esc>"] = actions.close,

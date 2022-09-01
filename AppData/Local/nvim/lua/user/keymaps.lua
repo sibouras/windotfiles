@@ -11,6 +11,9 @@ map("", "<Space>", "<Nop>")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- distinguish between <Tab> and <C-i> (<C-i> is mapped to <C-F15> in autohotkey)
+map("n", "<C-F15>", "<C-i>")
+
 -- de-tab
 map("i", "<S-Tab>", "<C-d>")
 
@@ -47,8 +50,8 @@ map("n", "<M-s>", ":silent w<CR>")
 map("i", "<M-s>", "<Esc>:silent w<CR>")
 
 -- Ctrl-Backspace to delete the previous word
-map("i", "<C-BS>", "<C-W>", { noremap = false })
-map("c", "<C-BS>", "<C-W>", { silent = false })
+map("i", "<C-BS>", "<C-w>", { noremap = false })
+map("c", "<C-BS>", "<C-w>", { silent = false })
 
 -- ctrl-z to undo
 map("i", "<C-z>", "<C-o>:u<CR>")
@@ -167,7 +170,7 @@ map("i", "<S-Insert>", "<C-r>+")
 -- map("n", "sp", "`[v`]")
 
 -- Quickly edit your macros(from vim-galore)
-map("n", "<leader>m", ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>")
+map("n", "<leader>me", ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>")
 
 -- Stay in indent mode
 map("v", "<", "<gv")
@@ -178,12 +181,6 @@ map("v", ">", ">gv")
 
 -- remove highlight
 map("n", "<esc>", ":noh<cr>")
-
--- Quickly add empty lines
--- map("n", "[<space>", ":<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[")
--- map("n", "]<space>", ":<c-u>put =repeat(nr2char(10), v:count1)<cr>")
-map("n", "[<space>", "O<Esc>")
-map("n", "]<space>", "o<Esc>")
 
 -- %% expands to the path of the directory that contains the current file.
 -- works with with :cd, :grep etc.
@@ -202,7 +199,8 @@ map("n", "<leader>;", [[:execute "normal! mqA;\<lt>esc>`q"<enter>]])
 map("n", "<leader>tn", "<C-w>T")
 
 -- edit keymaps in new tab
-map("n", "<leader>tk", ":tab drop $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>:Tz nvim<CR>")
+-- map("n", "<leader>tk", ":tab drop $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>:Tz nvim<CR>")
+map("n", "<leader>tk", ":tab drop $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>")
 
 vim.cmd([[
 iab <expr> t/ strftime('TODO(' . '%Y-%m-%d):')
@@ -231,6 +229,16 @@ map("n", ")", ":execute 'keepjumps norm! ' . v:count1 . ')'<CR>")
 -- open current file in explorer
 map("n", "<leader>fl", ":silent !start %:p:h<CR>")
 
+-- Toggle quickfix window
+map("n", "<leader>q", function()
+  vim.cmd(not vim.g.quickfix_toggled and "cclose" or "copen")
+  vim.g.quickfix_toggled = not vim.g.quickfix_toggled
+end)
+
+----------------------------------
+--- functions
+----------------------------------
+
 -- use black hole register when deleting empty line
 local function smart_dd()
   if vim.api.nvim_get_current_line():match("^%s*$") then
@@ -242,21 +250,47 @@ end
 
 map("n", "dd", smart_dd, { expr = true })
 
-----------------------------------
---- functions
-----------------------------------
+-- Quickly add empty lines
+vim.cmd([[
+function! s:BlankUp() abort
+  let cmd = 'put!=repeat(nr2char(10), v:count1)|silent '']+'
+  if &modifiable
+    let cmd .= '|silent! call repeat#set("\<Plug>(unimpaired-blank-up)", v:count1)'
+  endif
+  return cmd
+endfunction
+
+function! s:BlankDown() abort
+  let cmd = 'put =repeat(nr2char(10), v:count1)|silent ''[-'
+  if &modifiable
+    let cmd .= '|silent! call repeat#set("\<Plug>(unimpaired-blank-down)", v:count1)'
+  endif
+  return cmd
+endfunction
+
+nnoremap <silent> <Plug>(unimpaired-blank-up)   :<C-U>exe <SID>BlankUp()<CR>
+nnoremap <silent> <Plug>(unimpaired-blank-down) :<C-U>exe <SID>BlankDown()<CR>
+]])
+
+map("n", "[<space>", "<Plug>(unimpaired-blank-up)")
+map("n", "]<space>", "<Plug>(unimpaired-blank-down)")
+
+-- autoload/functions.vim
 map("v", "<leader>cy", ":call functions#CompleteYank()<CR>")
 map("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>")
+map("n", "<C-c><C-y>", ":call functions#ToggleConcealLevel()<CR>")
 
 -- essentials.lua functions
 -- map("n", "<F2>", ":lua require('user.essentials').rename()<CR>")
 map("n", "gm", ":lua require('user.essentials').toggle_comment()<CR>")
 map("v", "gm", ":lua require('user.essentials').toggle_comment(true)<CR>")
 map("n", "<leader>ru", ":lua require('user.essentials').run_file()<CR>")
+map("n", "<leader>sb", ":lua require('user.essentials').swap_bool()<CR>")
 
 ----------------------------------
 --- definition of new commands ---
 ----------------------------------
+
 vim.cmd([[
 command! TS silent! call functions#T2S()
 command! ST silent! call functions#S2T()
@@ -273,7 +307,6 @@ command! -nargs=1 -complete=command -bar -range Redir silent call functions#Redi
 ---------------------------------------------------------------
 -- => telescope.nvim
 ---------------------------------------------------------------
--- map("n", "<leader>f", "<cmd>Telescope find_files<cr>")
 -- map(
 --   "n",
 --   "<leader>f",
@@ -290,14 +323,12 @@ map(
   "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h'), prompt_title = 'From Current Buffer' })<cr>"
 )
 map("n", "<leader>fs", ":Telescope find_files<CR>")
-map("n", "<leader>fe", ":Telescope resume<CR>")
--- map("n", "<leader>b", ":lua require'telescope.builtin'.buffers{ path_display = {'shorten'} }<CR>")
+map("n", "<leader>fe", "<cmd>lua require('telescope.builtin').resume({ initial_mode = 'normal' })<cr>")
 map(
   "n",
   "<leader>b",
   "<cmd>lua require('telescope.builtin').buffers({ previewer = false, initial_mode = 'insert', path_display = {'shorten'} })<cr>"
 )
--- map("n", "<leader>b", ":Telescope buffers<CR>")
 map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>")
 map("n", "<leader>fo", ":Telescope oldfiles<CR>")
 map("n", "<leader>fg", ":Telescope live_grep<CR>")
@@ -308,7 +339,7 @@ map("n", "<leader>fn", ":Telescope neoclip<CR>")
 map("n", "<leader>fm", ":lua require('telescope').extensions.macroscope.default()<CR>")
 map("n", "<leader>p", ":Telescope workspaces<CR>")
 map("n", "<leader>lr", ":Telescope lsp_references<CR>")
-map("n", "<leader>ld", ":Telescope lsp_definitions<CR>")
+map("n", "<leader>ld", ":Telescope diagnostics<CR>")
 map("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>")
 map("n", "<leader>lt", ":Telescope treesitter<CR>")
 
@@ -318,6 +349,9 @@ map("n", "<leader>lt", ":Telescope treesitter<CR>")
 -- map("n", "<leader>e", ":lua require'lir.float'.toggle()<CR>")
 map("n", "<M-e>", ":NvimTreeToggle<CR>")
 map("n", "<leader>e", ":NvimTreeFindFileToggle<CR>")
+map("n", "<leader>mn", require("nvim-tree.api").marks.navigate.next)
+map("n", "<leader>mp", require("nvim-tree.api").marks.navigate.prev)
+map("n", "<leader>ms", require("nvim-tree.api").marks.navigate.select)
 
 ---------------------------------------------------------------
 -- => gomove.nvim
@@ -392,16 +426,3 @@ map("", "S", "<cmd>PounceRepeat<CR>")
 -- map("n", "<A-S->>", ":BufferLineMoveNext<CR>")
 -- map("n", "<A-S-<>", ":BufferLineMovePrev<CR>")
 -- map("n", "Q", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>")
-
--- toggle conceal
-vim.cmd([[
-  function! ToggleConcealLevel()
-    if &conceallevel == 0
-      setlocal conceallevel=3
-    else
-      setlocal conceallevel=0
-    endif
-  endfunction
-
-  nnoremap <silent> <C-c><C-y> :call ToggleConcealLevel()<CR>
-]])

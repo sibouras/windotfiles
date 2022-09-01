@@ -50,6 +50,7 @@ vim.opt.whichwrap:append("<,>,[,],h,l") -- let movement keys reach the previous 
 vim.opt.shortmess:append("c") -- don't show the dumb matching stuff
 vim.opt.path:append("**") -- find files recursively
 -- vim.opt.concealcursor:append("nc")
+vim.opt.jumpoptions:append("stack") -- browser-like jumplist behavior
 
 -- vim.cmd([[set formatoptions-=cro]]) -- TODO: this doesn't seem to work
 vim.cmd([[

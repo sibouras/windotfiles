@@ -199,32 +199,31 @@ end
 
 ----- Go to last edited place -----
 function M.last_place()
-  -- if vim.api.nvim_win_is_valid(0) and vim.api.nvim_buf_is_loaded(0) then
-  if vim.tbl_contains(vim.api.nvim_list_bufs(), vim.api.nvim_get_current_buf()) then
-    if not vim.tbl_contains({ "help", "packer", "toggleterm" }, vim.bo.ft) then
-      if line([['"]]) > 1 and line([['"]]) <= line("$") then
-        vim.cmd([[norm '"]]) -- g'" for including column
-      end
-    end
+  local _, row, col, _ = unpack(vim.fn.getpos([['"]]))
+  local last = vim.api.nvim_buf_line_count(0)
+  if (row > 0 or col > 0) and (row <= last) then
+    vim.cmd([[norm! '"]])
   end
 end
 -----------------------------------
 
 -------  Go To URL ---------
 function M.go_to_url(cmd)
-  local url = vim.api.nvim_get_current_line():match([[%[.*]%((.*)%)]]) -- To work on md links
+  local url = vim.api.nvim_get_current_line():match([[%[.*]%((.*)%)]]) -- markdown links
   if url == nil then
-    url = vim.fn.expand("<cWORD>")
-    if not string.match(url, "http") then
-      url = "https://github.com/" .. url
-    end
-    if string.match(url, [[(.+)[,:]$]]) then
-      url = url:sub(1, -2)
-    end -- to check commas at the end
+    return
   end
-
-  -- vim.notify("Going to " .. url, "info", { title = "Opening browser..." })
-  vim.cmd(":silent !" .. (cmd or "xdg-open") .. " " .. url .. " 1>/dev/null")
+  if not url:match("http") then
+    -- can only have one jump per line
+    vim.cmd([[
+      " add current position to jumplist with m'
+      normal! m'f(
+      " When the :keepjumps command modifier is used, jumps are not stored in the jumplist.
+      keepjumps normal! gf
+    ]])
+  else
+    vim.cmd(":silent !" .. cmd .. " " .. url)
+  end
 end
 ----------------------------
 
