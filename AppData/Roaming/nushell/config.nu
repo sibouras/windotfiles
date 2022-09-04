@@ -130,8 +130,9 @@ let default_theme = {
 
 # The default config record. This is where much of your global configuration is setup.
 let-env config = {
+  show_banner: false
   # completion_algorithm: "fuzzy"
-  buffer_editor: nvim
+  buffer_editor: hx
   filesize_metric: false
   table_mode: rounded # basic, compact, compact_double, light, thin, with_love, rounded, reinforced, heavy, none, other
   use_ls_colors: true
@@ -141,12 +142,11 @@ let-env config = {
   footer_mode: "25" # always, never, number_of_rows, auto
   quick_completions: false  # set this to false to prevent auto-selecting completions when only one remains
   partial_completions: true  # set this to false to prevent partial filling of the prompt
-  animate_prompt: false # redraw the prompt every second
   float_precision: 2
   use_ansi_coloring: true
   filesize_format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, zb, zib, auto
   edit_mode: emacs # emacs, vi
-  max_history_size: 10000 # Session has to be reloaded for this to take effect
+  max_history_size: 20000 # Session has to be reloaded for this to take effect
   sync_history_on_enter: true # Enable to share the history between multiple sessions, else you have to close the session to persist history to file
 
   menus: [
@@ -403,16 +403,20 @@ let-env config = {
 }
 
 # Aliases
+alias :q = exit
+alias md = mkdir
 alias pwd = $env.PWD
 alias pwds = ($env.PWD | str replace $nu.home-path '~' -s)
 alias v = nvim
 alias l = lsd -l
 alias ll = lsd -l
 alias lg = lazygit
+alias gs = gswin64c
 alias ga = git add
 alias gst = git status
 alias gss = git status -s
-alias gb = git branch
+alias gb = git branch --sort=committerdate
+alias gci = (git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff {1} --color=always | delta" | str trim | git checkout $in)
 alias gd = git diff
 alias gr = cd (git rev-parse --show-toplevel)
 alias gg = git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold green)%d%Creset %s %C(bold yellow)(%cr) %C(blue)%ad%Creset' --abbrev-commit --date=short
@@ -424,7 +428,8 @@ alias fs = (fd --strip-cwd-prefix -H -t f -E .git | fzf | str trim)
 alias fp = (fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim)
 
 def fh [] {
-  let text = (history | reverse | get command | str collect (char nl) | fzf)
+  # let text = (history | reverse | get command | str collect (char nl) | fzf)
+  let text = (history | reverse | get command | to text | fzf)
   kbsend -text $text -currentWindow -charDelay 0
 }
 
@@ -444,8 +449,27 @@ def fm [] {
 }
 
 # get aliases
+# def get-aliases [] {
+#   open $nu.config-path | lines | find alias | find -v aliases | split column '=' | select column1 column2 | rename Alias Command | update Alias {|f| $f.Alias | split row ' ' | last} | sort-by Alias
+# }
 def get-aliases [] {
-  open $nu.config-path | lines | find alias | find -v aliases | split column '=' | select column1 column2 | rename Alias Command | update Alias {|f| $f.Alias | split row ' ' | last} | sort-by Alias
+  $nu | get scope | get aliases | update expansion { |c| $c.expansion | nu-highlight }
+}
+
+# ls by date (newer last)
+def ld [
+  --reverse(-r) #reverse order
+] {
+  if ($reverse | empty?) || (not $reverse) {
+    ls | sort-by modified | reject type
+  } else {
+    ls | sort-by modified -r | reject type
+  }
+}
+
+# ls by type
+def lt [] {
+  ls | sort-by -i type name | reject type
 }
 
 # search for specific process
@@ -465,6 +489,37 @@ def git-push [m: string] {
   git commit -am $"($m)"
   git push origin main
 }
+
+# Universal help command, combining https://tldr.sh/ with nushell’s help for built-ins:
+def ? [...terms] {
+  if (
+    which ($terms | first) | any? { |it| $it.built-in || $it.path =~ ^Nushell }
+  ) {
+    help ($terms | str collect " ")
+  } else {
+    tldr ($terms | str collect "-")
+  }
+}
+
+# Return random element from a list or a table
+def get-random-entry [input] {
+  $input
+  |get (random integer 0..(($input|length) - 1))
+}
+
+# Shortcut function and competitions to search for commands in the selected category of nushell
+def "nu-complete help categories" [] {
+  help commands | get category | uniq
+}
+
+def hc [category?: string@"nu-complete help categories"] {
+  help commands | select name category usage | move usage --after name | where category =~ $category
+}
+
+# scripts
+source ~/Appdata/Roaming/nushell/scripts/dict.nu
+source ~/Appdata/Roaming/nushell/scripts/format-number.nu
+source ~/Appdata/Roaming/nushell/scripts/nu-sloc.nu
 
 ### starship config
 source ~/.cache/starship/init.nu
