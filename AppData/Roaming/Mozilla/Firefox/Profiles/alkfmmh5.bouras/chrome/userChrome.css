@@ -1,0 +1,69 @@
+/* * { */
+/*   font-size: 11pt; */
+/* } */
+
+:root {
+  /* default: 36px */
+  --tab-min-height: 32px !important;
+}
+
+/* #titlebar { */
+/*   height: 14px !important; */
+/* } */
+
+/* #TabsToolbar { */
+/*   height: 14px !important; */
+/* } */
+
+/* Larger text in toolbar are */
+/* #navigator-toolbox { */
+/* 125% of Windows default of 12px => 15px */
+/* font-size: 15px !important; */
+/* } */
+
+/* Tab bar */
+#TabsToolbar {
+  font-size: 13px !important;
+}
+
+/* Main Toolbar */
+#nav-bar {
+  font-size: 13px !important;
+}
+
+#urlbar-background {
+  --toolbar-field-focus-background-color: hsl(249, 11%, 12%);
+}
+
+/* library */
+window[windowtype="Places:Organizer"] treechildren::-moz-tree-cell-text {
+  font-size: 15px !important;
+}
+
+/* bookmarks sidebar */
+.sidebar-placesTreechildren::-moz-tree-cell-text {
+  font-size: 15px !important;
+}
+
+/* Bookmarks Toolbar */
+#PersonalToolbar,
+#PersonalToolbar menuitem,
+#PersonalToolbar menu {
+  font-size: 13px !important;
+}
+
+/* context menu, right click menu */
+menupopup {
+  font-size: 13px !important;
+}
+
+/* right click menu, extension options menu */
+/* menuitem, */
+/* menu { */
+/*   font-size: 13px !important; */
+/* } */
+
+/* hamburger menu */
+.subviewbutton {
+  font-size: 13px !important;
+}
