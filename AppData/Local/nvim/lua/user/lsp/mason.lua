@@ -122,11 +122,13 @@ mason_lspconfig.setup_handlers({
     lspconfig.tailwindcss.setup({
       on_attach = function(client, bufnr)
         if client.server_capabilities.colorProvider then
-          require("user.lsp.utils.documentcolors").buf_attach(bufnr)
+          -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
+          require("document-color").buf_attach(bufnr)
         end
       end,
       capabilities = opts.capabilities,
       filetypes = { "html", "css", "javascriptreact", "typescriptreact", "vue", "svelte" },
+      root_dir = lspconfig.util.root_pattern("tailwind.config.js", "tailwind.config.ts"),
     })
   end,
 

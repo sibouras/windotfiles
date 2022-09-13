@@ -94,7 +94,8 @@ return packer.startup(function(use)
   use("akinsho/toggleterm.nvim")
   -- use("numToStr/FTerm.nvim")
   use("dstein64/vim-startuptime")
-  use("br1anchen/nvim-colorizer.lua")
+  use("NvChad/nvim-colorizer.lua") -- maintained fork
+  use("mrshmllow/document-color.nvim")
   use("stevearc/dressing.nvim")
   use("Djancyp/cheat-sheet")
   -- use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
@@ -148,6 +149,7 @@ return packer.startup(function(use)
   use("nvim-treesitter/nvim-treesitter-textobjects")
   use("RRethy/nvim-treesitter-textsubjects")
   use("windwp/nvim-ts-autotag")
+  use("m-demare/hlargs.nvim")
   -- use("p00f/nvim-ts-rainbow")
 
   -- Git

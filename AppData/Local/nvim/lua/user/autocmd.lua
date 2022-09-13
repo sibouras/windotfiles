@@ -35,6 +35,17 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 --   augroup END
 -- ]])
 
+-- hide cursor line when nvim loses focus
+vim.cmd([[
+  augroup CursorLine
+      au!
+      au FocusGained * setlocal cursorline
+      au FocusLost * setlocal nocursorline
+      " au FocusGained * highlight Cursor guifg=black guibg=#7aa2f7
+      " au FocusLost * highlight Cursor guifg=black guibg=#546faa
+  augroup END
+]])
+
 -- Automatically equalize splits when Vim is resized
 vim.cmd([[
   autocmd VimResized * wincmd =

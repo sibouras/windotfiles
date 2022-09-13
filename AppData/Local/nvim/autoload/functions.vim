@@ -50,6 +50,11 @@ function! functions#ToggleConcealLevel()
   endif
 endfunction
 
+function! functions#GetHighlightGroupUnderCursor()
+    let id = synID(line('.'), col('.'), 1)
+    echo synIDattr(id, 'name') . '; translated: ' . synIDattr(synIDtrans(id), 'name')
+endfunction
+
 " Redirect the output of a Vim or external command into a scratch buffer
 " source: https://gist.github.com/romainl/eae0a260ab9c135390c30cd370c20cd7
 function! functions#Redir(cmd, rng, start, end)

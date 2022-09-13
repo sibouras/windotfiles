@@ -46,8 +46,8 @@ end
 -- map("i", "df", "<ESC>")
 
 -- quick save
-map("n", "<M-s>", ":silent w<CR>")
-map("i", "<M-s>", "<Esc>:silent w<CR>")
+map("n", "<M-s>", ":silent update<CR>")
+map("i", "<M-s>", "<Esc>:silent update<CR>")
 
 -- Ctrl-Backspace to delete the previous word
 map("i", "<C-BS>", "<C-w>", { noremap = false })
@@ -279,6 +279,7 @@ map("n", "]<space>", "<Plug>(unimpaired-blank-down)")
 map("v", "<leader>cy", ":call functions#CompleteYank()<CR>")
 map("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>")
 map("n", "<C-c><C-y>", ":call functions#ToggleConcealLevel()<CR>")
+map("n", "<leader>hl", ":call functions#GetHighlightGroupUnderCursor()<CR>")
 
 -- essentials.lua functions
 -- map("n", "<F2>", ":lua require('user.essentials').rename()<CR>")
@@ -299,6 +300,12 @@ command! Rename call functions#RenameFile()
 command! Remove call functions#RemoveFile()
 command! -nargs=1 -complete=command -bar -range Redir silent call functions#Redir(<q-args>, <range>, <line1>, <line2>)
 ]])
+
+vim.api.nvim_create_user_command("Json", function()
+  vim.cmd([[ enew | norm! "+p ]])
+  vim.cmd([[ setlocal filetype=json noswapfile ]])
+  vim.cmd([[ nnoremap <silent> <buffer> q :bw!<CR> ]])
+end, { force = true })
 
 -----------------------------------
 ------------- Plugins -------------
@@ -396,8 +403,14 @@ map("n", "<leader>sd", ":SessionsStop<CR>")
 ---------------------------------------------------------------
 -- => vim-illuminate
 ---------------------------------------------------------------
-map({ "n", "v" }, "<M-n>", '<cmd>lua require"illuminate".goto_next_reference()<cr>')
-map({ "n", "v" }, "<M-S-n>", '<cmd>lua require"illuminate".goto_prev_reference()<cr>')
+map({ "n", "v" }, "<M-n>", '<cmd>lua require"illuminate".goto_next_reference()<CR>')
+map({ "n", "v" }, "<M-S-n>", '<cmd>lua require"illuminate".goto_prev_reference()<CR>')
+
+---------------------------------------------------------------
+-- => nvim-colorizer.lua, document-color.nvim
+---------------------------------------------------------------
+map("n", "<leader>tt", "<cmd>ColorizerToggle<CR>")
+map("n", "<leader>tw", "<cmd>lua require('document-color').buf_toggle()<CR>")
 
 ---------------------------------------------------------------
 -- => hop.nvim
@@ -411,8 +424,8 @@ map({ "n", "v" }, "<M-S-n>", '<cmd>lua require"illuminate".goto_prev_reference()
 ---------------------------------------------------------------
 -- => pounce.nvim
 ---------------------------------------------------------------
-map("", "s", "<cmd>Pounce<CR>")
-map("", "S", "<cmd>PounceRepeat<CR>")
+map({ "n", "x" }, "s", "<cmd>Pounce<CR>")
+map({ "n", "x" }, "S", "<cmd>PounceRepeat<CR>")
 
 ---------------------------------------------------------------
 -- => bufferline.nvim

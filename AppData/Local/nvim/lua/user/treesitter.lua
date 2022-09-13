@@ -2,6 +2,8 @@ local configs = require("nvim-treesitter.configs")
 
 require("nvim-treesitter.install").compilers = { "clang", "gcc" }
 
+require("hlargs").setup({ color = "#e0af68" })
+
 configs.setup({
   ensure_installed = {
     "lua",

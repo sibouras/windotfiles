@@ -1,8 +1,3 @@
--- Time in milliseconds (default 0)
--- vim.g.Illuminate_delay = 200
--- vim.g.Illuminate_ftblacklist = { 'alpha', 'help' }
--- vim.g.Illuminate_ftwhitelist = { "vim", "sh", "python" }
-
 local status_ok, illuminate = pcall(require, "illuminate")
 if not status_ok then
   return
@@ -40,9 +35,3 @@ illuminate.configure({
   -- under_cursor: whether or not to illuminate under the cursor
   under_cursor = true,
 })
-
-vim.cmd([[
-  hi def IlluminatedWordText guibg=#3b4261
-  hi def IlluminatedWordRead guibg=#3b4261
-  hi def IlluminatedWordWrite guibg=#3b4261
-]])
