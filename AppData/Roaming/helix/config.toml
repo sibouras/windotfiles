@@ -1,0 +1,58 @@
+theme = "catppuccin_mocha"
+
+[editor]
+idle-timeout = 0
+cursorline = true
+color-modes = true
+completion-trigger-len = 1
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "underline"
+
+[editor.indent-guides]
+render = true
+# character = "╎"
+
+# [editor.lsp]
+# display-messages = true
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "diagnostics"]
+center = []
+right = ["position", "selections", "file-encoding", "file-line-ending", "file-type"]
+
+[keys.normal]
+"C-[" = ":config-open"
+"C-]" = ":config-reload"
+A-d = ":bc"
+A-F = ":format"
+A-s = ":w"
+C-i = "jump_forward"
+C-o = "jump_backward"
+"C-/" = "toggle_comments"
+"A-n" = "repeat_last_motion"
+C-c = "no_op" # turn off the default comment functionality
+"K" = "hover"
+"A-k" = "keep_selections"
+
+# C-h = "select_prev_sibling"
+# C-j = "shrink_selection"
+# C-k = "expand_selection"
+# C-l = "select_next_sibling"
+
+"{" = ["goto_prev_paragraph", "collapse_selection"]
+"}" = ["goto_next_paragraph", "collapse_selection"]
+
+H = "extend_char_left"
+# J = "extend_line_down"
+# K = "extend_line_up"
+L = "extend_char_right"
+
+[keys.insert]
+C-backspace = "delete_word_backward"
+C-i = "jump_forward"
+C-o = "jump_backward"
+"C-/" = "toggle_comments"
+A-s = ["normal_mode", ":w"]
