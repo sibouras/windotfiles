@@ -1,5 +1,6 @@
 #NoEnv
 #SingleInstance force
+#WinActivateForce
 
 WinIdArray := {} ; Holds AHK_ID for each stored window
 

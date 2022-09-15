@@ -7,7 +7,7 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 Easy accents on a qwerty keyboard including french ç as well as spanish ñ and ¿ 1nd ¡
 
 Inspired a.o. by https://autohotkey.com/board/topic/16920-how-to-enter-basic-spanish-accented-characters/
-Note: Obtained the unicode values at: https en.wikipedia.org /wiki/List_of_Unicode_characters  Broken Link for safety  
+Note: Obtained the unicode values at: https en.wikipedia.org /wiki/List_of_Unicode_characters  Broken Link for safety
 
 Basiclly this solution allows to type any vowel followed by any of ['"\^] to obtain the 'accented' version:
 ' after [aeiou] produces [áéíóú]

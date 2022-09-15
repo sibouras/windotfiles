@@ -99,7 +99,16 @@ CapsLock & m::
   }
   else if Key = v
   {
-    Run nvy
+    Run nvy.exe
+    WinWait, Nvy,, 1
+    if ErrorLevel
+    {
+      MsgBox, WinWait timed out.
+      return
+    }
+    else
+      WinActivate, Nvy
+    WinMove, Nvy,, 260, 47, 1400, 985
   }
   else if Key = w
   {

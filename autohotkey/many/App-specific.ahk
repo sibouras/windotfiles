@@ -63,6 +63,10 @@
   !s::Send, {Esc}^s
 #IfWinActive
 
+#IfWinActive, ahk_exe nvy.exe
+  ^i::Send, ^{F15}
+#IfWinActive
+
 #IfWinNotActive, ahk_exe WindowsTerminal.exe
   !BS::Send ^{BS}
 #IfWinNotActive

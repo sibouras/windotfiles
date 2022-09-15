@@ -34,3 +34,7 @@ XButton2 UP::return
 #IfWinActive ahk_exe mpv.exe
   XButton2 UP::Send, {XButton2}
 #IfWinActive
+
+#IfWinActive, ahk_class MultitaskingViewFrame
+  XButton2 & RButton::Esc
+#IfWinActive

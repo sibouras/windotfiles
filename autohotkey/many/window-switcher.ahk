@@ -19,21 +19,14 @@ ToggleWindowVisibility(windowClass) {
 }
 
 RAlt & b::
+  SetTitleMatchMode, 2
   brave = ahk_exe brave.exe
-  edge = ahk_exe msedge.exe
-  firefox = ahk_exe firefox.exe
-  if WinExist(brave) {
-    IfWinActive, %brave%
-      WinMinimize, %brave%
-    else
-      WinActivate, %brave%
-  }
-  else if WinExist(edge) {
-    IfWinActive, %edge%
-      WinMinimize, %edge%
-    else
-      WinActivate, %edge%
-  }
+  GroupAdd, braveGroup, - Brave
+  GroupAdd, braveGroup, DevTools
+  If WinActive(brave)
+    GroupActivate, braveGroup, r
+  else
+    WinActivate %brave%
 return
 
 RAlt & s::
@@ -59,22 +52,22 @@ RAlt & v::
 return
 
 ; minimize active window and restore it
-RAlt & c::
-  IfWinExist, ahk_id %lastWindow%
-  {
-    WinGet, WinState, MinMax, ahk_id %lastWindow%
-    If WinState = -1
-      WinActivate
-    else
-      WinMinimize
-    lastWindow:= ; remove this line if you want minimize/toggle only one window
-  }
-  else
-  {
-    lastWindow:= WinExist("A")
-    WinMinimize, ahk_id %lastWindow%
-  }
-return
+; RAlt & c::
+;   IfWinExist, ahk_id %lastWindow%
+;   {
+;     WinGet, WinState, MinMax, ahk_id %lastWindow%
+;     If WinState = -1
+;       WinActivate
+;     else
+;       WinMinimize
+;     lastWindow:= ; remove this line if you want minimize/toggle only one window
+;   }
+;   else
+;   {
+;     lastWindow:= WinExist("A")
+;     WinMinimize, ahk_id %lastWindow%
+;   }
+; return
 
 !i::Send, ^!{Tab}
 #IfWinActive, ahk_class MultitaskingViewFrame
@@ -82,22 +75,30 @@ return
   j::Down
   k::Up
   l::Right
-  q::Delete
+  d::Delete
+  i::Enter
+  q::Esc
 #IfWinActive
 
 ; switch to previous window
 !j::
   winNumber = 0
-  WinGet, win, List
-  Loop, %win% {
-    WinGetTitle, ttitle, % winTitle := "ahk_id " win%A_Index% ; Window title
-    WinGet, proc, ProcessName, %winTitle% ; Window process
-    WinGetClass, class, %winTitle% ; Window class
-    winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > ""
+  WinGet, ids, List
+  Loop, %ids% {
+    this_id := ids%A_Index%
+    id := % "ahk_id " this_id
+    WinGet, ExStyle, ExStyle, %id%
+    WinGetTitle, ttitle, %id% ; Window title
+    WinGet, proc, ProcessName, %id% ; Window process
+    WinGetClass, class, %id% ; Window class
+    ; https://www.autohotkey.com/docs/commands/WinGet.htm#ExStyle
+    ; 0x8 is WS_EX_TOPMOST(always-on-top)
+    winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > "" && !(ExStyle & 0x8)
     && (ttitle != "Program Manager" || proc != "Explorer.exe")
   } Until (winNumber = 2)
-  WinActivate, %winTitle%
-Return
+  if (winNumber = 2)
+    WinActivate, %id%
+return
 
 ; switch between all windows of the current window class
 listIndex = 1
@@ -121,7 +122,9 @@ Beginning:
       if (W AND H) {
         WinActivate, ahk_id %Id%
         return
-      } } WinActivate, ahk_id %Id%
+      }
+    }
+    WinActivate, ahk_id %Id%
     Goto, Beginning
   }
 return
