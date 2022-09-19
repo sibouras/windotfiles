@@ -37,7 +37,7 @@ end
 
 -- new way: https://github.com/L3MON4D3/LuaSnip/issues/81
 ls.add_snippets(nil, {
-  all = {
+  markdown = {
     s(
       "curtime",
       f(function()

@@ -4,10 +4,6 @@ if not status_ok then
 end
 
 local actions = require("telescope.actions")
--- telescope.load_extension("ui-select")
-telescope.load_extension("workspaces")
-telescope.load_extension("fzf")
--- telescope.load_extension("ui-select")
 
 telescope.setup({
   defaults = {
@@ -120,5 +116,13 @@ telescope.setup({
       case_mode = "smart_case", -- or "ignore_case" or "respect_case"
       -- the default case_mode is "smart_case"
     },
+    recent_files = {
+      only_cwd = true,
+    },
   },
 })
+
+-- telescope.load_extension("ui-select")
+telescope.load_extension("workspaces")
+telescope.load_extension("fzf")
+telescope.load_extension("recent_files")

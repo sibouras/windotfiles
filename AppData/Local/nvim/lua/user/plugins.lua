@@ -139,6 +139,7 @@ return packer.startup(function(use)
     run = "mingw32-make",
   })
   -- use("nvim-telescope/telescope-ui-select.nvim")
+  use("smartpde/telescope-recent-files")
 
   -- Treesitter
   use({

@@ -287,6 +287,7 @@ map("n", "gm", ":lua require('user.essentials').toggle_comment()<CR>")
 map("v", "gm", ":lua require('user.essentials').toggle_comment(true)<CR>")
 map("n", "<leader>ru", ":lua require('user.essentials').run_file()<CR>")
 map("n", "<leader>sb", ":lua require('user.essentials').swap_bool()<CR>")
+map("n", "<leader>sc", ":lua require('user.essentials').scratch()<CR>", { desc = "Command to scratch buffer" })
 
 ----------------------------------
 --- definition of new commands ---
@@ -349,6 +350,14 @@ map("n", "<leader>lr", ":Telescope lsp_references<CR>")
 map("n", "<leader>ld", ":Telescope diagnostics<CR>")
 map("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>")
 map("n", "<leader>lt", ":Telescope treesitter<CR>")
+-- map(
+--   "n",
+--   "<leader>fw",
+--   "<cmd>lua require('telescope').extensions.recent_files.pick({ initial_mode = 'normal', path_display = {'shorten'} })<cr>"
+-- )
+map("n", "<leader>fw", function()
+  require("telescope").extensions.recent_files.pick({ initial_mode = "normal", path_display = { "shorten" } })
+end)
 
 ---------------------------------------------------------------
 -- => lir.nvim, nvim-tree.nvim
@@ -356,9 +365,15 @@ map("n", "<leader>lt", ":Telescope treesitter<CR>")
 -- map("n", "<leader>e", ":lua require'lir.float'.toggle()<CR>")
 map("n", "<M-e>", ":NvimTreeToggle<CR>")
 map("n", "<leader>e", ":NvimTreeFindFileToggle<CR>")
-map("n", "<leader>mn", require("nvim-tree.api").marks.navigate.next)
-map("n", "<leader>mp", require("nvim-tree.api").marks.navigate.prev)
-map("n", "<leader>ms", require("nvim-tree.api").marks.navigate.select)
+map("n", "<leader>mn", function()
+  require("nvim-tree.api").marks.navigate.next()
+end)
+map("n", "<leader>mp", function()
+  require("nvim-tree.api").marks.navigate.prev()
+end)
+map("n", "<leader>ms", function()
+  require("nvim-tree.api").marks.navigate.select()
+end)
 
 ---------------------------------------------------------------
 -- => gomove.nvim
