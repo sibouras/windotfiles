@@ -233,7 +233,12 @@ map("n", "<leader>fl", ":silent !start %:p:h<CR>")
 map("n", "<leader>q", function()
   vim.cmd(not vim.g.quickfix_toggled and "cclose" or "copen")
   vim.g.quickfix_toggled = not vim.g.quickfix_toggled
-end)
+end, { desc = "toggle quickfix window" })
+
+-- toggle cmp(mapped <C-;> to <C-F16> in ahk)
+map({ "i", "n" }, "<C-F16>", function()
+  vim.g.cmp_active = not vim.g.cmp_active
+end, { desc = "toggle cmp" })
 
 ----------------------------------
 --- functions
@@ -278,7 +283,6 @@ map("n", "]<space>", "<Plug>(unimpaired-blank-down)")
 -- autoload/functions.vim
 map("v", "<leader>cy", ":call functions#CompleteYank()<CR>")
 map("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>")
-map("n", "<C-c><C-y>", ":call functions#ToggleConcealLevel()<CR>")
 map("n", "<leader>hl", ":call functions#GetHighlightGroupUnderCursor()<CR>")
 
 -- essentials.lua functions

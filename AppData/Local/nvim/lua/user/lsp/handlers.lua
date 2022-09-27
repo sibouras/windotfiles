@@ -69,19 +69,20 @@ map("n", "]d", vim.diagnostic.goto_next, opts)
 map("n", "<leader>dq", vim.diagnostic.setloclist, opts)
 map("n", "<M-S-f>", vim.lsp.buf.formatting, opts)
 map("v", "<M-S-f>", vim.lsp.buf.range_formatting, opts)
-map("n", "<leader>li", "<cmd>LspInfo<cr>")
-map("n", "<leader>lI", "<cmd>Mason<cr>")
+map("n", "<leader>li", "<Cmd>LspInfo<CR>")
+map("n", "<leader>lm", "<Cmd>Mason<CR>")
+map("n", "<leader>ln", "<Cmd>NullLsInfo<CR>")
 
 -- toggle LSP diagnostics
 vim.g.diagnostics_active = true
-vim.keymap.set("n", "<leader>dt", function()
+map("n", "<leader>dt", function()
   vim.g.diagnostics_active = not vim.g.diagnostics_active
   if vim.g.diagnostics_active then
     vim.diagnostic.show()
   else
     vim.diagnostic.hide()
   end
-end)
+end, { desc = "toggle LSP diagnostics" })
 
 local function lsp_keymaps(bufnr)
   local bufopts = { noremap = true, silent = true, buffer = bufnr }

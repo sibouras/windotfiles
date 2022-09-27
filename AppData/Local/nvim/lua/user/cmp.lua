@@ -43,6 +43,8 @@ local kind_icons = {
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
+vim.g.cmp_active = true
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -155,14 +157,21 @@ cmp.setup({
   --   entries = "native",
   -- },
   -- disable completion in comments
+  -- enabled = function()
+  --   if
+  --     require("cmp.config.context").in_treesitter_capture("comment") == true
+  --     or require("cmp.config.context").in_syntax_group("Comment")
+  --   then
+  --     return false
+  --   else
+  --     return true
+  --   end
+  -- end,
   enabled = function()
-    if
-      require("cmp.config.context").in_treesitter_capture("comment") == true
-      or require("cmp.config.context").in_syntax_group("Comment")
-    then
+    local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+    if buftype == "prompt" then
       return false
-    else
-      return true
     end
+    return vim.g.cmp_active
   end,
 })

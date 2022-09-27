@@ -52,7 +52,7 @@ function _LAZYGIT_TOGGLE()
   lazygit:toggle()
 end
 
-vim.api.nvim_set_keymap("n", "<M-'>", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<M-S-:>", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { noremap = true, silent = true })
 
 local node = Terminal:new({ cmd = "node", hidden = true })
 
@@ -67,19 +67,41 @@ function _PYTHON_TOGGLE()
 end
 
 vim.cmd([[
-command! -count=1 Node lua require'toggleterm'.exec("node " .. vim.fn.expand('%'), <count>, 12)
+  command! -count=1 Node lua require'toggleterm'.exec("node " .. vim.fn.expand('%'), <count>, 12)
 ]])
+
+vim.api.nvim_create_user_command("Lua", function()
+  vim.cmd([[3TermExec cmd="lua %"]])
+end, {})
 
 local map = vim.keymap.set
 
-map("n", "<m-1>", "<cmd>1ToggleTerm direction=float<cr>")
-map("t", "<m-1>", "<cmd>1ToggleTerm direction=float<cr>")
-map("i", "<m-1>", "<cmd>1ToggleTerm direction=float<cr>")
+map({ "n", "i", "t" }, "<M-1>", "<Cmd>1ToggleTerm direction=float<CR>")
+map({ "n", "i", "t" }, "<M-2>", "<Cmd>2ToggleTerm size=60 direction=vertical<CR>")
+map({ "n", "i", "t" }, "<M-3>", "<Cmd>3ToggleTerm size=15 direction=horizontal | set cmdheight=1<CR>")
 
-map("n", "<m-2>", "<cmd>2ToggleTerm size=60 direction=vertical<cr>")
-map("t", "<m-2>", "<cmd>2ToggleTerm size=60 direction=vertical<cr>")
-map("i", "<m-2>", "<cmd>2ToggleTerm size=60 direction=vertical<cr>")
+-- Code Runner
+local runners = { lua = "lua", javascript = "node", typescript = "tsx" }
 
-map("n", "<m-3>", "<cmd>3ToggleTerm size=10 direction=horizontal | set cmdheight=1<cr>")
-map("t", "<m-3>", "<cmd>3ToggleTerm size=10 direction=horizontal | set cmdheight=1<cr>")
-map("i", "<m-3>", "<cmd>3ToggleTerm size=10 direction=horizontal | set cmdheight=1<cr>")
+local function run(n)
+  local ftype = vim.bo.filetype
+  local exec = runners[ftype]
+  if exec ~= nil then
+    if n ~= nil then
+      vim.cmd(n .. [[TermExec cmd="]] .. exec .. [[ %"]])
+    else
+      require("toggleterm").exec(exec .. " " .. vim.fn.expand("%"))
+    end
+  end
+end
+
+map({ "n", "i" }, "<M-'>", run)
+map("n", "<M-S-!>", function()
+  run(1)
+end)
+map("n", "<M-S-@>", function()
+  run(2)
+end)
+map("n", "<M-S-#>", function()
+  run(3)
+end)

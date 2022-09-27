@@ -41,6 +41,14 @@ Hydra({
   },
 })
 
+local conceallevel = function()
+  if vim.o.conceallevel == 3 then
+    return "[x]"
+  else
+    return "[ ]"
+  end
+end
+
 local hint = [[
   ^ ^        Options
   ^
@@ -51,6 +59,7 @@ local hint = [[
   _c_ %{cul} cursor line
   _n_ %{nu} number
   _r_ %{rnu} relative number
+  _l_ %{cole} conceal level
   ^
        ^^^^             _q_  _<Esc>_
 ]]
@@ -65,6 +74,9 @@ Hydra({
     hint = {
       border = "rounded",
       position = "middle",
+      funcs = {
+        cole = conceallevel,
+      },
     },
   },
   mode = { "n", "x" },
@@ -161,6 +173,17 @@ Hydra({
         end
       end,
       { desc = "cursor line" },
+    },
+    {
+      "l",
+      function()
+        if vim.o.conceallevel == 3 then
+          vim.opt_local.conceallevel = 0
+        else
+          vim.opt_local.conceallevel = 3
+        end
+      end,
+      { desc = "conceal level" },
     },
     { "<Esc>", nil, { exit = true } },
     { "q", nil, { exit = true } },

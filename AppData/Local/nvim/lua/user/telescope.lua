@@ -89,6 +89,13 @@ telescope.setup({
       find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
       follow = true,
     },
+    -- order result by line number
+    current_buffer_fuzzy_find = {
+      tiebreak = function(current_entry, existing_entry)
+        -- returning true means preferring current entry
+        return current_entry.lnum < existing_entry.lnum
+      end,
+    },
   },
   extensions = {
     -- Your extension configuration goes here:
@@ -126,3 +133,4 @@ telescope.setup({
 telescope.load_extension("workspaces")
 telescope.load_extension("fzf")
 telescope.load_extension("recent_files")
+telescope.load_extension("neoclip")
