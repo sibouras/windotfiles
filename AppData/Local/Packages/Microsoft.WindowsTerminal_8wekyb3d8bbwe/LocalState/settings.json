@@ -8,12 +8,8 @@
             "keys": "alt+enter"
         },
         {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "ctrl+c"
+            "command": "unbound",
+            "keys": "ctrl+v"
         },
         {
             "command": "find",
@@ -22,13 +18,21 @@
         {
             "command": 
             {
-                "action": "newTab"
+                "action": "copy",
+                "singleLine": false
             },
-            "keys": "ctrl+shift+t"
+            "keys": "ctrl+c"
         },
         {
             "command": "paste",
             "keys": "ctrl+shift+v"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab"
+            },
+            "keys": "ctrl+shift+t"
         },
         {
             "command": 
@@ -44,7 +48,7 @@
     "copyOnSelect": false,
     "defaultProfile": "{24e286ee-1a67-4610-a720-a62c3725946a}",
     "initialCols": 120,
-    "initialPosition": "120,26",
+    "initialPosition": "120,45",
     "initialRows": 32,
     "launchMode": "default",
     "profiles": 
@@ -117,12 +121,12 @@
             },
             {
                 "colorScheme": "hyper",
+                "commandline": "nu.exe",
                 "font": 
                 {
                     "face": "JetBrainsMono Nerd Font",
                     "size": 18
                 },
-                "commandline": "nu.exe",
                 "guid": "{24e286ee-1a67-4610-a720-a62c3725946a}",
                 "hidden": false,
                 "intenseTextStyle": "all",
@@ -148,16 +152,6 @@
                 "guid": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
                 "hidden": false,
                 "name": "Arch",
-                "source": "Windows.Terminal.Wsl"
-            },
-            {
-                "font": 
-                {
-                    "size": 18
-                },
-                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-                "hidden": false,
-                "name": "Ubuntu",
                 "source": "Windows.Terminal.Wsl"
             },
             {
