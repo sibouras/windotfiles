@@ -7,6 +7,10 @@
   --tab-min-height: 32px !important;
 }
 
+tooltip {
+  font-size: 13px !important;
+}
+
 /* #titlebar { */
 /*   height: 14px !important; */
 /* } */
