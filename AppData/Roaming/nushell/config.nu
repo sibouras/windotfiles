@@ -345,6 +345,17 @@ let-env config = {
         ]
       }
     }
+    {
+      name: cut_current_line
+      modifier: 'control | shift'
+      keycode: char_u
+      mode: emacs
+      event: {
+        until: [
+          { edit: CutCurrentLine }
+        ]
+      }
+    }
 
     # Keybindings used to trigger the user defined menus
     {
@@ -426,6 +437,7 @@ alias dotfiles = lazygit --git-dir=C:/Users/marzouk/.dotfiles --work-tree=C:/Use
 alias uptime = (sys).host.uptime
 alias fs = (fd --strip-cwd-prefix -H -t f -E .git | fzf | str trim)
 alias fp = (fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim)
+alias sl = (scoop list | lines | range 4.. | drop | split column -c ' ' | drop column | rename name version source updated | sort-by updated)
 
 def fh [] {
   # let text = (history | reverse | get command | str collect (char nl) | fzf)
@@ -460,7 +472,7 @@ def get-aliases [] {
 def ld [
   --reverse(-r) #reverse order
 ] {
-  if ($reverse | empty?) || (not $reverse) {
+  if ($reverse | is-empty) || (not $reverse) {
     ls | sort-by modified | reject type
   } else {
     ls | sort-by modified -r | reject type
@@ -493,7 +505,7 @@ def git-push [m: string] {
 # Universal help command, combining https://tldr.sh/ with nushell’s help for built-ins:
 def ? [...terms] {
   if (
-    which ($terms | first) | any? { |it| $it.built-in || $it.path =~ ^Nushell }
+    which ($terms | first) | any { |it| $it.built-in || $it.path =~ ^Nushell }
   ) {
     help ($terms | str collect " ")
   } else {
@@ -514,6 +526,29 @@ def "nu-complete help categories" [] {
 
 def hc [category?: string@"nu-complete help categories"] {
   help commands | select name category usage | move usage --after name | where category =~ $category
+}
+
+def-env up [nb: int = 1] {
+  let path = (1..$nb | each {|_| ".."} | reduce {|it, acc| $acc + "/" + $it})
+  cd $path
+}
+
+def-env mkcd [name: path] {
+  cd (mkdir $name -s | first)
+}
+
+export def show_banner [] {
+  let ellie = [
+    "     __  ,"
+    " .--()°'.'"
+    "'|, . ,'  "
+    ' !_-(_\   '
+  ]
+  let s = (sys)
+  print $"(ansi reset)(ansi green)($ellie.0)"
+  print $"(ansi green)($ellie.1)  (ansi yellow) (ansi yellow_bold)Nushell (ansi reset)(ansi yellow)v(version | get version)(ansi reset)"
+  print $"(ansi green)($ellie.2)  (ansi light_blue) (ansi light_blue_bold)RAM (ansi reset)(ansi light_blue)($s.mem.used) / ($s.mem.total)(ansi reset)"
+  print $"(ansi green)($ellie.3)  (ansi light_purple)ﮫ (ansi light_purple_bold)Uptime (ansi reset)(ansi light_purple)($s.host.uptime)(ansi reset)"
 }
 
 # scripts
