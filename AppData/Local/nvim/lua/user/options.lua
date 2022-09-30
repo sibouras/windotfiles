@@ -37,7 +37,7 @@ local options = {
   scrolloff = 5, -- is one of my fav
   sidescrolloff = 10,
   foldlevelstart = 99,
-  sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,globals",
+  -- sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,globals",
   guifont = "JetbrainsMono Nerd Font:h16", -- the font used in graphical neovim applications
   -- guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:Cursor/lCursor", -- this makes changing Cursor highlight work
 }

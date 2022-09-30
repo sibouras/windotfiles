@@ -78,7 +78,7 @@ local map = vim.keymap.set
 
 map({ "n", "i", "t" }, "<M-1>", "<Cmd>1ToggleTerm direction=float<CR>")
 map({ "n", "i", "t" }, "<M-2>", "<Cmd>2ToggleTerm size=60 direction=vertical<CR>")
-map({ "n", "i", "t" }, "<M-3>", "<Cmd>3ToggleTerm size=15 direction=horizontal | set cmdheight=1<CR>")
+map({ "n", "i", "t" }, "<M-3>", "<Cmd>3ToggleTerm size=13 direction=horizontal | set cmdheight=1<CR>")
 
 -- Code Runner
 local runners = { lua = "lua", javascript = "node", typescript = "tsx" }

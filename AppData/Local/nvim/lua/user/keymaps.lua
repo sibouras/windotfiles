@@ -324,44 +324,44 @@ end, { force = true })
 --   "<leader>f",
 --   "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>"
 -- )
-map(
-  "n",
-  "<leader>fd",
-  "<cmd>lua require'telescope.builtin'.find_files({ cwd = '~/.config/symlinks', prompt_title = 'Dotfiles' })<cr>"
-)
-map(
-  "n",
-  "<leader>ff",
-  "<cmd>lua require'telescope.builtin'.find_files({ cwd = vim.fn.expand('%:p:h'), prompt_title = 'From Current Buffer' })<cr>"
-)
+map("n", "<leader>fd", function()
+  require("telescope.builtin").find_files({ cwd = "~/.config/symlinks", prompt_title = "Dotfiles" })
+end)
+map("n", "<leader>ff", function()
+  require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h"), prompt_title = "From Current Buffer" })
+end)
+map("n", "<leader>fe", function()
+  require("telescope.builtin").resume({ initial_mode = "normal" })
+end)
+map("n", "<leader>b", function()
+  require("telescope.builtin").buffers({ previewer = false, initial_mode = "insert", path_display = { "shorten" } })
+end)
+map("n", "<leader>fw", function()
+  require("telescope").extensions.recent_files.pick({ initial_mode = "normal", path_display = { "shorten" } })
+end)
+map("n", "<leader>fn", function()
+  require("telescope").extensions.neoclip.default(require("telescope.themes").get_dropdown({
+    initial_mode = "normal",
+    layout_strategy = "vertical",
+    layout_config = { height = 0.95 },
+  }))
+end)
+map("n", "<leader>fm", function()
+  require("telescope").extensions.macroscope.default({ initial_mode = "normal" })
+end)
 map("n", "<leader>fs", ":Telescope find_files<CR>")
-map("n", "<leader>fe", "<cmd>lua require('telescope.builtin').resume({ initial_mode = 'normal' })<cr>")
-map(
-  "n",
-  "<leader>b",
-  "<cmd>lua require('telescope.builtin').buffers({ previewer = false, initial_mode = 'insert', path_display = {'shorten'} })<cr>"
-)
 map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>")
 map("n", "<leader>fo", ":Telescope oldfiles<CR>")
+map("n", "<leader>fv", ":Telescope vim_options<CR>")
 map("n", "<leader>fg", ":Telescope live_grep<CR>")
 map("n", "<leader>fk", ":Telescope keymaps<CR>")
 map("n", "<leader>f/", ":Telescope search_history<CR>")
 map("n", "<leader>f;", ":Telescope command_history<CR>")
-map("n", "<leader>fn", ":Telescope neoclip<CR>")
-map("n", "<leader>fm", ":lua require('telescope').extensions.macroscope.default()<CR>")
 map("n", "<leader>p", ":Telescope workspaces<CR>")
 map("n", "<leader>lr", ":Telescope lsp_references<CR>")
 map("n", "<leader>ld", ":Telescope diagnostics<CR>")
 map("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>")
 map("n", "<leader>lt", ":Telescope treesitter<CR>")
--- map(
---   "n",
---   "<leader>fw",
---   "<cmd>lua require('telescope').extensions.recent_files.pick({ initial_mode = 'normal', path_display = {'shorten'} })<cr>"
--- )
-map("n", "<leader>fw", function()
-  require("telescope").extensions.recent_files.pick({ initial_mode = "normal", path_display = { "shorten" } })
-end)
 
 ---------------------------------------------------------------
 -- => lir.nvim, nvim-tree.nvim

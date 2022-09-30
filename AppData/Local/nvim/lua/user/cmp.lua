@@ -8,6 +8,9 @@ if not snip_status_ok then
   return
 end
 
+local types = require("cmp.types")
+local context = require("cmp.config.context")
+
 -- uncomment this if friendly snippets is installed
 -- require("luasnip/loaders/from_vscode").lazy_load()
 
@@ -58,10 +61,18 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ["<Up>"] = cmp.mapping.select_prev_item(),
     ["<Down>"] = cmp.mapping.select_next_item(),
+    ["<PageUp>"] = cmp.mapping.scroll_docs(-4),
+    ["<PageDown>"] = cmp.mapping.scroll_docs(4),
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.abort(),
+    ["<C-l>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        return cmp.complete_common_string()
+      end
+      fallback()
+    end, { "i", "c" }),
     -- ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     -- Accept currently selected item. If none selected, `select` first item.
     -- Set `select` to `false` to only confirm explicitly selected items.
@@ -130,10 +141,24 @@ cmp.setup({
     end,
   },
   sources = {
-    { name = "nvim_lsp", max_item_count = 50 },
+    {
+      name = "nvim_lsp",
+      entry_filter = function(entry, _)
+        local kind = types.lsp.CompletionItemKind[entry:get_kind()]
+        local in_capture = context.in_treesitter_capture
+        if kind == "Snippet" then
+          local name = vim.split(entry.source:get_debug_name(), ":")[2]
+          if name == "emmet_ls" and (vim.bo.filetype == "javascriptreact" or vim.bo.filetype == "typescriptreact") then
+            return in_capture("jsx_text")
+          end
+        end
+        return true
+      end,
+    },
+    -- { name = "nvim_lsp", max_item_count = 50 },
     { name = "nvim_lua" },
     { name = "luasnip" },
-    { name = "buffer" },
+    { name = "buffer", max_item_count = 10 },
     { name = "path" },
   },
   confirm_opts = {
