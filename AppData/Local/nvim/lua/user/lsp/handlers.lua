@@ -45,29 +45,23 @@ M.setup = function()
   })
 end
 
--- local function lsp_highlight_document(client)
---   -- Set autocommands conditional on server_capabilities
---   if client.resolved_capabilities.document_highlight then
---     vim.api.nvim_exec(
---       [[
---       augroup lsp_document_highlight
---         autocmd! * <buffer>
---         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
---         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
---       augroup END
---     ]],
---       false
---     )
---   end
--- end
-
 local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 map("n", "<leader>dg", vim.diagnostic.open_float, opts)
 map("n", "[d", vim.diagnostic.goto_prev, opts)
 map("n", "]d", vim.diagnostic.goto_next, opts)
 map("n", "<leader>dq", vim.diagnostic.setloclist, opts)
-map("n", "<M-S-f>", vim.lsp.buf.formatting, opts)
+map("n", "<M-S-f>", function()
+  vim.lsp.buf.format({
+    async = true,
+    filter = function(client)
+      if client.name == "sumneko_lua" or client.name == "tsserver" or client.name == "html" then
+        return false
+      end
+      return true
+    end,
+  })
+end, opts)
 map("v", "<M-S-f>", vim.lsp.buf.range_formatting, opts)
 map("n", "<leader>li", "<Cmd>LspInfo<CR>")
 map("n", "<leader>lm", "<Cmd>Mason<CR>")
@@ -96,31 +90,19 @@ local function lsp_keymaps(bufnr)
   -- map("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
   map("n", "<leader>rn", ":lua require('user.essentials').lspRename()<CR>", bufopts)
   map("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-  map("v", "<leader>ca", vim.lsp.buf.range_code_action, bufopts)
   map("n", "<leader>lT", vim.lsp.buf.type_definition, bufopts)
   map("n", "<leader>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, bufopts)
   map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
   map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-  -- vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
-  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
-  -- vim.api.nvim_buf_create_user_command(bufnr, "Format", vim.lsp.buf.formatting, {})
+  vim.api.nvim_create_user_command("Format", function()
+    vim.lsp.buf.format({ async = true })
+  end, {})
 end
 
 M.on_attach = function(client, bufnr)
-  if client.name == "tsserver" then
-    client.resolved_capabilities.document_formatting = false
-  end
-  if client.name == "html" then
-    client.resolved_capabilities.document_formatting = false
-  end
-  if client.name == "sumneko_lua" then
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
-  end
   lsp_keymaps(bufnr)
-  -- lsp_highlight_document(client) -- use illuminate instead
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
