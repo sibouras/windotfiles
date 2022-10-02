@@ -7,6 +7,23 @@
   --tab-min-height: 32px !important;
 }
 
+/* Remove titlebar buttons on small screen*/
+@media (width < 900px) {
+  .titlebar-buttonbox-container {
+    display: none;
+  }
+}
+
+/* Remove left spacer on non-maximized windows */
+.titlebar-spacer[type="pre-tabs"] {
+  display: none !important;
+}
+
+/* Remove right spacer on non-maximized windows */
+.titlebar-spacer[type="post-tabs"] {
+  display: none !important;
+}
+
 tooltip {
   font-size: 13px !important;
 }
