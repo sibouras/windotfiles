@@ -101,8 +101,10 @@ cmp.setup({
       local col = vim.fn.col(".") - 1
       if cmp.visible() then
         cmp.select_next_item(select_opts)
-      elseif luasnip.jumpable(1) then
-        luasnip.jump(1)
+      -- elseif luasnip.jumpable(1) then
+      --   luasnip.jump(1)
+      elseif luasnip.expand_or_locally_jumpable(select_opts) then
+        luasnip.expand_or_jump()
       elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
         fallback()
       else
@@ -121,6 +123,7 @@ cmp.setup({
   }),
 
   formatting = {
+    expandable_indicator = true,
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
       -- -- Kind icons

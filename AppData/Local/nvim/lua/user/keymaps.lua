@@ -6,10 +6,14 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
---Remap space as leader key
+-- Remap space as leader key
 map("", "<Space>", "<Nop>")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+-- Horizontal scroll
+map({ "n", "i", "v" }, "<S-ScrollWheelUp>", "<ScrollWheelLeft>")
+map({ "n", "i", "v" }, "<S-ScrollWheelDown>", "<ScrollWheelRight>")
 
 -- distinguish between <Tab> and <C-i> (<C-i> is mapped to <C-F15> in autohotkey)
 map("n", "<C-F15>", "<C-i>")
@@ -88,9 +92,6 @@ vim.cmd([[
   xnoremap gl g_
   onoremap gl :normal vgl<CR>
 ]])
-
--- search for visually selected text
-map("v", "//", [[y/\V<C-R>=escape(@",'/\')<CR><CR>]], { silent = false })
 
 -- use . to repeat a regular c-prefixed command as if it were perforced using cgn.
 map("n", "g.", '/\\V<C-r>"<CR>cgn<C-a><Esc>', { silent = false })
@@ -298,11 +299,11 @@ map("n", "<leader>sc", ":lua require('user.essentials').scratch()<CR>", { desc =
 ----------------------------------
 
 vim.cmd([[
-command! TS silent! call functions#T2S()
-command! ST silent! call functions#S2T()
-command! Rf silent! call functions#ReplaceFile()
-command! Rename call functions#RenameFile()
-command! Remove call functions#RemoveFile()
+command! TabToSpace silent! call functions#T2S()
+command! SpaceToTab silent! call functions#S2T()
+command! ReplaceFile silent! call functions#ReplaceFile()
+command! RenameFile call functions#RenameFile()
+command! RemoveFile call functions#RemoveFile()
 command! -nargs=1 -complete=command -bar -range Redir silent call functions#Redir(<q-args>, <range>, <line1>, <line2>)
 ]])
 
@@ -330,14 +331,8 @@ end)
 map("n", "<leader>ff", function()
   require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h"), prompt_title = "From Current Buffer" })
 end)
-map("n", "<leader>fe", function()
-  require("telescope.builtin").resume({ initial_mode = "normal" })
-end)
-map("n", "<leader>b", function()
-  require("telescope.builtin").buffers({ previewer = false, initial_mode = "insert", path_display = { "shorten" } })
-end)
 map("n", "<leader>fw", function()
-  require("telescope").extensions.recent_files.pick({ initial_mode = "normal", path_display = { "shorten" } })
+  require("telescope").extensions.recent_files.pick({ initial_mode = "normal", path_display = { "shorten" } }) -- path_display doesn't work here
 end)
 map("n", "<leader>fn", function()
   require("telescope").extensions.neoclip.default(require("telescope.themes").get_dropdown({
@@ -349,14 +344,17 @@ end)
 map("n", "<leader>fm", function()
   require("telescope").extensions.macroscope.default({ initial_mode = "normal" })
 end)
+map("n", "<leader>b", ":Telescope buffers<CR>")
+map("n", "<leader>fe", ":Telescope resume<CR>")
 map("n", "<leader>fs", ":Telescope find_files<CR>")
-map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>")
+map("n", "<leader>fr", ":Telescope registers<CR>")
 map("n", "<leader>fo", ":Telescope oldfiles<CR>")
 map("n", "<leader>fv", ":Telescope vim_options<CR>")
 map("n", "<leader>fg", ":Telescope live_grep<CR>")
 map("n", "<leader>fk", ":Telescope keymaps<CR>")
-map("n", "<leader>f/", ":Telescope search_history<CR>")
 map("n", "<leader>f;", ":Telescope command_history<CR>")
+map("n", "<leader>f/", ":Telescope search_history<CR>")
+map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>")
 map("n", "<leader>p", ":Telescope workspaces<CR>")
 map("n", "<leader>lr", ":Telescope lsp_references<CR>")
 map("n", "<leader>ld", ":Telescope diagnostics<CR>")

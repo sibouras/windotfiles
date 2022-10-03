@@ -9,21 +9,23 @@ telescope.setup({
   defaults = {
     prompt_prefix = " ",
     selection_caret = " ",
-    path_display = { "smart" },
+    path_display = { "shorten" },
     file_ignore_patterns = { ".git\\", "node_modules", "^.nvim" },
     sorting_strategy = "ascending",
     layout_config = {
-      -- height = 25,
+      height = 0.9,
       prompt_position = "top",
+      preview_cutoff = 100,
     },
     preview = {
       hide_on_startup = true, -- hide previewer when picker starts
     },
     mappings = {
       i = {
+        ["`"] = actions.close,
+        ["<C-c>"] = actions.close,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
-        ["<C-c>"] = actions.close,
         ["<Down>"] = actions.move_selection_next,
         ["<Up>"] = actions.move_selection_previous,
         ["<CR>"] = actions.select_default,
@@ -46,6 +48,7 @@ telescope.setup({
         ["<C-BS>"] = { "<C-w>", type = "command", opts = { noremap = false } },
       },
       n = {
+        ["`"] = actions.close,
         ["<esc>"] = actions.close,
         ["q"] = actions.close,
         ["<CR>"] = actions.select_default,
@@ -72,6 +75,7 @@ telescope.setup({
         ["<PageUp>"] = actions.results_scrolling_up,
         ["<PageDown>"] = actions.results_scrolling_down,
         ["?"] = actions.which_key,
+        ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
         ["<C-x>"] = actions.delete_buffer,
       },
     },
@@ -85,9 +89,18 @@ telescope.setup({
     -- Now the picker_config_key will be applied every time you call this
     -- builtin picker
     find_files = {
-      hidden = true,
+      hidden = true, -- show hidden files
+      path_display = { "smart" },
       find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
       follow = true,
+    },
+    buffers = {
+      ignore_current_buffer = true,
+      sort_mru = true,
+      previewer = false,
+    },
+    resume = {
+      initial_mode = "normal",
     },
     -- order result by line number
     current_buffer_fuzzy_find = {
@@ -96,22 +109,28 @@ telescope.setup({
         return current_entry.lnum < existing_entry.lnum
       end,
     },
+    lsp_references = {
+      theme = "dropdown",
+      initial_mode = "normal",
+      layout_strategy = "vertical",
+      layout_config = { height = 0.95 },
+      preview = {
+        hide_on_startup = false, -- hide previewer when picker starts
+      },
+      path_display = { "tail" },
+      show_line = true,
+    },
   },
   extensions = {
     -- Your extension configuration goes here:
     -- extension_name = {
     --   extension_config_key = value,
     -- }
-    -- please take a look at the readme of the extension you want to configure
-
-    -- ui-select for neovim-session manager
-    -- ["ui-select"] = {
-    --   require("telescope.themes").get_dropdown({
-    --     previewer = false,
-    --     -- even more opts
-    --   }),
-    -- },
-
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown({
+        previewer = false,
+      }),
+    },
     -- workspaces = {
     --   -- keep insert mode after selection in the picker, default is false
     --   keep_insert = true,
@@ -129,8 +148,7 @@ telescope.setup({
   },
 })
 
--- telescope.load_extension("ui-select")
+telescope.load_extension("ui-select")
 telescope.load_extension("workspaces")
 telescope.load_extension("fzf")
 telescope.load_extension("recent_files")
-telescope.load_extension("neoclip")

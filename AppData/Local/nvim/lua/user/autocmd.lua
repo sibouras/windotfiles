@@ -23,6 +23,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
   callback = function()
     vim.cmd("set formatoptions-=cro")
+    vim.cmd([[set formatexpr=\"]]) -- empty formatexpr so gq uses formatoptions
   end,
 })
 
@@ -64,10 +65,11 @@ augroup END
 
 -- keep window position when switching buffers
 -- https://stackoverflow.com/questions/4251533/vim-keep-window-position-when-switching-buffers
-vim.cmd([[
-  au BufLeave * let b:winview = winsaveview()
-  au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
-]])
+-- replaced with :set jumpoptions=view (added in 0.8)
+-- vim.cmd([[
+--   au BufLeave * let b:winview = winsaveview()
+--   au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+-- ]])
 
 -- source: https://github.com/ecosse3/nvim/blob/master/lua/autocmds.lua
 -- Disable diagnostics in node_modules (0 is current buffer only)

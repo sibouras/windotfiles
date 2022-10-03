@@ -45,17 +45,9 @@ require("packer_compiled")
 
 -- Install your plugins here
 return packer.startup(function(use)
-  -- My plugins here
   use("wbthomason/packer.nvim") -- Have packer manage itself
-  use({
-    "lewis6991/impatient.nvim",
-    config = function()
-      require("impatient")
-    end,
-  })
-  -- use("nathom/filetype.nvim")
+  use("lewis6991/impatient.nvim")
   use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
-  -- use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
   -- use("MunifTanjim/nui.nvim")
   use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
   use("numToStr/Comment.nvim") -- Easily comment stuff
@@ -64,15 +56,10 @@ return packer.startup(function(use)
   use("natecraddock/workspaces.nvim")
   use("kyazdani42/nvim-tree.lua")
   use("nanotee/zoxide.vim")
-  -- use("tamago324/lir.nvim")
-  -- use("tamago324/lir-bookmark.nvim")
   use("elihunter173/dirbuf.nvim")
-  -- use("akinsho/bufferline.nvim")
   use("Sangdol/mintabline.vim")
-  -- use("moll/vim-bbye")
+  use("rebelot/heirline.nvim")
   use("kazhala/close-buffers.nvim")
-  use({ "nvim-lualine/lualine.nvim", commit = "8d956c18258bb128ecf42f95411bb26efd3a5d23" })
-  -- use("nvim-lualine/lualine.nvim")
   use("karb94/neoscroll.nvim")
   use("booperlv/nvim-gomove")
   use("goolord/alpha-nvim")
@@ -80,23 +67,18 @@ return packer.startup(function(use)
   use("tpope/vim-repeat")
   use("tpope/vim-abolish")
   use("kylechui/nvim-surround")
-  -- use("echasnovski/mini.nvim")
-  -- use({ "phaazon/hop.nvim", branch = "v1" })
   use("rlane/pounce.nvim")
   use("ThePrimeagen/harpoon")
   -- use("mattn/emmet-vim")
-  -- use("lervag/wiki.vim")
-  -- use("dkarter/bullets.vim")
   use("tommcdo/vim-exchange")
   use("michaeljsmith/vim-indent-object")
   use("vim-scripts/ReplaceWithRegister")
   use("svban/YankAssassin.vim")
   use("akinsho/toggleterm.nvim")
-  -- use("numToStr/FTerm.nvim")
   use("dstein64/vim-startuptime")
   use("NvChad/nvim-colorizer.lua") -- maintained fork
   use("mrshmllow/document-color.nvim")
-  use("stevearc/dressing.nvim")
+  -- use("stevearc/dressing.nvim")
   use("Djancyp/cheat-sheet")
   -- use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
   use("mrjones2014/smart-splits.nvim")
@@ -128,6 +110,7 @@ return packer.startup(function(use)
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
   -- use("ray-x/lsp_signature.nvim") -- LSP signature hint as you type
   use("RRethy/vim-illuminate") -- highlight symbols under cursor and cycle through
+  use("SmiteshP/nvim-navic")
   use("b0o/SchemaStore.nvim")
   -- use("j-hui/fidget.nvim")
 
@@ -138,7 +121,7 @@ return packer.startup(function(use)
     "nvim-telescope/telescope-fzf-native.nvim",
     run = "mingw32-make",
   })
-  -- use("nvim-telescope/telescope-ui-select.nvim")
+  use("nvim-telescope/telescope-ui-select.nvim")
   use("smartpde/telescope-recent-files")
 
   -- Treesitter

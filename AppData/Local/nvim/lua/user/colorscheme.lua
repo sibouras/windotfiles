@@ -13,6 +13,9 @@ require("tokyonight").setup({
     colors.bg_highlight = "#24283b"
     colors.bg_statusline = "#0b0b0f"
   end,
+  on_highlights = function(hl, colors)
+    hl.TabLineSel = { bg = "#1A2336" }
+  end,
 })
 
 local colorscheme = "tokyonight"

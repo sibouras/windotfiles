@@ -1,5 +1,4 @@
 local options = {
-  backup = false, -- creates a backup file
   -- clipboard = "unnamedplus", -- allows neovim to access the system clipboard
   cmdheight = 1, -- more space in the neovim command line for displaying messages
   completeopt = { "menuone", "noselect" }, -- mostly just for cmp
@@ -19,12 +18,13 @@ local options = {
   smartindent = true, -- make indenting smarter again
   splitbelow = true, -- force all horizontal splits to go below current window
   splitright = true, -- force all vertical splits to go to the right of current window
-  swapfile = false, -- creates a swapfile
   termguicolors = true, -- set term gui colors (most terminals support this)
-  timeoutlen = 300, -- time to wait for a mapped sequence to complete (in milliseconds)
-  undofile = true, -- enable persistent undo
+  timeoutlen = 400, -- time to wait for a mapped sequence to complete (in milliseconds)
   updatetime = 300, -- faster completion (4000ms default)
+  backup = false, -- creates a backup file
   writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
+  undofile = true, -- enable persistent undo
+  swapfile = false, -- creates a swapfile
   expandtab = true, -- convert tabs to spaces
   shiftwidth = 2, -- the number of spaces inserted for each indentation
   tabstop = 2, -- insert 2 spaces for a tab
@@ -51,9 +51,10 @@ vim.opt.whichwrap:append("<,>,[,],h,l") -- let movement keys reach the previous 
 vim.opt.shortmess:append("c") -- don't show the dumb matching stuff
 vim.opt.path:append("**") -- find files recursively
 -- vim.opt.concealcursor:append("nc")
-vim.opt.jumpoptions:append("stack") -- browser-like jumplist behavior
+-- view: When you jump around, or switch buffers with ctrl-^ the viewport is
+-- restored instead of resetting/recentering vertically.
+vim.opt.jumpoptions:append("stack,view") -- stack:browser-like jumplist behavior
 
--- vim.cmd([[set formatoptions-=cro]]) -- TODO: this doesn't seem to work
 vim.cmd([[
   if exists("g:nvy") || exists("g:neovide")
     cd $home

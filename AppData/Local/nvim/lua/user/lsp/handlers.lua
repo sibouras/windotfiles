@@ -102,6 +102,17 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
+  local navic_status_ok, navic = pcall(require, "nvim-navic")
+  if not navic_status_ok then
+    print("nvim-navic not found")
+    return
+  end
+
+  -- attach nvim-navic
+  if client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
+
   lsp_keymaps(bufnr)
 end
 

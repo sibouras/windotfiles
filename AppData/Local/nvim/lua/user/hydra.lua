@@ -37,6 +37,11 @@ Hydra({
     { "J", splits.resize_down },
     { "K", splits.resize_up },
     { "L", splits.resize_right },
+    { "<Left>", "<C-w>H" },
+    { "<Down>", "<C-w>J" },
+    { "<Up>", "<C-w>K" },
+    { "<Right>", "<C-w>L" },
+    { "c", "<C-w>c" },
     { "q", nil, { exit = true } },
   },
 })

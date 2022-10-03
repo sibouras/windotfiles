@@ -46,29 +46,21 @@ end
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 
 local Terminal = require("toggleterm.terminal").Terminal
-local lazygit = Terminal:new({ cmd = "lazygit", hidden = true })
 
-function _LAZYGIT_TOGGLE()
+local lazygit = Terminal:new({
+  cmd = "lazygit",
+  count = 4,
+  dir = "git_dir",
+  on_open = function(term)
+    vim.cmd("norm 0")
+    vim.cmd("startinsert!")
+    vim.keymap.set("n", "q", "<cmd>close<CR>", { silent = true, buffer = term.bufnr })
+  end,
+})
+
+vim.keymap.set({ "n", "t" }, "<M-S-:>", function()
   lazygit:toggle()
-end
-
-vim.api.nvim_set_keymap("n", "<M-S-:>", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", { noremap = true, silent = true })
-
-local node = Terminal:new({ cmd = "node", hidden = true })
-
-function _NODE_TOGGLE()
-  node:toggle()
-end
-
-local python = Terminal:new({ cmd = "python", hidden = true })
-
-function _PYTHON_TOGGLE()
-  python:toggle()
-end
-
-vim.cmd([[
-  command! -count=1 Node lua require'toggleterm'.exec("node " .. vim.fn.expand('%'), <count>, 12)
-]])
+end, { silent = true })
 
 vim.api.nvim_create_user_command("Lua", function()
   vim.cmd([[3TermExec cmd="lua %"]])
@@ -76,9 +68,12 @@ end, {})
 
 local map = vim.keymap.set
 
-map({ "n", "i", "t" }, "<M-1>", "<Cmd>1ToggleTerm direction=float<CR>")
-map({ "n", "i", "t" }, "<M-2>", "<Cmd>2ToggleTerm size=60 direction=vertical<CR>")
-map({ "n", "i", "t" }, "<M-3>", "<Cmd>3ToggleTerm size=13 direction=horizontal | set cmdheight=1<CR>")
+map({ "n", "t" }, "<M-1>", "<Cmd>1ToggleTerm direction=float<CR>")
+map({ "n", "t" }, "<M-2>", "<Cmd>2ToggleTerm size=60 direction=vertical<CR>")
+map({ "n", "t" }, "<M-3>", function()
+  vim.cmd("3ToggleTerm size=13 direction=horizontal")
+  vim.cmd("set cmdheight=1")
+end)
 
 -- Code Runner
 local runners = { lua = "lua", javascript = "node", typescript = "tsx" }

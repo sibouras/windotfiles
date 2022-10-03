@@ -222,7 +222,7 @@ end
 
 --> redirect output of command to scratch buffer
 function M.scratch()
-  vim.ui.input({ prompt = "enter command", completion = "command" }, function(input)
+  vim.ui.input({ prompt = "enter command: ", completion = "command" }, function(input)
     if input == nil then
       return
     elseif input == "scratch" then
