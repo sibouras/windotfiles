@@ -205,8 +205,7 @@ FileNameBlock = utils.insert(
   FileNameBlock,
   FileIcon,
   utils.insert(FileNameModifer, FileName), -- a new table where FileName is a child of FileNameModifier
-  unpack(FileFlags), -- A small optimisation, since their parent does nothing
-  { provider = "%<" } -- this means that the statusline is cut here when there's not enough space
+  unpack(FileFlags) -- A small optimisation, since their parent does nothing
 )
 
 --> FileType, FileEncoding and FileFormat
@@ -355,6 +354,8 @@ local LSPActive = {
 --> Nvim Navic
 
 -- Full nerd (with icon colors)!
+-- Be careful, this implementation will work only if this component
+-- is displayied in a single window, and it is the current window.
 local Navic = {
   condition = require("nvim-navic").is_available,
   provider = "",
@@ -387,6 +388,13 @@ local Navic = {
       Operator = "Operator",
       TypeParameter = "Type",
     },
+    -- bit operation dark magic, see below...
+    enc = function(a, b)
+      return bit.bor(bit.lshift(a, 16), b)
+    end,
+    dec = function(c)
+      return { bit.rshift(c, 16), bit.band(c, 65535) }
+    end,
   },
   init = function(self)
     local data = require("nvim-navic").get_data() or {}
@@ -397,15 +405,28 @@ local Navic = {
     end
     -- create a child for each level
     for i, d in ipairs(data) do
+      -- encode line and column numbers into a single integer
+      local pos = self.enc(d.scope.start.line, d.scope.start.character)
       local child = {
         {
           provider = d.icon,
           hl = self.type_hl[d.type],
         },
         {
-          provider = d.name,
+          -- escape `%`s (elixir) and buggy default separators
+          provider = d.name:gsub("%%", "%%%%"):gsub("%s*->%s*", ""),
           -- highlight icon only or location name as well
           hl = self.type_hl[d.type],
+
+          on_click = {
+            -- pass the encoded position through minwid
+            minwid = pos,
+            callback = function(self, minwid)
+              -- decode
+              vim.api.nvim_win_set_cursor(0, self.dec(minwid))
+            end,
+            name = "heirline_navic",
+          },
         },
       }
       -- add a separator only if needed
@@ -678,6 +699,7 @@ local WinBars = {
       return conditions.is_active()
     end,
     utils.surround({ "", "" }, "dark_bg", FileNameBlock),
+    { provider = "%<" }, -- this means that the winbar is cut here when there's not enough space
     Navic,
   },
 }
