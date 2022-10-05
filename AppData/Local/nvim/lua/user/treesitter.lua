@@ -25,8 +25,16 @@ configs.setup({
   highlight = {
     enable = true, -- false will disable the whole extension
     -- disable = { "" }, -- list of language that will be disabled
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+    -- Or use a function for more flexibility
     disable = function(lang, buf)
+      -- filetypes that will be disabled
+      local ftype = vim.bo.filetype
+      local filetype_exclude = { "help" }
+      if vim.tbl_contains(filetype_exclude, vim.bo.filetype) then
+        return true
+      end
+
+      -- disable slow treesitter highlight for large files
       local max_filesize = 100 * 1024 -- 100 KB
       local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
       if ok and stats and stats.size > max_filesize then
