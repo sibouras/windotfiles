@@ -136,7 +136,7 @@ let-env config = {
   filesize_metric: false
   table_mode: rounded # basic, compact, compact_double, light, thin, with_love, rounded, reinforced, heavy, none, other
   use_ls_colors: true
-  rm_always_trash: false
+  rm_always_trash: true
   color_config: $default_theme
   use_grid_icons: true
   footer_mode: "25" # always, never, number_of_rows, auto
@@ -356,6 +356,16 @@ let-env config = {
         ]
       }
     }
+    {
+      name: reload_config
+      modifier: none
+      keycode: f5
+      mode: emacs
+      event: {
+        send: executehostcommand,
+        cmd: $"source '($nu.config-path)'"
+      }
+    }
 
     # Keybindings used to trigger the user defined menus
     {
@@ -473,15 +483,21 @@ def ld [
   --reverse(-r) #reverse order
 ] {
   if ($reverse | is-empty) || (not $reverse) {
-    ls | sort-by modified | reject type
+    # ls | sort-by modified | reject type
+    ls | sort-by modified | select name size modified
   } else {
-    ls | sort-by modified -r | reject type
+    ls | sort-by modified -r | select name size modified
   }
 }
 
 # ls by type
 def lt [] {
-  ls | sort-by -i type name | reject type
+  ls | sort-by type name | select name size modified
+}
+
+# ls sorted by extension
+def le [] {
+  ls | sort-by -i type name | insert ext { $in.name | path parse | get extension } | sort-by ext | reject ext type
 }
 
 # search for specific process
@@ -502,6 +518,11 @@ def git-push [m: string] {
   git push origin main
 }
 
+# git log (count)
+def gl [count: int = 10] {
+  git log $'--max-count=($count)'
+}
+
 # Universal help command, combining https://tldr.sh/ with nushell’s help for built-ins:
 def ? [...terms] {
   if (
@@ -515,8 +536,7 @@ def ? [...terms] {
 
 # Return random element from a list or a table
 def get-random-entry [input] {
-  $input
-  |get (random integer 0..(($input|length) - 1))
+  $input |get (random integer 0..(($input|length) - 1))
 }
 
 # Shortcut function and competitions to search for commands in the selected category of nushell
@@ -528,16 +548,7 @@ def hc [category?: string@"nu-complete help categories"] {
   help commands | select name category usage | move usage --after name | where category =~ $category
 }
 
-def-env up [nb: int = 1] {
-  let path = (1..$nb | each {|_| ".."} | reduce {|it, acc| $acc + "/" + $it})
-  cd $path
-}
-
-def-env mkcd [name: path] {
-  cd (mkdir $name -s | first)
-}
-
-export def show_banner [] {
+def show_banner [] {
   let ellie = [
     "     __  ,"
     " .--()°'.'"
@@ -549,6 +560,121 @@ export def show_banner [] {
   print $"(ansi green)($ellie.1)  (ansi yellow) (ansi yellow_bold)Nushell (ansi reset)(ansi yellow)v(version | get version)(ansi reset)"
   print $"(ansi green)($ellie.2)  (ansi light_blue) (ansi light_blue_bold)RAM (ansi reset)(ansi light_blue)($s.mem.used) / ($s.mem.total)(ansi reset)"
   print $"(ansi green)($ellie.3)  (ansi light_purple)ﮫ (ansi light_purple_bold)Uptime (ansi reset)(ansi light_purple)($s.host.uptime)(ansi reset)"
+}
+
+# green echo
+def echo-g [string:string] {
+  echo $"(ansi -e { fg: '#A8D8B9' attr: b })($string)(ansi reset)"
+}
+
+# red echo
+def echo-r [string:string] {
+  echo $"(ansi -e { fg: '#ff0000' attr: b })($string)(ansi reset)"
+}
+
+# rm trough pipe
+#
+# Example
+# ls *.txt | first 5 | rmp
+def rmp [] {
+  if not ($in | is-empty) {
+    get name | ansi strip | par-each {|file| rm -rf $file }
+  }
+}
+
+# cp trough pipe to same dir
+def cpp [
+  to: string#target directory
+  #
+  #Example
+  #ls *.txt | first 5 | cp-pipe ~/temp
+] {
+  get name | each { |file| echo $"copying ($file)..." ; cp -r $file ($to | path expand) }
+}
+
+# mv trough pipe to same dir
+def mvp [
+  to: string#target directory
+  #
+  #Example
+  #ls *.txt | mvp ~/temp
+] {
+  get name | each { |file| echo $"moving ($file)..." ; mv $file ($to | path expand) }
+}
+
+# last n elements in history with highlight(default 100)
+def h [n = 100] {
+  history | last $n | update command { |f| $f.command | nu-highlight }
+}
+
+# translate text using mymemmory api
+def tr [
+  ...search:string  # search query
+  --from:string     # from which language you are translating (default english)
+  --to:string       # to which language you are translating (default french)
+  #
+  # Use ISO standar names for the languages, for example:
+  # english: en-US
+  # spanish: es-ES
+  # italian: it-IT
+  # swedish: sv-SV
+  #
+  # More in: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+] {
+  if ($search | is-empty) {
+    echo-r "no search query provided"
+  } else {
+    let from = if ($from | is-empty) {"en-US"} else {$from}
+    let to = if ($to | is-empty) {"fr-FR"} else {$to}
+    let to_translate = ($search | str collect "%20")
+    let url = $"https://api.mymemory.translated.net/get?q=($to_translate)&langpair=($from)%7C($to)"
+
+    fetch $url
+    | get responseData
+    | get translatedText
+  }
+}
+
+# go up n directories
+def-env up [nb: int = 1] {
+  let path = (1..$nb | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
+  cd $path
+}
+
+# make and cd into a directory
+def-env mcd [name: path] {
+  cd (mkdir $name -s | first)
+}
+
+# cd with tere(Terminal file explorer)
+def-env ce [...args] {
+  let result = ( tere --autocd-timeout=off $args | str trim )
+  cd $result
+}
+
+# cd with lf
+def-env lc [args = "."] {
+  let cmd_file = $"($env.TEMP)\\" + (random chars -l 6) + ".tmp";
+  touch $cmd_file;
+  lf -last-dir-path $cmd_file $args;
+  let cmd = ((open $cmd_file) | str trim);
+  rm $cmd_file;
+  cd ($cmd | str replace "cd" "" | str trim)
+}
+
+# cd with broot
+def-env br [args = "."] {
+  # let cmd_file = (^mktemp | str trim);
+  let cmd_file = $"($env.TEMP)\\" + (random chars -l 6) + ".tmp";
+  touch $cmd_file;
+  broot --outcmd $cmd_file $args;
+  let cmd = ((open $cmd_file) | str trim);
+  rm $cmd_file;
+  cd (if ($cmd | str contains '"') {
+    ($cmd | str replace "cd" "" | str trim | str substring "1,-1")
+  } else {
+    ($cmd | str replace "cd" "" | str trim)
+  })
 }
 
 # scripts
