@@ -333,23 +333,49 @@ local LSPActive = {
 
 --> Treesitter
 
--- local TreesitterActive = {
---   condition = function()
---     local ts_avail, ts = pcall(require, "nvim-treesitter.parsers")
---     return ts_avail
---   end,
---
---   update = { "BufWinEnter", "ModeChanged" },
---
---   provider = function()
---     -- local ts_avail, ts = pcall(require, "nvim-treesitter.parsers")
---     -- return (ts_avail and ts.has_parser()) and "綠TS" or ""
---     local buf = vim.api.nvim_get_current_buf()
---     local highlighter = require("vim.treesitter.highlighter")
---     return highlighter.active[buf] and "綠TS " or ""
---   end,
---   hl = { fg = "green", bold = false },
--- }
+local ts_avail, ts = pcall(require, "nvim-treesitter.parsers")
+
+local TreesitterActive = {
+  -- update = { "OptionSet", pattern = "syntax" },
+  update = { "BufWinEnter" },
+
+  provider = function()
+    if not (ts_avail and ts.has_parser()) then
+      return
+    end
+    local buf = vim.api.nvim_get_current_buf()
+    local highlighter = require("vim.treesitter.highlighter")
+    return highlighter.active[buf] and "綠TS " or ""
+  end,
+  hl = { fg = "green", bold = false },
+}
+
+local TSHl = {
+  update = { "OptionSet", pattern = "syntax" },
+  init = function(self)
+    if not rawget(self, "once") then
+      vim.api.nvim_create_autocmd("BufWinEnter", {
+        callback = function()
+          self._win_cache = nil
+        end,
+      })
+      self.once = true
+    end
+  end,
+  hl = function()
+    local buf = vim.api.nvim_get_current_buf()
+    local highlighter = require("vim.treesitter.highlighter")
+    local fg = highlighter.active[buf] and "green" or "red"
+    return { fg = fg, bold = false }
+  end,
+  provider = function()
+    if not (ts_avail and ts.has_parser()) then
+      return
+    end
+    -- return "TS " .. os.clock() .. " "
+    return "綠TS "
+  end,
+}
 
 --> Nvim Navic
 
@@ -357,7 +383,10 @@ local LSPActive = {
 -- Be careful, this implementation will work only if this component
 -- is displayied in a single window, and it is the current window.
 local Navic = {
-  condition = require("nvim-navic").is_available,
+  condition = function()
+    return require("nvim-navic").is_available()
+  end,
+  update = "CursorMoved",
   provider = "",
   static = {
     type_hl = {
@@ -421,7 +450,7 @@ local Navic = {
           on_click = {
             -- pass the encoded position through minwid
             minwid = pos,
-            callback = function(self, minwid)
+            callback = function(_, minwid)
               -- decode
               vim.api.nvim_win_set_cursor(0, self.dec(minwid))
             end,
@@ -611,9 +640,17 @@ local DefaultStatusline = {
   -- FileNameBlock,
   Git,
   Space,
+  -- {
+  --   condition = function()
+  --     return vim.g.diagnostics_active
+  --   end,
+  --   Diagnostics,
+  -- },
   Diagnostics,
   Align,
   utils.make_flexible_component(3, { LSPActive, Space }, { provider = "" }),
+  -- TreesitterActive,
+  TSHl,
   FileFormat,
   Space,
   Ruler,
@@ -631,7 +668,7 @@ local SpecialStatusline = {
   condition = function()
     return conditions.buffer_matches({
       buftype = { "nofile", "prompt", "help", "quickfix" },
-      filetype = { "^git.*", "fugitive", "harpoon" },
+      filetype = { "fugitive", "harpoon" },
     })
   end,
   Space,
@@ -681,7 +718,7 @@ local WinBars = {
     condition = function()
       return conditions.buffer_matches({
         buftype = { "nofile", "prompt", "help", "quickfix", "terminal" },
-        filetype = { "^git.*", "fugitive" },
+        filetype = { "fugitive" },
       })
     end,
     init = function()
