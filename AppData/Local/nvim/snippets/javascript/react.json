@@ -215,9 +215,4 @@
     "body": "{${1:array}.map((item) => {\n\treturn <${2:elementName} key={item.id}>\n\t$0\n</${2}>\n})}",
     "description": "an element self closed"
   },
-  "jsx element wrap selection": {
-    "prefix": "jsx wrap selection with element",
-    "body": "<${1:elementName}>\n\t{$TM_SELECTED_TEXT}\n</${1}>",
-    "description": "an element"
-  }
 }
