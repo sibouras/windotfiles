@@ -86,6 +86,7 @@ return packer.startup(function(use)
     "anuvyklack/hydra.nvim",
     requires = "anuvyklack/keymap-layer.nvim", -- needed only for pink hydras
   })
+  use("smjonas/live-command.nvim")
 
   -- Colorschemes
   use("folke/tokyonight.nvim")

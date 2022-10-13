@@ -5,6 +5,7 @@ if not status_ok then
 end
 
 npairs.setup({
+  break_undo = false,
   check_ts = true,
   ts_config = {
     lua = { "string", "source" },
