@@ -37,6 +37,11 @@ local options = {
   scrolloff = 5, -- is one of my fav
   sidescrolloff = 10,
   foldlevelstart = 99,
+  grepprg = "rg --vimgrep --smart-case", -- Replacing grep with rg
+  grepformat = "%f:%l:%c:%m",
+  -- listchars = { eol = "↴", extends = "›", precedes = "‹", nbsp = "␣", trail = "·", tab = "> " },
+  -- listchars = "tab:¦ ,eol:¬,trail:⋅,extends:❯,precedes:❮",
+  listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←,eol:↴",
   -- sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,globals",
   guifont = "JetbrainsMono Nerd Font:h16", -- the font used in graphical neovim applications
   -- guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:Cursor/lCursor", -- this makes changing Cursor highlight work
@@ -55,24 +60,16 @@ vim.opt.path:append("**") -- find files recursively
 -- restored instead of resetting/recentering vertically.
 vim.opt.jumpoptions:append("stack,view") -- stack:browser-like jumplist behavior
 
-vim.cmd([[
-  if exists("g:nvy") || exists("g:neovide")
-    cd $home
-  endif
-  if exists("g:neovide")
-    " let g:neovide_refresh_rate=140
-  endif
-  set grepprg=rg\ --vimgrep\ --smart-case " Replacing grep with rg
-  set grepformat=%f:%l:%c:%m
-  set listchars=tab:¦\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
-]])
-
 -- prettier folding
 function _G.MyFoldText()
   return vim.fn.getline(vim.v.foldstart) .. " ... " .. vim.fn.getline(vim.v.foldend):gsub("^%s*", "")
 end
 vim.opt.foldtext = "v:lua.MyFoldText()"
 vim.opt.fillchars:append({ fold = " " })
+
+if vim.g.nvy then
+  vim.cmd("cd $home")
+end
 
 vim.g.python3_host_prog = "python3"
 

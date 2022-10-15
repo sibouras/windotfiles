@@ -20,13 +20,15 @@ if not config_status_ok then
 end
 
 -- https://github.com/williamboman/mason.nvim/discussions/92#discussioncomment-3173425
+
 -- Extension to bridge mason.nvim with the lspconfig plugin
-mason_lspconfig.setup({
-  -- A list of servers to automatically install if they're not already installed.
-  ensure_installed = {
-    "lua-language-server",
-  },
-})
+-- this slows down startuptime
+-- mason_lspconfig.setup({
+--   -- A list of servers to automatically install if they're not already installed.
+--   ensure_installed = {
+--     "lua-language-server",
+--   },
+-- })
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status_ok then
@@ -144,6 +146,15 @@ mason_lspconfig.setup_handlers({
     })
   end,
 
+  ["emmet_ls"] = function()
+    lspconfig.emmet_ls.setup({
+      on_attach = opts.on_attach,
+      capabilities = opts.capabilities,
+      -- filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+      filetypes = { "html", "css", "sass", "scss", "less" },
+    })
+  end,
+
   ["marksman"] = function()
     lspconfig.marksman.setup({
       on_attach = opts.on_attach,
@@ -162,8 +173,23 @@ mason_lspconfig.setup_handlers({
       settings = {
         json = {
           schemas = require("schemastore").json.schemas(),
+          validate = { enable = true },
         },
       },
+    })
+  end,
+
+  ["eslint"] = function()
+    lspconfig.eslint.setup({
+      on_attach = opts.on_attach,
+      capabilities = opts.capabilities,
+      root_dir = lspconfig.util.root_pattern(
+        ".eslintrc",
+        ".eslintrc.js",
+        ".eslintrc.cjs",
+        ".eslintrc.json",
+        "eslint.config.js"
+      ),
     })
   end,
 })

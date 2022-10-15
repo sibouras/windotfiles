@@ -15,6 +15,9 @@ configs.setup({
     "markdown_inline",
   },
   sync_install = false,
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = false,
   -- ignore_install = { "tlaplus" }, -- List of parsers to ignore installing
   autopairs = {
     enable = true,
@@ -28,7 +31,6 @@ configs.setup({
     -- Or use a function for more flexibility
     disable = function(lang, buf)
       -- filetypes that will be disabled
-      local ftype = vim.bo.filetype
       local filetype_exclude = { "help" }
       if vim.tbl_contains(filetype_exclude, vim.bo.filetype) then
         return true

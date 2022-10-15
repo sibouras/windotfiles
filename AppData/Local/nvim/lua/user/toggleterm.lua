@@ -41,6 +41,9 @@ function _G.set_terminal_keymaps()
   map("t", "<C-w><C-j>", [[<Cmd>wincmd j<CR>]], opts)
   map("t", "<C-w><C-k>", [[<Cmd>wincmd k<CR>]], opts)
   map("t", "<C-w><C-l>", [[<Cmd>wincmd l<CR>]], opts)
+  -- pasting in term mode
+  map("t", "<C-r>", [['<C-\><C-n>"' . nr2char(getchar()) . 'pi']], { expr = true, buffer = 0 })
+  map("t", "<M-p>", [[<C-\><C-n>"+pi]], opts)
 end
 
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")

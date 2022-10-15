@@ -19,29 +19,29 @@ null_ls.setup({
     formatting.prettierd,
     -- formatting.black.with({ extra_args = { "--fast" } }),
     formatting.stylua.with({ extra_args = { "--indent-type=Spaces", "--indent-width=2" } }),
-    code_actions.eslint_d.with({
-      disabled_filetypes = { "typescript" },
-      condition = function(utils)
-        return utils.root_has_file({
-          ".eslintrc",
-          ".eslintrc.js",
-          ".eslintrc.cjs",
-          ".eslintrc.json",
-          "eslint.config.js",
-        })
-      end,
-    }),
-    diagnostics.eslint_d.with({
-      disabled_filetypes = { "typescript" },
-      condition = function(utils)
-        return utils.root_has_file({
-          ".eslintrc",
-          ".eslintrc.js",
-          ".eslintrc.cjs",
-          ".eslintrc.json",
-          "eslint.config.js",
-        })
-      end,
-    }),
+    -- code_actions.eslint_d.with({
+    --   disabled_filetypes = { "typescript" },
+    --   condition = function(utils)
+    --     return utils.root_has_file({
+    --       ".eslintrc",
+    --       ".eslintrc.js",
+    --       ".eslintrc.cjs",
+    --       ".eslintrc.json",
+    --       "eslint.config.js",
+    --     })
+    --   end,
+    -- }),
+    -- diagnostics.eslint_d.with({
+    --   disabled_filetypes = { "typescript" },
+    --   condition = function(utils)
+    --     return utils.root_has_file({
+    --       ".eslintrc",
+    --       ".eslintrc.js",
+    --       ".eslintrc.cjs",
+    --       ".eslintrc.json",
+    --       "eslint.config.js",
+    --     })
+    --   end,
+    -- }),
   },
 })

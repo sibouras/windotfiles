@@ -58,9 +58,12 @@ ls.add_snippets(nil, {
 })
 
 vim.keymap.set({ "i", "s" }, "<C-j>", function()
-  if ls.jumpable(1) then
-    ls.jump(1)
+  if ls.expand_or_jumpable() then
+    ls.expand_or_jump()
   end
+  -- if ls.jumpable(1) then
+  --   ls.jump(1)
+  -- end
 end, { silent = true })
 
 vim.keymap.set({ "i", "s" }, "<C-k>", function()

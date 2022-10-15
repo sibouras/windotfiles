@@ -21,6 +21,9 @@ map("n", "<C-F15>", "<C-i>")
 -- de-tab
 map("i", "<S-Tab>", "<C-d>")
 
+-- change mapping for diagraphs
+map("i", "<C-f>", "<C-k>")
+
 -- Quit vim
 map("n", "<M-F4>", ":qa!<CR>")
 
@@ -42,6 +45,17 @@ for i = 1, 9 do
   map("n", i .. ",", i .. "gt")
 end
 
+-- Switch to last active tab
+vim.cmd([[
+  if !exists('g:Lasttab')
+    let g:Lasttab = 1
+    let g:Lasttab_backup = 1
+  endif
+  autocmd! TabLeave * let g:Lasttab_backup = g:Lasttab | let g:Lasttab = tabpagenr()
+  autocmd! TabClosed * let g:Lasttab = g:Lasttab_backup
+  nmap <silent> <C-h> :exe "tabn " . g:Lasttab<cr>
+]])
+
 -- Move text up and down(using nvim-gomove instead)
 -- map("n", "<A-j>", "<Esc>:m .+1<CR>==gi")
 -- map("n", "<A-k>", "<Esc>:m .-2<CR>==gi")
@@ -61,10 +75,10 @@ map("c", "<C-BS>", "<C-w>", { silent = false })
 map("i", "<C-z>", "<C-o>:u<CR>")
 
 -- undo break points
-map("i", ",", ",<c-g>u")
-map("i", ".", ".<c-g>u")
-map("i", "!", "!<c-g>u")
-map("i", "?", "?<c-g>u")
+local undo_ch = { ",", ".", "!", "?", ";" }
+for _, ch in ipairs(undo_ch) do
+  map("i", ch, ch .. "<C-g>u")
+end
 
 -- jumplit mutations
 vim.cmd([[
@@ -130,6 +144,13 @@ map("n", "<F9>", "gn@i")
 -- delete all trailing whitespace
 map("n", "<F6>", [[:let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>]])
 
+-- print current time
+map({ "n", "i" }, "<F8>", function()
+  local t = os.date("*t")
+  local time = string.format("%02d:%02d:%02d", t.hour, t.min, t.sec)
+  print(time)
+end)
+
 -- Navigate quickfix list
 map("n", "[q", ":cprevious<CR>")
 map("n", "]q", ":cnext<CR>")
@@ -181,7 +202,7 @@ map("v", ">", ">gv")
 -- map("v", "p", '"_dP')
 
 -- remove highlight
-map("n", "<esc>", ":noh<cr>")
+-- map("n", "<esc>", ":noh<cr>")
 
 -- %% expands to the path of the directory that contains the current file.
 -- works with with :cd, :grep etc.
@@ -217,6 +238,26 @@ command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1'
 map("n", "<M-=>", ":Bigger<CR>")
 map("n", "<M-->", ":Smaller<CR>")
 map("n", "<M-S-_>", ":set guifont=:h16<CR>")
+
+-- Zoom / Restore window.
+-- https://stackoverflow.com/questions/13194428/is-better-way-to-zoom-windows-in-vim-than-zoomwin
+vim.cmd([[
+function! ToggleZoom(toggle)
+  if exists("t:restore_zoom") && (t:restore_zoom.win != winnr() || a:toggle == v:true)
+    exec t:restore_zoom.cmd
+    unlet t:restore_zoom
+  elseif a:toggle
+    let t:restore_zoom = { 'win': winnr(), 'cmd': winrestcmd() }
+    vert resize | resize
+  endi
+endfunction
+
+augroup restorezoom
+  au WinEnter * silent! :call ToggleZoom(v:false)
+augroup END
+]])
+map("n", "<C-q>", ":call ToggleZoom(v:true)<CR>")
+map("t", "<C-q>", [[<C-\><C-n>:call ToggleZoom(v:true)<CR>i]])
 
 -- search for regex pattern
 -- map("n", "<M-l>", "<Cmd>call search('[([{<]')<CR>")
@@ -299,6 +340,8 @@ map("n", "<leader>sc", ":lua require('user.essentials').scratch()<CR>", { desc =
 ----------------------------------
 
 vim.cmd([[
+command! JsonFormat :%!jq .
+command! JsonUnformat :%!jq -c .
 command! TabToSpace silent! call functions#T2S()
 command! SpaceToTab silent! call functions#S2T()
 command! ReplaceFile silent! call functions#ReplaceFile()
@@ -443,6 +486,7 @@ map("n", "<leader>tw", "<cmd>lua require('document-color').buf_toggle()<CR>")
 ---------------------------------------------------------------
 map({ "n", "x" }, "s", "<cmd>Pounce<CR>")
 map({ "n", "x" }, "S", "<cmd>PounceRepeat<CR>")
+map("o", "gs", "<cmd>Pounce<CR>") -- s is used by nvim-surround
 
 ---------------------------------------------------------------
 -- => bufferline.nvim

@@ -1,14 +1,4 @@
-local ls = require("luasnip")
-
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
-local c = ls.choice_node
-local f = ls.function_node
-local d = ls.dynamic_node
-local sn = ls.snippet_node
-local fmt = require("luasnip.extras.fmt").fmt
-local rep = require("luasnip.extras").rep
+---@diagnostic disable: undefined-global
 
 -- source: https://gist.github.com/davidatsurge/9873d9cb1781f1a37c0f25d24cb1b3ab
 -- Get a list of  the property names given an `interface_declaration`
