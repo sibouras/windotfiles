@@ -15,8 +15,8 @@ vim.g.maplocalleader = " "
 map({ "n", "i", "v" }, "<S-ScrollWheelUp>", "<ScrollWheelLeft>")
 map({ "n", "i", "v" }, "<S-ScrollWheelDown>", "<ScrollWheelRight>")
 
--- distinguish between <Tab> and <C-i> (<C-i> is mapped to <C-F15> in autohotkey)
-map("n", "<C-F15>", "<C-i>")
+-- distinguish between <Tab> and <C-i> (ctrl+i is mapped to <M-C-S-F6> in ahk,terminal)
+map("n", "<M-C-S-F6>", "<C-i>")
 
 -- de-tab
 map("i", "<S-Tab>", "<C-d>")
@@ -277,8 +277,8 @@ map("n", "<leader>q", function()
   vim.g.quickfix_toggled = not vim.g.quickfix_toggled
 end, { desc = "toggle quickfix window" })
 
--- toggle cmp(mapped <C-;> to <C-F16> in ahk)
-map({ "i", "n" }, "<C-F16>", function()
+-- toggle cmp(mapped <C-;> to <M-C-S-F7> in ahk,terminal)
+map({ "i", "n" }, "<M-C-S-F7>", function()
   vim.g.cmp_active = not vim.g.cmp_active
 end, { desc = "toggle cmp" })
 

@@ -64,7 +64,9 @@
 #IfWinActive
 
 #IfWinActive, ahk_exe nvy.exe
-  ^i::Send, ^{F15}
+  ^BS::Send, ^{w}
+  ^i::Send, !^+{F6}
+  ^;::Send, !^+{F7}
 #IfWinActive
 
 #IfWinNotActive, ahk_exe WindowsTerminal.exe

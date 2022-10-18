@@ -65,6 +65,11 @@ vim.keymap.set({ "n", "t" }, "<M-S-:>", function()
   lazygit:toggle()
 end, { silent = true })
 
+-- for wt,alacritty
+vim.keymap.set({ "n", "t" }, "<M-:>", function()
+  lazygit:toggle()
+end, { silent = true })
+
 vim.api.nvim_create_user_command("Lua", function()
   vim.cmd([[3TermExec cmd="lua %"]])
 end, {})

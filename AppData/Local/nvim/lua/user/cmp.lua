@@ -60,6 +60,7 @@ cmp.setup({
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
+    ["<M-C-S-F5>"] = cmp.mapping.complete(), -- mapped to control+space in terminal
     ["<C-e>"] = cmp.mapping.abort(),
 
     -- ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
@@ -67,7 +68,7 @@ cmp.setup({
     -- Set `select` to `false` to only confirm explicitly selected items.
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
 
-    ["<C-F15>"] = cmp.mapping(function(fallback)
+    ["<M-C-S-F6>"] = cmp.mapping(function(fallback) -- mapped to control+i in ahk,terminal
       if cmp.visible() then
         return cmp.complete_common_string()
       end

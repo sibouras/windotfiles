@@ -751,7 +751,12 @@ working_directory: /users/marzouk
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
-  - { key: Back, mods: Control, chars: "\x1b\x7f" }
+  # - { key: Back, mods: Control, chars: "\x1b\x7f" } # alt+backspace
+  - { key: Back, mods: Control, chars: "\u0017" } # <C-w>
+  - { key: Space, mods: Control, chars: "\x1b[15;8~" } # <M-C-S-F5>
+  - { key: I, mods: Control, chars: "\x1b[17;8~" } # <M-C-S-F6>
+  - { key: Semicolon, mods: Control, chars: "\x1b[18;8~" } # <M-C-S-F7>
+
   - { key: Backslash, mods: Control, action: CreateNewWindow }
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
