@@ -16,9 +16,10 @@ dashboard.section.buttons.val = {
   dashboard.button("e", "  New file", ":enew <BAR> startinsert<CR>"),
   dashboard.button("f", "  Find file", ":Telescope find_files<CR>"),
   dashboard.button("p", "  Find project", ":Telescope workspaces<CR>"),
-  dashboard.button("r", "  Recently used files", ":Telescope oldfiles<CR>"),
+  dashboard.button("o", "  old files", ":Telescope oldfiles<CR>"),
   dashboard.button("w", "ﴬ  Wiki", ":WorkspacesOpen docuwiki<CR>"),
   dashboard.button("c", "  Configuration", ":WorkspacesOpen nvim<CR>"),
+  dashboard.button("s", "龍 Startup time", ":StartupTime<CR>"),
   dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
 }
 

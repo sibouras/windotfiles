@@ -76,15 +76,15 @@ end, {})
 
 local map = vim.keymap.set
 
-map({ "n", "t" }, "<M-1>", "<Cmd>1ToggleTerm direction=float<CR>")
-map({ "n", "t" }, "<M-2>", "<Cmd>2ToggleTerm size=60 direction=vertical<CR>")
-map({ "n", "t" }, "<M-3>", function()
+map({ "n", "t" }, "<F1>", "<Cmd>1ToggleTerm direction=float<CR>")
+map({ "n", "t" }, "<F2>", "<Cmd>2ToggleTerm size=60 direction=vertical<CR>")
+map({ "n", "t" }, "<F3>", function()
   vim.cmd("3ToggleTerm size=13 direction=horizontal")
   vim.cmd("set cmdheight=1")
 end)
 
 -- Code Runner
-local runners = { lua = "lua", javascript = "node", typescript = "tsx" }
+local runners = { lua = "lua", javascript = "node", typescript = "tsx", go = "go run" }
 
 local function run(n)
   local ftype = vim.bo.filetype
@@ -99,12 +99,12 @@ local function run(n)
 end
 
 map({ "n", "i" }, "<M-'>", run)
-map("n", "<M-S-!>", function()
+map("n", "<S-F1>", function()
   run(1)
 end)
-map("n", "<M-S-@>", function()
+map("n", "<S-F2>", function()
   run(2)
 end)
-map("n", "<M-S-#>", function()
+map("n", "<S-F3>", function()
   run(3)
 end)

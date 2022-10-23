@@ -37,6 +37,7 @@ local options = {
   scrolloff = 5, -- is one of my fav
   sidescrolloff = 10,
   foldlevelstart = 99,
+  keywordprg = ":help", -- default is :Man(crashes on windows)
   grepprg = "rg --vimgrep --smart-case", -- Replacing grep with rg
   grepformat = "%f:%l:%c:%m",
   -- listchars = { eol = "↴", extends = "›", precedes = "‹", nbsp = "␣", trail = "·", tab = "> " },

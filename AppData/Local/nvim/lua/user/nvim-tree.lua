@@ -44,7 +44,7 @@ nvim_tree.setup({
   view = {
     width = 30,
     hide_root_folder = false,
-    side = "left",
+    side = "right",
     mappings = {
       custom_only = false,
       list = {
@@ -53,17 +53,36 @@ nvim_tree.setup({
         { key = "v", action = "vsplit" },
         { key = "s", action = "" },
         { key = "o", action = "system_open" },
+        {
+          key = "p",
+          action = "prev_win",
+          action_cb = function()
+            vim.cmd.wincmd("p")
+          end,
+        },
       },
     },
     number = false,
     relativenumber = false,
+    -- float = {
+    --   enable = false,
+    --   quit_on_focus_loss = true,
+    --   open_win_config = {
+    --     relative = "editor",
+    --     border = "rounded",
+    --     width = 30,
+    --     height = 30,
+    --     row = 1,
+    --     col = 1,
+    --   },
+    -- },
     float = {
       enable = true,
       open_win_config = function()
         local screen_w = vim.opt.columns:get()
         local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
-        local _width = screen_w * 0.7
-        local _height = screen_h * 0.9
+        local _width = screen_w * 0.5
+        local _height = screen_h * 0.8
         local width = math.floor(_width)
         local height = math.floor(_height)
         local center_y = ((vim.opt.lines:get() - _height) / 2) - vim.opt.cmdheight:get()

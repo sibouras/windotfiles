@@ -150,8 +150,8 @@ mason_lspconfig.setup_handlers({
     lspconfig.emmet_ls.setup({
       on_attach = opts.on_attach,
       capabilities = opts.capabilities,
-      -- filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
-      filetypes = { "html", "css", "sass", "scss", "less" },
+      filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+      -- filetypes = { "html", "css", "sass", "scss", "less" },
     })
   end,
 
@@ -190,6 +190,14 @@ mason_lspconfig.setup_handlers({
         ".eslintrc.json",
         "eslint.config.js"
       ),
+    })
+  end,
+
+  ["gopls"] = function()
+    lspconfig.gopls.setup({
+      on_attach = opts.on_attach,
+      capabilities = opts.capabilities,
+      cmd = { "gopls.cmd" },
     })
   end,
 })
