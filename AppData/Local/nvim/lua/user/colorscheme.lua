@@ -1,24 +1,6 @@
-require("tokyonight").setup({
-  style = "night",
-  styles = {
-    comments = { italic = false },
-    keywords = { italic = false },
-  },
-  sidebars = { "lspinfo", "null-ls-info" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
-  on_colors = function(colors)
-    colors.bg = "#16161e"
-    colors.bg_dark = "#121218"
-    colors.bg_popup = "#121218"
-    colors.bg_sidebar = "#121218"
-    colors.bg_highlight = "#24283b"
-    colors.bg_statusline = "#0b0b0f"
-  end,
-  on_highlights = function(hl, colors)
-    hl.TabLineSel = { bg = "#1A2336" }
-  end,
-})
+require("user.catppuccin")
 
-local colorscheme = "tokyonight"
+local colorscheme = "catppuccin"
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
