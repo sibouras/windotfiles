@@ -3,6 +3,7 @@ RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & r::ToggleWindowVisibility("Alacritty")
 RAlt & w::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
+RAlt & g::ToggleWindowVisibility("ahk_exe Glasswire.exe")
 
 ToggleWindowVisibility(windowClass) {
   IfWinExist, %windowClass%
@@ -152,4 +153,22 @@ return
 ;   }
 ;   else
 ;     WinActivate, %firefoxClass%
+; return
+
+; f2::
+;   DetectHiddenWindows, On
+;   window = ahk_exe notepad.exe
+;   IfWinExist, %window%
+;   {
+;     IfWinActive, %window%
+;     {
+;       WinHide, %window%
+;       Send, !{Esc}
+;     }
+;     else
+;     {
+;       WinShow, %window%
+;       WinActivate, %window%
+;     }
+;   }
 ; return

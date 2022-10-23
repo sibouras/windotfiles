@@ -6,7 +6,6 @@ if CapsLockState = D
   SetCapsLockState, AlwaysOff
 else
   SetCapsLockState, AlwaysOn
-KeyWait, F8
 return
 
 CapsLock::Send, {ESC}
@@ -45,7 +44,6 @@ CapsLock & n:: Send, ^{BS}
 CapsLock & z:: Run nircmd.exe mutesysvolume 2 microphone
 CapsLock & a:: Send, ^a
 CapsLock & y:: Send, ^y
-CapsLock & w:: Send, ^{Right}
 CapsLock & b:: Send, ^{Left}
 CapsLock & c:: Send, ^{c}
 CapsLock & v:: Send, ^{v}
@@ -54,8 +52,9 @@ CapsLock & d:: Ctrl
 CapsLock & f:: Send, {Esc}
 CapsLock & [:: Send, {Esc}
 CapsLock & ]:: Send, {insert}
-CapsLock & 9:: Send, #^{Left}
-CapsLock & 0:: Send, #^{Right}
+
+CapsLock & 9:: ControlClick,, A,, WheelUp
+CapsLock & 0:: ControlClick,, A,, WheelDown
 
 CapsLock & F2:: Send, {Volume_Down}
 CapsLock & F3:: Send, {Volume_Up}
@@ -65,8 +64,10 @@ CapsLock & F6:: Send, {Media_Stop}
 CapsLock & F7:: Send, {Media_Prev}
 CapsLock & F8:: Send, {Media_Next}
 
+CapsLock & t::Send, ^{t}
 CapsLock & r::Send, ^{Tab}
 CapsLock & e::Send, ^+{Tab}
+CapsLock & w:: Send, ^{w}
 CapsLock & q::
   if GetKeyState("alt") = 0 {
     Send, ^w
@@ -83,43 +84,35 @@ CapsLock & m::
   If Key = f
   {
     if getKeyState("alt") = 0
-      Run, mpv.exe
+      Run, mpv.exe --no-border
     else {
-      opts := "keep_session-auto_save=no,keep_session-auto_load=no"
-      Run, mpv.exe --script-opts=%opts% %clipboard%
+      ; opts := "keep_session-auto_save=no,keep_session-auto_load=no"
+      ; Run, mpv.exe --script-opts=%opts% %clipboard%
+      Run, mpv.exe --no-border %clipboard%
     }
   }
   else if Key = s
-  {
     Run firefox.exe
-  }
   else if Key = d
-  {
     Run code.exe
-  }
   else if Key = v
   {
     Run nvy.exe
     WinWait, Nvy,, 1
-    if ErrorLevel
-    {
+    if ErrorLevel {
       MsgBox, WinWait timed out.
       return
     }
-    else
+    else {
       WinActivate, Nvy
-    WinMove, Nvy,, 260, 47, 1400, 985
+      ; sleep 400
+      ; WinMove, Nvy,, 260, 47, 1400, 985
+    }
   }
   else if Key = w
-  {
     Run wt.exe
-  }
   else if Key = e
-  {
     Run explorer.exe
-  }
   else if Key = r
-  {
     RunWait, alacritty.exe, , Min
-  }
 return

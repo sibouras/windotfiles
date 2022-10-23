@@ -14,5 +14,4 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 #Include %A_ScriptDir%\google-selection.ahk
 
 !+r::reload
-!+a::suspend
 !+q::exitapp
