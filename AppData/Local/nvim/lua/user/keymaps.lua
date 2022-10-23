@@ -224,12 +224,6 @@ map("n", "<leader>tn", "<C-w>T")
 -- map("n", "<leader>tk", ":tab drop $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>:Tz nvim<CR>")
 map("n", "<leader>tk", ":tab drop $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>")
 
-vim.cmd([[
-iab <expr> t/ strftime('TODO(' . '%Y-%m-%d):')
-" Open help and man pages in a tab:
-cab help tab help
-]])
-
 -- Quickly change font size in GUI
 vim.cmd([[
 command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
@@ -354,7 +348,23 @@ vim.api.nvim_create_user_command("Json", function()
   vim.cmd([[ enew | norm! "+p ]])
   vim.cmd([[ setlocal filetype=json noswapfile ]])
   vim.cmd([[ nnoremap <silent> <buffer> q :bw!<CR> ]])
-end, { force = true })
+end, { force = true, desc = "paste JSON in new buffer" })
+
+vim.api.nvim_create_user_command("Mdn", function(cmd_opts)
+  local url = "https://mdn.io/"
+  vim.cmd(":silent !start " .. url .. unpack(cmd_opts.fargs))
+end, { nargs = 1, desc = "search in mdn" })
+
+----------------------------------
+---------- abbreviations ---------
+----------------------------------
+
+vim.cmd([[
+iab <expr> t/ strftime('TODO(' . '%Y-%m-%d):')
+" Open help and man pages in a tab:
+cab he tab help
+cab mdn Mdn
+]])
 
 -----------------------------------
 ------------- Plugins -------------
