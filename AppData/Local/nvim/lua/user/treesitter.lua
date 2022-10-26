@@ -4,6 +4,10 @@ require("nvim-treesitter.install").compilers = { "clang", "gcc" }
 
 require("hlargs").setup({ color = "#e0af68" })
 
+-- use html parser in ejs files
+local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
+ft_to_parser.ejs = "html"
+
 configs.setup({
   ensure_installed = {
     "html",

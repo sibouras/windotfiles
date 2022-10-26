@@ -37,12 +37,18 @@ require("catppuccin").setup({
   highlight_overrides = {
     mocha = function(mocha)
       return {
-        Comment = { fg = "#767a96" },
+        -- NormalFloat = { bg = mocha.mantle },
+        LspInfoBorder = { fg = mocha.blue },
         Pmenu = { bg = "#1a1a2b" },
+        Comment = { fg = "#767a96" },
+        ["@field.lua"] = { fg = mocha.teal },
+        ["@constructor.lua"] = { fg = mocha.lavender }, -- For constructor calls and definitions: = { } in Lua, and Java constructors.
+        -- remove italics
         ErrorMsg = { fg = mocha.red, style = { "bold" } }, -- error messages on the command line
         ["@parameter"] = { fg = mocha.maroon, style = {} }, -- For parameters of a function.
         ["@text.literal"] = { fg = mocha.teal, style = {} }, -- used for inline code in markdown and for doc in python (""")
         ["@text.uri"] = { fg = mocha.rosewater, style = {} }, -- urls, links and emails
+        ["@tag.attribute"] = { fg = mocha.teal, style = {} }, -- Tags like html tag names.
       }
     end,
   },

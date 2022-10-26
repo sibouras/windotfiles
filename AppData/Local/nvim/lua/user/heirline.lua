@@ -445,7 +445,7 @@ local Navic = {
           -- escape `%`s (elixir) and buggy default separators
           provider = d.name:gsub("%%", "%%%%"):gsub("%s*->%s*", ""),
           -- highlight icon only or location name as well
-          hl = self.type_hl[d.type],
+          -- hl = self.type_hl[d.type],
 
           on_click = {
             -- pass the encoded position through minwid

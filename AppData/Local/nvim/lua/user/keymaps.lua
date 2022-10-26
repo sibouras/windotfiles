@@ -28,8 +28,8 @@ map("i", "<C-f>", "<C-k>")
 map("n", "<M-F4>", ":qa!<CR>")
 
 -- Navigate buffers
-map("i", "<M-w>", "<esc><C-^>")
-map("n", "<M-w>", "<C-^>")
+map("i", "<M-w>", "<C-o>:keepjumps b#<CR>")
+map("n", "<M-w>", ":keepjumps b#<CR>")
 map("n", "<M-d>", ":BDelete! this<CR>")
 map("n", "<M-D>", ":BDelete hidden<CR>")
 map("n", "]b", ":bnext<CR>")
@@ -84,6 +84,29 @@ end
 vim.cmd([[
  nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
  nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+]])
+
+-- When the :keepjumps command modifier is used, jumps are not stored in the jumplist.
+map("n", "{", ":execute 'keepjumps norm! ' . v:count1 . '{'<CR>")
+map("n", "}", ":execute 'keepjumps norm! ' . v:count1 . '}'<CR>")
+map("n", "(", ":execute 'keepjumps norm! ' . v:count1 . '('<CR>")
+map("n", ")", ":execute 'keepjumps norm! ' . v:count1 . ')'<CR>")
+
+-- scroll with H L and don't store them in jumplist
+vim.cmd([[
+function! s:precise_HL(top=0) abort
+  let save_so = &so
+  let &so=0
+  if a:top
+    keepjumps normal! H
+  else
+    keepjumps normal! L
+  endif
+  let &so=save_so
+endfunction
+nnoremap H <cmd>call <sid>precise_HL(1)<CR>
+nnoremap L <cmd>call <sid>precise_HL(0)<CR>
+nnoremap M <cmd>keepjumps normal! M<CR>
 ]])
 
 -- Keep the cursor in place while joining lines
@@ -255,12 +278,6 @@ map("t", "<C-q>", [[<C-\><C-n>:call ToggleZoom(v:true)<CR>i]])
 
 -- search for regex pattern
 -- map("n", "<M-l>", "<Cmd>call search('[([{<]')<CR>")
-
--- When the :keepjumps command modifier is used, jumps are not stored in the jumplist.
-map("n", "{", ":execute 'keepjumps norm! ' . v:count1 . '{'<CR>")
-map("n", "}", ":execute 'keepjumps norm! ' . v:count1 . '}'<CR>")
-map("n", "(", ":execute 'keepjumps norm! ' . v:count1 . '('<CR>")
-map("n", ")", ":execute 'keepjumps norm! ' . v:count1 . ')'<CR>")
 
 -- open current file in explorer
 map("n", "<leader>fl", ":silent !start %:p:h<CR>")

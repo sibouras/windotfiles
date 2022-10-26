@@ -34,7 +34,7 @@ local options = {
   numberwidth = 4, -- set number column width to 2 {default 4}
   signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
   wrap = false, -- display lines as one long line
-  scrolloff = 5, -- is one of my fav
+  scrolloff = 4,
   sidescrolloff = 10,
   foldlevelstart = 99,
   keywordprg = ":help", -- default is :Man(crashes on windows)
@@ -42,7 +42,7 @@ local options = {
   grepformat = "%f:%l:%c:%m",
   -- listchars = { eol = "↴", extends = "›", precedes = "‹", nbsp = "␣", trail = "·", tab = "> " },
   -- listchars = "tab:¦ ,eol:¬,trail:⋅,extends:❯,precedes:❮",
-  listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←,eol:↴",
+  listchars = "tab:▸ ,nbsp:+,trail:·,extends:→,precedes:←,eol:↲",
   -- sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,globals",
   guifont = "JetbrainsMono Nerd Font:h16", -- the font used in graphical neovim applications
   -- guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:Cursor/lCursor", -- this makes changing Cursor highlight work

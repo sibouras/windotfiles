@@ -1,5 +1,8 @@
 local M = {}
 
+-- :LspInfo border
+require("lspconfig.ui.windows").default_options.border = "single"
+
 -- TODO: backfill this to template
 M.setup = function()
   local signs = {

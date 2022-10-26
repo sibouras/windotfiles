@@ -54,10 +54,17 @@ nvim_tree.setup({
         { key = "s", action = "" },
         { key = "o", action = "system_open" },
         {
-          key = "p",
+          key = "e",
           action = "prev_win",
           action_cb = function()
             vim.cmd.wincmd("p")
+          end,
+        },
+        {
+          key = "i",
+          action = "print_the_node_path",
+          action_cb = function(node)
+            print(node.absolute_path)
           end,
         },
       },
