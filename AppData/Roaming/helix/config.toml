@@ -24,11 +24,12 @@ center = []
 right = ["position", "selections", "file-encoding", "file-line-ending", "file-type"]
 
 [keys.normal]
-"C-[" = ":config-open"
-"C-]" = ":config-reload"
+"\\" = {c = ":config-open", r = ":config-reload"}
 A-d = ":bc"
 A-F = ":format"
 A-s = ":w"
+A-w = "goto_last_accessed_file"
+C-A-S-F6 = "jump_forward"
 C-i = "jump_forward"
 C-o = "jump_backward"
 "C-/" = "toggle_comments"
@@ -37,13 +38,19 @@ C-c = "no_op" # turn off the default comment functionality
 "K" = "hover"
 "A-k" = "keep_selections"
 
+# Muscle memory
+D = ["extend_to_line_end", "delete_selection"]
+Z = { Z = ":wq", Q = ":q!" }
+G = "goto_file_end"
+C = ["collapse_selection", "extend_to_line_end", "change_selection"]
+V = ["select_mode", "extend_to_line_bounds"]
+"{" = ["goto_prev_paragraph", "collapse_selection"]
+"}" = ["goto_next_paragraph", "collapse_selection"]
+
 # C-h = "select_prev_sibling"
 # C-j = "shrink_selection"
 # C-k = "expand_selection"
 # C-l = "select_next_sibling"
-
-"{" = ["goto_prev_paragraph", "collapse_selection"]
-"}" = ["goto_next_paragraph", "collapse_selection"]
 
 H = "extend_char_left"
 # J = "extend_line_down"
@@ -51,8 +58,12 @@ H = "extend_char_left"
 L = "extend_char_right"
 
 [keys.insert]
+C-space = "completion"
+A-C-S-F5 = "completion"
 C-backspace = "delete_word_backward"
+A-C-S-F6 = "jump_forward"
 C-i = "jump_forward"
 C-o = "jump_backward"
 "C-/" = "toggle_comments"
 A-s = ["normal_mode", ":w"]
+A-w = "goto_last_accessed_file"
