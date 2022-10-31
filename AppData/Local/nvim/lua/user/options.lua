@@ -34,6 +34,7 @@ local options = {
   numberwidth = 4, -- set number column width to 2 {default 4}
   signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
   wrap = false, -- display lines as one long line
+  linebreak = true,
   scrolloff = 4,
   sidescrolloff = 10,
   foldlevelstart = 99,

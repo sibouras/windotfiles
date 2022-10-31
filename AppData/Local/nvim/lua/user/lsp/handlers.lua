@@ -55,15 +55,7 @@ map("n", "[d", vim.diagnostic.goto_prev, opts)
 map("n", "]d", vim.diagnostic.goto_next, opts)
 map("n", "<leader>dq", vim.diagnostic.setloclist, opts)
 map("n", "<M-S-f>", function()
-  vim.lsp.buf.format({
-    async = true,
-    filter = function(client)
-      if client.name == "sumneko_lua" or client.name == "tsserver" or client.name == "html" then
-        return false
-      end
-      return true
-    end,
-  })
+  vim.lsp.buf.format({ async = true })
 end, opts)
 map("v", "<M-S-f>", vim.lsp.buf.range_formatting, opts)
 map("n", "<leader>li", "<Cmd>LspInfo<CR>")
@@ -114,6 +106,10 @@ M.on_attach = function(client, bufnr)
   -- attach nvim-navic
   if client.server_capabilities.documentSymbolProvider then
     navic.attach(client, bufnr)
+  end
+
+  if client.name == "sumneko_lua" or client.name == "tsserver" or client.name == "html" then
+    client.server_capabilities.documentFormattingProvider = false
   end
 
   lsp_keymaps(bufnr)

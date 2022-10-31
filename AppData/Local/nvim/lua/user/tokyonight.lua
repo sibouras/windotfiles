@@ -11,7 +11,7 @@ require("tokyonight").setup({
     colors.bg_popup = "#121218"
     colors.bg_sidebar = "#121218"
     colors.bg_highlight = "#24283b"
-    colors.bg_statusline = "#0b0b0f"
+    colors.bg_statusline = "#121218"
   end,
   on_highlights = function(hl, colors)
     hl.TabLineSel = { bg = "#1A2336" }

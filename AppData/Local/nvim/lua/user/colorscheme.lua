@@ -1,6 +1,6 @@
-require("user.catppuccin")
+require("user.tokyonight")
 
-local colorscheme = "catppuccin"
+local colorscheme = "tokyonight"
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then

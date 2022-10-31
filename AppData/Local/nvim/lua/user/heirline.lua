@@ -331,6 +331,13 @@ local LSPActive = {
   hl = { fg = "#cfc9c2", bold = false },
 }
 
+local LSPSimple = {
+  condition = conditions.lsp_attached,
+  update = { "LspAttach", "LspDetach", "BufWinEnter" },
+  provider = " [LSP]",
+  hl = { fg = "gray" },
+}
+
 --> Treesitter
 
 local ts_avail, ts = pcall(require, "nvim-treesitter.parsers")
@@ -648,7 +655,7 @@ local DefaultStatusline = {
   -- },
   Diagnostics,
   Align,
-  utils.make_flexible_component(3, { LSPActive, Space }, { provider = "" }),
+  utils.make_flexible_component(3, { LSPSimple, Space }, { provider = "" }),
   -- TreesitterActive,
   TSHl,
   FileFormat,

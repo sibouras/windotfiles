@@ -28,3 +28,13 @@ harpoon.setup({
 -- end
 --
 -- telescope.load_extension("harpoon")
+
+local map = vim.keymap.set
+local opts = { silent = true }
+
+map("n", "<leader>ha", ":lua require('harpoon.mark').add_file()<CR>", opts)
+map("n", "<M-f>", ":lua require('harpoon.ui').toggle_quick_menu()<CR>", opts)
+-- map("n", "<leader>hc", ":lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>")
+for i = 1, 9 do
+  map("n", i .. "<leader>", ":lua require('harpoon.ui').nav_file(" .. i .. ")<CR>", opts)
+end

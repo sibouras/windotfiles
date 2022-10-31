@@ -27,11 +27,18 @@ map("i", "<C-f>", "<C-k>")
 -- Quit vim
 map("n", "<M-F4>", ":qa!<CR>")
 
--- Navigate buffers
+--> Navigate buffers
+-- from: https://sharats.me/posts/automating-the-vim-workplace/#switching-to-alternate-buffer
+-- My remapping of <C-^>. If there is no alternate file, and there's no count
+-- given, then switch to next file. We use `bufloaded` to check for alternate
+-- buffer presence. This will ignore deleted buffers, as intended. To get
+-- default behaviour, use `bufexists` in it's place.
+map("n", "<M-w>", ":<C-u>exe v:count ? v:count . 'b' : 'keepjumps b' . (bufloaded(0) ? '#' : 'n')<CR>")
+-- map("n", "<M-w>", ":keepjumps b#<CR>")
 map("i", "<M-w>", "<C-o>:keepjumps b#<CR>")
-map("n", "<M-w>", ":keepjumps b#<CR>")
-map("n", "<M-d>", ":BDelete! this<CR>")
-map("n", "<M-D>", ":BDelete hidden<CR>")
+map("n", "<M-d>", ":Bdelete<CR>")
+map("n", "<M-D>", ":%bd <bar> e# <bar> bd#<CR>", { desc = "close all but current buffer" })
+map("n", "<M-c>", ":Bwipeout<CR>")
 map("n", "]b", ":bnext<CR>")
 map("n", "[b", ":bprevious<CR>")
 map("n", "<M-.>", ":bnext<CR>")
@@ -109,6 +116,10 @@ nnoremap L <cmd>call <sid>precise_HL(0)<CR>
 nnoremap M <cmd>keepjumps normal! M<CR>
 ]])
 
+-- center when scrolling
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+
 -- Keep the cursor in place while joining lines
 map("n", "J", "mzJ`z")
 
@@ -180,6 +191,7 @@ map("n", "]q", ":cnext<CR>")
 
 -- yank to system clipboard
 map({ "n", "v" }, "<M-y>", '"+y')
+map("n", "<M-Y>", '"+y$')
 map({ "n", "v" }, "<M-p>", '"+p')
 map("i", "<M-p>", "<C-r>+")
 map("c", "<M-p>", "<C-r>+", { silent = false })
@@ -196,6 +208,9 @@ map("n", "<leader>D", '"_D')
 -- -- x and X won't alter the register
 -- map("n", "x", '"_x')
 -- map("n", "X", '"_X')
+
+-- unexpected behavior when pasting above highlighted text
+map("v", "<leader>p", '"_dP')
 
 -- change directory to the file being edited and print the directory after changing
 map("n", "<leader>cd", ":cd %:p:h<CR>:pwd<CR>")
@@ -220,9 +235,6 @@ map("n", "<leader>me", ":<c-u><c-r><c-r>='let @'. v:register .' = '. string(getr
 -- Stay in indent mode
 map("v", "<", "<gv")
 map("v", ">", ">gv")
-
--- unexpected behavior when pasting above highlighted text(broken mapping)
--- map("v", "p", '"_dP')
 
 -- remove highlight
 -- map("n", "<esc>", ":noh<cr>")
@@ -372,6 +384,10 @@ vim.api.nvim_create_user_command("Mdn", function(cmd_opts)
   vim.cmd(":silent !start " .. url .. unpack(cmd_opts.fargs))
 end, { nargs = 1, desc = "search in mdn" })
 
+vim.api.nvim_create_user_command("Bonly", function()
+  vim.cmd("silent! execute '%bd|e#|bd#'")
+end, { desc = "delete all but current buffer" })
+
 ----------------------------------
 ---------- abbreviations ---------
 ----------------------------------
@@ -425,7 +441,7 @@ map("n", "<leader>fk", ":Telescope keymaps<CR>")
 map("n", "<leader>f;", ":Telescope command_history<CR>")
 map("n", "<leader>f/", ":Telescope search_history<CR>")
 map("n", "<leader>/", ":Telescope current_buffer_fuzzy_find<CR>")
-map("n", "<leader>p", ":Telescope workspaces<CR>")
+map("n", "<leader>fp", ":Telescope workspaces<CR>")
 map("n", "<leader>lr", ":Telescope lsp_references<CR>")
 map("n", "<leader>ld", ":Telescope diagnostics<CR>")
 map("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>")
@@ -469,16 +485,6 @@ map("x", "<M-S-Left>", "<Plug>GoVSDLeft", { noremap = false })
 map("x", "<M-S-Down>", "<Plug>GoVSDDown", { noremap = false })
 map("x", "<M-S-Up>", "<Plug>GoVSDUp", { noremap = false })
 map("x", "<M-S-Right>", "<Plug>GoVSDRight", { noremap = false })
-
----------------------------------------------------------------
--- => harpoon.nvim
----------------------------------------------------------------
-map("n", "<leader>ha", ":lua require('harpoon.mark').add_file()<CR>")
-map("n", "<M-f>", ":lua require('harpoon.ui').toggle_quick_menu()<CR>")
--- map("n", "<leader>hc", ":lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>")
-for i = 1, 9 do
-  map("n", i .. "<leader>", ":lua require('harpoon.ui').nav_file(" .. i .. ")<CR>")
-end
 
 --------------------------------------------------------------
 -- => sessions.nvim
