@@ -654,22 +654,33 @@ def rmp [] {
 
 # cp trough pipe to same dir
 def cpp [
-  to: string#target directory
+  to: string # target directory
   #
-  #Example
-  #ls *.txt | first 5 | cp-pipe ~/temp
+  # Example
+  # ls *.txt | first 5 | cp-pipe ~/temp
 ] {
   get name | each { |file| echo $"copying ($file)..." ; cp -r $file ($to | path expand) }
 }
 
 # mv trough pipe to same dir
 def mvp [
-  to: string#target directory
+  to: string # target directory
   #
-  #Example
-  #ls *.txt | mvp ~/temp
+  # Example
+  # ls *.txt | mvp ~/temp
 ] {
   get name | each { |file| echo $"moving ($file)..." ; mv $file ($to | path expand) }
+}
+
+# rename a file
+def mvr [
+  path: string # e.g: dir/subdir/file.txt
+  moveto: string # e.g: %/file2.txt
+  #
+  # Example
+  # mvr dir/subdir/file.txt %/file2.txt
+] {
+  mv $path ($moveto | str replace % ($path | path dirname))
 }
 
 # last n elements in history with highlight(default 100)
@@ -703,6 +714,13 @@ def tr [
     | get responseData
     | get translatedText
   }
+}
+
+def tolink [name: string] {
+  let url = $in
+  let pre = "\e]8;;"
+  let sp = "\e\\"
+  $"($pre)($url)($sp)($name)($pre)($sp)"
 }
 
 # go up n directories
