@@ -23,17 +23,7 @@ return {
     end, {}),
   }),
   s({ trig = "im", dscr = "import" }, fmt("import {} from '{}'", { i(2, "foo"), i(1) })),
-  s(
-    { trig = "f", dscr = "arrow function" },
-    fmt(
-      [[
-        ({}) => {{
-          {}
-        }}
-      ]],
-      { i(1), i(2) }
-    )
-  ),
+  s({ trig = "f", dscr = "arrow function" }, fmt("({}) => {{\n\t{}\n}}", { i(1), i(2) })),
   s(
     { trig = "np", dscr = "new Promise" },
     fmt(
