@@ -57,7 +57,7 @@ map("n", "<leader>dq", vim.diagnostic.setloclist, opts)
 map("n", "<M-S-f>", function()
   vim.lsp.buf.format({ async = true })
 end, opts)
-map("v", "<M-S-f>", vim.lsp.buf.range_formatting, opts)
+-- map("v", "<M-S-f>", vim.lsp.buf.range_formatting, opts) -- deprecated
 map("n", "<leader>li", "<Cmd>LspInfo<CR>")
 map("n", "<leader>lm", "<Cmd>Mason<CR>")
 map("n", "<leader>ln", "<Cmd>NullLsInfo<CR>")

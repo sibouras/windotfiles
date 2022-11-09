@@ -18,6 +18,7 @@ local options = {
   smartindent = true, -- make indenting smarter again
   splitbelow = true, -- force all horizontal splits to go below current window
   splitright = true, -- force all vertical splits to go to the right of current window
+  splitkeep = "screen", -- Keep the text on the same screen line.
   termguicolors = true, -- set term gui colors (most terminals support this)
   timeoutlen = 400, -- time to wait for a mapped sequence to complete (in milliseconds)
   updatetime = 300, -- faster completion (4000ms default)
@@ -61,6 +62,7 @@ vim.opt.path:append("**") -- find files recursively
 -- view: When you jump around, or switch buffers with ctrl-^ the viewport is
 -- restored instead of resetting/recentering vertically.
 vim.opt.jumpoptions:append("stack,view") -- stack:browser-like jumplist behavior
+vim.opt.diffopt:append("linematch:60")
 
 -- prettier folding
 function _G.MyFoldText()
