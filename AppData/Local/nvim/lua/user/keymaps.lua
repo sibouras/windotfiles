@@ -99,21 +99,26 @@ map("n", "}", ":execute 'keepjumps norm! ' . v:count1 . '}'<CR>")
 map("n", "(", ":execute 'keepjumps norm! ' . v:count1 . '('<CR>")
 map("n", ")", ":execute 'keepjumps norm! ' . v:count1 . ')'<CR>")
 
--- scroll with H L and don't store them in jumplist
+-- scroll with <C-j> <C-k>
+-- from: https://vi.stackexchange.com/questions/10031/scroll-a-quarter-25-of-the-screen-up-or-down
 vim.cmd([[
-function! s:precise_HL(top=0) abort
-  let save_so = &so
-  let &so=0
-  if a:top
-    keepjumps normal! H
-  else
-    keepjumps normal! L
+function! ScrollGolden(move)
+  let height=winheight(0)
+  if a:move == 'up'
+    let prep='H'
+    " let key="^Y"
+    let key='gk'
+    let post='zt'
+  elseif a:move == 'down'
+    let prep='L'
+    " let key="^E"
+    let key='gj'
+    let post='zb'
   endif
-  let &so=save_so
+  execute 'keepjumps normal! ' . prep . float2nr(round(height*0.12)) . key . post
 endfunction
-nnoremap H <cmd>call <sid>precise_HL(1)<CR>
-nnoremap L <cmd>call <sid>precise_HL(0)<CR>
-nnoremap M <cmd>keepjumps normal! M<CR>
+nnoremap <silent> <C-k> :call ScrollGolden('up')<CR>
+nnoremap <silent> <C-j> :call ScrollGolden('down')<CR>
 ]])
 
 -- center when scrolling
