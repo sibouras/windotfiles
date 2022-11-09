@@ -48,10 +48,10 @@ cmp.setup({
       luasnip.lsp_expand(args.body) -- For `luasnip` users.
     end,
   },
-  performance = {
-    debounce = 80,
-    throttle = 40,
-  },
+  -- performance = {
+  --   debounce = 80,
+  --   throttle = 40,
+  -- },
   mapping = cmp.mapping.preset.insert({
     ["<Up>"] = cmp.mapping.select_prev_item(),
     ["<Down>"] = cmp.mapping.select_next_item(),

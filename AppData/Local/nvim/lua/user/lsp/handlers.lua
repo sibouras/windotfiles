@@ -97,6 +97,9 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
+  -- Make omnicomplete use LSP completions
+  -- vim.bo.omnifunc = "v:lua.vim.lsp.omnifunc"
+
   local navic_status_ok, navic = pcall(require, "nvim-navic")
   if not navic_status_ok then
     print("nvim-navic not found")

@@ -45,6 +45,7 @@ map("n", "<M-.>", ":bnext<CR>")
 map("i", "<M-.>", "<Esc>:bnext<CR>")
 map("n", "<M-,>", ":bprevious<CR>")
 map("i", "<M-,>", "<Esc>:bprevious<CR>")
+map("n", "<C-p>", "<Cmd>wincmd p<CR>")
 
 -- Navigate tabs
 -- Number + , to select a tab, i.e. type 1, to select the first tab.
@@ -124,6 +125,10 @@ nnoremap <silent> <C-j> :call ScrollGolden('down')<CR>
 -- center when scrolling
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
+
+-- faster scrolling
+map("n", "<C-e>", "2<C-e>")
+map("n", "<C-y>", "2<C-y>")
 
 -- Keep the cursor in place while joining lines
 map("n", "J", "mzJ`z")
@@ -398,7 +403,8 @@ end, { desc = "delete all but current buffer" })
 ----------------------------------
 
 vim.cmd([[
-iab <expr> t/ strftime('TODO(' . '%Y-%m-%d):')
+iab <expr> t/ strftime('%Y-%m-%d')
+iab <expr> td/ strftime('TODO(' . '%Y-%m-%d):')
 " Open help and man pages in a tab:
 cab he tab help
 cab mdn Mdn
@@ -538,3 +544,9 @@ map("o", "gs", "<cmd>Pounce<CR>") -- s is used by nvim-surround
 -- map("n", "<A-S->>", ":BufferLineMoveNext<CR>")
 -- map("n", "<A-S-<>", ":BufferLineMovePrev<CR>")
 -- map("n", "Q", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>")
+
+---------------------------------------------------------------
+-- => ton/vim-bufsurf
+---------------------------------------------------------------
+-- map("n", "<C-j>", "<Plug>(buf-surf-forward)")
+-- map("n", "<C-k>", "<Plug>(buf-surf-back)")

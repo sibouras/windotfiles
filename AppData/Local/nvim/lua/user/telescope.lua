@@ -95,6 +95,7 @@ telescope.setup({
       follow = true,
     },
     buffers = {
+      initial_mode = "normal",
       ignore_current_buffer = true,
       sort_mru = true,
       previewer = false,
