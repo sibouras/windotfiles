@@ -175,11 +175,13 @@ let dark_theme = {
   shape_record: cyan_bold
   shape_block: blue_bold
   shape_filepath: cyan
+  shape_directory: cyan
   shape_globpattern: cyan_bold
   shape_variable: purple
   shape_flag: blue_bold
   shape_custom: green
   shape_nothing: light_cyan
+  shape_matching_brackets: { attr: u }
 }
 
 # The default config record. This is where much of your global configuration is setup.
@@ -191,7 +193,7 @@ let-env config = {
   color_config: $dark_theme   # if you want a light theme, replace `$dark_theme` to `$light_theme`
   use_grid_icons: true
   footer_mode: "25" # always, never, number_of_rows, auto
-  quick_completions: false  # set this to false to prevent auto-selecting completions when only one remains
+  quick_completions: true  # set this to false to prevent auto-selecting completions when only one remains
   partial_completions: true  # set this to false to prevent partial filling of the prompt
   completion_algorithm: "prefix"  # prefix, fuzzy
   float_precision: 2
@@ -218,6 +220,7 @@ let-env config = {
   }
   show_banner: false # true or false to enable or disable the banner
   show_clickable_links_in_ls: true # true or false to enable or disable clickable links in the ls listing. your terminal has to support links.
+  render_right_prompt_on_last_line: false # true or false to enable or disable right prompt to be rendered on last line of the prompt.
 
   menus: [
       # Configuration for default nushell menus
