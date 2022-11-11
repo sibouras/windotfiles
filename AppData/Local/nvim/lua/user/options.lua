@@ -45,7 +45,7 @@ local options = {
   -- listchars = { eol = "↴", extends = "›", precedes = "‹", nbsp = "␣", trail = "·", tab = "> " },
   -- listchars = "tab:¦ ,eol:¬,trail:⋅,extends:❯,precedes:❮",
   listchars = "tab:▸ ,nbsp:+,trail:·,extends:→,precedes:←,eol:↲",
-  -- sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,globals",
+  sessionoptions = "buffers,curdir,folds,help,localoptions,tabpages,terminal,winsize",
   guifont = "JetbrainsMono Nerd Font:h16", -- the font used in graphical neovim applications
   -- guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:Cursor/lCursor", -- this makes changing Cursor highlight work
 }

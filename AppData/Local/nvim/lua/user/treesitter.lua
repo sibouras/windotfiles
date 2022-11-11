@@ -40,6 +40,11 @@ configs.setup({
         return true
       end
 
+      -- disable for lines > 10000
+      -- if vim.api.nvim_buf_line_count(buf) > 10000 then
+      --   return true
+      -- end
+
       -- disable slow treesitter highlight for large files
       local max_filesize = 100 * 1024 -- 100 KB
       local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -142,6 +147,6 @@ configs.setup({
   },
 })
 
--- folding
-vim.wo.foldmethod = "expr"
-vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+-- folding(slow for large files)
+-- vim.wo.foldmethod = "expr"
+-- vim.wo.foldexpr = "nvim_treesitter#foldexpr()"

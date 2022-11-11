@@ -34,11 +34,20 @@ map("n", "<M-F4>", ":qa!<CR>")
 -- buffer presence. This will ignore deleted buffers, as intended. To get
 -- default behaviour, use `bufexists` in it's place.
 map("n", "<M-w>", ":<C-u>exe v:count ? v:count . 'b' : 'keepjumps b' . (bufloaded(0) ? '#' : 'n')<CR>")
--- map("n", "<M-w>", ":keepjumps b#<CR>")
 map("i", "<M-w>", "<C-o>:keepjumps b#<CR>")
-map("n", "<M-d>", ":Bdelete<CR>")
-map("n", "<M-D>", ":%bd <bar> e# <bar> bd#<CR>", { desc = "close all but current buffer" })
-map("n", "<M-c>", ":Bwipeout<CR>")
+map("n", "<M-d>", function()
+  -- switch back to previous buffer instead of going to next buffer
+  local prevFile = vim.fn.expand("#")
+  require("bufdelete").bufdelete(0)
+  vim.cmd("keepjumps b " .. prevFile)
+end, { desc = "delete buffer" })
+map("n", "<M-c>", function()
+  local prevFile = vim.fn.expand("#")
+  require("bufdelete").bufwipeout(0)
+  vim.cmd("keepjumps b " .. prevFile)
+end, { desc = "wipeout buffer" })
+-- map("n", "<M-D>", ":%bd <bar> e# <bar> bd#<CR>", { desc = "close all but current buffer" })
+map("n", "<M-D>", ":BdeleteHidden<CR>", { desc = "delete hidden buffers" })
 map("n", "]b", ":bnext<CR>")
 map("n", "[b", ":bprevious<CR>")
 map("n", "<M-.>", ":bnext<CR>")
@@ -397,6 +406,16 @@ end, { nargs = 1, desc = "search in mdn" })
 vim.api.nvim_create_user_command("Bonly", function()
   vim.cmd("silent! execute '%bd|e#|bd#'")
 end, { desc = "delete all but current buffer" })
+
+vim.api.nvim_create_user_command("BdeleteHidden", function()
+  local hidden_bufs = vim.tbl_filter(function(bufnr)
+    return vim.fn.getbufinfo(bufnr)[1].hidden == 1
+  end, vim.api.nvim_list_bufs())
+
+  for _, bufnr in ipairs(hidden_bufs) do
+    require("bufdelete").bufdelete(bufnr)
+  end
+end, { bang = true, desc = "delete hidden buffers" })
 
 ----------------------------------
 ---------- abbreviations ---------

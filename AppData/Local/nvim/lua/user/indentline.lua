@@ -59,7 +59,7 @@ vim.g.indent_blankline_use_treesitter = true
 -- vim.opt.listchars:append "eol:↴"
 
 indent_blankline.setup({
-  enabled = true,
+  enabled = false,
   -- show_end_of_line = true,
   -- space_char_blankline = " ",
   show_current_context = true,

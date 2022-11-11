@@ -96,6 +96,7 @@ mason_lspconfig.setup_handlers({
 
   ["tsserver"] = function()
     lspconfig.tsserver.setup({
+      -- autostart = false,
       on_attach = opts.on_attach,
       capabilities = opts.capabilities,
       commands = {
@@ -117,6 +118,14 @@ mason_lspconfig.setup_handlers({
       --     disableSuggestions = true,
       --   },
       -- },
+      -- disable lsp in node_modules
+      root_dir = function(fname)
+        if string.find(fname, "node_modules/") then
+          return
+        end
+        local root_files = { "package.json", "tsconfig.json", "jsconfig.json", ".git" }
+        return lspconfig.util.root_pattern(unpack(root_files))(fname)
+      end,
     })
   end,
 
@@ -127,8 +136,23 @@ mason_lspconfig.setup_handlers({
           -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
           require("document-color").buf_attach(bufnr)
         end
+        -- client.server_capabilities.hoverProvider = false
+        client.server_capabilities.completionProvider.triggerCharacters = {
+          '"',
+          "'",
+          "`",
+          ".",
+          "(",
+          "[",
+          "!",
+          "/",
+          ":",
+        }
       end,
       capabilities = opts.capabilities,
+      -- flags = {
+      --   debounce_text_changes = 500,
+      -- },
       filetypes = { "html", "css", "javascriptreact", "typescriptreact", "vue", "svelte" },
       root_dir = lspconfig.util.root_pattern("tailwind.config.js", "tailwind.config.ts"),
     })
