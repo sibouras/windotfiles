@@ -11,6 +11,8 @@ workspaces.setup({
       "SessionsStop",
       -- delete all buffers (does not save changes)
       "silent %bdelete!",
+      -- clear the jumplist
+      "clearjumps",
     },
 
     -- hooks run after change directory

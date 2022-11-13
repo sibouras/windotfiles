@@ -3,6 +3,8 @@ if not status_ok then
   return
 end
 
+-- example config https://github.com/Gelio/ubuntu-dotfiles/blob/7ed3274c016e7ec1050952b4c5ab0dfa79638fab/install/neovim/stowed/.config/nvim/lua/plugins.lua#L419-L460
+
 vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
 vim.g.indent_blankline_filetype_exclude = {
   "help",

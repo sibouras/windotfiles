@@ -137,3 +137,17 @@ nvim_tree.setup({
     exclude = {},
   },
 })
+
+local map = vim.keymap.set
+
+map("n", "<M-e>", ":NvimTreeToggle<CR>")
+map("n", "<leader>e", ":NvimTreeFindFileToggle<CR>")
+map("n", "<leader>mn", function()
+  require("nvim-tree.api").marks.navigate.next()
+end)
+map("n", "<leader>mp", function()
+  require("nvim-tree.api").marks.navigate.prev()
+end)
+map("n", "<leader>ms", function()
+  require("nvim-tree.api").marks.navigate.select()
+end)

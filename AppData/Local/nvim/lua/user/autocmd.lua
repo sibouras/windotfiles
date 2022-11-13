@@ -82,7 +82,7 @@ vim.api.nvim_create_autocmd("BufNewFile", { pattern = "*/node_modules/*", comman
 
 -- Use 'q' to quit from common plugins
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "qf", "help", "man", "lspinfo", "spectre_panel", "lir", "startuptime", "Redir" },
+  pattern = { "qf", "help", "man", "lspinfo", "spectre_panel", "startuptime", "Redir" },
   callback = function()
     vim.cmd([[
       nnoremap <silent> <buffer> q :close<CR>

@@ -1,3 +1,7 @@
+vim.opt_local.shiftwidth = 2
+vim.opt_local.tabstop = 2
+vim.opt_local.softtabstop = 0
+
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true, buffer = 0 }
 

@@ -263,7 +263,7 @@ map("v", ">", ">gv")
 vim.cmd("cabbr <expr> %% expand('%:h')")
 
 -- type \e  to enter :e /some/path/ on the command line.
-map("n", "<Bslash>e", ":e <C-R>=expand('%:h') . '/'<CR>", { silent = false })
+map("n", "<Bslash>e", ":e <C-R>=expand('%:h') . '\\'<CR>", { silent = false })
 
 -- Use curl to upload visual selection to ix.io to easily share it: http://ix.io/3QMC
 map("v", "<Bslash>c", [[:w !curl -F "f:1=<-" ix.io<CR>]])
@@ -476,22 +476,6 @@ map("n", "<leader>lr", ":Telescope lsp_references<CR>")
 map("n", "<leader>ld", ":Telescope diagnostics<CR>")
 map("n", "<leader>ls", ":Telescope lsp_document_symbols<CR>")
 map("n", "<leader>lt", ":Telescope treesitter<CR>")
-
----------------------------------------------------------------
--- => lir.nvim, nvim-tree.nvim
----------------------------------------------------------------
--- map("n", "<leader>e", ":lua require'lir.float'.toggle()<CR>")
-map("n", "<M-e>", ":NvimTreeToggle<CR>")
-map("n", "<leader>e", ":NvimTreeFindFileToggle<CR>")
-map("n", "<leader>mn", function()
-  require("nvim-tree.api").marks.navigate.next()
-end)
-map("n", "<leader>mp", function()
-  require("nvim-tree.api").marks.navigate.prev()
-end)
-map("n", "<leader>ms", function()
-  require("nvim-tree.api").marks.navigate.select()
-end)
 
 ---------------------------------------------------------------
 -- => gomove.nvim

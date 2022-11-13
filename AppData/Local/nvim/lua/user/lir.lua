@@ -14,12 +14,16 @@ local function goto_git_root()
   end
   vim.cmd("e " .. dir)
 end
+
 lir.setup({
   show_hidden_files = false,
   devicons_enable = true,
   mappings = {
     ["l"] = actions.edit,
     ["H"] = goto_git_root,
+    ["~"] = function()
+      vim.cmd("edit " .. vim.fn.expand("$HOME"))
+    end,
     ["<cr>"] = actions.edit,
     ["<C-s>"] = actions.split,
     ["<C-v>"] = actions.vsplit,
@@ -55,21 +59,34 @@ lir.setup({
       highlight_dirname = true,
     },
 
-    -- -- You can define a function that returns a table to be passed as the third
-    -- -- argument of nvim_open_win().
-    -- win_opts = function()
-    --   local width = math.floor(vim.o.columns * 0.8)
-    --   local height = math.floor(vim.o.lines * 0.8)
-    --   return {
-    --     border = require("lir.float.helper").make_border_opts({
-    --       "+", "─", "+", "│", "+", "─", "+", "│",
-    --     }, "Normal"),
-    --     width = width,
-    --     height = height,
-    --     row = 1,
-    --     col = math.floor((vim.o.columns - width) / 2),
-    --   }
-    -- end,
+    -- You can define a function that returns a table to be passed as the third
+    -- argument of nvim_open_win().
+    win_opts = function()
+      local screen_w = vim.opt.columns:get()
+      local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+      local _width = screen_w * 0.5
+      local _height = screen_h * 0.8
+      local width = math.floor(_width)
+      local height = math.floor(_height)
+      local center_y = ((vim.opt.lines:get() - _height) / 2) - vim.opt.cmdheight:get()
+      local center_x = (screen_w - _width) / 2
+      return {
+        border = {
+          "+",
+          "─",
+          "+",
+          "│",
+          "+",
+          "─",
+          "+",
+          "│",
+        },
+        row = center_y,
+        col = center_x,
+        width = width,
+        height = height,
+      }
+    end,
   },
   hide_cursor = true,
   on_init = function()
@@ -109,7 +126,18 @@ require("lir.bookmark").setup({
     ["<C-v>"] = b_actions.vsplit,
     ["<C-t>"] = b_actions.tabedit,
     ["<C-e>"] = b_actions.open_lir,
-    ["B"] = b_actions.open_lir,
-    ["q"] = b_actions.open_lir,
+    ["B"] = function()
+      b_actions.open_lir()
+      vim.cmd("bd .lir_bookmark")
+    end,
+    ["q"] = function()
+      b_actions.open_lir()
+      vim.cmd("bd .lir_bookmark")
+    end,
   },
 })
+
+local map = vim.keymap.set
+local opts = { silent = true }
+
+map("n", "<leader>e", ":lua require'lir.float'.toggle()<CR>", opts)

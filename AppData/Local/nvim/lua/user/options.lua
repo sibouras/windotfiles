@@ -32,7 +32,7 @@ local options = {
   cursorline = true, -- highlight the current line
   number = true, -- set numbered lines
   relativenumber = true, -- set relative numbered lines
-  numberwidth = 4, -- set number column width to 2 {default 4}
+  numberwidth = 4, -- Minimal number of columns to use for the line number.
   signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
   wrap = false, -- display lines as one long line
   linebreak = true,
@@ -45,7 +45,7 @@ local options = {
   -- listchars = { eol = "↴", extends = "›", precedes = "‹", nbsp = "␣", trail = "·", tab = "> " },
   -- listchars = "tab:¦ ,eol:¬,trail:⋅,extends:❯,precedes:❮",
   listchars = "tab:▸ ,nbsp:+,trail:·,extends:→,precedes:←,eol:↲",
-  sessionoptions = "buffers,curdir,folds,help,localoptions,tabpages,terminal,winsize",
+  sessionoptions = "buffers,curdir,folds,help,tabpages,terminal,winsize",
   guifont = "JetbrainsMono Nerd Font:h16", -- the font used in graphical neovim applications
   -- guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:Cursor/lCursor", -- this makes changing Cursor highlight work
 }
