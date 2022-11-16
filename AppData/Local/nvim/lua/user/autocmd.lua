@@ -110,3 +110,9 @@ vim.api.nvim_create_autocmd({ "User" }, {
 --     vim.opt_local.spell = true
 --   end,
 -- })
+
+-- insert mode when switching to terminal
+vim.api.nvim_create_autocmd("WinEnter", {
+  pattern = "term://*",
+  command = "startinsert",
+})

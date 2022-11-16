@@ -216,7 +216,7 @@ function M.go_to_url(cmd)
       keepjumps normal! gf
     ]])
   else
-    vim.cmd(":silent !" .. cmd .. " " .. url)
+    vim.cmd("silent !" .. cmd .. " " .. url)
   end
 end
 
@@ -237,6 +237,21 @@ function M.scratch()
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, output)
     vim.api.nvim_win_set_buf(0, buf)
   end)
+end
+
+--> netrw gx replacement to  open in browser
+function M.open_in_browser()
+  -- support comma or semicolon at the end of line
+  local url = string.match(vim.fn.expand("<cWORD>"), "https?://[%w-_%.%?%.:/%+=&]+[^ >\"',;`]*")
+  if url ~= nil then
+    if vim.fn.has("win32") == 1 then
+      vim.cmd(("silent !start %s"):format(url))
+    else
+      vim.cmd(('silent !xdg-open "%s"'):format(url))
+    end
+  else
+    print("No https or http URI found in line.")
+  end
 end
 
 return M

@@ -57,12 +57,16 @@ end
 -- vim.opt.iskeyword:append("-")
 vim.opt.whichwrap:append("<,>,[,],h,l") -- let movement keys reach the previous line
 vim.opt.shortmess:append("c") -- don't show the dumb matching stuff
-vim.opt.path:append("**") -- find files recursively
 -- vim.opt.concealcursor:append("nc")
 -- view: When you jump around, or switch buffers with ctrl-^ the viewport is
 -- restored instead of resetting/recentering vertically.
 vim.opt.jumpoptions:append("stack,view") -- stack:browser-like jumplist behavior
 vim.opt.diffopt:append("linematch:60")
+vim.opt.path:append("**") -- find files recursively
+vim.opt.wildignore = {
+  "**/node_modules/**",
+  "**/.git/**",
+}
 
 -- prettier folding
 function _G.MyFoldText()
@@ -79,8 +83,8 @@ vim.g.python3_host_prog = "python3"
 
 -- Disable builtin plugins
 local disabled_built_ins = {
-  -- "netrw", -- keep it for enter key to work in wiki.vim
-  -- "netrwPlugin", -- keep it for gx to work
+  "netrw", -- keep it for enter key to work in wiki.vim
+  "netrwPlugin", -- keep it for gx to work
   "netrwSettings",
   "netrwFileHandlers",
   "gzip",

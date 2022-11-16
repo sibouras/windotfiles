@@ -27,6 +27,9 @@ map("i", "<C-f>", "<C-k>")
 -- Quit vim
 map("n", "<M-F4>", ":qa!<CR>")
 
+map("n", "gw", "*N")
+map("x", "gw", [[y/\V<C-R>"<CR>N]])
+
 --> Navigate buffers
 -- from: https://sharats.me/posts/automating-the-vim-workplace/#switching-to-alternate-buffer
 -- My remapping of <C-^>. If there is no alternate file, and there's no count
@@ -97,11 +100,9 @@ for _, ch in ipairs(undo_ch) do
   map("i", ch, ch .. "<C-g>u")
 end
 
--- jumplit mutations
-vim.cmd([[
- nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
- nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
-]])
+-- Store relative line number jumps in the jumplist if they exceed a threshold.
+map("n", "k", '(v:count > 5 ? "m\'" . v:count : "") . "k"', { expr = true })
+map("n", "j", '(v:count > 5 ? "m\'" . v:count : "") . "j"', { expr = true })
 
 -- When the :keepjumps command modifier is used, jumps are not stored in the jumplist.
 map("n", "{", ":execute 'keepjumps norm! ' . v:count1 . '{'<CR>")
@@ -135,9 +136,16 @@ nnoremap <silent> <C-j> :call ScrollGolden('down')<CR>
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 
--- faster scrolling
+-- Faster scrolling
 map("n", "<C-e>", "2<C-e>")
 map("n", "<C-y>", "2<C-y>")
+
+-- More comfortable jumping to marks
+map("n", "'", "`")
+map("n", "`", "'")
+
+-- Split line with X
+map("n", "X", ":keeppatterns substitute/\\s*\\%#\\s*/\\r/e <bar> normal! ==^<cr>")
 
 -- Keep the cursor in place while joining lines
 map("n", "J", "mzJ`z")
@@ -148,8 +156,8 @@ vim.cmd([[
   onoremap il :normal vil<CR>
   xnoremap al $o^
   onoremap al :normal val<CR>
-  xnoremap i% GoggV
-  onoremap i% :normal vi%<CR>
+  xnoremap ig GoggV
+  onoremap ig :normal vig<CR>
 
   " better start and end of line
   nnoremap gh _
@@ -212,7 +220,7 @@ map("n", "]q", ":cnext<CR>")
 map({ "n", "v" }, "<M-y>", '"+y')
 map("n", "<M-Y>", '"+y$')
 map({ "n", "v" }, "<M-p>", '"+p')
-map("i", "<M-p>", "<C-r>+")
+map("i", "<M-p>", "<C-r><C-o>+", { desc = "Inserts text literally, not as if you typed it" })
 map("c", "<M-p>", "<C-r>+", { silent = false })
 map({ "n", "v" }, "<M-S-p>", '"+P')
 
@@ -368,11 +376,13 @@ map("n", "]<space>", "<Plug>(unimpaired-blank-down)")
 map("v", "<leader>cy", ":call functions#CompleteYank()<CR>")
 map("x", "@", ":<C-u>call functions#ExecuteMacroOverVisualRange()<CR>")
 map("n", "<leader>hl", ":call functions#GetHighlightGroupUnderCursor()<CR>")
+-- map("n", "gx", ":call functions#open_url_under_cursor()<CR>")
 
 -- essentials.lua functions
 -- map("n", "<F2>", ":lua require('user.essentials').rename()<CR>")
-map("n", "gm", ":lua require('user.essentials').toggle_comment()<CR>")
-map("v", "gm", ":lua require('user.essentials').toggle_comment(true)<CR>")
+map("n", "gx", ":lua require('user.essentials').open_in_browser()<CR>")
+map("n", "g/", ":lua require('user.essentials').toggle_comment()<CR>")
+map("v", "g/", ":lua require('user.essentials').toggle_comment(true)<CR>")
 map("n", "<leader>ru", ":lua require('user.essentials').run_file()<CR>")
 map("n", "<leader>sb", ":lua require('user.essentials').swap_bool()<CR>")
 map("n", "<leader>sc", ":lua require('user.essentials').scratch()<CR>", { desc = "Command to scratch buffer" })
@@ -389,6 +399,7 @@ command! SpaceToTab silent! call functions#S2T()
 command! ReplaceFile silent! call functions#ReplaceFile()
 command! RenameFile call functions#RenameFile()
 command! RemoveFile call functions#RemoveFile()
+command! DeleteHiddenBuffers call functions#DeleteHiddenBuffers()
 command! -nargs=1 -complete=command -bar -range Redir silent call functions#Redir(<q-args>, <range>, <line1>, <line2>)
 ]])
 

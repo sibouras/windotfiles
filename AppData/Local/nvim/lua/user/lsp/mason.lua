@@ -165,6 +165,10 @@ mason_lspconfig.setup_handlers({
       settings = {
         css = {
           validate = true,
+          lint = {
+            -- Do not warn for Tailwind's @apply rule
+            unknownAtRules = "ignore",
+          },
         },
       },
     })
