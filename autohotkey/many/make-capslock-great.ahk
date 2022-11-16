@@ -83,8 +83,10 @@ CapsLock & m::
   Input Key, L1 M
   If Key = f
   {
-    if getKeyState("alt") = 0
-      Run, mpv.exe --no-border
+    if getKeyState("alt") = 0 {
+      EnvGet, vUserProfile, USERPROFILE
+      Run, %vUserProfile%\scoop\apps\mpv\current\mpv.exe --no-terminal --no-border --config-dir=%A_AppData%\mpv
+    }
     else {
       ; opts := "keep_session-auto_save=no,keep_session-auto_load=no"
       ; Run, mpv.exe --script-opts=%opts% %clipboard%
