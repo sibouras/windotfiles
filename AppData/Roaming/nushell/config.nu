@@ -384,18 +384,6 @@ let-env config = {
     }
     {
       name: redo_or_next_page
-      modifier: control
-      keycode: char_y
-      mode: emacs
-      event: {
-        until: [
-          { send: menupagenext }
-          { edit: redo }
-        ]
-      }
-    }
-    {
-      name: redo_or_next_page
       modifier: 'control | shift'
       keycode: char_z
       mode: emacs
@@ -521,6 +509,9 @@ alias uptime = (sys).host.uptime
 alias fs = (fd --strip-cwd-prefix -H -t f -E .git | fzf | str trim)
 alias fp = (fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim)
 alias sl = (scoop list | lines | range 4.. | drop | split column -c ' ' | drop column | rename name version source updated | sort-by updated)
+alias hxh = (hx --health | lines | skip 7 | to text | detect columns)
+alias dur = ($env.CMD_DURATION_MS + 'ms' | into duration)
+alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv"
 
 def fh [] {
   # let text = (history | reverse | get command | str collect (char nl) | fzf)
