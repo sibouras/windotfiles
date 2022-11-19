@@ -11,6 +11,8 @@ require("catppuccin").setup({
     shade = "dark",
     percentage = 0.15,
   },
+  no_italic = true, -- Force no italic
+  -- no_bold = true, -- Force no bold
   styles = {
     comments = {},
     conditionals = {},
@@ -43,12 +45,10 @@ require("catppuccin").setup({
         Comment = { fg = "#767a96" },
         ["@field.lua"] = { fg = mocha.teal },
         ["@constructor.lua"] = { fg = mocha.lavender }, -- For constructor calls and definitions: = { } in Lua, and Java constructors.
-        -- remove italics
-        ErrorMsg = { fg = mocha.red, style = { "bold" } }, -- error messages on the command line
-        ["@parameter"] = { fg = mocha.maroon, style = {} }, -- For parameters of a function.
-        ["@text.literal"] = { fg = mocha.teal, style = {} }, -- used for inline code in markdown and for doc in python (""")
+        -- remove bold
+        ErrorMsg = { fg = mocha.red, style = {} }, -- error messages on the command line
+        -- remove underline
         ["@text.uri"] = { fg = mocha.rosewater, style = {} }, -- urls, links and emails
-        ["@tag.attribute"] = { fg = mocha.teal, style = {} }, -- Tags like html tag names.
       }
     end,
   },
