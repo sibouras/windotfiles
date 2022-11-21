@@ -8,9 +8,9 @@ local types = require("luasnip.util.types")
 -- require("luasnip.loaders.from_vscode").lazy_load({
 --   paths = vim.fn.stdpath("config") .. "/snippets",
 -- })
--- require("luasnip.loaders.from_vscode").load({ paths = "./snippets" })
+-- require("luasnip.loaders.from_vscode").load({ paths = ".\\snippets" })
 
-require("luasnip.loaders.from_lua").lazy_load({ paths = "./luasnippets" })
+require("luasnip.loaders.from_lua").lazy_load({ paths = ".\\luasnippets" })
 
 local s = ls.snippet
 local t = ls.text_node

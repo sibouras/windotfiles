@@ -459,7 +459,7 @@ map("n", "<leader>ff", function()
   require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h"), prompt_title = "From Current Buffer" })
 end)
 map("n", "<leader>fw", function()
-  require("telescope").extensions.recent_files.pick({ initial_mode = "normal", path_display = { "shorten" } }) -- path_display doesn't work here
+  require("telescope").extensions.recent_files.pick({ initial_mode = "normal" })
 end)
 map("n", "<leader>fn", function()
   require("telescope").extensions.neoclip.default(require("telescope.themes").get_dropdown({

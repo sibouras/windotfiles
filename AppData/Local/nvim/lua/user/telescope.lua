@@ -4,6 +4,7 @@ if not status_ok then
 end
 
 local actions = require("telescope.actions")
+-- local Path = require("plenary.path")
 
 telescope.setup({
   defaults = {
@@ -96,7 +97,7 @@ telescope.setup({
     },
     buffers = {
       initial_mode = "normal",
-      ignore_current_buffer = true,
+      -- ignore_current_buffer = true,
       sort_mru = true,
       previewer = false,
     },
@@ -145,6 +146,11 @@ telescope.setup({
     },
     recent_files = {
       only_cwd = true,
+      show_current_file = true,
+      -- path_display = function(_, path)
+      --   local p = Path:new(path)
+      --   return p.normalize(p)
+      -- end,
     },
   },
 })

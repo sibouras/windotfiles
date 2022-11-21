@@ -550,7 +550,7 @@ local Git = {
     provider = function(self)
       return " " .. self.status_dict.head
     end,
-    hl = { bold = true },
+    hl = { bold = false },
   },
   -- You could handle delimiters, icons and counts similar to Diagnostics
   {
