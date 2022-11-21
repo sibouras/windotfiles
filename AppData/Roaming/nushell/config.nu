@@ -293,8 +293,8 @@ let-env config = {
         }
         source: { |buffer, position|
           $nu.scope.commands
-          | where command =~ $buffer
-          | each { |it| {value: $it.command description: $it.usage} }
+          | where name =~ $buffer
+          | each { |it| {value: $it.name description: $it.usage} }
         }
       }
       {
@@ -477,7 +477,7 @@ let-env config = {
     {
       name: get_file_menu_nu_ui
       modifier: control
-      keycode: char_f
+      keycode: char_g
       mode: [emacs, vi_normal, vi_insert]
       event: { send: menu name: get_file_menu_nu_ui }
     }
@@ -508,7 +508,8 @@ alias dotfiles = lazygit --git-dir=C:/Users/marzouk/.dotfiles --work-tree=C:/Use
 alias uptime = (sys).host.uptime
 alias fs = (fd --strip-cwd-prefix -H -t f -E .git | fzf | str trim)
 alias fp = (fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim)
-alias sl = (scoop list | lines | range 4.. | drop | split column -c ' ' | drop column | rename name version source updated | sort-by updated)
+# alias sl = (scoop list | lines | range 4.. | drop | split column -c ' ' | drop column | rename name version source updated | sort-by updated)
+alias sl = (sfsl | lines | range 3.. | drop 3 | parse -r '(?<name>\S+)\s+(?<version>\S+)\s+(?<source>\S+)\s+(?<updated>\d{4}-\d{2}-\d{2})' | sort-by updated)
 alias hxh = (hx --health | lines | skip 7 | to text | detect columns)
 alias dur = ($env.CMD_DURATION_MS + 'ms' | into duration)
 alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv"
@@ -715,6 +716,13 @@ def tolink [name: string] {
   let pre = "\e]8;;"
   let sp = "\e\\"
   $"($pre)($url)($sp)($name)($pre)($sp)"
+}
+
+# scoop search structured wrapper (much faster)
+def "sfsss" [
+    term:string # the term to search for
+] {
+    ^sfss $term | parse -r '\s*(.*)\s*\((.*)\)' | rename package version
 }
 
 # go up n directories
