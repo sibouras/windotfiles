@@ -33,16 +33,22 @@ C-A-S-F6 = "jump_forward"
 C-i = "jump_forward"
 C-o = "jump_backward"
 "C-/" = "toggle_comments"
-"A-n" = "repeat_last_motion"
+A-n = "repeat_last_motion"
 C-c = "no_op" # turn off the default comment functionality
-"K" = "hover"
-"A-k" = "keep_selections"
+K = "hover"
+A-k = "keep_selections"
+C-u = ["half_page_up", "align_view_center"]
+C-d = ["half_page_down", "align_view_center"]
+C-y = "scroll_up"
+C-e = "scroll_down"
+C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"] # move line down
+C-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"] # move line up
 
 # Muscle memory
 D = ["extend_to_line_end", "delete_selection"]
 Z = { Z = ":wq", Q = ":q!" }
 G = "goto_file_end"
-C = ["collapse_selection", "extend_to_line_end", "change_selection"]
+# C = ["collapse_selection", "extend_to_line_end", "change_selection"]
 V = ["select_mode", "extend_to_line_bounds"]
 "{" = ["goto_prev_paragraph", "collapse_selection"]
 "}" = ["goto_next_paragraph", "collapse_selection"]
@@ -58,6 +64,10 @@ H = "extend_char_left"
 L = "extend_char_right"
 
 [keys.insert]
+C-a = "goto_line_start"
+C-e = "goto_line_end_newline"
+C-right = ["move_next_word_start", "move_char_right"]
+C-left = ["move_prev_word_end", "collapse_selection"]
 C-space = "completion"
 A-C-S-F5 = "completion"
 C-backspace = "delete_word_backward"
