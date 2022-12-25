@@ -1,6 +1,26 @@
 ---@diagnostic disable: undefined-global
 
+-- from https://github.com/garcia5/dotfiles/blob/master/files/nvim/lua/ag/plugin-conf/luasnip.lua
+local function js_loop_snippet(type)
+  return fmt(
+    [[
+      {type}({async}({item}) => {{
+        {body}
+      }})
+    ]],
+    {
+      type = t(type),
+      async = c(1, { t(""), t("async ") }),
+      item = c(2, { i(1, "item"), sn(nil, { t("{ "), i(1, "field"), t(" }") }) }),
+      body = i(0),
+    }
+  )
+end
+
 return {
+  s("map", js_loop_snippet("map")),
+  s("filter", js_loop_snippet("filter")),
+  s("forEach", js_loop_snippet("forEach")),
   s("cl", fmt("console.log({})", { i(1) })),
   s("cd", fmt("console.dir({})", { i(1) })),
   s("ce", fmt("console.error({})", { i(1) })),
@@ -68,6 +88,35 @@ return {
         }}
       ]],
       { i(1), i(2, "err"), i(3) }
+    )
+  ),
+  s(
+    "it",
+    fmt(
+      [[
+        it('{test_case}', {async}() => {{
+          {body}
+        }});
+      ]],
+      {
+        test_case = i(1, "does something"),
+        async = c(2, { t("async "), t("") }),
+        body = i(3),
+      }
+    )
+  ),
+  s(
+    "describe",
+    fmt(
+      [[
+        describe('{suite}', () => {{
+          {body}
+        }});
+      ]],
+      {
+        suite = i(1, "function or module"),
+        body = i(2),
+      }
     )
   ),
 }
