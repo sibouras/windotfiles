@@ -7,9 +7,9 @@
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u0017"
+                "input": "\u001b[17;8~"
             },
-            "keys": "ctrl+backspace"
+            "keys": "ctrl+i"
         },
         {
             "command": 
@@ -23,16 +23,9 @@
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u001b[17;8~"
+                "input": "\u0017"
             },
-            "keys": "ctrl+i"
-        },
-        {
-            "command": 
-            {
-                "action": "newTab"
-            },
-            "keys": "ctrl+shift+t"
+            "keys": "ctrl+backspace"
         },
         {
             "command": 
@@ -45,10 +38,9 @@
         {
             "command": 
             {
-                "action": "sendInput",
-                "input": "\u001b[18;8~"
+                "action": "newTab"
             },
-            "keys": "ctrl+;"
+            "keys": "ctrl+shift+t"
         },
         {
             "command": "unbound",
@@ -101,6 +93,14 @@
                 "index": 2
             },
             "keys": "alt+shift+3"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[18;8~"
+            },
+            "keys": "ctrl+;"
         },
         {
             "command": "paste",
@@ -288,13 +288,13 @@
                 "source": "Windows.Terminal.Wsl"
             },
             {
-                "guid": "{b45e282e-a535-5b4d-8507-93841a00cfb9}",
+                "guid": "{7034bce4-8b61-54c4-beef-f5518db39c60}",
                 "hidden": false,
                 "name": "Developer Command Prompt for VS 2019",
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "guid": "{a6893879-a50c-598c-87a5-d6ed3cd049c4}",
+                "guid": "{89caa1d6-64fb-5240-ab5d-00bbe67b26a5}",
                 "hidden": false,
                 "name": "Developer PowerShell for VS 2019",
                 "source": "Windows.Terminal.VisualStudio"
