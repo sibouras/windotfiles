@@ -468,6 +468,16 @@ map("n", "<leader>fn", function()
     layout_config = { height = 0.95 },
   }))
 end)
+map("n", "<leader>fi", function()
+  require("telescope").extensions.tailiscope.base(require("telescope.themes").get_dropdown({
+    initial_mode = "normal",
+    layout_strategy = "vertical",
+    layout_config = { height = 0.95 },
+    preview = {
+      hide_on_startup = false, -- hide previewer when picker starts
+    },
+  }))
+end)
 map("n", "<leader>fm", function()
   require("telescope").extensions.macroscope.default({ initial_mode = "normal" })
 end)

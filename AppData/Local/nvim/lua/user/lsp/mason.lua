@@ -119,13 +119,14 @@ mason_lspconfig.setup_handlers({
       --   },
       -- },
       -- disable lsp in node_modules
-      root_dir = function(fname)
-        if string.find(fname, "node_modules/") then
-          return
-        end
-        local root_files = { "package.json", "tsconfig.json", "jsconfig.json", ".git" }
-        return lspconfig.util.root_pattern(unpack(root_files))(fname)
-      end,
+      -- not needed anymore: https://github.com/neovim/nvim-lspconfig/pull/2287
+      -- root_dir = function(fname)
+      --   if string.find(fname, "node_modules/") then
+      --     return
+      --   end
+      --   local root_files = { "package.json", "tsconfig.json", "jsconfig.json", ".git" }
+      --   return lspconfig.util.root_pattern(unpack(root_files))(fname)
+      -- end,
     })
   end,
 
@@ -133,21 +134,25 @@ mason_lspconfig.setup_handlers({
     lspconfig.tailwindcss.setup({
       on_attach = function(client, bufnr)
         if client.server_capabilities.colorProvider then
+          -- require("telescope").load_extension("tailiscope")
+          -- vim.keymap.set("n", "<leader>fi", "<CMD>Telescope tailiscope<CR>")
+          -- vim.keymap.set("i", "<M-C-S-F6>", "<CMD>Telescope tailiscope classes<CR>")
           -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
           require("document-color").buf_attach(bufnr)
         end
         -- client.server_capabilities.hoverProvider = false
-        client.server_capabilities.completionProvider.triggerCharacters = {
-          '"',
-          "'",
-          "`",
-          ".",
-          "(",
-          "[",
-          "!",
-          "/",
-          ":",
-        }
+        client.server_capabilities.completionProvider = false
+        -- client.server_capabilities.completionProvider.triggerCharacters = {
+        --   '"',
+        --   "'",
+        --   "`",
+        --   ".",
+        --   "(",
+        --   "[",
+        --   "!",
+        --   "/",
+        --   ":",
+        -- }
       end,
       capabilities = opts.capabilities,
       -- flags = {

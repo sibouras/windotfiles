@@ -47,6 +47,7 @@ telescope.setup({
         ["<C-x>"] = actions.delete_buffer,
         ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
         ["<C-BS>"] = { "<C-w>", type = "command", opts = { noremap = false } },
+        ["<C-f>"] = actions.to_fuzzy_refine,
       },
       n = {
         ["`"] = actions.close,
@@ -152,6 +153,26 @@ telescope.setup({
       --   return p.normalize(p)
       -- end,
     },
+    tailiscope = {
+      -- initial_mode = "normal",
+      -- theme = "dropdown",
+      -- layout_strategy = "vertical",
+      -- layout_config = { height = 0.95 },
+      -- preview = {
+      --   hide_on_startup = false, -- hide previewer when picker starts
+      -- },
+      register = '"',
+      maps = {
+        i = {
+          back = "<C-h>",
+          open_doc = "<C-o>",
+        },
+        n = {
+          back = "h",
+          open_doc = "o",
+        },
+      },
+    },
   },
 })
 
@@ -159,3 +180,6 @@ telescope.load_extension("ui-select")
 telescope.load_extension("workspaces")
 telescope.load_extension("fzf")
 telescope.load_extension("recent_files")
+-- telescope.load_extension("tailiscope")
+-- vim.keymap.set("n", "<leader>fi", "<CMD>Telescope tailiscope<CR>")
+vim.keymap.set("i", "<M-C-S-F6>", "<CMD>Telescope tailiscope classes<CR>")

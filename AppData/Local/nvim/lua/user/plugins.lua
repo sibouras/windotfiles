@@ -46,7 +46,7 @@ require("packer_compiled")
 -- Install your plugins here
 return packer.startup(function(use)
   use("wbthomason/packer.nvim") -- Have packer manage itself
-  use("lewis6991/impatient.nvim")
+  use({ "lewis6991/impatient.nvim", commit = "9f7eed8133d62457f7ad2ca250eb9b837a4adeb7" })
   use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
   -- use("MunifTanjim/nui.nvim")
   use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
@@ -90,9 +90,17 @@ return packer.startup(function(use)
     requires = "anuvyklack/keymap-layer.nvim", -- needed only for pink hydras
   })
   use("smjonas/live-command.nvim")
+  use({
+    "glepnir/hlsearch.nvim",
+    -- event = "BufRead",
+    config = function()
+      require("hlsearch").setup()
+    end,
+  })
 
   -- Colorschemes
   use("folke/tokyonight.nvim")
+
   use({ "catppuccin/nvim", as = "catppuccin" })
 
   -- cmp plugins
@@ -128,6 +136,7 @@ return packer.startup(function(use)
   })
   use("nvim-telescope/telescope-ui-select.nvim")
   use("smartpde/telescope-recent-files")
+  use("danielvolchek/tailiscope.nvim")
 
   -- Treesitter
   use({

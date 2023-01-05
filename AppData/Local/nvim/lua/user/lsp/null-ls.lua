@@ -11,6 +11,7 @@ local code_actions = null_ls.builtins.code_actions
 
 null_ls.setup({
   debug = false,
+  border = "rounded",
   sources = {
     -- formatting.prettier.with({ extra_args = { "--single-quote", "--jsx-single-quote" } }),
     -- formatting.prettierd.with({

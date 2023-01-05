@@ -35,10 +35,10 @@ configs.setup({
     -- Or use a function for more flexibility
     disable = function(lang, buf)
       -- filetypes that will be disabled
-      local filetype_exclude = { "help" }
-      if vim.tbl_contains(filetype_exclude, vim.bo.filetype) then
-        return true
-      end
+      -- local filetype_exclude = { "help" }
+      -- if vim.tbl_contains(filetype_exclude, vim.bo.filetype) then
+      --   return true
+      -- end
 
       -- disable for lines > 10000
       -- if vim.api.nvim_buf_line_count(buf) > 10000 then
