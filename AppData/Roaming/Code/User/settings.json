@@ -265,8 +265,6 @@
   // "typescript.suggest.completeFunctionCalls": true,
   // "javascript.suggest.completeFunctionCalls": true,
   "editor.cursorBlinking": "solid",
-  // "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
-  "window.commandCenter": true,
   "workbench.colorTheme": "Moonlight II",
   "workbench.colorCustomizations": {
     "[Material Dark Theme]": {
@@ -410,5 +408,7 @@
   "javascript.preferences.jsxAttributeCompletionStyle": "auto",
   "explorer.excludeGitIgnore": true,
   "vsicons.dontShowNewVersionMessage": true,
-  "window.restoreWindows": "none"
+  "window.restoreWindows": "none",
+  "window.commandCenter": true,
+  "window.menuBarVisibility": "compact"
 }
