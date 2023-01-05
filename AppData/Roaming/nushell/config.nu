@@ -567,7 +567,7 @@ def get-aliases [] {
 def ld [
   --reverse(-r) #reverse order
 ] {
-  if ($reverse | is-empty) || (not $reverse) {
+  if ($reverse | is-empty) or (not $reverse) {
     # ls | sort-by modified | reject type
     ls | sort-by modified | select name size modified
   } else {
@@ -611,7 +611,7 @@ def gl [count: int = 10] {
 # Universal help command, combining https://tldr.sh/ with nushell’s help for built-ins:
 def ? [...terms] {
   if (
-    which ($terms | first) | any { |it| $it.built-in || $it.path =~ ^Nushell }
+    which ($terms | first) | any { |it| $it.built-in or $it.path =~ ^Nushell }
   ) {
     help ($terms | str collect " ")
   } else {
@@ -753,7 +753,7 @@ def-env up [nb: int = 1] {
 
 # make and cd into a directory
 def-env mcd [name: path] {
-  cd (mkdir $name -s | first)
+  cd (mkdir $name -v | first)
 }
 
 # cd with tere(Terminal file explorer)

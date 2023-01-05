@@ -3,13 +3,13 @@ def dict [...word #word(s) to query the dictionary API but they have to make sen
 ] {
   let query = ($word | str collect %20)
   let link = ('https://api.dictionaryapi.dev/api/v2/entries/en/' + $query)
-  let output = (fetch $link |
-  rename word)
+  let output = (fetch $link | rename word)
   let w = ($output.word | first)
   if $w == "No Definitions Found" {
     echo $output.word
   } else {
-    echo $output.meanings.definitions | flatten | flatten
+    echo $output.meanings | flatten | get definitions  | flatten
+    # echo $output.meanings.definitions | flatten | flatten
     # | select definition example
   }
 }

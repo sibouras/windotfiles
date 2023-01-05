@@ -61,7 +61,7 @@ let-env LF_ICONS = "tw=:st=:ow=:dt=:di=:fi=:ln=:or=:ex=�
 let-env EDITOR = "nvim"
 
 ### starship config
-starship init nu | save ~/.cache/starship/init.nu
+starship init nu | save -f ~/.cache/starship/init.nu
 
 ### zoxide config
-zoxide init nushell --hook prompt | save ~/.zoxide.nu
+# zoxide init nushell --hook prompt | save -f ~/.zoxide.nu
