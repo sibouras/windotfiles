@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 	Lists the full directory tree
 .DESCRIPTION

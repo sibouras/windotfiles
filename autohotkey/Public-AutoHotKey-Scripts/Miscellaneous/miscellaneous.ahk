@@ -1,4 +1,4 @@
-﻿; Allow normal CapsLock functionality to be toggled by Alt+CapsLock:
+; Allow normal CapsLock functionality to be toggled by Alt+CapsLock:
 ; !CapsLock::
 ; !Esc::
 ;     GetKeyState, capsstate, CapsLock, T ;(T indicates a Toggle. capsstate is an arbitrary varible name)

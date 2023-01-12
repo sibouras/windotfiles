@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 	Gives a reply
 .DESCRIPTION

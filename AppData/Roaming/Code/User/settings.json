@@ -410,5 +410,6 @@
   "vsicons.dontShowNewVersionMessage": true,
   "window.restoreWindows": "none",
   "window.commandCenter": true,
-  "window.menuBarVisibility": "compact"
+  "window.menuBarVisibility": "compact",
+  "editor.accessibilitySupport": "off"
 }

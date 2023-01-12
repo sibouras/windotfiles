@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 	Lists the latest operating system updates
 .DESCRIPTION

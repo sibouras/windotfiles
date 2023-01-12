@@ -116,5 +116,9 @@ CapsLock & m::
   else if Key = e
     Run explorer.exe
   else if Key = r
-    RunWait, alacritty.exe, , Min
+  {
+    EnvGet, vUserProfile, USERPROFILE
+    Run %vUserProfile%\scoop\apps\alacritty\current\alacritty.exe --working-directory %vUserProfile%
+    ; RunWait, alacritty.exe --working-directory "%vUserProfile%", , Min
+  }
 return

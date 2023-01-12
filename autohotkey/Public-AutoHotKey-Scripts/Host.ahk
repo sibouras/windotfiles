@@ -1,4 +1,4 @@
-﻿; Created by Asger Juul Brunshøj
+; Created by Asger Juul Brunshøj
 
 #NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
