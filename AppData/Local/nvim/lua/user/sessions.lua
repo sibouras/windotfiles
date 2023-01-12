@@ -4,5 +4,6 @@ if not status_ok then
 end
 
 sessions.setup({
-  session_filepath = ".nvim/session",
+  session_filepath = vim.fn.stdpath("data") .. "/sessions",
+  absolute = true,
 })

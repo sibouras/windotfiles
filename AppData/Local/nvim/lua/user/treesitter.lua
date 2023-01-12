@@ -10,13 +10,13 @@ ft_to_parser.ejs = "html"
 
 configs.setup({
   ensure_installed = {
-    "html",
-    "css",
-    "javascript",
-    "tsx",
-    "typescript",
-    "markdown",
-    "markdown_inline",
+    -- "html",
+    -- "css",
+    -- "javascript",
+    -- "tsx",
+    -- "typescript",
+    -- "markdown",
+    -- "markdown_inline",
   },
   sync_install = false,
   -- Automatically install missing parsers when entering buffer

@@ -306,13 +306,13 @@ local LSPActive = {
   -- Or complicate things a bit and get the servers names
   provider = function()
     -- local names = {}
-    -- for i, server in pairs(vim.lsp.buf_get_clients(0)) do
+    -- for i, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
     --   table.insert(names, server.name)
     -- end
     -- return " [" .. table.concat(names, " ") .. "]"
     local expand_null_ls = true
     local buf_client_names = {}
-    for _, client in pairs(vim.lsp.buf_get_clients(0)) do
+    for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
       if client.name == "null-ls" and expand_null_ls then
         local null_ls_sources = {}
         for _, type in ipairs({ "FORMATTING", "DIAGNOSTICS" }) do
@@ -655,7 +655,8 @@ local DefaultStatusline = {
   -- },
   Diagnostics,
   Align,
-  { flexible = 3, LSPSimple, { provider = "" } },
+  -- { flexible = 3, LSPSimple, { provider = "" } },
+  LSPSimple,
   Space,
   -- TreesitterActive,
   TSHl,
@@ -749,7 +750,10 @@ local WinBars = {
   },
 }
 
-require("heirline").setup(StatusLines, WinBars)
+require("heirline").setup({
+  statusline = StatusLines,
+  winbar = WinBars,
+})
 
 vim.api.nvim_create_augroup("Heirline", { clear = true })
 

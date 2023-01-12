@@ -18,7 +18,10 @@ end
 lir.setup({
   show_hidden_files = true,
   ignore = { "^.git$", "^.nvim$", "^node_modules$" },
-  devicons_enable = true,
+  devicons = {
+    enable = true,
+    highlight_dirname = false,
+  },
   mappings = {
     ["l"] = actions.edit,
     ["H"] = goto_git_root,
