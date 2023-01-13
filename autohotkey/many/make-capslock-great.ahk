@@ -85,12 +85,13 @@ CapsLock & m::
   {
     if getKeyState("alt") = 0 {
       EnvGet, vUserProfile, USERPROFILE
-      Run, %vUserProfile%\scoop\apps\mpv\current\mpv.exe --no-terminal --no-border --config-dir=%A_AppData%\mpv
+      ; Run, %vUserProfile%\scoop\apps\mpv\current\mpv.exe --no-terminal --no-border --config-dir=%A_AppData%\mpv
+      Run, mpv.exe
     }
     else {
       ; opts := "keep_session-auto_save=no,keep_session-auto_load=no"
       ; Run, mpv.exe --script-opts=%opts% %clipboard%
-      Run, mpv.exe --no-border %clipboard%
+      Run, mpv.exe %clipboard%
     }
   }
   else if Key = s

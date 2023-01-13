@@ -711,7 +711,7 @@ alias sfsl = sfsu list
 alias sl = (sfsl | lines | range 3.. | drop 3 | parse -r '(?<name>\S+)\s+(?<version>\S+)\s+(?<source>\S+)\s+(?<updated>\d{4}-\d{2}-\d{2})' | sort-by updated)
 alias hxh = (hx --health | lines | skip 7 | to text | detect columns)
 alias dur = ($env.CMD_DURATION_MS + 'ms' | into duration)
-alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
+# alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
 
 ### Functions
 def fh [] {
