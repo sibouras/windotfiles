@@ -4,6 +4,7 @@ RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & r::ToggleWindowVisibility("Alacritty")
 RAlt & w::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
 RAlt & g::ToggleWindowVisibility("ahk_exe Glasswire.exe")
+RAlt & x::ToggleWindowVisibility("ahk_exe Spotify.exe")
 
 ToggleWindowVisibility(windowClass) {
   IfWinExist, %windowClass%
@@ -71,7 +72,8 @@ return
 ; return
 
 !i::Send, ^!{Tab}
-#IfWinActive, ahk_class MultitaskingViewFrame
+; #IfWinActive, ahk_class MultitaskingViewFrame ; doesn't work in windows 11
+#IfWinActive, ahk_class XamlExplorerHostIslandWindow
   h::Left
   j::Down
   k::Up
@@ -95,7 +97,7 @@ return
     ; https://www.autohotkey.com/docs/commands/WinGet.htm#ExStyle
     ; 0x8 is WS_EX_TOPMOST(always-on-top)
     winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > "" && !(ExStyle & 0x8)
-    && (ttitle != "Program Manager" || proc != "Explorer.exe")
+    && (ttitle != "Program Manager" || proc != "Explorer.exe") && proc != "FancyWM.exe"
   } Until (winNumber = 2)
   if (winNumber = 2)
     WinActivate, %id%

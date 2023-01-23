@@ -1,4 +1,7 @@
-;Keep RButton working (mostly) normally.
+; F13 is G-Key
+F13::LWin
+
+; Keep RButton working (mostly) normally.
 RButton::Send {RButton}
 RButton & WheelUp::Send, {Volume_Up}
 RButton & WheelDown::Send, {Volume_Down}
