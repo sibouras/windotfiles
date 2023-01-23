@@ -134,25 +134,22 @@ mason_lspconfig.setup_handlers({
     lspconfig.tailwindcss.setup({
       on_attach = function(client, bufnr)
         if client.server_capabilities.colorProvider then
-          -- require("telescope").load_extension("tailiscope")
-          -- vim.keymap.set("n", "<leader>fi", "<CMD>Telescope tailiscope<CR>")
-          -- vim.keymap.set("i", "<M-C-S-F6>", "<CMD>Telescope tailiscope classes<CR>")
           -- require("user.lsp.utils.documentcolors").buf_attach(bufnr)
           require("document-color").buf_attach(bufnr)
         end
         -- client.server_capabilities.hoverProvider = false
-        client.server_capabilities.completionProvider = false
-        -- client.server_capabilities.completionProvider.triggerCharacters = {
-        --   '"',
-        --   "'",
-        --   "`",
-        --   ".",
-        --   "(",
-        --   "[",
-        --   "!",
-        --   "/",
-        --   ":",
-        -- }
+        -- client.server_capabilities.completionProvider = false
+        client.server_capabilities.completionProvider.triggerCharacters = {
+          '"',
+          "'",
+          "`",
+          ".",
+          "(",
+          "[",
+          "!",
+          "/",
+          ":",
+        }
       end,
       capabilities = opts.capabilities,
       -- flags = {

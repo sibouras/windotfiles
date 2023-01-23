@@ -22,6 +22,7 @@ local sn = ls.snippet_node
 local fmt = require("luasnip.extras.fmt").fmt
 local rep = require("luasnip.extras").rep
 
+ls.filetype_extend("typescript", { "javascript" })
 ls.filetype_extend("javascriptreact", { "javascript" })
 ls.filetype_extend("typescriptreact", { "javascript" })
 

@@ -17,7 +17,7 @@ end
 
 lir.setup({
   show_hidden_files = true,
-  ignore = { "^.git$", "^.nvim$", "^node_modules$" },
+  ignore = { ".git", "node_modules" },
   devicons = {
     enable = true,
     highlight_dirname = false,
