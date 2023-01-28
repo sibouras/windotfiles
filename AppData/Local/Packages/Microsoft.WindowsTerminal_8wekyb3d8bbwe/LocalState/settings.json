@@ -4,20 +4,20 @@
     "actions": 
     [
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
-            "command": "paste",
-            "keys": "ctrl+shift+v"
-        },
-        {
             "command": 
             {
                 "action": "copy",
                 "singleLine": false
             },
             "keys": "ctrl+c"
+        },
+        {
+            "command": "paste",
+            "keys": "ctrl+shift+v"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
         },
         {
             "command": 
@@ -32,17 +32,17 @@
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u0017"
+                "input": "\u001b[17;8~"
             },
-            "keys": "ctrl+backspace"
+            "keys": "ctrl+i"
         },
         {
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u001b[17;8~"
+                "input": "\u0017"
             },
-            "keys": "ctrl+i"
+            "keys": "ctrl+backspace"
         },
         {
             "command": 
@@ -64,6 +64,7 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
+    "firstWindowPreference": "persistedWindowLayout",
     "initialCols": 125,
     "initialPosition": "127,50",
     "initialRows": 30,
@@ -103,6 +104,7 @@
                 "hidden": false,
                 "icon": "https://www.nushell.sh/icon.png",
                 "name": "Nu Shell",
+                "padding": "0",
                 "startingDirectory": "%USERPROFILE%"
             },
             {
@@ -110,6 +112,28 @@
                 "hidden": false,
                 "name": "PowerShell",
                 "source": "Windows.Terminal.PowershellCore"
+            },
+            {
+                "bellStyle": "none",
+                "colorScheme": "Tokyo Night",
+                "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+                "hidden": false,
+                "name": "Ubuntu",
+                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
+            },
+            {
+                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+                "hidden": true,
+                "name": "Ubuntu",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "colorScheme": "Tokyo Night",
+                "guid": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
+                "hidden": false,
+                "name": "Arch",
+                "padding": "0",
+                "source": "Windows.Terminal.Wsl"
             }
         ]
     },
@@ -298,6 +322,52 @@
             "selectionBackground": "#FFFFFF",
             "white": "#D3D7CF",
             "yellow": "#C4A000"
+        },
+        {
+            "background": "#1A1B26",
+            "black": "#15161E",
+            "blue": "#7AA2F7",
+            "brightBlack": "#686C98",
+            "brightBlue": "#7AA2F7",
+            "brightCyan": "#7DCFFF",
+            "brightGreen": "#9ECE6A",
+            "brightPurple": "#BB9AF7",
+            "brightRed": "#F7768E",
+            "brightWhite": "#C0CAF5",
+            "brightYellow": "#E0AF68",
+            "cursorColor": "#C0CAF5",
+            "cyan": "#7DCFFF",
+            "foreground": "#C0CAF5",
+            "green": "#9ECE6A",
+            "name": "Tokyo Night",
+            "purple": "#BB9AF7",
+            "red": "#F7768E",
+            "selectionBackground": "#C0CAF5",
+            "white": "#C0CAF5",
+            "yellow": "#E0AF68"
+        },
+        {
+            "background": "#300A24",
+            "black": "#171421",
+            "blue": "#0037DA",
+            "brightBlack": "#767676",
+            "brightBlue": "#08458F",
+            "brightCyan": "#2C9FB3",
+            "brightGreen": "#26A269",
+            "brightPurple": "#A347BA",
+            "brightRed": "#C01C28",
+            "brightWhite": "#F2F2F2",
+            "brightYellow": "#A2734C",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#3A96DD",
+            "foreground": "#FFFFFF",
+            "green": "#26A269",
+            "name": "Ubuntu-ColorScheme",
+            "purple": "#881798",
+            "red": "#C21A23",
+            "selectionBackground": "#FFFFFF",
+            "white": "#CCCCCC",
+            "yellow": "#A2734C"
         },
         {
             "background": "#000000",
