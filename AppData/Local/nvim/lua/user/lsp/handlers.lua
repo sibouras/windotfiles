@@ -67,8 +67,6 @@ end
 local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 map("n", "<leader>dg", vim.diagnostic.open_float, opts)
-map("n", "[d", vim.diagnostic.goto_prev, opts)
-map("n", "]d", vim.diagnostic.goto_next, opts)
 map("n", "<leader>dq", vim.diagnostic.setloclist, opts)
 map("n", "<M-F>", function()
   vim.lsp.buf.format({ async = true })

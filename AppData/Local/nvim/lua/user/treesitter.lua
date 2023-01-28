@@ -58,6 +58,15 @@ configs.setup({
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "go", -- set to `false` to disable one of the mappings
+      node_incremental = "<C-o>",
+      node_decremental = "<M-C-S-F6>", -- <C-i>
+      scope_incremental = ".",
+    },
+  },
   indent = { enable = true, disable = { "yaml" } },
   rainbow = {
     enable = false,
@@ -70,15 +79,6 @@ configs.setup({
   context_commentstring = {
     enable = true,
     enable_autocmd = false,
-  },
-  textsubjects = {
-    enable = true,
-    prev_selection = ",", -- (Optional) keymap to select the previous selection
-    keymaps = {
-      ["."] = "textsubjects-smart",
-      [";"] = "textsubjects-container-outer",
-      ["i;"] = "textsubjects-container-inner",
-    },
   },
   textobjects = {
     select = {
@@ -135,6 +135,15 @@ configs.setup({
         ["[A"] = "@parameter.inner",
         ["[E"] = "@call.outer",
       },
+      -- Below will go to either the start or the end, whichever is closer.
+      -- Use if you want more granular movements
+      -- Make it even more gradual by adding multiple queries and regex.
+      goto_next = {
+        ["]v"] = "@conditional.outer",
+      },
+      goto_previous = {
+        ["[v"] = "@conditional.outer",
+      },
     },
     lsp_interop = {
       enable = true,
@@ -150,3 +159,39 @@ configs.setup({
 -- folding(slow for large files)
 -- vim.wo.foldmethod = "expr"
 -- vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+
+local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
+local map = vim.keymap.set
+-- Repeat movement with ; and ,
+-- ensure ; goes forward and , goes backward regardless of the last direction
+map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+
+-- vim way: ; goes to the direction you were moving.
+-- map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+-- map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+
+-- This repeats the last query with always previous direction and to the start of the range.
+map({ "n", "x", "o" }, "<home>", function()
+  ts_repeat_move.repeat_last_move({forward = false, start = true})
+end)
+-- This repeats the last query with always next direction and to the end of the range.
+map({ "n", "x", "o" }, "<end>", function()
+  ts_repeat_move.repeat_last_move({forward = true, start = false})
+end)
+
+local status_ok, gitsigns = pcall(require, "gitsigns")
+if not status_ok then
+  return
+end
+local gs = package.loaded.gitsigns
+local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk, gs.prev_hunk)
+-- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
+
+vim.keymap.set({ "n", "x", "o" }, "]g", next_hunk_repeat)
+vim.keymap.set({ "n", "x", "o" }, "[g", prev_hunk_repeat)
+
+-- LSP diagnostics
+local diagnostic_goto_next_repeat, diagnostic_goto_prev_repeat = ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
+map({ "n", "x", "o" }, "[d", diagnostic_goto_prev_repeat)
+map({ "n", "x", "o" }, "]d", diagnostic_goto_next_repeat)

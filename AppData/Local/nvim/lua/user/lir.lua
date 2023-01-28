@@ -53,6 +53,11 @@ lir.setup({
     ["X"] = clipboard_actions.cut,
     ["P"] = clipboard_actions.paste,
 
+    ["p"] = function()
+      local dir = vim.fn.expand("%:p"):gsub(os.getenv('USERPROFILE'), "~")
+      print(dir)
+    end,
+
     ["B"] = require("lir.bookmark.actions").list,
     ["ba"] = require("lir.bookmark.actions").add,
   },
@@ -93,7 +98,11 @@ lir.setup({
     end,
   },
   hide_cursor = true,
-  on_init = function()
+})
+
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "lir" },
+  callback = function()
     -- use visual mode
     vim.api.nvim_buf_set_keymap(
       0,
