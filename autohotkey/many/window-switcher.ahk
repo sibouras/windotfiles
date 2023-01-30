@@ -84,7 +84,7 @@ return
 #IfWinActive
 
 ; switch to previous window
-!j::
+!o::
   winNumber = 0
   WinGet, ids, List
   Loop, %ids% {
@@ -106,7 +106,7 @@ return
 ; switch between all windows of the current window class
 listIndex = 1
 #WinActivateForce
-!k::
+!+o::
 Beginning:
   WinGetClass, activeWindowClass, A
   WinGet, activeWindowID, ID, A

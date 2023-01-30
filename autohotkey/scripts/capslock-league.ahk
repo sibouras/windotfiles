@@ -19,37 +19,39 @@ screenClippingTool := "\screen-clipping-tool.ahk - AutoHotkey"
 ; ahk_class AutoHotkey to close AHK scripts only
 WinClose, %many% ahk_class AutoHotkey
 ; WinClose, %host% ahk_class AutoHotkey
-WinClose, %spicykeys% ahk_class AutoHotkey
+; WinClose, %spicykeys% ahk_class AutoHotkey
 WinClose, %screenClippingTool% ahk_class AutoHotkey
 ; WinClose, C:\tools\WinSize2\WinSize2.EXE
 
 XButton1::Ctrl
+CapsLock::Shift
+\::CapsLock
 
-enter::
-  SetCapsLockState off
-  send, {enter}
-return
+; enter::
+;   SetCapsLockState off
+;   send, {enter}
+; return
+;
+; +enter::
+;   SetCapsLockState off
+;   send, +{enter}
+; return
 
-+enter::
-  SetCapsLockState off
-  send, +{enter}
-return
-
-NumpadEnter::
-  SetCapsLockState off
-  send, {enter}
-return
-
-+NumpadEnter::
-  SetCapsLockState off
-  send, +{enter}
-return
+; NumpadEnter::
+;   SetCapsLockState off
+;   send, {enter}
+; return
+;
+; +NumpadEnter::
+;   SetCapsLockState off
+;   send, +{enter}
+; return
 
 !+c::
   EnvGet, vUserProfile, USERPROFILE
   ; Run, %vUserProfile%\Public-AutoHotKey-Scripts\Host.ahk
   Run, %vUserProfile%\autohotkey\many\many.ahk
-  Run, %vUserProfile%\autohotkey\spicykeys\spicykeys.ahk
+  ; Run, %vUserProfile%\autohotkey\spicykeys\spicykeys.ahk
   Run, %vUserProfile%\autohotkey\screen-clipping-tool\screen-clipping-tool.ahk
   ; Run, "C:\tools\WinSize2\WinSize2.EXE"
 ExitApp

@@ -55,10 +55,10 @@ return
 +!0::VD.goToDesktopNum(VD.MoveWindowToRelativeDesktopNum("A", 1))
 
 ; to come back to this window
-#NumpadMult:: ;#*
-  VD.goToDesktopOfWindow("VD.ahk examples WinTitle")
+; #NumpadMult:: ;#*
+  ; VD.goToDesktopOfWindow("VD.ahk examples WinTitle")
   ; VD.goToDesktopOfWindow("ahk_exe code.exe")
-return
+; return
 
 ; Win + x move VSCode to your current Desktop and WinActivate
 !+v::VD.MoveWindowToCurrentDesktop("ahk_exe nvy.exe")

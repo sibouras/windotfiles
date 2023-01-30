@@ -30,19 +30,19 @@ spotifyKey(key) {
 ; alt+shift+b
 !+b::spotifyKey("!+{b}")
 ; Win+alt+p: Play/Pause
-#!p::spotifyKey("{Space}")
+#+p::spotifyKey("{Space}")
 ; Win+alt+j: Next
-#!j::spotifyKey("^{Right}")
+#]::spotifyKey("^{Right}")
 ; Win+alt+k: Previous
-#!k::spotifyKey("^{Left}")
+#[::spotifyKey("^{Left}")
 ; Win+alt+l: Seek forward
-#!l::spotifyKey("+{Right}")
+#+]::spotifyKey("+{Right}")
 ; Win+alt+h: Seek backward
-#!h::spotifyKey("+{Left}")
+#+[::spotifyKey("+{Left}")
 ; Win+alt+0: Volume up
-#!0::spotifyKey("^{Up}")
+#0::spotifyKey("^{Up}")
 ; Win+alt+9: Volume down
-#!9::spotifyKey("^{Down}")
+#9::spotifyKey("^{Down}")
 ; Win+alt+o: Show Spotify
 #!o::
   spotifyHwnd := getSpotifyHwnd()

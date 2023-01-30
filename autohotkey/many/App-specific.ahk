@@ -1,8 +1,7 @@
 !q::Send, !{f4}
-!h:: Send, #{Left}
-!l:: Send, #{Right}
-!9:: Send, #^{Left}
-!0:: Send, #^{Right}
+!h::Send, #{Left}
+!l::Send, #{Right}
+#v::SendInput, {Raw}%Clipboard%
 
 #If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe")
 {
