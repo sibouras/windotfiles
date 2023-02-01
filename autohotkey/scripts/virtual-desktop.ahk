@@ -48,12 +48,16 @@ moveToDesktop(num, follow:=false) {
 
 ; pin/unpin window
 !8::
-  WinGet, Active_ID, ID, A
-  WinGet, Active_Process, ProcessName, ahk_id %Active_ID%
-  StringTrimRight, ActiveProcessWithoutExe, Active_Process, 4
-  RunWait, cmd.exe /c Virtualdesktop11 -IsWindowPinned:windowsterminal,,hide UseErrorLevel
+  WinGet, Active_PID, PID, A
+  RunWait, cmd.exe /c Virtualdesktop11 -IsWindowPinned:%Active_PID%,,hide UseErrorLevel
   if (ErrorLevel = 1)
-    Run, cmd.exe /c Virtualdesktop11 -PinWindow:%ActiveProcessWithoutExe%,, hide
+    Run, cmd.exe /c Virtualdesktop11 -PinWindow:%Active_PID%,, hide
   else
-    Run, cmd.exe /c Virtualdesktop11 -UnPinWindow:%ActiveProcessWithoutExe%,, hide
+    Run, cmd.exe /c Virtualdesktop11 -UnPinWindow:%Active_PID%,, hide
+return
+
+; move windows terminal to current Desktop and WinActivate
+!7::
+  RunWait, cmd.exe /c Virtualdesktop11 -GetCurrentDesktop -MoveWindow:windowsterminal,, hide
+  WinActivate, ahk_exe windowsterminal.exe
 return
