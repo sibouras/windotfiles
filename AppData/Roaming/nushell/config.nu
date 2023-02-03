@@ -397,6 +397,11 @@ let-env config = {
     metric: true # true => KB, MB, GB (ISO standard), false => KiB, MiB, GiB (Windows standard)
     format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, zb, zib, auto
   }
+  cursor_shape: {
+    emacs: line # block, underscore, line (line is the default)
+    vi_insert: block # block, underscore, line (block is the default)
+    vi_normal: underscore # block, underscore, line  (underscore is the default)
+  }
   color_config: $dark_theme   # if you want a light theme, replace `$dark_theme` to `$light_theme`
   use_grid_icons: true
   footer_mode: "25" # always, never, number_of_rows, auto
@@ -646,6 +651,17 @@ let-env config = {
       }
     }
     {
+      name: swap_words
+      modifier: 'alt'
+      keycode: char_s
+      mode: emacs
+      event: {
+        until: [
+          { edit: SwapWords }
+        ]
+      }
+    }
+    {
       name: reload_config
       modifier: none
       keycode: f5
@@ -690,13 +706,16 @@ alias v = nvim
 alias l = lsd -l
 alias ll = lsd -l
 alias lg = lazygit
+alias gu = gitui
 alias gs = gswin64c
 alias ga = git add
 alias gst = git status
 alias gss = git status -s
 alias gb = git branch --sort=committerdate
-alias gci = (git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff {1} --color=always | delta" | str trim | git checkout $in)
+alias gi = git rev-parse --abbrev-ref HEAD # in git
+alias gci = (git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff {1} | delta" | str trim | git checkout $in)
 alias gd = git diff
+alias gdp = (git diff --name-only | fzf --preview 'git diff {} | delta')
 alias gr = cd (git rev-parse --show-toplevel)
 alias gg = git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold green)%d%Creset %s %C(bold yellow)(%cr) %C(blue)%ad%Creset' --abbrev-commit --date=short
 alias gloo = git log --pretty=format:'%C(yellow)%h %Cred%ad %Cgreen%d %Creset%s' --date=short
@@ -712,6 +731,7 @@ alias sl = (sfsl | lines | range 3.. | drop 3 | parse -r '(?<name>\S+)\s+(?<vers
 alias hxh = (hx --health | lines | skip 7 | to text | detect columns)
 alias dur = ($env.CMD_DURATION_MS + 'ms' | into duration)
 # alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
+alias vd = VirtualDesktop11
 
 ### Functions
 def fh [] {
@@ -905,7 +925,7 @@ def tr [
     let to_translate = ($search | str collect "%20")
     let url = $"https://api.mymemory.translated.net/get?q=($to_translate)&langpair=($from)%7C($to)"
 
-    fetch $url
+    http get $url
     | get responseData
     | get translatedText
   }
@@ -979,4 +999,4 @@ source ~/.cache/.zoxide.nu
 # source ~/.cache/starship/init-temp.nu
 
 ### oh-my-posh
-source ~/.oh-my-posh.nu
+# source ~/.oh-my-posh.nu

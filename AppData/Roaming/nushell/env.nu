@@ -2,17 +2,32 @@
 
 def create_left_prompt [] {
     let path_segment = if (is-admin) {
-        $"(ansi red_bold)($env.PWD | str replace $nu.home-path '~' -s)"
+      $" (ansi red_bold)($env.PWD | str replace $nu.home-path '~' -s)"
     } else {
-        $"(ansi green_bold)($env.PWD | str replace $nu.home-path '~' -s)"
+      $" (ansi green_bold)($env.PWD | str replace $nu.home-path '~' -s)"
     }
 
-    $path_segment
+    let duration_segment = do {
+      let duration_secs = ($env.CMD_DURATION_MS | into int) / 1000
+      if ($duration_secs >= 1) {
+        $" (ansi yellow_bold)($duration_secs | math round | into string | append "sec" | str join | into duration)"
+      } else {
+        ""
+      }
+    }
+
+    let exit_code_segment = if ($env.LAST_EXIT_CODE == 0) {
+      ""
+    } else {
+      $" (ansi red_bold)($env.LAST_EXIT_CODE)"
+    }
+
+    [$path_segment, $exit_code_segment, $duration_segment] | str join
 }
 
 def create_right_prompt [] {
     let time_segment = ([
-        (date now | date format '%m/%d/%Y %r')
+      (date now | date format '%m/%d/%Y %r')
     ] | str join)
 
     $time_segment
@@ -20,11 +35,12 @@ def create_right_prompt [] {
 
 # Use nushell functions to define your right and left prompt
 let-env PROMPT_COMMAND = { create_left_prompt }
-let-env PROMPT_COMMAND_RIGHT = { create_right_prompt }
+let-env PROMPT_COMMAND_RIGHT = { "" }
 
 # The prompt indicators are environmental variables that represent
 # the state of the prompt
-let-env PROMPT_INDICATOR = { "〉" }
+# let-env PROMPT_INDICATOR = { "〉" }
+let-env PROMPT_INDICATOR = { "\r\n ➜ " }
 let-env PROMPT_INDICATOR_VI_INSERT = { ": " }
 let-env PROMPT_INDICATOR_VI_NORMAL = { "〉" }
 let-env PROMPT_MULTILINE_INDICATOR = { "::: " }
@@ -48,14 +64,14 @@ let-env ENV_CONVERSIONS = {
 #
 # By default, <nushell-config-dir>/scripts is added
 let-env NU_LIB_DIRS = [
-    ($nu.config-path | path dirname | path join 'scripts')
+  ($nu.config-path | path dirname | path join 'scripts')
 ]
 
 # Directories to search for plugin binaries when calling register
 #
 # By default, <nushell-config-dir>/plugins is added
 let-env NU_PLUGIN_DIRS = [
-    ($nu.config-path | path dirname | path join 'plugins')
+  ($nu.config-path | path dirname | path join 'plugins')
 ]
 
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
@@ -65,10 +81,10 @@ let-env LF_ICONS = "tw=:st=:ow=:dt=:di=:fi=:ln=:or=:ex=�
 let-env EDITOR = "nvim"
 
 ### zoxide config
-zoxide init nushell | save -f ~/.cache/.zoxide.nu
+# zoxide init nushell | save -f ~/.cache/.zoxide.nu
 
 ### starship config
 # starship init nu | save -f ~/.cache/starship/init.nu
 
 ### oh-my-posh config
-oh-my-posh init nu --config ~/.config/.pure-theme.omp.json
+# oh-my-posh init nu --config ~/.config/.pure-theme.omp.json
