@@ -1,0 +1,43 @@
+# example: https://github.com/mohkale/dotfiles/blob/master/prog/lf/lfrc
+#          https://github.com/gokcehan/lf/blob/master/etc/lfrc.example
+# :doc for help
+
+## interpreter for shell commands
+set shell cmd
+
+set icons
+# set info size
+set info size:time
+set scrolloff 10
+
+# Dual pane
+set ratios 1:1
+
+# Dual pane single column mode
+# set nopreview
+# set ratios 1
+
+# change the pager used in default pager keybinding
+# The standard pager used in Windows is 'more' which is not a very capable
+# pager. You may instead install a pager of your choice and replace the default
+# pager keybinding accordingly.
+map i $less %f%
+
+# change 'doc' command to use a different pager
+cmd doc $lf -doc | less
+
+# use enter for shell commands
+map <enter> shell
+
+# change the shell used in default shell keybinding
+map w $nu
+
+# map <space> $C:\Users\marzouk\scoop\apps\quicklook\current\QuickLook.exe %f%
+map J :toggle; down
+map K :toggle; up
+map D delete
+
+## Toggles
+map zd :set info time
+map zl set relativenumber!
+map zi :set icons!
