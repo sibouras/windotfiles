@@ -128,8 +128,10 @@ function! ScrollGolden(move)
   endif
   execute 'keepjumps normal! ' . prep . float2nr(round(height*0.12)) . key . post
 endfunction
-nnoremap <silent> <C-k> :call ScrollGolden('up')<CR>
-nnoremap <silent> <C-j> :call ScrollGolden('down')<CR>
+nnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
+vnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
+nnoremap <silent> <C-j> <cmd>call ScrollGolden('down')<CR>
+vnoremap <silent> <C-j> <cmd>call ScrollGolden('down')<CR>
 ]])
 
 -- center when scrolling

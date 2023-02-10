@@ -180,18 +180,17 @@ map({ "n", "x", "o" }, "<end>", function()
   ts_repeat_move.repeat_last_move({forward = true, start = false})
 end)
 
-local status_ok, gitsigns = pcall(require, "gitsigns")
+-- LSP diagnostics
+local diagnostic_goto_next_repeat, diagnostic_goto_prev_repeat = ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
+map({ "n", "x", "o" }, "[d", diagnostic_goto_prev_repeat)
+map({ "n", "x", "o" }, "]d", diagnostic_goto_next_repeat)
+
+local status_ok, gs = pcall(require, "gitsigns")
 if not status_ok then
   return
 end
-local gs = package.loaded.gitsigns
 local next_hunk_repeat, prev_hunk_repeat = ts_repeat_move.make_repeatable_move_pair(gs.next_hunk, gs.prev_hunk)
 -- Or, use `make_repeatable_move` or `set_last_move` functions for more control. See the code for instructions.
 
 vim.keymap.set({ "n", "x", "o" }, "]g", next_hunk_repeat)
 vim.keymap.set({ "n", "x", "o" }, "[g", prev_hunk_repeat)
-
--- LSP diagnostics
-local diagnostic_goto_next_repeat, diagnostic_goto_prev_repeat = ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
-map({ "n", "x", "o" }, "[d", diagnostic_goto_prev_repeat)
-map({ "n", "x", "o" }, "]d", diagnostic_goto_next_repeat)

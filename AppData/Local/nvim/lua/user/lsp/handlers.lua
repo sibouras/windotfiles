@@ -83,9 +83,9 @@ vim.g.diagnostics_active = true
 map("n", "<leader>dt", function()
   vim.g.diagnostics_active = not vim.g.diagnostics_active
   if vim.g.diagnostics_active then
-    vim.diagnostic.show()
+    vim.diagnostic.enable()
   else
-    vim.diagnostic.hide()
+    vim.diagnostic.disable()
   end
 end, { desc = "toggle LSP diagnostics" })
 
