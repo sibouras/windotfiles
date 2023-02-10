@@ -703,7 +703,6 @@ alias md = mkdir
 alias pwd = $env.PWD
 alias pwds = ($env.PWD | str replace $nu.home-path '~' -s)
 alias v = nvim
-alias l = lsd -l
 alias ll = lsd -l
 alias lg = lazygit
 alias gu = gitui
@@ -734,6 +733,10 @@ alias dur = ($env.CMD_DURATION_MS + 'ms' | into duration)
 alias vd = VirtualDesktop11
 
 ### Functions
+def title [name: string] {
+  $"(ansi title)($name)(ansi st)"
+}
+
 def fh [] {
   # let text = (history | reverse | get command | str collect (char nl) | fzf)
   let text = (history | reverse | get command | to text | fzf)
@@ -776,7 +779,7 @@ def ld [
 }
 
 # ls by type
-def lt [] {
+def l [] {
   ls | sort-by type name | select name size modified
 }
 
