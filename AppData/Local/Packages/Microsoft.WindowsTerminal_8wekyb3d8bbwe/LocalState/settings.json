@@ -64,10 +64,10 @@
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
-    "firstWindowPreference": "persistedWindowLayout",
-    "initialCols": 125,
-    "initialPosition": "127,50",
-    "initialRows": 30,
+    "firstWindowPreference": "defaultProfile",
+    "initialCols": 98,
+    "initialRows": 35,
+    "initialPosition": "625,0",
     "profiles": 
     {
         "defaults": 
@@ -102,7 +102,7 @@
                 "commandline": "nu.exe",
                 "guid": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
                 "hidden": false,
-                "icon": "https://www.nushell.sh/icon.png",
+                "icon": "C:\\Users\\ala\\Pictures\\icons\\nushell-icon.png",
                 "name": "Nu Shell",
                 "padding": "0",
                 "startingDirectory": "%USERPROFILE%"
