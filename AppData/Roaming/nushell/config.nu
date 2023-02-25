@@ -149,20 +149,20 @@ let dark_theme = {
     duration: white
     date: { (date now) - $in |
       if $in < 1hr {
-        '#e61919'
+        'red3b'
       } else if $in < 6hr {
-        '#e68019'
+        'orange3'
       } else if $in < 1day {
-        '#e5e619'
+        'yellow3b'
       } else if $in < 3day {
-        '#80e619'
+        'chartreuse2b'
       } else if $in < 1wk {
-        '#19e619'
+        'green3b'
       } else if $in < 6wk {
-        '#19e5e6'
+        'darkturquoise'
       } else if $in < 52wk {
-        '#197fe6'
-      } else { 'light_gray' }
+        'deepskyblue3b'
+      } else { 'dark_gray' }
     }
     range: white
     float: white
@@ -405,7 +405,7 @@ let-env config = {
   color_config: $dark_theme   # if you want a light theme, replace `$dark_theme` to `$light_theme`
   use_grid_icons: true
   footer_mode: "25" # always, never, number_of_rows, auto
-  float_precision: 2
+  float_precision: 2 # the precision for displaying floats in tables
   buffer_editor: "nvim" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
   use_ansi_coloring: true
   edit_mode: emacs # emacs, vi
@@ -726,7 +726,7 @@ alias fp = (fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=n
 # alias sl = (scoop list | lines | range 4.. | drop | split column -c ' ' | drop column | rename name version source updated | sort-by updated)
 alias sfss = sfsu search
 alias sfsl = sfsu list
-alias sl = (sfsl | lines | range 3.. | drop 3 | parse -r '(?<name>\S+)\s+(?<version>\S+)\s+(?<source>\S+)\s+(?<updated>\d{4}-\d{2}-\d{2})' | sort-by updated)
+alias sl = (sfsl | lines | range 1.. | parse -r '(?<name>\S+)\s+\|\s(?<version>\S+)\s+\|\s(?<source>\S+)\s+\|\s(?<updated>\d{4}-\d{2}-\d{2})' | sort-by updated)
 alias hxh = (hx --health | lines | skip 7 | to text | detect columns)
 alias dur = ($env.CMD_DURATION_MS + 'ms' | into duration)
 # alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
@@ -948,6 +948,20 @@ def "sfsss" [
     sfsu search $term | parse -r '\s*(.*)\s*\((.*)\)' | rename package version
 }
 
+def "list todos" [] {
+  rg "//.? ?TODO" . -n
+  | lines
+  | parse "{file}:{line}:{match}"
+  | try {
+    group-by file
+    | transpose
+    | reject column1.file
+    | transpose -rid
+  } catch {
+    "no TODOs found in this directory"
+  }
+}
+
 # go up n directories
 def-env up [nb: int = 1] {
   let path = (1..$nb | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
@@ -994,6 +1008,7 @@ def-env br [args = "."] {
 source ~/Appdata/Roaming/nushell/scripts/dict.nu
 source ~/Appdata/Roaming/nushell/scripts/format-number.nu
 source ~/Appdata/Roaming/nushell/scripts/nu-sloc.nu
+source ~/Appdata/Roaming/nushell/scripts/youtube.nu
 
 ### zoxide
 source ~/.cache/.zoxide.nu

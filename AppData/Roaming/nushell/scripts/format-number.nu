@@ -6,7 +6,7 @@ def format-number [ num ,
   ] {
   let int_part = ($num // 1)
 
-  let int_part_f = ( $int_part | into string | split chars | reverse | each -n {
+  let int_part_f = ( $int_part | into string | split chars | reverse | enumerate | each {
     |it| if ((($it.index + 1) mod 3) == 0) {
       $"($thousands_delim)($it.item)"
     } else {
