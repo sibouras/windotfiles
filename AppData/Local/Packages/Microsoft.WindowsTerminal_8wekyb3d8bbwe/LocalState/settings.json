@@ -4,20 +4,28 @@
     "actions": 
     [
         {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
+        {
             "command": 
             {
-                "action": "copy",
-                "singleLine": false
+                "action": "sendInput",
+                "input": "\u001b[18;8~"
             },
-            "keys": "ctrl+c"
+            "keys": "ctrl+;"
         },
         {
             "command": "paste",
             "keys": "ctrl+shift+v"
         },
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "ctrl+c"
         },
         {
             "command": 
@@ -32,14 +40,6 @@
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u001b[17;8~"
-            },
-            "keys": "ctrl+i"
-        },
-        {
-            "command": 
-            {
-                "action": "sendInput",
                 "input": "\u0017"
             },
             "keys": "ctrl+backspace"
@@ -48,17 +48,17 @@
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u001b[15;8~"
+                "input": "\u001b[17;8~"
             },
-            "keys": "ctrl+space"
+            "keys": "ctrl+i"
         },
         {
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u001b[18;8~"
+                "input": "\u001b[15;8~"
             },
-            "keys": "ctrl+;"
+            "keys": "ctrl+space"
         }
     ],
     "copyFormatting": "none",
@@ -66,8 +66,8 @@
     "defaultProfile": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
     "firstWindowPreference": "defaultProfile",
     "initialCols": 98,
-    "initialRows": 35,
     "initialPosition": "625,0",
+    "initialRows": 35,
     "profiles": 
     {
         "defaults": 
@@ -75,8 +75,9 @@
             "font": 
             {
                 "face": "JetBrainsMono NF",
-                "size": 13
-            }
+                "size": 13.0
+            },
+            "useAtlasEngine": false
         },
         "list": 
         [
@@ -134,6 +135,18 @@
                 "name": "Arch",
                 "padding": "0",
                 "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{a5fdfd31-ce57-5d98-a194-989d2e41bde1}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{283f6460-bf3c-51fd-a8b5-3eed5163e15a}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },
@@ -392,5 +405,7 @@
             "white": "#C0C0C0",
             "yellow": "#808000"
         }
-    ]
+    ],
+    "tabWidthMode": "equal",
+    "themes": []
 }
