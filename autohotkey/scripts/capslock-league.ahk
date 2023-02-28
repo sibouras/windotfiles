@@ -20,12 +20,16 @@ screenClippingTool := "\screen-clipping-tool.ahk - AutoHotkey"
 WinClose, %many% ahk_class AutoHotkey
 ; WinClose, %host% ahk_class AutoHotkey
 ; WinClose, %spicykeys% ahk_class AutoHotkey
-WinClose, %screenClippingTool% ahk_class AutoHotkey
+; WinClose, %screenClippingTool% ahk_class AutoHotkey
 ; WinClose, C:\tools\WinSize2\WinSize2.EXE
 
 XButton1::Ctrl
 CapsLock::Shift
-\::CapsLock
+!;::CapsLock
+
+!1:: Run nircmd.exe mutesysvolume 1 "external microphone" ; Mute
+!2:: Run nircmd.exe mutesysvolume 0 "external microphone" ; Unmute
+; !4:: Run nircmd.exe mutesysvolume 2 "external microphone"  ; Toggle
 
 ; enter::
 ;   SetCapsLockState off
@@ -52,7 +56,7 @@ CapsLock::Shift
   ; Run, %vUserProfile%\Public-AutoHotKey-Scripts\Host.ahk
   Run, %vUserProfile%\autohotkey\many\many.ahk
   ; Run, %vUserProfile%\autohotkey\spicykeys\spicykeys.ahk
-  Run, %vUserProfile%\autohotkey\screen-clipping-tool\screen-clipping-tool.ahk
+  ; Run, %vUserProfile%\autohotkey\screen-clipping-tool\screen-clipping-tool.ahk
   ; Run, "C:\tools\WinSize2\WinSize2.EXE"
 ExitApp
 return
