@@ -116,3 +116,9 @@ vim.api.nvim_create_autocmd("WinEnter", {
   pattern = "term://*",
   command = "startinsert",
 })
+
+-- cursorline in harpoon
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = "harpoon",
+  command = "setlocal cursorline",
+})

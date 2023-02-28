@@ -113,7 +113,7 @@ return packer.startup(function(use)
   -- LSP
   use("williamboman/mason.nvim")
   use("williamboman/mason-lspconfig.nvim")
-  use("neovim/nvim-lspconfig")
+  use({ "neovim/nvim-lspconfig", commit = "1393aaca8a59a9ce586ed55770b3a02155a56ac2" })
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
   -- use("ray-x/lsp_signature.nvim") -- LSP signature hint as you type
   use("RRethy/vim-illuminate") -- highlight symbols under cursor and cycle through

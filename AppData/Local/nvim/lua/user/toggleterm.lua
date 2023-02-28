@@ -86,7 +86,13 @@ map({ "n", "t" }, "<F3>", function()
 end)
 
 -- Code Runner
-local runners = { lua = "lua", javascript = "node", typescript = "tsx", go = "go run" }
+local runners = {
+  lua = "lua",
+  javascript = "node",
+  typescript = "tsx",
+  go = "go run",
+  rust = "cargo run",
+}
 
 local function run(n)
   local ftype = vim.bo.filetype

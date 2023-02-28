@@ -67,7 +67,7 @@ mason_lspconfig.setup_handlers({
   --   require("rust-tools").setup({})
   -- end,
 
-  ["sumneko_lua"] = function()
+  ["lua_ls"] = function()
     lspconfig.sumneko_lua.setup({
       on_attach = opts.on_attach,
       capabilities = opts.capabilities,
@@ -230,4 +230,10 @@ mason_lspconfig.setup_handlers({
       cmd = { "gopls.cmd" },
     })
   end,
+})
+
+lspconfig.rust_analyzer.setup({
+  on_attach = opts.on_attach,
+  capabilities = opts.capabilities,
+  cmd = { "rustup", "run", "stable", "rust-analyzer" },
 })
