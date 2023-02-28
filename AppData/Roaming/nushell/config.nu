@@ -733,8 +733,15 @@ alias dur = ($env.CMD_DURATION_MS + 'ms' | into duration)
 alias vd = VirtualDesktop11
 
 ### Functions
+
+# Set tab title
 def title [name: string] {
   $"(ansi title)($name)(ansi st)"
+}
+
+# Set tab color
+def color [idx: int] {
+  ansi -e ( ["2;15;", ($idx | into string), (",|") ] | str join )
 }
 
 def fh [] {
@@ -943,9 +950,9 @@ def tolink [name: string] {
 
 # scoop search structured wrapper (much faster)
 def "sfsss" [
-    term:string # the term to search for
+  term:string # the term to search for
 ] {
-    sfsu search $term | parse -r '\s*(.*)\s*\((.*)\)' | rename package version
+  sfsu search $term | parse -r '\s*(.*)\s*\((.*)\)' | rename package version
 }
 
 def "list todos" [] {
@@ -970,7 +977,7 @@ def-env up [nb: int = 1] {
 
 # make and cd into a directory
 def-env mcd [name: path] {
-  cd (mkdir $name -v | first)
+  mkdir $name ; cd $name
 }
 
 # cd with tere(Terminal file explorer)
