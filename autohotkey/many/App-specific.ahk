@@ -2,6 +2,7 @@
 !h::Send, #{Left}
 !l::Send, #{Right}
 #v::SendInput, {Raw}%Clipboard%
+!+m::PostMessage, 0x112, 0xF100, 0x20,, A ; context menu of the window's title bar
 
 #If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe")
 {

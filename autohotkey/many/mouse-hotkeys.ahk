@@ -1,5 +1,5 @@
 ; F13 is G-Key
-F13::LWin
+F13::Alt
 
 ; Keep RButton working (mostly) normally.
 RButton::Send {RButton}

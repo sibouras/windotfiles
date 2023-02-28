@@ -13,5 +13,5 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 #Include %A_ScriptDir%\window-moving-vim.ahk
 #Include %A_ScriptDir%\google-selection.ahk
 
-!+m::reload
+!+r::reload
 !+q::exitapp

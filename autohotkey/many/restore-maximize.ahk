@@ -1,5 +1,5 @@
 ; Maximize/Restore active window
-#m::
+!m::
   WinGet, active_id, ID, A
   WinGet, checkmax, MinMax, A
   If(checkmax == 1) {
