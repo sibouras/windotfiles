@@ -187,25 +187,25 @@ schemes:
 
     # Normal colors
     normal:
-      black: "0x32344a"
+      black: "0x15161e"
       red: "0xf7768e"
       green: "0x9ece6a"
       yellow: "0xe0af68"
       blue: "0x7aa2f7"
-      magenta: "0xad8ee6"
-      cyan: "0x449dab"
-      white: "0x787c99"
+      magenta: "0xbb9af7"
+      cyan: "0x7dcfff"
+      white: "0xa9b1d6"
 
     # Bright colors
     bright:
-      black: "0x444b6a"
-      red: "0xff7a93"
-      green: "0xb9f27c"
-      yellow: "0xff9e64"
-      blue: "0x7da6ff"
+      black: "0x414868"
+      red: "0xf7768e"
+      green: "0x9ece6a"
+      yellow: "0xe0af68"
+      blue: "0x7aa2f7"
       magenta: "0xbb9af7"
-      cyan: "0x0db9d7"
-      white: "0xacb0d0"
+      cyan: "0x7dcfff"
+      white: "0xc0caf5"
 
   tokyo-night-storm: &tokyo-night-storm # Default colors
     primary:
@@ -360,6 +360,9 @@ colors: *tokyo-night
 #   `- { index: 16, color: '#ff00ff' }`
 #
 #indexed_colors: []
+indexed_colors:
+  - { index: 16, color: "0xff9e64" }
+  - { index: 17, color: "0xdb4b4b" }
 
 # Bell
 #
