@@ -11,3 +11,11 @@ map("n", "<S-Tab>", "<Cmd>call search('\\[[^]]*\\]([^)]\\+)', 'b')<CR>", opts)
 
 -- open url if markdown link is a url else `gf`
 map("n", "<CR>", ":lua require('user.essentials').go_to_url('start')<CR>", opts)
+
+local status_ok, various_textobjs = pcall(require, "various-textobjs")
+if not status_ok then
+  return
+end
+
+map({ "o", "x" }, "aC", function() various_textobjs.mdFencedCodeBlock(false) end)
+map({ "o", "x" }, "iC", function() various_textobjs.mdFencedCodeBlock(true) end)
