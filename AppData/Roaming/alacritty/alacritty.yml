@@ -754,6 +754,8 @@ working_directory: /users/marzouk
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
+  - { key: Return, mods: Shift, chars: "\x1b[13;2u" } # <S-CR>
+  - { key: Return, mods: Control, chars: "\x1b[13;5u" } # <C-CR>
   # - { key: Back, mods: Control, chars: "\x1b\x7f" } # alt+backspace
   - { key: Back, mods: Control, chars: "\u0017" } # <C-w>
   - { key: Space, mods: Control, chars: "\x1b[15;8~" } # <M-C-S-F5>

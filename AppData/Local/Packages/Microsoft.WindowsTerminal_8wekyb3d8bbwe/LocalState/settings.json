@@ -59,7 +59,23 @@
                 "input": "\u001b[15;8~"
             },
             "keys": "ctrl+space"
-        }
+        },
+        {
+            "command":
+            {
+                "action": "sendInput",
+                "input": "\u001b[13;2u"
+            },
+            "keys": "shift+enter"
+        },
+        {
+            "command":
+            {
+                "action": "sendInput",
+                "input": "\u001b[13;5u"
+            },
+            "keys": "ctrl+enter"
+        },
     ],
     "copyFormatting": "none",
     "copyOnSelect": false,
