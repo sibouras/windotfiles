@@ -641,7 +641,7 @@ let-env config = {
     }
     {
       name: cut_current_line
-      modifier: 'alt'
+      modifier: alt
       keycode: char_r
       mode: emacs
       event: {
@@ -652,7 +652,7 @@ let-env config = {
     }
     {
       name: swap_words
-      modifier: 'alt'
+      modifier: alt
       keycode: char_s
       mode: emacs
       event: {
@@ -669,6 +669,18 @@ let-env config = {
       event: {
         send: executehostcommand,
         cmd: $"source '($nu.config-path)'"
+      }
+    }
+    # encapsulate current command into brackets and give it a uniq name.
+    {
+      name: temp_var
+      modifier: alt
+      keycode: char_v
+      mode: [emacs , vi_normal, vi_insert]
+      event: {
+        send: executehostcommand
+        cmd: "let-env temp_var = ($env | get -i temp_var | default 0 | $in + 1);
+        commandline ('let temp' + ($env.temp_var | into string) + ' = (' + (commandline) + ')')"
       }
     }
 
@@ -721,6 +733,7 @@ alias gloo = git log --pretty=format:'%C(yellow)%h %Cred%ad %Cgreen%d %Creset%s'
 alias winconfig = git $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias dotfiles = lazygit $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias uptime = (sys).host.uptime
+alias mem = ((sys).mem | select total free used)
 alias fs = (fd --strip-cwd-prefix -H -t f -E .git | fzf | str trim)
 alias fp = (fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim)
 # alias sl = (scoop list | lines | range 4.. | drop | split column -c ' ' | drop column | rename name version source updated | sort-by updated)
@@ -735,8 +748,12 @@ alias vd = VirtualDesktop11
 ### Functions
 
 # Set tab title
-def title [name: string] {
-  $"(ansi title)($name)(ansi st)"
+def title [name?: string] {
+  if ($name == null) {
+    $"(ansi title)($env.PWD | path basename)(ansi st)"
+  } else {
+    $"(ansi title)($name)(ansi st)"
+  }
 }
 
 # Set tab color
@@ -913,6 +930,27 @@ def h [n = 100] {
   history | last $n | update command { |f| $f.command | nu-highlight }
 }
 
+# short pwd
+def spwd [sep: string = $"(char path_sep)"] {
+  let tokens = (
+    ["!" $env.PWD] | str join
+    | str replace -s (["!" $nu.home-path] | str join) "~"
+    | split row $sep
+  )
+
+  $tokens
+  | enumerate
+  | each {|it|
+    $it.item
+    | if ($it.index != (($tokens | length) - 1)) {
+      str substring (
+        if ($it.item | str starts-with '.') { 0..2 } else { 0..1 }
+      )
+    } else { $it.item }
+  }
+  | path join
+}
+
 # translate text using mymemmory api
 def tr [
   ...search:string  # search query
@@ -967,6 +1005,13 @@ def "list todos" [] {
   } catch {
     "no TODOs found in this directory"
   }
+}
+
+# output shortcuts set in config.nu
+def "keybindings config" [] {
+  open $nu.config-path -r | lines | skip (open $nu.config-path -r | lines | enumerate
+  | each {|i| if $i.item =~ "keybindings" {$i.index}} | get 0) | str join "\n"
+  | parse -r "[^#].*name: (?P<name>.*)\n.*modifier: (?P<modifier>.*)\n.*keycode: (?P<key>.*)"
 }
 
 # go up n directories
