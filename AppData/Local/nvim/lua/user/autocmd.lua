@@ -66,11 +66,10 @@ augroup END
 -- keep window position when switching buffers
 -- https://stackoverflow.com/questions/4251533/vim-keep-window-position-when-switching-buffers
 -- replaced with :set jumpoptions=view (added in 0.8)
--- NOTE(2022-11-01): jumpoptions=view stopped working
-vim.cmd([[
-  au BufLeave * let b:winview = winsaveview()
-  au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
-]])
+-- vim.cmd([[
+--   au BufLeave * let b:winview = winsaveview()
+--   au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+-- ]])
 
 -- source: https://github.com/ecosse3/nvim/blob/master/lua/autocmds.lua
 -- Disable diagnostics in node_modules (0 is current buffer only)

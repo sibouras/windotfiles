@@ -123,7 +123,7 @@ M.on_attach = function(client, bufnr)
   end
 
   -- attach nvim-navic
-  if client.server_capabilities.documentSymbolProvider then
+  if client.server_capabilities.documentSymbolProvider and client.name ~= "astro" then
     navic.attach(client, bufnr)
   end
 

@@ -99,6 +99,7 @@ mason_lspconfig.setup_handlers({
       -- autostart = false,
       on_attach = opts.on_attach,
       capabilities = opts.capabilities,
+      single_file_support = false,
       commands = {
         OrganizeImports = {
           organize_imports,
@@ -127,6 +128,15 @@ mason_lspconfig.setup_handlers({
       --   local root_files = { "package.json", "tsconfig.json", "jsconfig.json", ".git" }
       --   return lspconfig.util.root_pattern(unpack(root_files))(fname)
       -- end,
+    })
+  end,
+
+  ["unocss"] = function()
+    lspconfig.unocss.setup({
+      on_attach = function(client, bufnr)
+        client.server_capabilities.completionProvider.triggerCharacters = { "-" }
+      end,
+      capabilities = opts.capabilities,
     })
   end,
 
@@ -178,7 +188,10 @@ mason_lspconfig.setup_handlers({
 
   ["emmet_ls"] = function()
     lspconfig.emmet_ls.setup({
-      on_attach = opts.on_attach,
+      -- on_attach = opts.on_attach,
+      on_attach = function(client, bufnr)
+        client.server_capabilities.completionProvider.triggerCharacters = { ".", ">", "*", "+" }
+      end,
       capabilities = opts.capabilities,
       filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
       -- filetypes = { "html", "css", "sass", "scss", "less" },

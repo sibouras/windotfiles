@@ -2,11 +2,10 @@ local configs = require("nvim-treesitter.configs")
 
 require("nvim-treesitter.install").compilers = { "clang", "gcc" }
 
-require("hlargs").setup({ color = "#e0af68" })
+-- require("hlargs").setup({ color = "#e0af68" })
 
 -- use html parser in ejs files
-local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
-ft_to_parser.ejs = "html"
+vim.treesitter.language.register("html", "ejs")
 
 configs.setup({
   ensure_installed = {
@@ -89,14 +88,13 @@ configs.setup({
         -- You can use the capture groups defined in textobjects.scm
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
         ["ab"] = "@block.outer",
         ["ib"] = "@block.inner",
         ["aa"] = "@parameter.outer",
         ["ia"] = "@parameter.inner",
         ["ae"] = "@call.outer",
         ["ie"] = "@call.inner",
+        ["in"] = "@number.inner",
       },
     },
     swap = {
@@ -113,27 +111,33 @@ configs.setup({
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
         ["]f"] = "@function.outer",
-        ["]c"] = "@class.outer",
+        ["]c"] = "@comment.outer",
         ["]a"] = "@parameter.inner",
         ["]e"] = "@call.outer",
+        ["]b"] = "@block.outer",
+        ["]n"] = "@number.inner",
       },
       goto_next_end = {
         ["]F"] = "@function.outer",
-        ["]C"] = "@class.outer",
+        ["]C"] = "@comment.outer",
         ["]A"] = "@parameter.inner",
         ["]E"] = "@call.outer",
+        ["]B"] = "@block.outer",
       },
       goto_previous_start = {
         ["[f"] = "@function.outer",
-        ["[c"] = "@class.outer",
+        ["[c"] = "@comment.outer",
         ["[a"] = "@parameter.inner",
         ["[e"] = "@call.outer",
+        ["[b"] = "@block.inner",
+        ["[n"] = "@number.inner",
       },
       goto_previous_end = {
         ["[F"] = "@function.outer",
-        ["[C"] = "@class.outer",
+        ["[C"] = "@comment.outer",
         ["[A"] = "@parameter.inner",
         ["[E"] = "@call.outer",
+        ["[B"] = "@block.outer",
       },
       -- Below will go to either the start or the end, whichever is closer.
       -- Use if you want more granular movements
@@ -173,15 +177,16 @@ map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
 
 -- This repeats the last query with always previous direction and to the start of the range.
 map({ "n", "x", "o" }, "<home>", function()
-  ts_repeat_move.repeat_last_move({forward = false, start = true})
+  ts_repeat_move.repeat_last_move({ forward = false, start = true })
 end)
 -- This repeats the last query with always next direction and to the end of the range.
 map({ "n", "x", "o" }, "<end>", function()
-  ts_repeat_move.repeat_last_move({forward = true, start = false})
+  ts_repeat_move.repeat_last_move({ forward = true, start = false })
 end)
 
 -- LSP diagnostics
-local diagnostic_goto_next_repeat, diagnostic_goto_prev_repeat = ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
+local diagnostic_goto_next_repeat, diagnostic_goto_prev_repeat =
+  ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
 map({ "n", "x", "o" }, "[d", diagnostic_goto_prev_repeat)
 map({ "n", "x", "o" }, "]d", diagnostic_goto_next_repeat)
 

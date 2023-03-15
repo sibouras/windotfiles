@@ -6,6 +6,7 @@ end
 colorizer.setup({
   filetypes = {
     "css",
+    "astro",
   },
   user_default_options = {
     RGB = true, -- #RGB hex codes

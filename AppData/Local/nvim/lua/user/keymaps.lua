@@ -27,17 +27,22 @@ map("i", "<C-f>", "<C-k>")
 -- Quit vim
 map("n", "<M-F4>", ":qa!<CR>")
 
+-- new line
+map("i", "<C-CR>", "<C-o>o")
+
 map("n", "gw", "*N")
 map("x", "gw", [[y/\V<C-R>"<CR>N]])
 
 --> Navigate buffers
+-- NOTE: b# doesn't work with jumpoption=view
 -- from: https://sharats.me/posts/automating-the-vim-workplace/#switching-to-alternate-buffer
 -- My remapping of <C-^>. If there is no alternate file, and there's no count
 -- given, then switch to next file. We use `bufloaded` to check for alternate
 -- buffer presence. This will ignore deleted buffers, as intended. To get
 -- default behaviour, use `bufexists` in it's place.
-map("n", "<M-w>", ":<C-u>exe v:count ? v:count . 'b' : 'keepjumps b' . (bufloaded(0) ? '#' : 'n')<CR>")
-map("i", "<M-w>", "<C-o>:keepjumps b#<CR>")
+-- map("n", "<M-w>", ":<C-u>exe v:count ? v:count . 'b' : 'keepjumps b' . (bufloaded(0) ? '#' : 'n')<CR>")
+-- map("i", "<M-w>", "<C-o>:keepjumps b#<CR>")
+map({ "n", "i" }, "<M-w>", "<Cmd>keepjumps normal <CR>")
 map("n", "<M-d>", function()
   -- switch back to previous buffer instead of going to next buffer
   local prevFile = vim.fn.expand("#")
@@ -51,8 +56,6 @@ map("n", "<M-c>", function()
 end, { desc = "wipeout buffer" })
 -- map("n", "<M-D>", ":%bd <bar> e# <bar> bd#<CR>", { desc = "close all but current buffer" })
 map("n", "<M-D>", ":BdeleteHidden<CR>", { desc = "delete hidden buffers" })
-map("n", "]b", ":bnext<CR>")
-map("n", "[b", ":bprevious<CR>")
 map("n", "<M-.>", ":bnext<CR>")
 map("i", "<M-.>", "<Esc>:bnext<CR>")
 map("n", "<M-,>", ":bprevious<CR>")

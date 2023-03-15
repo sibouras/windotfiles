@@ -141,7 +141,7 @@ return packer.startup(function(use)
   use("nvim-treesitter/nvim-treesitter-textobjects")
   -- use("RRethy/nvim-treesitter-textsubjects")
   use("windwp/nvim-ts-autotag")
-  use("m-demare/hlargs.nvim")
+  -- use("m-demare/hlargs.nvim") -- use semantic tokens instead
   -- use("p00f/nvim-ts-rainbow")
 
   -- Git

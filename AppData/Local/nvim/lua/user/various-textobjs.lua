@@ -23,10 +23,7 @@ map({ "o", "x" }, "gG", function() various_textobjs.entireBuffer() end)
 -- url
 map({ "o", "x" }, "L", function() various_textobjs.url() end)
 
--- example: `an` for outer number, `in` for inner number
-map({ "o", "x" }, "an", function() various_textobjs.number(false) end)
-map({ "o", "x" }, "in", function() various_textobjs.number(true) end)
--- subword
+-- example: `aS` for outer subword, `iS` for inner subword
 map({ "o", "x" }, "aS", function() various_textobjs.subword(false) end)
 map({ "o", "x" }, "iS", function() various_textobjs.subword(true) end)
 -- key/value
