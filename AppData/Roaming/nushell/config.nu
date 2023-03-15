@@ -130,104 +130,23 @@ use completions *
 # For more information on themes, see
 # https://www.nushell.sh/book/coloring_and_theming.html
 let dark_theme = {
-    # color for nushell primitives
-    separator: white
-    leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
-    header: green_bold
-    empty: blue
-    # Closures can be used to choose colors for specific values.
-    # The value (in this case, a bool) is piped into the closure.
-    bool: { if $in { 'light_cyan' } else { 'light_gray' } }
-    int: white
-    filesize: {|e|
-      if $e == 0b {
-        'white'
-      } else if $e < 1mb {
-        'cyan'
-      } else { 'blue' }
-    }
-    duration: white
-    date: { (date now) - $in |
-      if $in < 1hr {
-        'red3b'
-      } else if $in < 6hr {
-        'orange3'
-      } else if $in < 1day {
-        'yellow3b'
-      } else if $in < 3day {
-        'chartreuse2b'
-      } else if $in < 1wk {
-        'green3b'
-      } else if $in < 6wk {
-        'darkturquoise'
-      } else if $in < 52wk {
-        'deepskyblue3b'
-      } else { 'dark_gray' }
-    }
-    range: white
-    float: white
-    string: white
-    nothing: white
-    binary: white
-    cellpath: white
-    row_index: green_bold
-    record: white
-    list: white
-    block: white
-    hints: dark_gray
-
-    shape_and: purple_bold
-    shape_binary: purple_bold
-    shape_block: blue_bold
-    shape_bool: light_cyan
-    shape_custom: green
-    shape_datetime: cyan_bold
-    shape_directory: cyan
-    shape_external: cyan
-    shape_externalarg: green_bold
-    shape_filepath: cyan
-    shape_flag: blue_bold
-    shape_float: purple_bold
-    # shapes are used to change the cli syntax highlighting
-    shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: b}
-    shape_globpattern: cyan_bold
-    shape_int: purple_bold
-    shape_internalcall: cyan_bold
-    shape_list: cyan_bold
-    shape_literal: blue
-    shape_matching_brackets: { attr: u }
-    shape_nothing: light_cyan
-    shape_operator: yellow
-    shape_or: purple_bold
-    shape_pipe: purple_bold
-    shape_range: yellow_bold
-    shape_record: cyan_bold
-    shape_redirection: purple_bold
-    shape_signature: green_bold
-    shape_string: green
-    shape_string_interpolation: cyan_bold
-    shape_table: blue_bold
-    shape_variable: purple
-}
-
-let light_theme = {
-    # color for nushell primitives
-    separator: dark_gray
-    leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
-    header: green_bold
-    empty: blue
-    # Closures can be used to choose colors for specific values.
-    # The value (in this case, a bool) is piped into the closure.
-    bool: { if $in { 'dark_cyan' } else { 'dark_gray' } }
-    int: dark_gray
-    filesize: {|e|
-      if $e == 0b {
-        'dark_gray'
-      } else if $e < 1mb {
-        'cyan_bold'
-      } else { 'blue_bold' }
-    }
-    duration: dark_gray
+  # color for nushell primitives
+  separator: white
+  leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
+  header: green_bold
+  empty: blue
+  # Closures can be used to choose colors for specific values.
+  # The value (in this case, a bool) is piped into the closure.
+  bool: { if $in { 'light_cyan' } else { 'light_gray' } }
+  int: white
+  filesize: {|e|
+    if $e == 0b {
+      'white'
+    } else if $e < 1mb {
+      'cyan'
+    } else { 'blue' }
+  }
+  duration: white
   date: { (date now) - $in |
     if $in < 1hr {
       'red3b'
@@ -245,50 +164,131 @@ let light_theme = {
       'deepskyblue3b'
     } else { 'dark_gray' }
   }
-    range: dark_gray
-    float: dark_gray
-    string: dark_gray
-    nothing: dark_gray
-    binary: dark_gray
-    cellpath: dark_gray
-    row_index: green_bold
-    record: white
-    list: white
-    block: white
-    hints: dark_gray
+  range: white
+  float: white
+  string: white
+  nothing: white
+  binary: white
+  cellpath: white
+  row_index: green_bold
+  record: white
+  list: white
+  block: white
+  hints: dark_gray
 
-    shape_and: purple_bold
-    shape_binary: purple_bold
-    shape_block: blue_bold
-    shape_bool: light_cyan
-    shape_custom: green
-    shape_datetime: cyan_bold
-    shape_directory: cyan
-    shape_external: cyan
-    shape_externalarg: green_bold
-    shape_filepath: cyan
-    shape_flag: blue_bold
-    shape_float: purple_bold
-    # shapes are used to change the cli syntax highlighting
-    shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: b}
-    shape_globpattern: cyan_bold
-    shape_int: purple_bold
-    shape_internalcall: cyan_bold
-    shape_list: cyan_bold
-    shape_literal: blue
-    shape_matching_brackets: { attr: u }
-    shape_nothing: light_cyan
-    shape_operator: yellow
-    shape_or: purple_bold
-    shape_pipe: purple_bold
-    shape_range: yellow_bold
-    shape_record: cyan_bold
-    shape_redirection: purple_bold
-    shape_signature: green_bold
-    shape_string: green
-    shape_string_interpolation: cyan_bold
-    shape_table: blue_bold
-    shape_variable: purple
+  shape_and: purple_bold
+  shape_binary: purple_bold
+  shape_block: blue_bold
+  shape_bool: light_cyan
+  shape_custom: green
+  shape_datetime: cyan_bold
+  shape_directory: cyan
+  shape_external: cyan
+  shape_externalarg: green_bold
+  shape_filepath: cyan
+  shape_flag: blue_bold
+  shape_float: purple_bold
+  # shapes are used to change the cli syntax highlighting
+  shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: b}
+  shape_globpattern: cyan_bold
+  shape_int: purple_bold
+  shape_internalcall: cyan_bold
+  shape_list: cyan_bold
+  shape_literal: blue
+  shape_matching_brackets: { attr: u }
+  shape_nothing: light_cyan
+  shape_operator: yellow
+  shape_or: purple_bold
+  shape_pipe: purple_bold
+  shape_range: yellow_bold
+  shape_record: cyan_bold
+  shape_redirection: purple_bold
+  shape_signature: green_bold
+  shape_string: green
+  shape_string_interpolation: cyan_bold
+  shape_table: blue_bold
+  shape_variable: purple
+}
+
+let light_theme = {
+  # color for nushell primitives
+  separator: dark_gray
+  leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
+  header: green_bold
+  empty: blue
+  # Closures can be used to choose colors for specific values.
+  # The value (in this case, a bool) is piped into the closure.
+  bool: { if $in { 'dark_cyan' } else { 'dark_gray' } }
+  int: dark_gray
+  filesize: {|e|
+    if $e == 0b {
+      'dark_gray'
+    } else if $e < 1mb {
+      'cyan_bold'
+    } else { 'blue_bold' }
+  }
+  duration: dark_gray
+  date: { (date now) - $in |
+    if $in < 1hr {
+      'red3b'
+    } else if $in < 6hr {
+      'orange3'
+    } else if $in < 1day {
+      'yellow3b'
+    } else if $in < 3day {
+      'chartreuse2b'
+    } else if $in < 1wk {
+      'green3b'
+    } else if $in < 6wk {
+      'darkturquoise'
+    } else if $in < 52wk {
+      'deepskyblue3b'
+    } else { 'dark_gray' }
+  }
+  range: dark_gray
+  float: dark_gray
+  string: dark_gray
+  nothing: dark_gray
+  binary: dark_gray
+  cellpath: dark_gray
+  row_index: green_bold
+  record: white
+  list: white
+  block: white
+  hints: dark_gray
+
+  shape_and: purple_bold
+  shape_binary: purple_bold
+  shape_block: blue_bold
+  shape_bool: light_cyan
+  shape_custom: green
+  shape_datetime: cyan_bold
+  shape_directory: cyan
+  shape_external: cyan
+  shape_externalarg: green_bold
+  shape_filepath: cyan
+  shape_flag: blue_bold
+  shape_float: purple_bold
+  # shapes are used to change the cli syntax highlighting
+  shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: b}
+  shape_globpattern: cyan_bold
+  shape_int: purple_bold
+  shape_internalcall: cyan_bold
+  shape_list: cyan_bold
+  shape_literal: blue
+  shape_matching_brackets: { attr: u }
+  shape_nothing: light_cyan
+  shape_operator: yellow
+  shape_or: purple_bold
+  shape_pipe: purple_bold
+  shape_range: yellow_bold
+  shape_record: cyan_bold
+  shape_redirection: purple_bold
+  shape_signature: green_bold
+  shape_string: green
+  shape_string_interpolation: cyan_bold
+  shape_table: blue_bold
+  shape_variable: purple
 }
 
 # External completer example
@@ -437,15 +437,15 @@ let-env config = {
         only_buffer_difference: false
         marker: "| "
         type: {
-            layout: columnar
-            columns: 4
-            col_width: 20   # Optional value. If missing all the screen width is used to calculate column width
-            col_padding: 2
+          layout: columnar
+          columns: 4
+          col_width: 20   # Optional value. If missing all the screen width is used to calculate column width
+          col_padding: 2
         }
         style: {
-            text: green
-            selected_text: green_reverse
-            description_text: yellow
+          text: green
+          selected_text: green_reverse
+          description_text: yellow
         }
       }
       {
@@ -453,13 +453,13 @@ let-env config = {
         only_buffer_difference: true
         marker: "? "
         type: {
-            layout: list
-            page_size: 10
+          layout: list
+          page_size: 10
         }
         style: {
-            selected_text: green_reverse
-            text: green
-            description_text: yellow
+          selected_text: green_reverse
+          text: green
+          description_text: yellow
         }
       }
       {
@@ -467,17 +467,17 @@ let-env config = {
         only_buffer_difference: true
         marker: "? "
         type: {
-            layout: description
-            columns: 4
-            col_width: 20   # Optional value. If missing all the screen width is used to calculate column width
-            col_padding: 2
-            selection_rows: 4
-            description_rows: 10
+          layout: description
+          columns: 4
+          col_width: 20   # Optional value. If missing all the screen width is used to calculate column width
+          col_padding: 2
+          selection_rows: 4
+          description_rows: 10
         }
         style: {
-            text: green
-            selected_text: green_reverse
-            description_text: yellow
+          text: green
+          selected_text: green_reverse
+          description_text: yellow
         }
       }
       # Example of extra menus created using a nushell source
@@ -488,20 +488,20 @@ let-env config = {
         only_buffer_difference: false
         marker: "# "
         type: {
-            layout: columnar
-            columns: 4
-            col_width: 20
-            col_padding: 2
+          layout: columnar
+          columns: 4
+          col_width: 20
+          col_padding: 2
         }
         style: {
-            text: green
-            selected_text: green_reverse
-            description_text: yellow
+          text: green
+          selected_text: green_reverse
+          description_text: yellow
         }
         source: { |buffer, position|
-            $nu.scope.commands
-            | where name =~ $buffer
-            | each { |it| {value: $it.name description: $it.usage} }
+          $nu.scope.commands
+          | where name =~ $buffer
+          | each { |it| {value: $it.name description: $it.usage} }
         }
       }
       {
@@ -509,19 +509,19 @@ let-env config = {
         only_buffer_difference: true
         marker: "# "
         type: {
-            layout: list
-            page_size: 10
+          layout: list
+          page_size: 10
         }
         style: {
-            text: green
-            selected_text: green_reverse
-            description_text: yellow
+          text: green
+          selected_text: green_reverse
+          description_text: yellow
         }
         source: { |buffer, position|
-            $nu.scope.vars
-            | where name =~ $buffer
-            | sort-by name
-            | each { |it| {value: $it.name description: $it.type} }
+          $nu.scope.vars
+          | where name =~ $buffer
+          | sort-by name
+          | each { |it| {value: $it.name description: $it.type} }
         }
       }
       {
@@ -529,22 +529,22 @@ let-env config = {
         only_buffer_difference: true
         marker: "# "
         type: {
-            layout: description
-            columns: 4
-            col_width: 20
-            col_padding: 2
-            selection_rows: 4
-            description_rows: 10
+          layout: description
+          columns: 4
+          col_width: 20
+          col_padding: 2
+          selection_rows: 4
+          description_rows: 10
         }
         style: {
-            text: green
-            selected_text: green_reverse
-            description_text: yellow
+          text: green
+          selected_text: green_reverse
+          description_text: yellow
         }
         source: { |buffer, position|
-            $nu.scope.commands
-            | where name =~ $buffer
-            | each { |it| {value: $it.name description: $it.usage} }
+          $nu.scope.commands
+          | where name =~ $buffer
+          | each { |it| {value: $it.name description: $it.usage} }
         }
       }
   ]
