@@ -713,7 +713,6 @@ let-env config = {
 alias :q = exit
 alias md = mkdir
 alias pwd = $env.PWD
-alias pwds = ($env.PWD | str replace $nu.home-path '~' -s)
 alias v = nvim
 alias ll = lsd -l
 alias lg = lazygit
@@ -724,28 +723,35 @@ alias gst = git status
 alias gss = git status -s
 alias gb = git branch --sort=committerdate
 alias gi = git rev-parse --abbrev-ref HEAD # in git
-alias gci = (git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff {1} | delta" | str trim | git checkout $in)
 alias gd = git diff
-alias gdp = (git diff --name-only | fzf --preview 'git diff {} | delta')
 alias gr = cd (git rev-parse --show-toplevel)
 alias gg = git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold green)%d%Creset %s %C(bold yellow)(%cr) %C(blue)%ad%Creset' --abbrev-commit --date=short
 alias gloo = git log --pretty=format:'%C(yellow)%h %Cred%ad %Cgreen%d %Creset%s' --date=short
 alias winconfig = git $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias dotfiles = lazygit $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
-alias uptime = (sys).host.uptime
-alias mem = ((sys).mem | select total free used)
-alias fs = (fd --strip-cwd-prefix -H -t f -E .git | fzf | str trim)
-alias fp = (fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim)
-# alias sl = (scoop list | lines | range 4.. | drop | split column -c ' ' | drop column | rename name version source updated | sort-by updated)
 alias sfss = sfsu search
 alias sfsl = sfsu list
-alias sl = (sfsl | lines | range 1.. | parse -r '(?<name>\S+)\s+\|\s(?<version>\S+)\s+\|\s(?<source>\S+)\s+\|\s(?<updated>\d{4}-\d{2}-\d{2})' | sort-by updated)
-alias hxh = (hx --health | lines | skip 7 | to text | detect columns)
-alias dur = ($env.CMD_DURATION_MS + 'ms' | into duration)
 # alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
 alias vd = VirtualDesktop11
 
 ### Functions
+
+def uptime [] {
+  (sys).host.uptime
+}
+
+def hxh [] {
+  hx --health | lines | skip 7 | to text | detect columns
+}
+
+def mem [] {
+  (sys).mem | select total free used
+}
+
+# cmd duration
+def dur [] {
+  $env.CMD_DURATION_MS + 'ms' | into duration
+}
 
 # Set tab title
 def title [name?: string] {
@@ -761,6 +767,16 @@ def color [idx: int] {
   ansi -e ( ["2;15;", ($idx | into string), (",|") ] | str join )
 }
 
+def fs [] {
+  fd --strip-cwd-prefix -H -t f -E .git | fzf | str trim
+}
+
+# preview with fzf
+def fp [] {
+  fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim
+}
+
+# histry with fzf
 def fh [] {
   # let text = (history | reverse | get command | str collect (char nl) | fzf)
   let text = (history | reverse | get command | to text | fzf)
@@ -775,6 +791,7 @@ def fe [] {
   }
 }
 
+# search for media file with fzf and open it with mpv
 def fm [] {
   let file = (fd --strip-cwd-prefix -e mp4 -e webm -e mkv -e gif | fzf | decode utf-8 | str trim)
   if ($file != '') {
@@ -820,6 +837,16 @@ def psn [name: string] {
 # kill specified process in name
 def killn [name: string] {
   ps | find $name | each {kill -f $in.pid}
+}
+
+# git checkout interactive
+def gci [] {
+  git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff {1} | delta" | str trim | git checkout $in
+}
+
+# git diff preview
+def gdp [] {
+  git diff --name-only | fzf --preview 'git diff {} | delta'
 }
 
 # push to git
@@ -930,8 +957,14 @@ def h [n = 100] {
   history | last $n | update command { |f| $f.command | nu-highlight }
 }
 
+
 # short pwd
-def spwd [sep: string = $"(char path_sep)"] {
+def pwds [] {
+  $env.PWD | str replace $nu.home-path '~' -s
+}
+
+# shorter pwd
+def pwdss [sep: string = $"(char path_sep)"] {
   let tokens = (
     ["!" $env.PWD] | str join
     | str replace -s (["!" $nu.home-path] | str join) "~"
@@ -984,6 +1017,11 @@ def tolink [name: string] {
   let pre = "\e]8;;"
   let sp = "\e\\"
   $"($pre)($url)($sp)($name)($pre)($sp)"
+}
+
+# structured scoop list
+def sl [] {
+  sfsl | lines | range 1.. | parse -r '(?<name>\S+)\s+\|\s(?<version>\S+)\s+\|\s(?<source>\S+)\s+\|\s(?<updated>\d{4}-\d{2}-\d{2})' | sort-by updated
 }
 
 # scoop search structured wrapper (much faster)
