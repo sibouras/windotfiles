@@ -1,0 +1,90 @@
+/* * { */
+/*   font-size: 11pt; */
+/* } */
+
+:root {
+  /* default: 36px */
+  --tab-min-height: 32px !important;
+}
+
+/* Remove titlebar buttons on small screen*/
+@media (width < 900px) {
+  .titlebar-buttonbox-container {
+    display: none;
+  }
+}
+
+/* Remove left spacer on non-maximized windows */
+.titlebar-spacer[type="pre-tabs"] {
+  display: none !important;
+}
+
+/* Remove right spacer on non-maximized windows */
+.titlebar-spacer[type="post-tabs"] {
+  display: none !important;
+}
+
+tooltip {
+  font-size: 12px !important;
+}
+
+/* #titlebar { */
+/*   height: 14px !important; */
+/* } */
+
+/* #TabsToolbar { */
+/*   height: 14px !important; */
+/* } */
+
+/* Larger text in toolbar are */
+/* #navigator-toolbox { */
+/* 125% of Windows default of 12px => 15px */
+/* font-size: 15px !important; */
+/* } */
+
+/* Tab bar */
+#TabsToolbar {
+  font-size: 12px !important;
+}
+
+/* Main Toolbar */
+#nav-bar {
+  font-size: 12px !important;
+}
+
+#urlbar-background {
+  --toolbar-field-focus-background-color: hsl(249, 11%, 12%);
+}
+
+/* library */
+window[windowtype="Places:Organizer"] treechildren::-moz-tree-cell-text {
+  font-size: 15px !important;
+}
+
+/* bookmarks sidebar */
+.sidebar-placesTreechildren::-moz-tree-cell-text {
+  font-size: 15px !important;
+}
+
+/* Bookmarks Toolbar */
+#PersonalToolbar,
+#PersonalToolbar menuitem,
+#PersonalToolbar menu {
+  font-size: 12px !important;
+}
+
+/* context menu, right click menu */
+menupopup {
+  font-size: 12px !important;
+}
+
+/* right click menu, extension options menu */
+/* menuitem, */
+/* menu { */
+/*   font-size: 12px !important; */
+/* } */
+
+/* hamburger menu */
+.subviewbutton {
+  font-size: 12px !important;
+}
