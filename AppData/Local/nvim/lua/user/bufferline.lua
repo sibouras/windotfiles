@@ -165,3 +165,15 @@ bufferline.setup({
     },
   },
 })
+
+-- local map = vim.keymap.set
+
+-- map("n", "]b", ":BufferLineCycleNext<CR>")
+-- map("n", "[b", ":BufferLineCyclePrev<CR>")
+-- map("n", "<M-.>", ":BufferLineCycleNext<CR>")
+-- map("i", "<M-.>", "<Esc>:BufferLineCycleNext<CR>")
+-- map("n", "<M-,>", ":BufferLineCyclePrev<CR>")
+-- map("i", "<M-,>", "<Esc>:BufferLineCyclePrev<CR>")
+-- map("n", "<A-S->>", ":BufferLineMoveNext<CR>")
+-- map("n", "<A-S-<>", ":BufferLineMovePrev<CR>")
+-- map("n", "Q", ":BufferLineCloseLeft<CR>:BufferLineCloseRight<CR>")

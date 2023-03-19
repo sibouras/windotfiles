@@ -26,3 +26,5 @@ colorizer.setup({
     virtualtext = "■",
   },
 })
+
+vim.keymap.set("n", "<leader>tt", "<cmd>ColorizerToggle<CR>", { desc = "toggle colorizer" })

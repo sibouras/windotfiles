@@ -44,3 +44,24 @@ illuminate.configure({
   -- min_count_to_highlight: minimum number of matches required to perform highlighting
   -- min_count_to_highlight = 1,
 })
+
+-- turn off by default
+-- local augroup = "my-vim-illuminate-autocmds"
+-- vim.api.nvim_create_augroup(augroup, { clear = true })
+-- vim.api.nvim_create_autocmd("BufRead", {
+--   group = augroup,
+--   callback = function()
+--     require("illuminate").invisible_buf()
+--   end,
+-- })
+
+local map = vim.keymap.set
+
+-- turn off highlighting for the buffer but still calculate references for
+-- <M-n> and <M-N>
+map("n", "<leader>ti", function()
+  require("illuminate").toggle_visibility_buf()
+end, { desc = "toggle illuminate" })
+
+map({ "n", "v" }, "<M-n>", '<cmd>lua require"illuminate".goto_next_reference()<CR>')
+map({ "n", "v" }, "<M-N>", '<cmd>lua require"illuminate".goto_prev_reference()<CR>')

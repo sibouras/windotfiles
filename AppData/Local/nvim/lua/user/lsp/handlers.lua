@@ -80,7 +80,7 @@ map("n", "<leader>ln", "<Cmd>NullLsInfo<CR>")
 
 -- toggle LSP diagnostics
 vim.g.diagnostics_active = true
-map("n", "<leader>dt", function()
+map("n", "<leader>td", function()
   vim.g.diagnostics_active = not vim.g.diagnostics_active
   if vim.g.diagnostics_active then
     vim.diagnostic.enable()
