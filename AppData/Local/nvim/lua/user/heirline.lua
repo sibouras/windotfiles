@@ -352,7 +352,7 @@ local TreesitterActive = {
     end
     local buf = vim.api.nvim_get_current_buf()
     local highlighter = require("vim.treesitter.highlighter")
-    return highlighter.active[buf] and "綠TS " or ""
+    return highlighter.active[buf] and "󰐾 TS " or ""
   end,
   hl = { fg = "green", bold = false },
 }
@@ -380,8 +380,7 @@ local TSHl = {
       return
     end
     -- return "TS " .. os.clock() .. " "
-    return "綠TS "
-    -- return "  "
+    return "󰐾 TS "
   end,
 }
 
