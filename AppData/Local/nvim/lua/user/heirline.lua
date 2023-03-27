@@ -385,6 +385,19 @@ local TSHl = {
   end,
 }
 
+--> Grapple
+
+local Grapple = {
+  condition = function()
+    return require("grapple").exists({ buffer = 0 })
+  end,
+  update = "BufEnter",
+  provider = function()
+    local key = require("grapple").key()
+    return "  [" .. key .. "]"
+  end,
+}
+
 --> Nvim Navic
 
 -- Full nerd (with icon colors)!
@@ -643,6 +656,7 @@ Git = {
 
 local DefaultStatusline = {
   ViMode,
+  Grapple,
   Spell,
   -- Space,
   -- FileNameBlock,
