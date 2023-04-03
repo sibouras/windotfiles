@@ -9,48 +9,61 @@ vt.setup({
 
 local map = vim.keymap.set
 
--- stylua: ignore start
 -- example: `?` for diagnostic textobj
-map({ "o", "x" }, "?", function() vt.diagnostic() end)
+map({ "o", "x" }, "?", "<Cmd>lua require('various-textobjs').diagnostic()<CR>")
 -- near EoL: from cursor position to end of line, minus one character
-map({ "o", "x" }, "m", function() vt.nearEoL() end)
+map({ "o", "x" }, "m", "<Cmd>lua require('various-textobjs').nearEoL()<CR>")
 -- like }, but linewise
-map({ "o", "x" }, "<CR>", function() vt.restOfParagraph() end)
+map({ "o", "x" }, "<CR>", "<Cmd>lua require('various-textobjs').restOfParagraph()<CR>")
 -- rest of indentation
-map({ "o", "x" }, "R", function() vt.restOfIndentation() end)
+map({ "o", "x" }, "R", "<Cmd>lua require('various-textobjs').restOfIndentation()<CR>")
 -- from cursor to next closing ], ), or }
-map({ "o", "x" }, "T", function() vt.toNextClosingBracket() end)
+map({ "o", "x" }, "T", "<Cmd>lua require('various-textobjs').toNextClosingBracket()<CR>")
 -- column down until indent or shorter line.
-map({ "o", "x" }, "|", function() vt.column() end)
+map({ "o", "x" }, "|", "<Cmd>lua require('various-textobjs').column()<CR>")
 -- entire buffer
-map({ "o", "x" }, "gG", function() vt.entireBuffer() end)
+map({ "o", "x" }, "gG", "<Cmd>lua require('various-textobjs').entireBuffer()<CR>")
 -- url
-map({ "o", "x" }, "<BS>", function() vt.url() end)
+map({ "o", "x" }, "<BS>", "<Cmd>lua require('various-textobjs').url()<CR>")
 
 -- example: `aS` for outer subword, `iS` for inner subword
-map({ "o", "x" }, "aS", function() vt.subword(false) end)
-map({ "o", "x" }, "iS", function() vt.subword(true) end)
+map({ "o", "x" }, "aS", "<Cmd>lua require('various-textobjs').subword(false)<CR>")
+map({ "o", "x" }, "iS", "<Cmd>lua require('various-textobjs').subword(true)<CR>")
 -- key/value
-map({ "o", "x" }, "ak", function() vt.key(false) end)
-map({ "o", "x" }, "ik", function() vt.key(true) end)
-map({ "o", "x" }, "av", function() vt.value(false) end)
-map({ "o", "x" }, "iv", function() vt.value(true) end)
+map({ "o", "x" }, "ak", "<Cmd>lua require('various-textobjs').key(false)<CR>")
+map({ "o", "x" }, "ik", "<Cmd>lua require('various-textobjs').key(true)<CR>")
+map({ "o", "x" }, "av", "<Cmd>lua require('various-textobjs').value(false)<CR>")
+map({ "o", "x" }, "iv", "<Cmd>lua require('various-textobjs').value(true)<CR>")
 -- class in CSS, like .my-class
-map({ "o", "x" }, "ac", function() vt.cssSelector(false) end)
-map({ "o", "x" }, "ic", function() vt.cssSelector(true) end)
--- stylua: ignore end
+map({ "o", "x" }, "ac", "<Cmd>lua require('various-textobjs').cssSelector(false)<CR>")
+map({ "o", "x" }, "ic", "<Cmd>lua require('various-textobjs').cssSelector(true)<CR>")
+-- html attribute
+map({ "o", "x" }, "ax", "<Cmd>lua require('various-textobjs').htmlAttribute(false)<CR>")
+map({ "o", "x" }, "ix", "<Cmd>lua require('various-textobjs').htmlAttribute(true)<CR>")
 
 -- exception: indentation textobj requires two parameters, first for exclusion of the
 -- starting border, second for the exclusion of ending border
-map({ "o", "x" }, "ii", function()
-  vt.indentation(true, true)
-end, { desc = "inner-inner indentation textobj" })
-map({ "o", "x" }, "ai", function()
-  vt.indentation(false, true)
-end, { desc = "outer-inner indentation textobj" })
-map({ "o", "x" }, "iI", function()
-  vt.indentation(true, false)
-end, { desc = "inner-outer indentation textobj" })
-map({ "o", "x" }, "aI", function()
-  vt.indentation(false, false)
-end, { desc = "outer-outer indentation textobj" })
+map(
+  { "o", "x" },
+  "ii",
+  "<Cmd>lua require('various-textobjs').indentation(true, true)<CR>",
+  { desc = "inner-inner indentation textobj" }
+)
+map(
+  { "o", "x" },
+  "ai",
+  "<Cmd>lua require('various-textobjs').indentation(false, true)<CR>",
+  { desc = "outer-inner indentation textobj" }
+)
+map(
+  { "o", "x" },
+  "iI",
+  "<Cmd>lua require('various-textobjs').indentation(true, false)<CR>",
+  { desc = "inner-outer indentation textobj" }
+)
+map(
+  { "o", "x" },
+  "aI",
+  "<Cmd>lua require('various-textobjs').indentation(false, false)<CR>",
+  { desc = "outer-outer indentation textobj" }
+)
