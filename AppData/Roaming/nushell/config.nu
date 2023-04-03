@@ -544,7 +544,7 @@ let-env config = {
         cmd: $"source '($nu.config-path)'"
       }
     }
-    # encapsulate current command into brackets and give it a uniq name.
+    # encapsulate current command into brackets and give it a name.
     {
       name: temp_var
       modifier: alt
@@ -553,11 +553,25 @@ let-env config = {
       event: {
         send: executehostcommand
         cmd: "let-env temp_var = ($env | get -i temp_var | default 0 | $in + 1);
-        commandline ('let temp' + ($env.temp_var | into string) + ' = (' + (commandline) + ')')"
+        let custom_var = input 'enter variable name: ';
+        let name = (if $custom_var == "" {$env.temp_var | into string | 't' + $in} else {$custom_var});
+        commandline ('let ' + ($name) + ' = (' + (commandline) + '); $' + ($name))"
       }
     }
 
     # Keybindings used to trigger the user defined menus
+    {
+      name: trigger-help-menu
+      modifier: control
+      keycode: char_q
+      mode: emacs
+      event: {
+        until: [
+          { send: menu name: help_menu }
+          { send: menunext }
+        ]
+      }
+    }
     {
       name: commands_menu
       modifier: control
@@ -579,13 +593,24 @@ let-env config = {
       mode: [emacs, vi_normal, vi_insert]
       event: { send: menu name: commands_with_description }
     }
+    {
+      name: change_dir_with_fzf
+      modifier: control
+      keycode: char_f
+      mode: emacs
+      event:{
+        send: executehostcommand,
+        # cmd: "cd (ls | where type == dir | each { |it| $it.name} | str collect (char nl) | fzf | decode utf-8 | str trim)"
+        cmd: "cd (fd --hidden --type directory --exclude .git --exclude node_modules | fzf)"
+      }
+    }
   ]
 }
 
 ### Aliases
 alias :q = exit
 alias md = mkdir
-alias pwd = $env.PWD
+alias pwd = echo $env.PWD
 alias v = nvim
 alias ll = lsd -l
 alias lg = lazygit
@@ -606,8 +631,16 @@ alias sfss = sfsu search
 alias sfsl = sfsu list
 # alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
 alias vd = VirtualDesktop11
+alias b = buku --suggest
+alias firefox = $"($env.LOCALAPPDATA)\\Mozilla Firefox\\firefox.exe"
+alias msedge = "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+
 
 ### Functions
+
+def t [] {
+  NVIM_APPNAME=nvimtest nvim
+}
 
 def uptime [] {
   (sys).host.uptime
@@ -641,12 +674,12 @@ def color [idx: int] {
 }
 
 def fs [] {
-  fd --strip-cwd-prefix -H -t f -E .git | fzf | str trim
+  fd -H -t f -E .git | fzf | str trim
 }
 
 # preview with fzf
 def fp [] {
-  fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim
+  fd -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | ignore
 }
 
 # histry with fzf
@@ -657,8 +690,8 @@ def fh [] {
 }
 
 def fe [] {
-  # let file = (fd --strip-cwd-prefix -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim)
-  let file = (fd --strip-cwd-prefix -H -e txt -e json -e js -e jsx -e ts -e tsx -e css -e html -e md -e lua | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim)
+  # let file = (fd -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim)
+  let file = (fd -H -e txt -e json -e js -e jsx -e ts -e tsx -e css -e html -e md -e lua | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim)
   if ($file != '') {
     nvim $file
   }
@@ -666,7 +699,7 @@ def fe [] {
 
 # search for media file with fzf and open it with mpv
 def fm [] {
-  let file = (fd --strip-cwd-prefix -e mp4 -e webm -e mkv -e gif | fzf | decode utf-8 | str trim)
+  let file = (fd --absolute-path -e mp4 -e webm -e mkv -e gif | fzf | decode utf-8 | str trim)
   if ($file != '') {
     mpv $file
   }
