@@ -5,6 +5,7 @@ idle-timeout = 0
 cursorline = true
 color-modes = true
 completion-trigger-len = 1
+shell = ["nu", "-c"]
 
 [editor.cursor-shape]
 normal = "block"
@@ -19,9 +20,9 @@ render = true
 # display-messages = true
 
 [editor.statusline]
-left = ["mode", "spinner", "file-name", "diagnostics"]
+left = ["mode", "spinner", "file-name", "file-modification-indicator", "diagnostics"]
 center = []
-right = ["position", "selections", "file-encoding", "file-line-ending", "file-type"]
+right = ["version-control", "position", "selections", "file-encoding", "file-line-ending", "file-type"]
 
 [keys.normal]
 "\\" = {c = ":config-open", r = ":config-reload"}
@@ -43,6 +44,8 @@ C-y = "scroll_up"
 C-e = "scroll_down"
 C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"] # move line down
 C-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"] # move line up
+A-x = ["extend_to_line_bounds", "trim_selections"]
+A-c = ["extend_to_line_bounds", "trim_selections", "change_selection"]
 
 # Muscle memory
 D = ["extend_to_line_end", "delete_selection"]
