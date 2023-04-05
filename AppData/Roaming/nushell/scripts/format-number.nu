@@ -12,7 +12,7 @@ def format-number [ num ,
     } else {
       $it.item
     }
-  } | reverse | str collect '')
+  } | reverse | str join '')
 
   let int_part_f2 = (if ($int_part_f | str substring '0,1') == $thousands_delim {
     ($int_part_f | str substring '1,')

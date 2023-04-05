@@ -10,7 +10,7 @@ let dark_theme = {
   empty: blue
   # Closures can be used to choose colors for specific values.
   # The value (in this case, a bool) is piped into the closure.
-  bool: { if $in { 'light_cyan' } else { 'light_gray' } }
+  bool: {|| if $in { 'light_cyan' } else { 'light_gray' } }
   int: white
   filesize: {|e|
     if $e == 0b {
@@ -20,7 +20,7 @@ let dark_theme = {
     } else { 'blue' }
   }
   duration: white
-  date: { (date now) - $in |
+  date: {|| (date now) - $in |
     if $in < 1hr {
       'red3b'
     } else if $in < 6hr {
@@ -68,6 +68,7 @@ let dark_theme = {
   shape_internalcall: cyan_bold
   shape_list: cyan_bold
   shape_literal: blue
+  shape_match_pattern: green
   shape_matching_brackets: { attr: u }
   shape_nothing: light_cyan
   shape_operator: yellow
@@ -91,7 +92,7 @@ let light_theme = {
   empty: blue
   # Closures can be used to choose colors for specific values.
   # The value (in this case, a bool) is piped into the closure.
-  bool: { if $in { 'dark_cyan' } else { 'dark_gray' } }
+  bool: {|| if $in { 'dark_cyan' } else { 'dark_gray' } }
   int: dark_gray
   filesize: {|e|
     if $e == 0b {
@@ -101,7 +102,7 @@ let light_theme = {
     } else { 'blue_bold' }
   }
   duration: dark_gray
-  date: { (date now) - $in |
+  date: {|| (date now) - $in |
     if $in < 1hr {
       'red3b'
     } else if $in < 6hr {
@@ -149,6 +150,7 @@ let light_theme = {
   shape_internalcall: cyan_bold
   shape_list: cyan_bold
   shape_literal: blue
+  shape_match_pattern: green
   shape_matching_brackets: { attr: u }
   shape_nothing: light_cyan
   shape_operator: yellow
@@ -172,6 +174,7 @@ let light_theme = {
 
 # The default config record. This is where much of your global configuration is setup.
 let-env config = {
+  show_banner: false # true or false to enable or disable the banner
   ls: {
     use_ls_colors: true # use the LS_COLORS environment variable to colorize output
     clickable_links: true # enable or disable clickable links. Your terminal has to support links.
@@ -186,6 +189,7 @@ let-env config = {
     mode: rounded # basic, compact, compact_double, light, thin, with_love, rounded, reinforced, heavy, none, other
     index_mode: always # "always" show indexes, "never" show indexes, "auto" = show indexes when a table has "index" column
     # A strategy of managing table view in case of limited space.
+    show_empty: true # show 'empty list' and 'empty record' placeholders for command output
     trim: {
       methodology: wrapping # wrapping or truncating
       wrapping_try_keep_words: true # A strategy used by the 'wrapping' methodology
@@ -283,23 +287,25 @@ let-env config = {
   use_ansi_coloring: true
   edit_mode: emacs # emacs, vi
   shell_integration: false # enables terminal markers and a workaround to arrow keys stop working issue
-  show_banner: false # true or false to enable or disable the banner
   render_right_prompt_on_last_line: false # true or false to enable or disable right prompt to be rendered on last line of the prompt.
 
   hooks: {
-    pre_prompt: [{
-      $nothing  # replace with source code to run before the prompt is shown
+    pre_prompt: [{||
+      null  # replace with source code to run before the prompt is shown
     }]
-    pre_execution: [{
-      $nothing  # replace with source code to run before the repl input is run
+    pre_execution: [{||
+      null  # replace with source code to run before the repl input is run
     }]
     env_change: {
       PWD: [{|before, after|
-        $nothing  # replace with source code to run if the PWD environment is different since the last repl input
+        null  # replace with source code to run if the PWD environment is different since the last repl input
       }]
     }
-    display_output: {
+    display_output: {||
       if (term size).columns >= 100 { table -e } else { table }
+    }
+    command_not_found: {||
+      null  # replace with source code to return an error message when a command is not found
     }
   }
   menus: [
@@ -443,7 +449,7 @@ let-env config = {
     }
     {
       name: history_menu
-      modifier: control
+      modifier: control_shift
       keycode: char_r
       mode: emacs
       event: { send: menu name: history_menu }
@@ -469,7 +475,7 @@ let-env config = {
     }
     {
       name: redo_or_next_page
-      modifier: 'control | shift'
+      modifier: control_shift
       keycode: char_z
       mode: emacs
       event: {
@@ -553,7 +559,7 @@ let-env config = {
       event: {
         send: executehostcommand
         cmd: "let-env temp_var = ($env | get -i temp_var | default 0 | $in + 1);
-        let custom_var = input 'enter variable name: ';
+        let custom_var = (input 'enter variable name: ');
         let name = (if $custom_var == "" {$env.temp_var | into string | 't' + $in} else {$custom_var});
         commandline ('let ' + ($name) + ' = (' + (commandline) + '); $' + ($name))"
       }
@@ -600,8 +606,18 @@ let-env config = {
       mode: emacs
       event:{
         send: executehostcommand,
-        # cmd: "cd (ls | where type == dir | each { |it| $it.name} | str collect (char nl) | fzf | decode utf-8 | str trim)"
+        # cmd: "cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)"
         cmd: "cd (fd --hidden --type directory --exclude .git --exclude node_modules | fzf)"
+      }
+    }
+    {
+      name: fuzzy_history
+      modifier: control
+      keycode: Char_r
+      mode: [emacs , vi_normal, vi_insert]
+      event: {
+        send: executehostcommand
+        cmd: "commandline (history | each { |it| $it.command } | uniq | reverse | str join  (char nl) | fzf --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --height=70% -q (commandline) | decode utf-8 | str trim)"
       }
     }
   ]
@@ -684,7 +700,7 @@ def fp [] {
 
 # histry with fzf
 def fh [] {
-  # let text = (history | reverse | get command | str collect (char nl) | fzf)
+  # let text = (history | reverse | get command | str join (char nl) | fzf)
   let text = (history | reverse | get command | to text | fzf)
   kbsend -text $text -currentWindow -charDelay 0
 }
@@ -732,7 +748,7 @@ def l [] {
 
 # ls sorted by extension
 def le [] {
-  ls | sort-by -i type name | insert ext { $in.name | path parse | get extension } | sort-by ext | reject ext type
+  ls | sort-by -i type name | insert ext {|| $in.name | path parse | get extension } | sort-by ext | reject ext type
 }
 
 # search for specific process
@@ -742,7 +758,7 @@ def psn [name: string] {
 
 # kill specified process in name
 def killn [name: string] {
-  ps | find $name | each {kill -f $in.pid}
+  ps | find $name | each {|| kill -f $in.pid }
 }
 
 # git checkout interactive
@@ -773,9 +789,9 @@ def ? [...terms] {
   if (
     which ($terms | first) | any { |it| $it.built-in or $it.path =~ ^Nushell }
   ) {
-    help ($terms | str collect " ")
+    help ($terms | str join " ")
   } else {
-    tldr ($terms | str collect "-")
+    tldr ($terms | str join "-")
   }
 }
 
@@ -909,7 +925,7 @@ def tr [
   } else {
     let from = if ($from | is-empty) {"en-US"} else {$from}
     let to = if ($to | is-empty) {"fr-FR"} else {$to}
-    let to_translate = ($search | str collect "%20")
+    let to_translate = ($search | str join "%20")
     let url = $"https://api.mymemory.translated.net/get?q=($to_translate)&langpair=($from)%7C($to)"
 
     http get $url
@@ -967,6 +983,12 @@ def-env up [nb: int = 1] {
 # make and cd into a directory
 def-env mcd [name: path] {
   mkdir $name ; cd $name
+}
+
+#cd to the folder where a binary is located
+def-env which-cd [program] {
+  let dir = (which $program | get path | path dirname)
+  cd $dir.0
 }
 
 # cd with tere(Terminal file explorer)

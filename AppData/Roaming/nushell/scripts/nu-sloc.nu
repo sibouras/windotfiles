@@ -2,7 +2,7 @@
 def 'nu-sloc' [] {
   let stats = (
     # ls **/*.nu
-    ls ([($nu.config-path | path dirname), '\*.nu'] | str collect)
+    ls ([($nu.config-path | path dirname), '\*.nu'] | str join)
       | select name
       | insert lines { |it| open $it.name | size | get lines }
       | insert blank {|s| $s.lines - (open $s.name | lines | find --regex '\S' | length) }
