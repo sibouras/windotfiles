@@ -85,13 +85,6 @@ return packer.startup(function(use)
     "anuvyklack/hydra.nvim",
     requires = "anuvyklack/keymap-layer.nvim", -- needed only for pink hydras
   })
-  use({
-    "glepnir/hlsearch.nvim",
-    -- event = "BufRead",
-    config = function()
-      require("hlsearch").setup()
-    end,
-  })
 
   -- Colorschemes
   use("folke/tokyonight.nvim")
