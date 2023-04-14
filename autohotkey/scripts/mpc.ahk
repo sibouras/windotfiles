@@ -9,16 +9,14 @@ ProcessExist(Name){
 }
 
 #If ProcessExist("mmtc.exe")
-  NumpadRight::Run % "cmd.exe /c mpc next",, hide
-  NumpadLeft::Run % "cmd.exe /c mpc prev",, hide
-  NumpadDel::Run % "cmd.exe /c mpc toggle",, hide
-  NumpadMult::Run % "cmd.exe /c mpc seek +5",, hide
-  NumpadDiv::Run % "cmd.exe /c mpc seek -5",, hide
-  NumpadPgUp::Run % "cmd.exe /c mpc volume +2",, hide
-  NumpadPgDn::Run % "cmd.exe /c mpc volume -2",, hide
-  NumpadAdd::Run % "cmd.exe /c mpc volume +2",, hide
-  NumpadSub::Run % "cmd.exe /c mpc volume -2",, hide
-  NumpadHome::Run % "cmd.exe /c mpc volume 70",, hide
+  NumpadRight::Run, cmd.exe /c mpc next,, hide
+  NumpadLeft::Run, cmd.exe /c mpc prev,, hide
+  NumpadDel::Run, cmd.exe /c mpc toggle,, hide
+  NumpadMult::Run, cmd.exe /c mpc seek +5,, hide
+  NumpadDiv::Run, cmd.exe /c mpc seek -5,, hide
+  NumpadPgUp::Run, cmd.exe /c mpc volume +2,, hide
+  NumpadPgDn::Run, cmd.exe /c mpc volume -2,, hide
+  NumpadAdd::Run, cmd.exe /c mpc volume +2,, hide
+  NumpadSub::Run, cmd.exe /c mpc volume -2,, hide
+  NumpadHome::Run, cmd.exe /c mpc volume 70,, hide
 #If
-
-!r::reload
