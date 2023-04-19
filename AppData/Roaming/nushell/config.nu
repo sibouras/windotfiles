@@ -283,7 +283,7 @@ let-env config = {
   use_grid_icons: true
   footer_mode: "25" # always, never, number_of_rows, auto
   float_precision: 2 # the precision for displaying floats in tables
-  buffer_editor: "nvim" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
+  buffer_editor: "helix" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
   use_ansi_coloring: true
   edit_mode: emacs # emacs, vi
   shell_integration: false # enables terminal markers and a workaround to arrow keys stop working issue
@@ -654,8 +654,12 @@ alias msedge = "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.ex
 
 ### Functions
 
-def t [] {
-  NVIM_APPNAME=nvimtest nvim
+def t [...args] {
+  if ($args | is-empty) {
+    NVIM_APPNAME=nvimtest nvim
+  } else {
+    NVIM_APPNAME=nvimtest nvim $args
+  }
 }
 
 def uptime [] {
@@ -906,6 +910,19 @@ def pwdss [sep: string = $"(char path_sep)"] {
   | path join
 }
 
+# Function querying free online English dictionary API for definition of given word(s)
+def dict [...word #word(s) to query the dictionary API but they have to make sense together like "martial law", not "cats dogs"
+] {
+  let query = ($word | str join %20)
+  let link = ('https://api.dictionaryapi.dev/api/v2/entries/en/' + $query)
+  let output = (http get -e $link | rename word)
+  if ($output.word == "No Definitions Found") {
+    echo $output.word
+  } else {
+    echo $output.meanings | flatten | get definitions  | flatten
+  }
+}
+
 # translate text using mymemmory api
 def tr [
   ...search:string  # search query
@@ -1023,7 +1040,6 @@ def-env br [args = "."] {
 }
 
 ### Scripts
-source ~/Appdata/Roaming/nushell/scripts/dict.nu
 source ~/Appdata/Roaming/nushell/scripts/format-number.nu
 source ~/Appdata/Roaming/nushell/scripts/nu-sloc.nu
 source ~/Appdata/Roaming/nushell/scripts/youtube.nu
