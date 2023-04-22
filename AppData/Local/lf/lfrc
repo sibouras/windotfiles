@@ -16,6 +16,8 @@ set ratios 1:1
 # Dual pane single column mode
 # set nopreview
 # set ratios 1
+map zn :set nopreview; set ratios 1
+map zp :set ratios 1:1; set preview
 
 # change the pager used in default pager keybinding
 # The standard pager used in Windows is 'more' which is not a very capable
