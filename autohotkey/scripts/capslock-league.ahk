@@ -31,6 +31,24 @@ CapsLock::Shift
 !2:: Run nircmd.exe mutesysvolume 0 "external microphone" ; Unmute
 ; !4:: Run nircmd.exe mutesysvolume 2 "external microphone"  ; Toggle
 
+!Esc::
+  league = ahk_exe League of Legends.exe
+  If not WinActive(league)
+    WinActivate, %league%
+return
+
+!f1::
+  firefox = ahk_class MozillaWindowClass
+  If not WinActive(firefox)
+    WinActivate, %firefox%
+return
+
+!f2::
+  spotify = ahk_exe spotify.exe
+  If not WinActive(spotify)
+    WinActivate, %spotify%
+return
+
 ; enter::
 ;   SetCapsLockState off
 ;   send, {enter}
