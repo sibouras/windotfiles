@@ -14,8 +14,8 @@ def format-number [ num ,
     }
   } | reverse | str join '')
 
-  let int_part_f2 = (if ($int_part_f | str substring '0,1') == $thousands_delim {
-    ($int_part_f | str substring '1,')
+  let int_part_f2 = (if ($int_part_f | str substring 0..1) == $thousands_delim {
+    ($int_part_f | str substring 1..)
   } else {
     $int_part_f
   } )
@@ -23,7 +23,7 @@ def format-number [ num ,
   let digits_after_dot = ($decimal_digits + 2)
 
   let dec_part = if $decimal_digits == 0 {""} else {
-    ($num mod 1) | math round -p $decimal_digits | into string | str substring $"1,($digits_after_dot)"
+    ($num mod 1) | math round -p $decimal_digits | into string | str substring 1..($digits_after_dot)
   }
 
   $"(ansi green)($int_part_f2)($dec_part)(ansi reset)(ansi green_bold)($"($denom)")(ansi reset)"
