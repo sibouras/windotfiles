@@ -617,7 +617,7 @@ def fs [] {
 
 # preview with fzf
 def fp [] {
-  fd -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | ignore
+  fd -H -t f -E .git -E node_modules | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | ignore
 }
 
 # histry with fzf
@@ -963,13 +963,13 @@ def-env "path-add" [
   --prepend(-p) # prepend instead of appending.
   ...paths # the paths to add
   ] {
-  let-env Path = if $prepend {
-    ($env.Path | prepend  $paths)
-  } else {
-    ($env.Path | append $paths)
-  }
+  let path_name = if "PATH" in $env { "PATH" } else { "Path" }
+  let-env $path_name = (
+    $env | get $path_name
+    | if $prepend { prepend $paths } else { append $paths }
+  )
   if $ret {
-    $env.Path
+    $env | get $path_name
   }
 }
 
