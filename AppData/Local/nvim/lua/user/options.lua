@@ -61,7 +61,7 @@ vim.opt.shortmess:append("c") -- don't show the dumb matching stuff
 -- vim.opt.concealcursor:append("nc")
 -- view: When you jump around, or switch buffers with ctrl-^ the viewport is
 -- restored instead of resetting/recentering vertically.
-vim.opt.jumpoptions:append("stack,view") -- stack:browser-like jumplist behavior
+vim.opt.jumpoptions:append("stack") -- stack:browser-like jumplist behavior
 vim.opt.diffopt:append("linematch:60")
 vim.opt.path:append("**") -- find files recursively
 vim.opt.wildignore = {

@@ -65,11 +65,36 @@ augroup END
 
 -- keep window position when switching buffers
 -- https://stackoverflow.com/questions/4251533/vim-keep-window-position-when-switching-buffers
--- replaced with :set jumpoptions=view (added in 0.8)
--- vim.cmd([[
---   au BufLeave * let b:winview = winsaveview()
---   au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
--- ]])
+-- https://vim.fandom.com/wiki/Avoid_scrolling_when_switch_buffers
+-- can be replaced with :set jumpoptions=view (added in 0.8) but `:b buffer` doesn't reset the view
+vim.cmd([[
+" Save current view settings on a per-window, per-buffer basis.
+function! AutoSaveWinView()
+  if !exists("w:SavedBufView")
+    let w:SavedBufView = {}
+  endif
+  let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+" Restore current view settings.
+function! AutoRestoreWinView()
+  let buf = bufnr("%")
+  if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+    let v = winsaveview()
+    let atStartOfFile = v.lnum == 1 && v.col == 0
+    if atStartOfFile && !&diff
+      call winrestview(w:SavedBufView[buf])
+    endif
+    unlet w:SavedBufView[buf]
+  endif
+endfunction
+
+" When switching buffers, preserve window view.
+if v:version >= 700
+  autocmd BufLeave * call AutoSaveWinView()
+  autocmd BufEnter * call AutoRestoreWinView()
+endif
+]])
 
 -- source: https://github.com/ecosse3/nvim/blob/master/lua/autocmds.lua
 -- Disable diagnostics in node_modules (0 is current buffer only)
