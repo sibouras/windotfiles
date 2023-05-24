@@ -66,6 +66,15 @@ H = "extend_char_left"
 # K = "extend_line_up"
 L = "extend_char_right"
 
+X = "extend_line_above"
+B = "extend_prev_word_start"
+W = "extend_next_word_start"
+
+g.i = "goto_first_nonwhitespace"
+g.I = "extend_to_first_nonwhitespace"
+g.L = "extend_to_line_end"
+g.H = "extend_to_line_start"
+
 [keys.insert]
 C-a = "goto_line_start"
 C-e = "goto_line_end_newline"
