@@ -59,7 +59,7 @@ ls.add_snippets(nil, {
 })
 
 vim.keymap.set({ "i", "s" }, "<C-j>", function()
-  if ls.expand_or_jumpable() then
+  if ls.expand_or_locally_jumpable() then
     ls.expand_or_jump()
   end
   -- if ls.jumpable(1) then
@@ -68,7 +68,7 @@ vim.keymap.set({ "i", "s" }, "<C-j>", function()
 end, { silent = true })
 
 vim.keymap.set({ "i", "s" }, "<C-k>", function()
-  if ls.jumpable(-1) then
+  if ls.locally_jumpable(-1) then
     ls.jump(-1)
   end
 end, { silent = true })
@@ -86,3 +86,29 @@ vim.keymap.set({ "i", "s" }, "<C-h>", function()
 end)
 
 -- vim.keymap.set("n", "<leader>s", ":source $LOCALAPPDATA/nvim/lua/user/luasnip.lua<CR>")
+
+-- forget the current snippet when leaving the insert mode
+-- https://github.com/L3MON4D3/LuaSnip/issues/747#issuecomment-1406946217
+vim.api.nvim_create_autocmd("CursorMovedI", {
+  pattern = "*",
+  callback = function(ev)
+    if not ls.session or not ls.session.current_nodes[ev.buf] or ls.session.jump_active then
+      return
+    end
+
+    local current_node = ls.session.current_nodes[ev.buf]
+    local current_start, current_end = current_node:get_buf_position()
+    current_start[1] = current_start[1] + 1 -- (1, 0) indexed
+    current_end[1] = current_end[1] + 1 -- (1, 0) indexed
+    local cursor = vim.api.nvim_win_get_cursor(0)
+
+    if
+      cursor[1] < current_start[1]
+      or cursor[1] > current_end[1]
+      or cursor[2] < current_start[2]
+      or cursor[2] > current_end[2]
+    then
+      ls.unlink_current()
+    end
+  end,
+})
