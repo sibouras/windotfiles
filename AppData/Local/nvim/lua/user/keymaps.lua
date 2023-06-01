@@ -490,7 +490,15 @@ map("n", "<leader>b", ":Telescope buffers<CR>")
 map("n", "<leader>fe", ":Telescope resume<CR>")
 map("n", "<leader>fs", ":Telescope find_files<CR>")
 map("n", "<leader>fr", ":Telescope registers<CR>")
-map("n", "<leader>fo", ":Telescope oldfiles<CR>")
+-- improve oldfiles sorting
+-- https://github.com/nvim-telescope/telescope.nvim/issues/2539
+map("n", "<leader>fo", function()
+  require("telescope.builtin").oldfiles({
+    tiebreak = function(current_entry, existing_entry, _)
+      return current_entry.index < existing_entry.index
+    end,
+  })
+end)
 map("n", "<leader>fv", ":Telescope vim_options<CR>")
 map("n", "<leader>fg", ":Telescope live_grep<CR>")
 map("n", "<leader>fk", ":Telescope keymaps<CR>")
