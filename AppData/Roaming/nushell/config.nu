@@ -178,6 +178,7 @@ let-env config = {
     max_size: 20000 # Session has to be reloaded for this to take effect
     sync_on_enter: true # Enable to share history between multiple sessions, else you have to close the session to write history to file
     file_format: "plaintext" # "sqlite" or "plaintext"
+    history_isolation: false # true enables history isolation, false disables it. true will allow the history to be isolated to the current session. false will allow the history to be shared across all sessions.
   }
   completions: {
     case_sensitive: false # set to true to enable case-sensitive completions
@@ -572,12 +573,8 @@ alias b = buku --suggest
 
 ### Functions
 
-def t [...args] {
-  if ($args | is-empty) {
-    NVIM_APPNAME=nvimtest nvim
-  } else {
-    NVIM_APPNAME=nvimtest nvim $args
-  }
+extern t [...args] {
+  NVIM_APPNAME=nvimtest nvim $args
 }
 
 def uptime [] {
@@ -808,7 +805,11 @@ def pwds [] {
 }
 
 # shorter pwd
-def pwdss [sep: string = $"(char path_sep)"] {
+def pwdss [sep?: string] {
+  let sep = (if ($sep | is-empty) {
+    char path_sep
+  } else { $sep })
+
   let tokens = (
     ["!" $env.PWD] | str join
     | str replace -s (["!" $nu.home-path] | str join) "~"
