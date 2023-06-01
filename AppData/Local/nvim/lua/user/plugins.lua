@@ -138,6 +138,7 @@ return packer.startup(function(use)
   use("windwp/nvim-ts-autotag")
   -- use("m-demare/hlargs.nvim") -- use semantic tokens instead
   -- use("p00f/nvim-ts-rainbow")
+  use("Wansmer/treesj")
 
   -- Git
   use("lewis6991/gitsigns.nvim")
