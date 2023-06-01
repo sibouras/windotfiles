@@ -204,7 +204,7 @@ let-env config = {
   use_grid_icons: true
   footer_mode: "25" # always, never, number_of_rows, auto
   float_precision: 2 # the precision for displaying floats in tables
-  buffer_editor: "helix" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
+  buffer_editor: "hx" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
   use_ansi_coloring: true
   edit_mode: emacs # emacs, vi
   shell_integration: false # enables terminal markers and a workaround to arrow keys stop working issue
@@ -523,7 +523,7 @@ let-env config = {
     {
       name: change_dir_with_fzf
       modifier: control
-      keycode: char_f
+      keycode: char_d
       mode: emacs
       event:{
         send: executehostcommand,
@@ -539,6 +539,16 @@ let-env config = {
       event: {
         send: executehostcommand
         cmd: "commandline (history | each { |it| $it.command } | uniq | reverse | str join  (char nl) | fzf --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --height=70% -q (commandline) | decode utf-8 | str trim)"
+      }
+    }
+    {
+      name: fuzzy_file
+      modifier: control
+      keycode: char_f
+      mode: [emacs, vi_normal, vi_insert]
+      event: {
+        send: executehostcommand
+        cmd: "commandline -a (fd --hidden --type file -E .git | fzf)"
       }
     }
   ]
@@ -569,6 +579,7 @@ alias sfsl = sfsu list
 # alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
 alias vd = VirtualDesktop11
 alias b = buku --suggest
+alias timeitt = commandline $"timeit {(history | last 1 | first | get command)}" # a shortcut to apply timeit to the previous command
 
 
 ### Functions
@@ -621,7 +632,8 @@ def fp [] {
 def fh [] {
   # let text = (history | reverse | get command | str join (char nl) | fzf)
   let text = (history | reverse | get command | to text | fzf)
-  kbsend -text $text -currentWindow -charDelay 0
+  # kbsend -text $text -currentWindow -charDelay 0
+  commandline $text
 }
 
 def fe [] {
@@ -658,6 +670,10 @@ def ld [
   } else {
     ls | sort-by modified -r | select name size modified
   }
+}
+
+def lsg [] {
+  ls | sort-by type name -i | grid -c
 }
 
 # ls by type
