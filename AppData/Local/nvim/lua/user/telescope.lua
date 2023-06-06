@@ -13,10 +13,19 @@ telescope.setup({
     path_display = { "shorten" },
     file_ignore_patterns = { ".git\\", "node_modules", "^.nvim" },
     sorting_strategy = "ascending",
+    layout_strategy = "flex",
     layout_config = {
       height = 0.9,
       prompt_position = "top",
-      preview_cutoff = 100,
+      -- preview_cutoff = 100,
+      horizontal = {
+        preview_width = 0.5,
+      },
+      vertical = {
+        mirror = true,
+        preview_cutoff = 30,
+        -- preview_height = 0.5,
+      },
     },
     preview = {
       hide_on_startup = true, -- hide previewer when picker starts
@@ -118,7 +127,7 @@ telescope.setup({
       layout_strategy = "vertical",
       layout_config = { height = 0.95 },
       preview = {
-        hide_on_startup = false, -- hide previewer when picker starts
+        hide_on_startup = false,
       },
       path_display = { "tail" },
       show_line = true,
@@ -158,9 +167,14 @@ telescope.setup({
       -- theme = "dropdown",
       -- layout_strategy = "vertical",
       -- layout_config = { height = 0.95 },
-      -- preview = {
-      --   hide_on_startup = false, -- hide previewer when picker starts
-      -- },
+      layout_config = {
+        vertical = {
+          preview_height = 0.2,
+        },
+      },
+      preview = {
+        hide_on_startup = false,
+      },
       register = '"',
       maps = {
         i = {
@@ -180,6 +194,20 @@ telescope.load_extension("ui-select")
 telescope.load_extension("workspaces")
 telescope.load_extension("fzf")
 telescope.load_extension("recent_files")
--- telescope.load_extension("tailiscope")
--- vim.keymap.set("n", "<leader>fi", "<CMD>Telescope tailiscope<CR>")
+-- telescope.load_extension("tailiscope") -- tailiscope is loaded automatically
 vim.keymap.set("i", "<M-C-S-F6>", "<CMD>Telescope tailiscope classes<CR>")
+vim.keymap.set("n", "<leader>fi", function()
+  require("telescope").extensions.tailiscope.base(require("telescope.themes").get_dropdown({
+    initial_mode = "normal",
+    layout_strategy = "vertical",
+    layout_config = {
+      height = 0.95,
+      vertical = {
+        preview_height = 0.45,
+      },
+    },
+    preview = {
+      hide_on_startup = false,
+    },
+  }))
+end)
