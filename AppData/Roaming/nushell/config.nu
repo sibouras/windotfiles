@@ -619,37 +619,39 @@ def color [idx: int] {
   ansi -e ( ["2;15;", ($idx | into string), (",|") ] | str join )
 }
 
-def fs [] {
-  fd -H -t f -E .git | fzf | str trim
+# search for files with fd and preview them with fzf
+extern fs [...args] {
+  fd $args -H -t f -E .git | fzf --multi --ansi | str trim | lines
 }
 
-# preview with fzf
-def fp [] {
-  fd -H -t f -E .git -E node_modules | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | ignore
+# search for files with fd and preview them with fzf and open them with nvim
+extern fe [...args] {
+  # let file = (fd -H -e txt -e json -e js -e jsx -e ts -e tsx -e css -e html -e md -e lua | fzf --multi --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim | lines)
+  let files = (fs ($args | to text))
+  if not ($files | is-empty) {
+    nvim $files
+  }
+}
+
+# search for media files with fd and fzf and open them with mpv
+extern fm [...args] {
+  let files = (fd $args -e mp4 -e webm -e mkv -e gif | fzf --multi | str trim | lines)
+  if not ($files | is-empty) {
+    let full_path = ($files | each {|it| $"($env.PWD)\\($it)"})
+    mpv $full_path
+  }
+}
+
+# preview files with fzf
+extern fp [...args] {
+  fd $args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim | lines
 }
 
 # histry with fzf
 def fh [] {
-  # let text = (history | reverse | get command | str join (char nl) | fzf)
   let text = (history | reverse | get command | to text | fzf)
   # kbsend -text $text -currentWindow -charDelay 0
   commandline $text
-}
-
-def fe [] {
-  # let file = (fd -H -t f -E .git | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim)
-  let file = (fd -H -e txt -e json -e js -e jsx -e ts -e tsx -e css -e html -e md -e lua | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim)
-  if ($file != '') {
-    nvim $file
-  }
-}
-
-# search for media file with fzf and open it with mpv
-def fm [] {
-  let file = (fd --absolute-path -e mp4 -e webm -e mkv -e gif | fzf | decode utf-8 | str trim)
-  if ($file != '') {
-    mpv $file
-  }
 }
 
 # get aliases
