@@ -926,6 +926,21 @@ def "keybindings config" [] {
   | parse -r "[^#].*name: (?P<name>.*)\n.*modifier: (?P<modifier>.*)\n.*keycode: (?P<key>.*)"
 }
 
+# get windows service status
+def get-win-svc [] {
+  sc queryex type=service state=all |
+  collect {|x| $x |
+    parse -r '(?m)SERVICE_NAME:\s*(?<svc>\w*)\s*DISPLAY_NAME:\s*(?<dsp>.*)\s*TYPE\s*:\s*(?<type>[\da-f]*)\s*(?<typename>\w*)?\s*\s*STATE\s*:\s*(?<state>\d)\s*(?<status>\w*)\s*(?<state_opts>\(.*\))?\s*?WIN32_EXIT_CODE\s*:\s*(?<exit>\d*).*\s*SERVICE_EXIT_CODE\s*:\s*(?<svc_exit>\d)\s*.*\s*CHECKPOINT\s*:\s*(?<chkpt>.*)\s*WAIT_HINT\s*:\s(?<wait>.*)\s*PID\s*:\s*(?<pid>\d*)\s*FLAGS\s*:\s(?<flags>.*)?' |
+    upsert status {|s|
+      if $s.status == RUNNING {
+        $"(ansi green)●(ansi reset)"
+      } else {
+        $"(ansi red)●(ansi reset)"
+      }
+    } | into int state exit svc_exit chkpt wait pid
+  }
+}
+
 # go up n directories
 def-env up [nb: int = 1] {
   let path = (1..$nb | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
