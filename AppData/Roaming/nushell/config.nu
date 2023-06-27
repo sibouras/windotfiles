@@ -751,11 +751,10 @@ def show_banner [] {
     "'|, . ,'  "
     ' !_-(_\   '
   ]
-  let s = (sys)
   print $"(ansi reset)(ansi green)($ellie.0)"
   print $"(ansi green)($ellie.1)  (ansi yellow) (ansi yellow_bold)Nushell (ansi reset)(ansi yellow)v(version | get version)(ansi reset)"
-  print $"(ansi green)($ellie.2)  (ansi light_blue) (ansi light_blue_bold)RAM (ansi reset)(ansi light_blue)($s.mem.used) / ($s.mem.total)(ansi reset)"
-  print $"(ansi green)($ellie.3)  (ansi light_purple)ﮫ (ansi light_purple_bold)Uptime (ansi reset)(ansi light_purple)($s.host.uptime)(ansi reset)"
+  print $"(ansi green)($ellie.2)  (ansi light_blue) (ansi light_blue_bold)RAM (ansi reset)(ansi light_blue)((sys).mem.used) / ((sys).mem.total)(ansi reset)"
+  print $"(ansi green)($ellie.3)  (ansi light_purple)ﮫ (ansi light_purple_bold)Uptime (ansi reset)(ansi light_purple)((sys).host.uptime)(ansi reset)"
 }
 
 # green echo
@@ -810,7 +809,7 @@ def mvr [
 }
 
 # last n elements in history with highlight(default 100)
-def h [n = 100] {
+def h [n = 20] {
   history | last $n | update command { |f| $f.command | nu-highlight }
 }
 
@@ -943,7 +942,7 @@ def get-win-svc [] {
 
 # go up n directories
 def-env up [nb: int = 1] {
-  let path = (1..$nb | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
+  let path = (1..($nb) | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
   cd $path
 }
 
