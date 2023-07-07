@@ -42,7 +42,33 @@ map("x", "gw", [[y/\V<C-R>"<CR>N]])
 -- default behaviour, use `bufexists` in it's place.
 -- map("n", "<M-w>", ":<C-u>exe v:count ? v:count . 'b' : 'keepjumps b' . (bufloaded(0) ? '#' : 'n')<CR>")
 -- map("i", "<M-w>", "<C-o>:keepjumps b#<CR>")
-map({ "n", "i" }, "<M-w>", "<Cmd>keepjumps normal <CR>")
+-- this switches to the last used buffer even if its deleted
+-- map({ "n", "i" }, "<M-w>", "<Cmd>keepjumps normal <CR>")
+
+-- switch to the most recent buffer that's not deleted
+map({ "n", "i" }, "<M-w>", function()
+  local curbufnr = vim.api.nvim_get_current_buf()
+  local buflist = vim.tbl_filter(function(buf)
+    return vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted and buf ~= curbufnr
+  end, vim.api.nvim_list_bufs())
+
+  -- table is empty if buffers are not loaded
+  if #buflist == 0 then
+    vim.cmd("keepjumps b#")
+  else
+    local switch_bufnr
+    local switch_bufnr_lastused = -1
+    for _, bufnr in pairs(buflist) do
+      local bufinfo = vim.fn.getbufinfo(bufnr)[1]
+      if bufinfo.lastused > switch_bufnr_lastused then
+        switch_bufnr = bufnr
+        switch_bufnr_lastused = bufinfo.lastused
+      end
+    end
+    vim.cmd("keepjumps b" .. switch_bufnr)
+  end
+end)
+
 map("n", "<M-d>", "<Cmd>Bdelete<CR>", { desc = "delete buffer" })
 map("n", "<M-c>", "<Cmd>Bwipeout<CR>", { desc = "wipeout buffer" })
 -- map("n", "<M-D>", ":%bd <bar> e# <bar> bd#<CR>", { desc = "close all but current buffer" })
