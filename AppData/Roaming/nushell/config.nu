@@ -653,10 +653,8 @@ def fh [] {
 }
 
 # get aliases
-# def get-aliases [] {
-#   open $nu.config-path | lines | find alias | find -v aliases | split column '=' | select column1 column2 | rename Alias Command | update Alias {|f| $f.Alias | split row ' ' | last} | sort-by Alias
-# }
 def get-aliases [] {
+  # open $nu.config-path | lines | find alias | find -v aliases | split column '=' | select column1 column2 | rename Alias Command | update Alias {|f| $f.Alias | split row ' ' | last} | sort-by Alias
   $nu | get scope | get aliases | update expansion { |c| $c.expansion | nu-highlight }
 }
 
@@ -732,7 +730,7 @@ def ? [...terms] {
 
 # Return random element from a list or a table
 def get-random-entry [input] {
-  $input |get (random integer 0..(($input|length) - 1))
+  $input | get (random integer 0..(($input|length) - 1))
 }
 
 # Shortcut function and competitions to search for commands in the selected category of nushell
@@ -943,8 +941,9 @@ def get-win-svc [] {
 
 # go up n directories
 def-env up [nb: int = 1] {
-  let path = (1..($nb) | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
-  cd $path
+  # let path = (1..($nb) | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
+  # cd $path
+  [".."] * $nb | path join | cd $in
 }
 
 # make and cd into a directory
