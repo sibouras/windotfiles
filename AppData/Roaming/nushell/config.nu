@@ -538,7 +538,7 @@ let-env config = {
       mode: [emacs , vi_normal, vi_insert]
       event: {
         send: executehostcommand
-        cmd: "commandline (history | each { |it| $it.command } | uniq | reverse | str join  (char nl) | fzf --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --height=70% -q (commandline) | decode utf-8 | str trim)"
+        cmd: "commandline (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
       }
     }
     {
@@ -649,9 +649,7 @@ extern fp [...args] {
 
 # histry with fzf
 def fh [] {
-  let text = (history | reverse | get command | to text | fzf)
-  # kbsend -text $text -currentWindow -charDelay 0
-  commandline $text
+  commandline (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --tiebreak=chunk --layout=reverse --multi  | decode utf-8 | str trim)
 }
 
 # get aliases
@@ -812,7 +810,8 @@ def mvr [
 
 # last n elements in history with highlight(default 100)
 def h [n = 20] {
-  history | last $n | update command { |f| $f.command | nu-highlight }
+  # history | last $n | update command { |f| $f.command | nu-highlight }
+  history | each { |it| $it.command } | uniq | last $n | each { |it| $it | nu-highlight }
 }
 
 
