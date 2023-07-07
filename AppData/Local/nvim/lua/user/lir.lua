@@ -54,7 +54,7 @@ lir.setup({
     ["P"] = clipboard_actions.paste,
 
     ["p"] = function()
-      local dir = vim.fn.expand("%:p"):gsub(os.getenv('USERPROFILE'), "~")
+      local dir = vim.fn.expand("%:p"):gsub(os.getenv("USERPROFILE"), "~")
       print(dir)
     end,
 
@@ -73,23 +73,14 @@ lir.setup({
     win_opts = function()
       local screen_w = vim.opt.columns:get()
       local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
-      local _width = screen_w * 0.5
+      local _width = screen_w * 0.6
       local _height = screen_h * 0.8
       local width = math.floor(_width)
       local height = math.floor(_height)
       local center_y = ((vim.opt.lines:get() - _height) / 2) - vim.opt.cmdheight:get()
       local center_x = (screen_w - _width) / 2
       return {
-        border = {
-          "+",
-          "─",
-          "+",
-          "│",
-          "+",
-          "─",
-          "+",
-          "│",
-        },
+        border = "rounded",
         row = center_y,
         col = center_x,
         width = width,

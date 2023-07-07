@@ -241,8 +241,10 @@ end
 
 --> netrw gx replacement to  open in browser
 function M.open_in_browser()
-  -- support comma or semicolon at the end of line
-  local url = string.match(vim.fn.expand("<cWORD>"), "https?://[%w-_%.%?%.:/%+=&]+[^ >\"',;`]*")
+  -- support comma or semicolon at the end of line(matches `)` at the end)
+  -- local url = string.match(vim.fn.expand("<cWORD>"), "https?://[%w-_%.%?%.:/%+=&]+[^ >\"',;`]*")
+  -- new pattern
+  local url = string.match(vim.fn.expand("<cWORD>"), "https?://[A-Za-z0-9_%-/.#%%=?&]+")
   if url ~= nil then
     if vim.fn.has("win32") == 1 then
       vim.cmd(("silent !start %s"):format(url))

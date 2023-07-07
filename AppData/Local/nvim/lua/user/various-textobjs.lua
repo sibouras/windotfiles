@@ -38,8 +38,18 @@ map({ "o", "x" }, "iv", "<Cmd>lua require('various-textobjs').value(true)<CR>")
 map({ "o", "x" }, "ac", "<Cmd>lua require('various-textobjs').cssSelector(false)<CR>")
 map({ "o", "x" }, "ic", "<Cmd>lua require('various-textobjs').cssSelector(true)<CR>")
 -- html attribute
-map({ "o", "x" }, "ax", "<Cmd>lua require('various-textobjs').htmlAttribute(false)<CR>")
-map({ "o", "x" }, "ix", "<Cmd>lua require('various-textobjs').htmlAttribute(true)<CR>")
+map(
+  { "o", "x" },
+  "ax",
+  "<Cmd>lua require('various-textobjs').htmlAttribute(false)<CR>",
+  { desc = "outer html attribute" }
+)
+map(
+  { "o", "x" },
+  "ix",
+  "<Cmd>lua require('various-textobjs').htmlAttribute(true)<CR>",
+  { desc = "inner html attribute" }
+)
 
 -- exception: indentation textobj requires two parameters, first for exclusion of the
 -- starting border, second for the exclusion of ending border
