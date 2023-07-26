@@ -423,7 +423,7 @@ let-env config = {
       mode: emacs
       event: {
         until: [
-          {edit: pastecutbufferafter}
+          { edit: pastecutbufferafter }
         ]
       }
     }
@@ -434,7 +434,7 @@ let-env config = {
       mode: [emacs, vi_normal, vi_insert]
       event: {
         until: [
-          {edit: cutfromlinestart}
+          { edit: cutfromlinestart }
         ]
       }
     }
@@ -445,7 +445,7 @@ let-env config = {
       mode: [emacs, vi_normal, vi_insert]
       event: {
         until: [
-          {edit: cuttolineend}
+          { edit: cuttolineend }
         ]
       }
     }
@@ -459,6 +459,13 @@ let-env config = {
           { edit: CutCurrentLine }
         ]
       }
+    }
+    {
+      name: insert_newline
+      modifier: control
+      keycode: char_j
+      mode: emacs
+      event: { edit: insertnewline }
     }
     {
       name: swap_words
@@ -820,7 +827,7 @@ def mvr [
 # last n elements in history with highlight(default 100)
 def h [n = 20] {
   # history | last $n | update command { |f| $f.command | nu-highlight }
-  history | each { |it| $it.command } | uniq | last $n | each { |it| $it | nu-highlight }
+  history | each { |it| $it.command } | uniq | last $n | each { |it| $it | nu-highlight } | wrap command
 }
 
 
