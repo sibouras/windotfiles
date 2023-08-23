@@ -94,7 +94,7 @@ let dark_theme = {
 
 
 # The default config record. This is where much of your global configuration is setup.
-let-env config = {
+$env.config = {
   show_banner: false # true or false to enable or disable the banner
   ls: {
     use_ls_colors: true # use the LS_COLORS environment variable to colorize output
@@ -188,7 +188,7 @@ let-env config = {
     max_size: 100_000 # Session has to be reloaded for this to take effect
     sync_on_enter: true # Enable to share history between multiple sessions, else you have to close the session to write history to file
     file_format: "plaintext" # "sqlite" or "plaintext"
-    isolation: false # true enables history isolation, false disables it. true will allow the history to be isolated to the current session. false will allow the history to be shared across all sessions.
+    isolation: false # only available with sqlite file_format. true enables history isolation, false disables it. true will allow the history to be isolated to the current session using up/down arrows. false will allow the history to be shared across all sessions.
   }
   completions: {
     case_sensitive: false # set to true to enable case-sensitive completions
@@ -496,7 +496,7 @@ let-env config = {
       mode: [emacs , vi_normal, vi_insert]
       event: {
         send: executehostcommand
-        cmd: "let-env temp_var = ($env | get -i temp_var | default 0 | $in + 1);
+        cmd: "$env.temp_var = ($env | get -i temp_var | default 0 | $in + 1);
         let custom_var = (input 'enter variable name: ');
         let name = (if $custom_var == "" {$env.temp_var | into string | 't' + $in} else {$custom_var});
         commandline ('let ' + ($name) + ' = (' + (commandline) + '); $' + ($name))"
@@ -601,7 +601,7 @@ alias timeitt = commandline $"timeit {(history | last 1 | first | get command)}"
 
 ### Functions
 
-extern t [...args] {
+extern-wrapped t [...args] {
   NVIM_APPNAME=nvimtest nvim $args
 }
 
@@ -638,12 +638,12 @@ def color [idx: int] {
 }
 
 # search for files with fd and preview them with fzf
-extern fs [...args] {
+extern-wrapped fs [...args] {
   fd $args -H -t f -E .git | fzf --multi --ansi | str trim | lines
 }
 
 # search for files with fd and preview them with fzf and open them with nvim
-extern fe [...args] {
+extern-wrapped fe [...args] {
   # let file = (fd -H -e txt -e json -e js -e jsx -e ts -e tsx -e css -e html -e md -e lua | fzf --multi --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim | lines)
   let files = (fs ($args | to text))
   if not ($files | is-empty) {
@@ -652,7 +652,7 @@ extern fe [...args] {
 }
 
 # search for media files with fd and fzf and open them with mpv
-extern fm [...args] {
+extern-wrapped fm [...args] {
   let files = (fd $args -e mp4 -e webm -e mkv -e gif | fzf --multi | str trim | lines)
   if not ($files | is-empty) {
     let full_path = ($files | each {|it| $"($env.PWD)\\($it)"})
@@ -661,7 +661,7 @@ extern fm [...args] {
 }
 
 # preview files with fzf
-extern fp [...args] {
+extern-wrapped fp [...args] {
   fd $args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim | lines
 }
 
@@ -738,7 +738,7 @@ def gl [count: int = 10] {
 # Universal help command, combining https://tldr.sh/ with nushell’s help for built-ins:
 def ? [...terms] {
   if (
-    which ($terms | first) | any { |it| $it.built-in or $it.path =~ ^Nushell }
+    which ($terms | first) | any { |it| $it.type != external or $it.path =~ ^Nushell }
   ) {
     help ($terms | str join " ")
   } else {
@@ -1013,7 +1013,7 @@ def-env "path-add" [
   ...paths # the paths to add
   ] {
   let path_name = if "PATH" in $env { "PATH" } else { "Path" }
-  let-env $path_name = (
+  $env.$path_name = (
     $env | get $path_name
     | if $prepend { prepend $paths } else { append $paths }
   )
