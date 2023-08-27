@@ -111,11 +111,13 @@ $env.config = {
     index_mode: always # "always" show indexes, "never" show indexes, "auto" = show indexes when a table has "index" column
     # A strategy of managing table view in case of limited space.
     show_empty: true # show 'empty list' and 'empty record' placeholders for command output
+    padding: { left: 1, right: 1 } # a left right padding of each column in a table
     trim: {
       methodology: wrapping # wrapping or truncating
       wrapping_try_keep_words: true # A strategy used by the 'wrapping' methodology
       truncating_suffix: "..." # A suffix used by the 'truncating' methodology
     }
+    header_on_separator: false # show header text on separator/border line
   }
 
   # datetime_format determines what a datetime rendered in the shell would look like.
@@ -155,7 +157,7 @@ $env.config = {
     table: {
       split_line: '#404040'
 
-      cursor: true
+      show_cursor: true
 
       line_index: true
       line_shift: true
@@ -833,7 +835,7 @@ def h [n = 20] {
 
 # short pwd
 def pwds [] {
-  $env.PWD | str replace $nu.home-path '~' -s
+  $env.PWD | str replace $nu.home-path '~'
 }
 
 # shorter pwd
@@ -844,7 +846,7 @@ def pwdss [sep?: string] {
 
   let tokens = (
     ["!" $env.PWD] | str join
-    | str replace -s (["!" $nu.home-path] | str join) "~"
+    | str replace (["!" $nu.home-path] | str join) "~"
     | split row $sep
   )
 

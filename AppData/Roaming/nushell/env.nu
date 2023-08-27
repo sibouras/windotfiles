@@ -2,9 +2,9 @@
 
 def create_left_prompt [] {
     let path_segment = if (is-admin) {
-      $" (ansi red_bold)($env.PWD | str replace $nu.home-path '~' -s)"
+      $" (ansi red_bold)($env.PWD | str replace $nu.home-path '~')"
     } else {
-      $" (ansi green_bold)($env.PWD | str replace $nu.home-path '~' -s)"
+      $" (ansi green_bold)($env.PWD | str replace $nu.home-path '~')"
     }
 
     let duration_segment = (do {
@@ -27,7 +27,7 @@ def create_left_prompt [] {
 
 def create_right_prompt [] {
     let time_segment = ([
-      (date now | date format '%m/%d/%Y %r')
+      (date now | format date '%m/%d/%Y %r')
     ] | str join)
 
     $time_segment
