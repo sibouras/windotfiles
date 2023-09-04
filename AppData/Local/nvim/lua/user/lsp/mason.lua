@@ -250,3 +250,10 @@ lspconfig.rust_analyzer.setup({
   capabilities = opts.capabilities,
   cmd = { "rustup", "run", "stable", "rust-analyzer" },
 })
+
+lspconfig.denols.setup({
+  on_attach = opts.on_attach,
+  capabilities = opts.capabilities,
+  cmd = { "deno", "lsp" },
+  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+})

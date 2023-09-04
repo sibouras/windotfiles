@@ -131,6 +131,10 @@ M.on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
   end
 
+  if client.name == "denols" then
+    require("null-ls").disable("prettierd")
+  end
+
   lsp_keymaps(bufnr)
 end
 
