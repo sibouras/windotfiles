@@ -203,7 +203,7 @@ end
 
 --> Go To URL
 function M.go_to_url(cmd)
-  local url = vim.api.nvim_get_current_line():match([[%[.*]%((.*)%)]]) -- markdown links
+  local url = vim.api.nvim_get_current_line():match([[%[.*]%((.%S+)%)]]) -- markdown links
   if url == nil then
     return
   end
@@ -216,7 +216,7 @@ function M.go_to_url(cmd)
       keepjumps normal! gf
     ]])
   else
-    vim.cmd("silent !" .. cmd .. " " .. url)
+    os.execute(cmd .. " " .. url)
   end
 end
 
@@ -244,10 +244,11 @@ function M.open_in_browser()
   -- support comma or semicolon at the end of line(matches `)` at the end)
   -- local url = string.match(vim.fn.expand("<cWORD>"), "https?://[%w-_%.%?%.:/%+=&]+[^ >\"',;`]*")
   -- new pattern
-  local url = string.match(vim.fn.expand("<cWORD>"), "https?://[A-Za-z0-9_%-/.#%%=?&]+")
+  -- INFO mastodon URLs contain `@`, neovim docs urls can contain a `'`
+  local url = string.match(vim.fn.expand("<cWORD>"), "https?://[A-Za-z0-9_%-/.#%%=?&'@]+")
   if url ~= nil then
     if vim.fn.has("win32") == 1 then
-      vim.cmd(("silent !start %s"):format(url))
+      os.execute(("start %s"):format(url))
     else
       vim.cmd(('silent !xdg-open "%s"'):format(url))
     end
