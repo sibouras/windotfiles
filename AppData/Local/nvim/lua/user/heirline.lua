@@ -760,7 +760,7 @@ local WinBars = {
     end,
     utils.surround({ "", "" }, "dark_bg", FileNameBlock),
     { provider = "%<" }, -- this means that the winbar is cut here when there's not enough space
-    Navic,
+    -- Navic,
   },
 }
 

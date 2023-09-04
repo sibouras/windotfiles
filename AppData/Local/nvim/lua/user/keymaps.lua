@@ -205,7 +205,7 @@ map("n", "<leader>rc", ":%s///gc<Left><left><Left>", { silent = false })
 map("x", "<leader>rr", ":s///g<Left><Left>", { silent = false })
 map("x", "<leader>rc", ":s///gc<Left><left><Left>", { silent = false })
 
--- <leader>rw over word to find and replace all occurrences.
+-- <leader>ra over word to find and replace all occurrences.
 map("n", "<leader>ra", [[:%s/\<<C-r>=expand("<cword>")<CR>\>//g<Left><Left>]], { silent = false })
 
 -- Replace selected characters, saving the word to which they belong(use dot to replace next occurrence)

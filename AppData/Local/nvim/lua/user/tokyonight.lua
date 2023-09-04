@@ -11,11 +11,13 @@ tokyonight.setup({
   },
   sidebars = { "lspinfo", "null-ls-info" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
   on_colors = function(colors)
-    colors.bg = "#16161e"
+    -- colors.bg = "#16161e"
+    colors.bg = "#0c0d11"
     colors.bg_dark = "#121218"
     colors.bg_popup = "#121218"
     colors.bg_sidebar = "#121218"
-    colors.bg_highlight = "#24283b"
+    -- colors.bg_highlight = "#24283b"
+    colors.bg_highlight = "#181a22"
     colors.bg_statusline = "#121218"
   end,
   on_highlights = function(hl, colors)
