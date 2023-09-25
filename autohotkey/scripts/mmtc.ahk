@@ -14,6 +14,8 @@ ProcessExist(Name){
   NumpadDel::Run, cmd.exe /c mmtc -C pause,, hide
   NumpadMult::Run, cmd.exe /c mmtc -C "seekcur +5",, hide
   NumpadDiv::Run, cmd.exe /c mmtc -C "seekcur -5",, hide
+  +NumpadMult::Run, cmd.exe /c mmtc -C "seekcur +60",, hide
+  +NumpadDiv::Run, cmd.exe /c mmtc -C "seekcur -60",, hide
   NumpadPgUp::Run, cmd.exe /c mmtc -C "volume +2",, hide
   NumpadPgDn::Run, cmd.exe /c mmtc -C "volume -2",, hide
   NumpadAdd::Run, cmd.exe /c mmtc -C "volume +2",, hide

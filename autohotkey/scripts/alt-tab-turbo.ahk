@@ -78,7 +78,7 @@ Save_Window(key) { ; Store window ID
 ; letters - load
 ; RAlt & a::Load_Window("a")
 ; RAlt & b::Load_Window("b")
-; RAlt & c::Load_Window("c")
+RAlt & c::Load_Window("c")
 ; RAlt & d::Load_Window("d")
 ; RAlt & e::Load_Window("e")
 ; RAlt & f::Load_Window("f")

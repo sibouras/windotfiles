@@ -9,14 +9,14 @@ RAlt & z::
 return
 
 RAlt & c::
-  nvy = ahk_exe nvy.exe
-  brave = ahk_exe brave.exe
+  nvim = ahk_exe alacritty.exe
+  edge = ahk_exe msedge.exe
   devtools = DevTools
   ; WinGetTitle, OutputVar, %devtools%
   if WinExist(devtools) {
     WinActivate, %devtools%
   }
   else
-    WinActivate, %brave%
-  WinActivate, %nvy%
+    WinActivate, %edge%
+  WinActivate, %nvim%
 return

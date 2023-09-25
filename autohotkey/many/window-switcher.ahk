@@ -31,6 +31,17 @@ RAlt & b::
     WinActivate %brave%
 return
 
+RAlt & a::
+  SetTitleMatchMode, 2
+  edge = ahk_exe msedge.exe
+  GroupAdd, edgeGroup, Edge
+  GroupAdd, edgeGroup, DevTools
+  If WinActive(edge)
+    GroupActivate, edgeGroup, r
+  else
+    WinActivate %edge%
+return
+
 RAlt & s::
   firefoxClass = ahk_class MozillaWindowClass
   GroupAdd, firefoxGroup, %firefoxClass%
