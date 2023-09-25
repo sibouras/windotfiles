@@ -42,7 +42,7 @@ let dark_theme = {
   string: white
   nothing: white
   binary: white
-  cellpath: white
+  cell-path: white
   row_index: green_bold
   record: white
   list: white
@@ -147,13 +147,6 @@ $env.config = {
       # info: {bg: 'yellow', fg: 'blue'}
     }
 
-    try: {
-      # border_color: 'red'
-      # highlighted_color: 'blue'
-
-      # reactive: false
-    }
-
     table: {
       split_line: '#404040'
 
@@ -176,13 +169,6 @@ $env.config = {
 
       # padding_index_left: 2
       # padding_index_right: 1
-    }
-
-    config: {
-      cursor_color: {bg: 'yellow' fg: 'black' }
-
-      # border_color: white
-      # list_color: green
     }
   }
 
@@ -208,9 +194,9 @@ $env.config = {
     format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, auto
   }
   cursor_shape: {
-    emacs: line # block, underscore, line (line is the default)
-    vi_insert: block # block, underscore, line (block is the default)
-    vi_normal: underscore # block, underscore, line  (underscore is the default)
+    emacs: line # block, underscore, line, blink_block, blink_underscore, blink_line, inherit to skip setting cursor shape (line is the default)
+    vi_insert: block # block, underscore, line, blink_block, blink_underscore, blink_line, inherit to skip setting cursor shape (block is the default)
+    vi_normal: underscore # block, underscore, line, blink_block, blink_underscore, blink_line, inherit to skip setting cursor shape (underscore is the default) is the default)
   }
   color_config: $dark_theme   # if you want a light theme, replace `$dark_theme` to `$light_theme`
   use_grid_icons: true
@@ -370,6 +356,7 @@ $env.config = {
         until: [
           { send: menu name: completion_menu }
           { send: menunext }
+          { edit: complete }
         ]
       }
     }
@@ -961,9 +948,8 @@ def get-win-svc [] {
 
 # go up n directories
 def-env up [nb: int = 1] {
-  # let path = (1..($nb) | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
-  # cd $path
-  [".."] * $nb | path join | cd $in
+  let path = (1..($nb) | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
+  cd $path
 }
 
 # make and cd into a directory
