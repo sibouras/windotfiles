@@ -181,7 +181,8 @@ schemes:
   #   https://github.com/enkia/tokyo-night-vscode-theme
   tokyo-night: &tokyo-night # Default colors
     primary:
-      background: "0x16161e"
+      # background: "0x16161e"
+      background: "0x0c0d11"
       # foreground: "0xa9b1d6"
       foreground: "0xc0caf5"
 
@@ -206,6 +207,14 @@ schemes:
       magenta: "0xbb9af7"
       cyan: "0x7dcfff"
       white: "0xc0caf5"
+
+    hints:
+      start:
+        foreground: "#f7768e"
+        background: "#1d1f21"
+      end:
+        foreground: "#e9ff5e"
+        background: "#1d1f21"
 
   tokyo-night-storm: &tokyo-night-storm # Default colors
     primary:
@@ -754,6 +763,12 @@ working_directory: /users/marzouk
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
+  # Ctrl+{non-letter} key bindings don’t work
+  # maybe this fixes it: https://github.com/alacritty/alacritty/pull/6958
+  # - { key: Slash, mods: Control, chars: "\x1f" } # 
+  - { key: Slash, mods: Control, chars: "\x1b[47;5u" } # <C-/>
+  - { key: Comma, mods: Control, chars: "\x1b[44;5u" } # <C-,>
+  - { key: Period, mods: Control, chars: "\x1b[46;5u" } # <C-.>
   - { key: Return, mods: Shift, chars: "\x1b[13;2u" } # <S-CR>
   - { key: Return, mods: Control, chars: "\x1b[13;5u" } # <C-CR>
   # - { key: Back, mods: Control, chars: "\x1b\x7f" } # alt+backspace
