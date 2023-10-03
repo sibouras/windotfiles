@@ -1,9 +1,44 @@
+general:
+  # Whether to automatically focus windows underneath the cursor.
+  focus_follows_cursor: false
+
+  # Whether to jump the cursor between windows focused by the WM.
+  cursor_follow_focus: false
+
+  # Whether to switch back and forth between the previously focused workspace
+  # when focusing the current workspace.
+  toggle_workspace_on_refocus: true
+
+  # Whether to show floating windows as always on top.
+  show_floating_on_top: false
+
+  # Amount to move floating windows by (eg. when using `alt+<hjkl>` on a floating window)
+  floating_window_move_amount: "5%"
+
+  # *Strongly* recommended to set to 'false'. Whether to globally enable/disable
+  # window transition animations (on minimize, close, etc). Set to 'unchanged'
+  # to make no setting changes.
+  window_animations: false
+
+# Highlight active/inactive windows with a colored border.
+# ** Exclusive to Windows 11 due to API limitations.
+focus_borders:
+  active:
+    enabled: true
+    color: "#2f81f7"
+  inactive:
+    enabled: false
+    color: "#0000ff"
+
 gaps:
-  inner_gap: 0
-  outer_gap: 0
+  # Gap between adjacent windows.
+  inner_gap: "0px"
+  # Gap between windows and the screen edge.
+  outer_gap: "0px"
 
 bar:
-  height: "0px"
+  enabled: true
+  height: "25px"
   position: "top"
   opacity: 1.0
   background: "#20242cc4"
@@ -14,6 +49,7 @@ bar:
   offset_x: "0"
   offset_y: "0"
   border_radius: "0"
+  border_width: "0px"
   components_left:
     - type: "workspaces"
       focused_workspace_background: "#ffffff33"
@@ -22,6 +58,13 @@ bar:
   components_center:
     - type: "window title"
   components_right:
+    - type: "cpu"
+      label: "CPU: {percent_usage}%"
+      # How often this counter is refreshed.
+      refresh_interval_ms: 1000
+      margin: "0 10px 0 0"
+    - type: "volume"
+      margin: "0 10px 0 0"
     - type: "tiling direction"
       label_horizontal: "⮂"
       label_vertical: "⮁"
@@ -30,8 +73,7 @@ bar:
       padding: "0 8px"
     - type: "binding mode"
       background: "#ffffff33"
-      margin: "0 4px 0 0"
-      padding: "0 8px"
+      margin: "0 10px 0 0"
     - type: "clock"
       # Documentation on formatting date/time string:
       # https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
@@ -129,7 +171,7 @@ keybindings:
   # As an alternative to the resize keybindings above, resize mode enables resizing via
   # HJKL or arrow keys. The binding mode is defined above with the name "resize".
   - command: "binding mode resize"
-    binding: "Alt+R"
+    binding: "Alt+Control+R"
 
   # Change tiling direction. This determines where new tiling windows will be inserted.
   - command: "tiling direction toggle"
