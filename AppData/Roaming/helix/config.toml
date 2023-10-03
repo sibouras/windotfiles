@@ -1,7 +1,7 @@
-theme = "catppuccin_mocha"
+theme = "my_catppuccin_mocha"
 
 [editor]
-idle-timeout = 0
+idle-timeout = 50
 cursorline = true
 color-modes = true
 completion-trigger-len = 1
@@ -26,6 +26,7 @@ right = ["version-control", "position", "selections", "file-encoding", "file-lin
 
 [keys.normal]
 "\\" = {c = ":config-open", r = ":config-reload"}
+minus = "trim_selections"
 A-d = ":bc"
 A-F = ":format"
 A-s = ":w"
@@ -34,6 +35,7 @@ C-A-S-F6 = "jump_forward"
 C-i = "jump_forward"
 C-o = "jump_backward"
 "C-/" = "toggle_comments"
+"A-/" = "toggle_comments"
 A-n = "repeat_last_motion"
 C-c = "no_op" # turn off the default comment functionality
 K = "hover"
@@ -44,8 +46,8 @@ C-y = "scroll_up"
 C-e = "scroll_down"
 C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"] # move line down
 C-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"] # move line up
-A-x = ["extend_to_line_bounds", "trim_selections"]
-A-c = ["extend_to_line_bounds", "trim_selections", "change_selection"]
+# A-x = ["extend_to_line_bounds", "trim_selections"]
+# A-c = ["extend_to_line_bounds", "trim_selections", "change_selection"]
 
 # Muscle memory
 D = ["extend_to_line_end", "delete_selection"]
@@ -67,8 +69,8 @@ H = "extend_char_left"
 L = "extend_char_right"
 
 X = "extend_line_above"
-B = "extend_prev_word_start"
-W = "extend_next_word_start"
+# B = "extend_prev_word_start"
+# W = "extend_next_word_start"
 
 g.i = "goto_first_nonwhitespace"
 g.I = "extend_to_first_nonwhitespace"
@@ -87,5 +89,13 @@ A-C-S-F6 = "jump_forward"
 C-i = "jump_forward"
 C-o = "jump_backward"
 "C-/" = "toggle_comments"
+"A-/" = "toggle_comments"
 A-s = ["normal_mode", ":w"]
 A-w = "goto_last_accessed_file"
+
+[keys.select]
+"C-/" = "toggle_comments"
+"A-/" = "toggle_comments"
+"{" = ["extend_to_line_bounds", "goto_prev_paragraph"]
+"}" = ["extend_to_line_bounds", "goto_next_paragraph"]
+G = "goto_file_end"
