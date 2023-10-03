@@ -152,8 +152,6 @@
       "silent": true
     }
   ],
-  "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "Moonlight II",
   "workbench.colorCustomizations": {
     "[Material Dark Theme]": {
       "editorCursor.foreground": "#1F8AD2",
