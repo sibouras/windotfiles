@@ -10,10 +10,35 @@
         {
             "command": 
             {
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
+            },
+            "keys": "alt+shift+d"
+        },
+        {
+            "command": 
+            {
                 "action": "sendInput",
                 "input": "\u001b[18;8~"
             },
             "keys": "ctrl+;"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[13;5u"
+            },
+            "keys": "ctrl+enter"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[13;2u"
+            },
+            "keys": "shift+enter"
         },
         {
             "command": "paste",
@@ -26,15 +51,6 @@
                 "singleLine": false
             },
             "keys": "ctrl+c"
-        },
-        {
-            "command": 
-            {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
-            },
-            "keys": "alt+shift+d"
         },
         {
             "command": 
@@ -59,41 +75,34 @@
                 "input": "\u001b[15;8~"
             },
             "keys": "ctrl+space"
-        },
-        {
-            "command":
-            {
-                "action": "sendInput",
-                "input": "\u001b[13;2u"
-            },
-            "keys": "shift+enter"
-        },
-        {
-            "command":
-            {
-                "action": "sendInput",
-                "input": "\u001b[13;5u"
-            },
-            "keys": "ctrl+enter"
-        },
+        }
     ],
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
+    "disableAnimations": true,
     "firstWindowPreference": "defaultProfile",
     "initialCols": 98,
     "initialPosition": "625,0",
     "initialRows": 35,
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": 
     {
         "defaults": 
         {
+            "experimental.rightClickContextMenu": true,
             "font": 
             {
                 "face": "JetBrainsMono NF",
                 "size": 13.0
             },
-            "useAtlasEngine": false
+            "scrollbarState": "hidden",
+            "useAtlasEngine": true
         },
         "list": 
         [
@@ -116,7 +125,8 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "commandline": "nu.exe",
+                "colorScheme": "Campbell",
+                "commandline": "nu.exe --no-std-lib",
                 "guid": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
                 "hidden": false,
                 "icon": "C:\\Users\\ala\\Pictures\\icons\\nushell-icon.png",
@@ -422,6 +432,29 @@
             "yellow": "#808000"
         }
     ],
+    "showTabsInTitlebar": true,
     "tabWidthMode": "equal",
-    "themes": []
+    "theme": "my_theme",
+    "themes": 
+    [
+        {
+            "name": "my_theme",
+            "tab": 
+            {
+                "background": "terminalBackground",
+                "showCloseButton": "hover",
+                "unfocusedBackground": "#00000000"
+            },
+            "tabRow": 
+            {
+                "background": "#2E2E2EFF",
+                "unfocusedBackground": "terminalBackground"
+            },
+            "window": 
+            {
+                "applicationTheme": "dark",
+                "useMica": false
+            }
+        }
+    ]
 }
