@@ -4,10 +4,6 @@
     "actions": 
     [
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": 
             {
                 "action": "splitPane",
@@ -25,12 +21,12 @@
             "keys": "ctrl+;"
         },
         {
-            "command": 
-            {
-                "action": "sendInput",
-                "input": "\u001b[13;5u"
-            },
-            "keys": "ctrl+enter"
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "command": "paste",
+            "keys": "ctrl+shift+v"
         },
         {
             "command": 
@@ -41,8 +37,12 @@
             "keys": "shift+enter"
         },
         {
-            "command": "paste",
-            "keys": "ctrl+shift+v"
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[13;5u"
+            },
+            "keys": "ctrl+enter"
         },
         {
             "command": 
@@ -173,6 +173,12 @@
                 "hidden": false,
                 "name": "Developer PowerShell for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+                "hidden": false,
+                "name": "Git Bash",
+                "source": "Git"
             }
         ]
     },
