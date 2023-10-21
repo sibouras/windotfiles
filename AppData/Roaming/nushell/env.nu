@@ -1,36 +1,42 @@
 # Nushell Environment Config File
 
 def create_left_prompt [] {
-    let path_segment = if (is-admin) {
-      $" (ansi red_bold)($env.PWD | str replace $nu.home-path '~')"
+  let path_segment = if (is-admin) {
+    $" (ansi red_bold)($env.PWD | str replace $nu.home-path '~')"
+  } else {
+    $" (ansi green_bold)($env.PWD | str replace $nu.home-path '~')"
+  }
+
+  let duration_segment = (do {
+    let duration_secs = ($env.CMD_DURATION_MS | into int) / 1000
+    if ($duration_secs >= 1) {
+      $" (ansi yellow_bold)($duration_secs | math round | into string | append "sec" | str join | into duration)"
     } else {
-      $" (ansi green_bold)($env.PWD | str replace $nu.home-path '~')"
-    }
-
-    let duration_segment = (do {
-      let duration_secs = ($env.CMD_DURATION_MS | into int) / 1000
-      if ($duration_secs >= 1) {
-        $" (ansi yellow_bold)($duration_secs | math round | into string | append "sec" | str join | into duration)"
-      } else {
-        ""
-      }
-    })
-
-    let exit_code_segment = if ($env.LAST_EXIT_CODE == 0) {
       ""
-    } else {
-      $" (ansi red_bold)($env.LAST_EXIT_CODE)"
     }
+  })
 
-    [$path_segment, $exit_code_segment, $duration_segment] | str join
+  let exit_code_segment = if ($env.LAST_EXIT_CODE == 0) {
+    ""
+  } else {
+    $" (ansi red_bold)($env.LAST_EXIT_CODE)"
+  }
+
+  let git_branch_segment = if ('.git' | path exists) {
+    $" (ansi xterm_mediumpurple2a)(open .git\HEAD | split words | last)(ansi xterm_mediumpurple2a)"
+  } else {
+    ""
+  }
+
+  [$path_segment, $exit_code_segment, $git_branch_segment, $duration_segment] | str join
 }
 
 def create_right_prompt [] {
-    let time_segment = ([
-      (date now | format date '%m/%d/%Y %r')
-    ] | str join)
+  let time_segment = ([
+    (date now | format date '%m/%d/%Y %r')
+  ] | str join)
 
-    $time_segment
+  $time_segment
 }
 
 # Use nushell functions to define your right and left prompt

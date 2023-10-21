@@ -565,7 +565,8 @@ alias :q = exit
 alias md = mkdir
 alias pwd = echo $env.PWD
 alias v = nvim
-alias ll = lsd -l
+alias y = yazi
+alias ll = eza -la -s Name --git --icons --group-directories-first --no-permissions
 alias lg = lazygit
 alias gu = gitui
 alias gs = gswin64c
@@ -592,6 +593,10 @@ alias timeitt = commandline $"timeit {(history | last 1 | first | get command)}"
 
 extern-wrapped t [...args] {
   NVIM_APPNAME=nvimtest nvim $args
+}
+
+extern-wrapped lv [...args] {
+  NVIM_APPNAME=lazyvim nvim $args
 }
 
 def uptime [] {
@@ -624,6 +629,12 @@ def title [name?: string] {
 # Set tab color
 def color [idx: int] {
   ansi -e ( ["2;15;", ($idx | into string), (",|") ] | str join )
+}
+
+# interactive global search with rg and fzf and open in hx
+def rghx [] {
+  let li = ((rg -e '.' --no-heading -n --color always | fzf --ansi) | lines |  split row ':')
+  hx ([$li.0, ':', $li.1] | str join)
 }
 
 # search for files with fd and preview them with fzf
@@ -900,7 +911,9 @@ def tolink [name: string] {
 
 # structured scoop list
 def sl [] {
-  sfsl | lines | range 1.. | parse -r '(?<name>\S+)\s+\|\s(?<version>\S+)\s+\|\s(?<source>\S+)\s+\|\s(?<updated>\d{4}-\d{2}-\d{2})' | sort-by updated
+  # sfsu list | lines | range 1.. | parse -r '(?<name>\S+)\s+\|\s(?<version>\S+)\s+\|\s(?<source>\S+)\s+\|\s(?<updated>\d{4}-\d{2}-\d{2})' | sort-by updated
+  # or
+  sfsu list | lines | skip 1 | split column '|' name version source updated | str trim | sort-by updated | update updated { |row| $row.updated | split row " " | first }
 }
 
 # scoop search structured wrapper (much faster)
@@ -911,14 +924,10 @@ def "sfsss" [
 }
 
 def "list todos" [] {
-  rg "//.? ?TODO" . -n
-  | lines
-  | parse "{file}:{line}:{match}"
+  rg "(--|//).? ?TODO" . -n
+  | lines | parse "{file}:{line}:{match}" | str trim
   | try {
-    group-by file
-    | transpose
-    | reject column1.file
-    | transpose -rid
+    group-by file | transpose | reject column1.file | transpose -rid
   } catch {
     "no TODOs found in this directory"
   }
@@ -945,6 +954,35 @@ def get-win-svc [] {
     } | into int state exit svc_exit chkpt wait pid
   }
 }
+
+# get the environment details
+def "env details" [] {
+  let e = ($env | reject config | transpose key value)
+  $e | each { |r|
+  let is_envc = ($r.key == ENV_CONVERSIONS)
+  let is_closure = ($r.value | describe | str contains 'closure')
+  let is_list = ($r.value | describe | str contains 'list')
+  if $is_envc {
+    echo [[key value];
+    [($r.key) ($r.value | transpose key value | each { |ec|
+      let to_string = ($ec.value | get to_string | view source $in | nu-highlight)
+      let from_string = ($ec.value | get from_string | view source $in | nu-highlight)
+      echo ({'ENV_CONVERSIONS': {($ec.key): { 'to_string': ($to_string) 'from_string': ($from_string)}}})
+    })]
+    ]
+  } else if $is_closure {
+    let closure_value = (view source ($env | get $r.key) | nu-highlight)
+    echo [[key value]; [($r.key) ($closure_value)]]
+  } else if $is_list {
+    let list_value = ($env | get $r.key | split row (char esep))
+    echo [[key value]; [($r.key) ($list_value)]]
+  } else {
+    echo [[key value]; [($r.key) ($r.value)]]
+  }
+  }
+}
+
+def env [] { env details | flatten }
 
 # go up n directories
 def-env up [nb: int = 1] {
