@@ -31,10 +31,9 @@ CapsLock & o::End
 CapsLock & u::PgUp
 CapsLock & p::PgDn
 
-CapsLock & ,:: Send, {Del}
-CapsLock & .:: Send, ^{Del}
-; CapsLock & m:: Send, {BS}
-CapsLock & n:: Send, ^{BS}
+CapsLock & n::BS
+CapsLock & b::Del
+Capslock & BS::Del
 
 ; Unmute
 ; CapsLock & c:: Run nircmd.exe mutesysvolume 0 microphone
@@ -44,7 +43,6 @@ CapsLock & n:: Send, ^{BS}
 CapsLock & z:: Run nircmd.exe mutesysvolume 2 microphone
 CapsLock & a:: Send, ^a
 CapsLock & y:: Send, ^y
-CapsLock & b:: Send, ^{Left}
 CapsLock & c:: Send, ^{c}
 CapsLock & v:: Send, ^{v}
 CapsLock & s:: Shift
