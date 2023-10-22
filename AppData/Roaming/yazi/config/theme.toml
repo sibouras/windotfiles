@@ -1,0 +1,16 @@
+[manager]
+cwd = { fg = "#27a1b9" }
+
+# Tab
+tab_inactive = { fg = "white", bg = "#181a22" }
+
+# Border
+border_symbol = "│"
+border_style = { fg = "#181a22" }
+
+[status]
+separator_style = { fg = "#181a22", bg = "#181a22" }
+
+[help]
+hovered = { bg = "#181a22", bold = true }
+footer = { fg = "gray", bg = "black" }
