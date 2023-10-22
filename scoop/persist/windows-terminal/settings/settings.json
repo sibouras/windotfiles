@@ -1,10 +1,10 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -13,7 +13,7 @@
             "keys": "alt+shift+d"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[18;8~"
@@ -29,7 +29,7 @@
             "keys": "ctrl+shift+v"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[13;2u"
@@ -37,7 +37,7 @@
             "keys": "shift+enter"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[13;5u"
@@ -45,7 +45,7 @@
             "keys": "ctrl+enter"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "copy",
                 "singleLine": false
@@ -53,7 +53,7 @@
             "keys": "ctrl+c"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u0017"
@@ -61,7 +61,7 @@
             "keys": "ctrl+backspace"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[17;8~"
@@ -69,7 +69,7 @@
             "keys": "ctrl+i"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[15;8~"
@@ -85,18 +85,18 @@
     "initialCols": 98,
     "initialPosition": "625,0",
     "initialRows": 35,
-    "newTabMenu": 
+    "newTabMenu":
     [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
             "experimental.rightClickContextMenu": true,
-            "font": 
+            "font":
             {
                 "face": "JetBrainsMono NF",
                 "size": 13.0
@@ -104,7 +104,7 @@
             "scrollbarState": "hidden",
             "useAtlasEngine": true
         },
-        "list": 
+        "list":
         [
             {
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
@@ -125,7 +125,7 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "colorScheme": "Campbell",
+                "colorScheme": "Tokyo Night",
                 "commandline": "nu.exe --no-std-lib",
                 "guid": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
                 "hidden": false,
@@ -182,7 +182,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0C0C",
@@ -369,7 +369,7 @@
             "yellow": "#C4A000"
         },
         {
-            "background": "#1A1B26",
+            "background": "#0c0d11",
             "black": "#15161E",
             "blue": "#7AA2F7",
             "brightBlack": "#686C98",
@@ -441,22 +441,22 @@
     "showTabsInTitlebar": true,
     "tabWidthMode": "equal",
     "theme": "my_theme",
-    "themes": 
+    "themes":
     [
         {
             "name": "my_theme",
-            "tab": 
+            "tab":
             {
                 "background": "terminalBackground",
                 "showCloseButton": "hover",
                 "unfocusedBackground": "#00000000"
             },
-            "tabRow": 
+            "tabRow":
             {
                 "background": "#2E2E2EFF",
                 "unfocusedBackground": "terminalBackground"
             },
-            "window": 
+            "window":
             {
                 "applicationTheme": "dark",
                 "useMica": false
