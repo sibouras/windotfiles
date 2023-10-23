@@ -142,6 +142,11 @@
       ]
     },
     {
+      "before": ["<leader>", "b"],
+      "commands": ["workbench.action.quickOpen"],
+      "silent": true
+    },
+    {
       "before": ["<leader>", "e"],
       "commands": ["workbench.action.toggleSidebarVisibility"],
       "silent": true
