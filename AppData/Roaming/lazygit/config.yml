@@ -1,0 +1,4 @@
+gui:
+  theme:
+    selectedLineBgColor:
+      - "#292e42" # set to `default` to have no background colour
