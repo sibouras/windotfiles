@@ -11,33 +11,35 @@ calc_padding := -10 ; minimum direction/alignment overlap for target windows
 
 ; ==== DEVELOPMENT SHORTCUTS ====
 ; Reload this script
-; #+r:: {
-;   Reload
-; }
+#+r:: {
+  Reload
+}
 ; Get active window position data
-; #+t:: {
-;   aID := WinGetID("A")
-;   WinGetFullPos(&aXL, &aXR, &aYT, &aYB, &aW, &aH, aID)
-;   discounted := WinIsDiscounted(aID, &visible, &desktop, &taskbar, &startmenu)
+#+t:: {
+  aID := WinGetID("A")
+  wclass := WinGetClass(aID)
+  WinGetFullPos(&aXL, &aXR, &aYT, &aYB, &aW, &aH, aID)
+  discounted := WinIsDiscounted(aID, &visible, &desktop, &taskbar, &startmenu)
 
-;   MsgBox(
-;     "XL:  " aXL "`n"
-;     "XR:  " aXR "`n"
-;     "YT:  " aYT "`n"
-;     "YB:  " aYB "`n"
-;     "W:  "  aW  "`n"
-;     "H:  "  aH  "`n"
-;     "`n"
-;     "ID:  " aID "`n"
-;     "`n"
-;     "Visible:  " visible "`n"
-;     "Desktop:  " desktop "`n"
-;     "Taskbar:  " taskbar "`n"
-;     "Startmenu:  " startmenu "`n"
-;     "`n"
-;     "Discounted:  " discounted
-;   )
-; }
+  MsgBox(
+    "class:  " wclass "`n"
+    "XL:  " aXL "`n"
+    "XR:  " aXR "`n"
+    "YT:  " aYT "`n"
+    "YB:  " aYB "`n"
+    "W:  "  aW  "`n"
+    "H:  "  aH  "`n"
+    "`n"
+    "ID:  " aID "`n"
+    "`n"
+    "Visible:  " visible "`n"
+    "Desktop:  " desktop "`n"
+    "Taskbar:  " taskbar "`n"
+    "Startmenu:  " startmenu "`n"
+    "`n"
+    "Discounted:  " discounted
+  )
+}
 
 WinGetFullPos(&xl, &xr, &yt, &yb, &w, &h, id) {
   WinGetPos(&xl, &yt, &w, &h, id)
@@ -60,7 +62,7 @@ WinIsDiscounted(id, &visible, &desktop, &taskbar, &startmenu) {
   WS_VISIBLE := 0x10000000
 
   visible := (wstyle & WS_VISIBLE) ? true : false
-  desktop := (wclass = "Progman" || wclass = "WorkerW")
+  desktop := (wclass = "Progman" || wclass = "WorkerW" || wclass = "ApplicationManager_ImmersiveShellWindow")
   taskbar := (wclass = "Shell_TrayWnd" || wclass = "Shell_SecondaryTrayWnd")
   startmenu := (wclass = "DV2ControlHost" || wclass = "Windows.UI.Core.CoreWindow")
 
