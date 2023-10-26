@@ -1,6 +1,6 @@
 !q::Send, !{f4}
-!h::Send, #{Left}
-!l::Send, #{Right}
+#!h::Send, #{Left}
+#!l::Send, #{Right}
 #v::SendInput, {Raw}%Clipboard%
 !+m::PostMessage, 0x112, 0xF100, 0x20,, A ; context menu of the window's title bar
 
@@ -51,7 +51,7 @@
   !s::Send, {Esc}^s
 #IfWinActive
 
-#IfWinActive, ahk_exe nvy.exe
+#If WinActive("ahk_exe nvy.exe") || WinActive("ahk_exe neovide.exe")
   ^BS::Send, ^{w}
   ^i::Send, !^+{F6}
   ^;::Send, !^+{F7}

@@ -96,7 +96,7 @@ CapsLock & m::
     Run firefox.exe
   else if Key = d
     Run code.exe
-  else if Key = v
+  else if Key = t
   {
     Run nvy.exe
     WinWait, Nvy,, 1
@@ -110,6 +110,12 @@ CapsLock & m::
       ; WinMove, Nvy,, 260, 47, 1400, 985
     }
   }
+  else if Key = v
+  {
+    Run neovide.exe --frame none,,, NewPID
+    WinWaitActive, ahk_pid %NewPID%,
+    WinSetTitle, Neovide
+  }
   else if Key = w
     Run wt.exe
   else if Key = e
@@ -121,5 +127,13 @@ CapsLock & m::
     EnvGet, vUserProfile, USERPROFILE
     Run %vUserProfile%\scoop\apps\alacritty\current\alacritty.exe --working-directory %vUserProfile%
     ; RunWait, alacritty.exe --working-directory "%vUserProfile%", , Min
+  }
+  else if Key = g
+  {
+    ; place glasswire icon next to `#b` menu in taskbar
+    Send, #b{right}{space}
+    ; opening an app from taskbar then closing it focuses the taskbar
+    WinWaitActive, ahk_exe glasswire.exe
+    Send, !{Esc}+!{Esc}
   }
 return

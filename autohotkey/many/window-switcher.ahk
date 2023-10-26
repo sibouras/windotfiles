@@ -51,7 +51,7 @@ RAlt & s::
     WinActivate %firefoxClass%
 return
 
-RAlt & v::
+RAlt & t::
   nvyClass = ahk_class Nvy_Class
   GroupAdd, nvyGroup, %nvyClass%
   WinGet, nvyList, List, %nvyClass%
@@ -62,6 +62,12 @@ RAlt & v::
       GroupActivate, nvyGroup, r
   else
     WinActivate %nvyClass%
+return
+
+RAlt & v::
+  neovide = ahk_exe neovide.exe
+  IfWinExist, %neovide%
+    WinActivate, %neovide%
 return
 
 ; minimize active window and restore it
