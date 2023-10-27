@@ -103,9 +103,6 @@ $env.config = {
   rm: {
     always_trash: true # always act as if -t was given. Can be overridden with -p
   }
-  cd: {
-    abbreviations: true # allows `cd s/o/f` to expand to `cd some/other/folder`
-  }
   table: {
     mode: rounded # basic, compact, compact_double, light, thin, with_love, rounded, reinforced, heavy, none, other
     index_mode: always # "always" show indexes, "never" show indexes, "auto" = show indexes when a table has "index" column
@@ -130,46 +127,20 @@ $env.config = {
   }
 
   explore: {
-    help_banner: true
-    exit_esc: true
-
-    command_bar_text: '#C4C9C6'
-    # command_bar: {fg: '#C4C9C6' bg: '#223311' }
-
-    status_bar_background: {fg: '#1D1F21' bg: '#C4C9C6' }
-    # status_bar_text: {fg: '#C4C9C6' bg: '#223311' }
-
-    highlight: {bg: 'yellow' fg: 'black' }
-
+    status_bar_background: {fg: "#1D1F21", bg: "#C4C9C6"},
+    command_bar_text: {fg: "#C4C9C6"},
+    highlight: {fg: "black", bg: "yellow"},
     status: {
-      # warn: {bg: 'yellow', fg: 'blue'}
-      # error: {bg: 'yellow', fg: 'blue'}
-      # info: {bg: 'yellow', fg: 'blue'}
-    }
-
+      error: {fg: "white", bg: "red"},
+      warn: {}
+      info: {}
+    },
     table: {
-      split_line: '#404040'
-
-      show_cursor: true
-
-      line_index: true
-      line_shift: true
-      line_head_top: true
-      line_head_bottom: true
-
-      show_head: true
-      show_index: true
-
-      # selected_cell: {fg: 'white', bg: '#777777'}
-      # selected_row: {fg: 'yellow', bg: '#C1C2A3'}
-      # selected_column: blue
-
-      # padding_column_right: 2
-      # padding_column_left: 2
-
-      # padding_index_left: 2
-      # padding_index_right: 1
-    }
+      split_line: {fg: "#404040"},
+      selected_cell: {bg: light_blue},
+      selected_row: {},
+      selected_column: {},
+    },
   }
 
   history: {
@@ -591,11 +562,11 @@ alias timeitt = commandline $"timeit {(history | last 1 | first | get command)}"
 
 ### Functions
 
-extern-wrapped t [...args] {
+def t [...args] {
   NVIM_APPNAME=nvimtest nvim $args
 }
 
-extern-wrapped lv [...args] {
+def lv [...args] {
   NVIM_APPNAME=lazyvim nvim $args
 }
 
@@ -638,12 +609,12 @@ def rghx [] {
 }
 
 # search for files with fd and preview them with fzf
-extern-wrapped fs [...args] {
+def fs [...args] {
   fd $args -H -t f -E .git | fzf --multi --ansi | str trim | lines
 }
 
 # search for files with fd and preview them with fzf and open them with nvim
-extern-wrapped fe [...args] {
+def fe [...args] {
   # let file = (fd -H -e txt -e json -e js -e jsx -e ts -e tsx -e css -e html -e md -e lua | fzf --multi --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim | lines)
   let files = (fs ($args | to text))
   if not ($files | is-empty) {
@@ -652,7 +623,7 @@ extern-wrapped fe [...args] {
 }
 
 # search for media files with fd and fzf and open them with mpv
-extern-wrapped fm [...args] {
+def fm [...args] {
   let files = (fd $args -e mp4 -e webm -e mkv -e gif | fzf --multi | str trim | lines)
   if not ($files | is-empty) {
     let full_path = ($files | each {|it| $"($env.PWD)\\($it)"})
@@ -661,7 +632,7 @@ extern-wrapped fm [...args] {
 }
 
 # preview files with fzf
-extern-wrapped fp [...args] {
+def fp [...args] {
   fd $args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim | lines
 }
 
@@ -748,7 +719,7 @@ def ? [...terms] {
 
 # Return random element from a list or a table
 def get-random-entry [input] {
-  $input | get (random integer 0..(($input|length) - 1))
+  $input | get (random int 0..(($input|length) - 1))
 }
 
 # Shortcut function and competitions to search for commands in the selected category of nushell
@@ -985,30 +956,30 @@ def "env details" [] {
 def env [] { env details | flatten }
 
 # go up n directories
-def-env up [nb: int = 1] {
+def --env up [nb: int = 1] {
   let path = (1..($nb) | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
   cd $path
 }
 
 # make and cd into a directory
-def-env mcd [name: path] {
+def --env mcd [name: path] {
   mkdir $name ; cd $name
 }
 
 #cd to the folder where a binary is located
-def-env which-cd [program] {
+def --env which-cd [program] {
   let dir = (which $program | get path | path dirname)
   cd $dir.0
 }
 
 # cd with tere(Terminal file explorer)
-def-env ce [...args] {
+def --env ce [...args] {
   let result = ( tere --autocd-timeout=off $args | str trim )
   cd $result
 }
 
 # cd with lf
-def-env lc [args = "."] {
+def --env lc [args = "."] {
   let cmd_file = $"($env.TEMP)\\" + (random chars -l 6) + ".tmp";
   touch $cmd_file;
   lf -last-dir-path $cmd_file $args;
@@ -1018,7 +989,7 @@ def-env lc [args = "."] {
 }
 
 # cd with broot
-def-env br [args = "."] {
+def --env br [args = "."] {
   # let cmd_file = (^mktemp | str trim);
   let cmd_file = $"($env.TEMP)\\" + (random chars -l 6) + ".tmp";
   touch $cmd_file;
@@ -1033,7 +1004,7 @@ def-env br [args = "."] {
 }
 
 # Add the given paths to PATH
-def-env "path-add" [
+def --env "path-add" [
   --ret(-r) # return the env (useful in pipelines to avoid scoping)
   --prepend(-p) # prepend instead of appending.
   ...paths # the paths to add
