@@ -15,3 +15,15 @@ NumpadDel::Send {Media_Play_Pause}
 NumpadIns::Send {Volume_Mute}
 NumpadEnd Up::Send {End}
 NumpadEnd & NumpadClear::suspend
+
+; make media buttons work when mpv isn't focused
+ProcessExist(Name) {
+	Process, Exist, %Name%
+	return Errorlevel
+}
+
+#If ProcessExist("mpv.exe") && not WinActive("ahk_class mpv")
+  NumpadLeft::ControlSend,, <, ahk_exe mpv.exe
+  NumpadRight::ControlSend,, >, ahk_exe mpv.exe
+  NumpadDel::ControlSend,, {Space}, ahk_exe mpv.exe
+#If
