@@ -212,7 +212,7 @@ keybindings:
 
   # Focus the workspace that last had focus.
   - command: "focus workspace recent"
-    binding: "Alt+8"
+    binding: "Alt+OemSemicolon"
 
   # Focus the next/previous workspace defined in `workspaces` config.
   - command: "focus workspace next"

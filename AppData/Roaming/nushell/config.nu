@@ -558,6 +558,7 @@ alias sfsl = sfsu list
 alias vd = VirtualDesktop11
 alias b = buku --suggest
 alias timeitt = commandline $"timeit {(history | last 1 | first | get command)}" # a shortcut to apply timeit to the previous command
+alias sub = python ~\code\python\scripts\OpenSubtitlesDownload.py --cli
 
 
 ### Functions
@@ -624,7 +625,7 @@ def fe [...args] {
 
 # search for media files with fd and fzf and open them with mpv
 def fm [...args] {
-  let files = (fd $args -e mp4 -e webm -e mkv -e gif | fzf --multi | str trim | lines)
+  let files = (fd $args -e mp4 -e m4a -e webm -e mkv -e gif | fzf --multi | str trim | lines)
   if not ($files | is-empty) {
     let full_path = ($files | each {|it| $"($env.PWD)\\($it)"})
     mpv $full_path

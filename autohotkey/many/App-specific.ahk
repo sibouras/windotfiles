@@ -57,9 +57,9 @@
   ^;::Send, !^+{F7}
 #IfWinActive
 
-#IfWinNotActive, ahk_exe WindowsTerminal.exe
-  !BS::Send ^{BS}
-#IfWinNotActive
+; #IfWinNotActive, ahk_exe WindowsTerminal.exe
+;   !BS::Send ^{BS}
+; #IfWinNotActive
 
 #IfWinActive, ahk_exe WindowsTerminal.exe
   !,::Send, ^+{Tab}
