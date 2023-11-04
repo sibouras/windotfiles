@@ -12,11 +12,30 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 !NumpadDiv::Run, cmd.exe /c Virtualdesktop11 -removeall,, hide
 
 ; next/prev desktop
-!9::Send, {RWin down}{CONTROLDOWN}{Left}{RWin up}{CONTROLUP}
-!0::Send, {RWin down}{CONTROLDOWN}{Right}{RWin up}{CONTROLUP}
+; !9::Send, {RWin down}{CONTROLDOWN}{Left}{RWin up}{CONTROLUP}
+; !0::Send, {RWin down}{CONTROLDOWN}{Right}{RWin up}{CONTROLUP}
 ; or use Virtualdesktop11 api(a bit slower)
 ; !9::Run cmd.exe /c Virtualdesktop11 -left,, hide
 ; !0::Run cmd.exe /c Virtualdesktop11 -right,, hide
+
+last_direction := "left"
+!9::
+  last_direction := "left"
+  Send, {RWin down}{CONTROLDOWN}{Left}{RWin up}{CONTROLUP}
+return
+!0::
+  last_direction := "right"
+  Send, {RWin down}{CONTROLDOWN}{Right}{RWin up}{CONTROLUP}
+return
+!;::
+  if (last_direction == "left") {
+    Send, {RWin down}{CONTROLDOWN}{Right}{RWin up}{CONTROLUP}
+    last_direction := "right"
+  } else {
+    Send, {RWin down}{CONTROLDOWN}{Left}{RWin up}{CONTROLUP}
+    last_direction := "left"
+  }
+return
 
 ; switch to specific desktop
 !1::Run, cmd.exe /c Virtualdesktop11 "-switch:Desktop 1",, hide
