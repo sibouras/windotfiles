@@ -16,9 +16,10 @@
   "editor.cursorSurroundingLines": 5,
   "editor.cursorBlinking": "solid",
   "editor.lineNumbers": "on",
-  "editor.minimap.enabled": true,
+  "editor.minimap.enabled": false,
   "editor.mouseWheelZoom": true,
   "editor.bracketPairColorization.enabled": true,
+  "editor.linkedEditing": false, // bug with vscode-neovim
   "javascript.preferences.jsxAttributeCompletionStyle": "auto",
   "javascript.suggest.autoImports": true,
   "typescript.suggest.autoImports": true,
@@ -239,8 +240,12 @@
   },
   "totalTypeScript.hideAllTips": false,
   "totalTypeScript.hideBasicTips": false,
-  "totalTypeScript.hiddenTips": [
-    "basic-types",
-    "typing-function-parameters"
-  ]
+  "totalTypeScript.hiddenTips": ["basic-types", "typing-function-parameters"],
+  "workbench.activityBar.location": "top",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "vscode-neovim.NVIM_APPNAME": "nvimcode",
+  "telemetry.telemetryLevel": "off",
+  "editor.multiCursorModifier": "ctrlCmd",
 }

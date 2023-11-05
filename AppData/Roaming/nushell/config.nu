@@ -567,6 +567,10 @@ def t [...args] {
   NVIM_APPNAME=nvimtest nvim $args
 }
 
+def c [...args] {
+  NVIM_APPNAME=nvimcode nvim $args
+}
+
 def lv [...args] {
   NVIM_APPNAME=lazyvim nvim $args
 }
