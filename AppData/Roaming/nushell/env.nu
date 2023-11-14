@@ -23,7 +23,12 @@ def create_left_prompt [] {
   }
 
   let git_branch_segment = if ('.git' | path exists) {
-    $" (ansi xterm_mediumpurple2a)(open .git\HEAD | split words | last)(ansi xterm_mediumpurple2a)"
+    let content = open .git\HEAD
+    if ($content | str starts-with 'ref') {
+      $" (ansi xterm_mediumpurple2a)($content | split words | last)(ansi xterm_mediumpurple2a)"
+    } else {
+      $" (ansi xterm_mediumpurple2a)($content | str substring ..7)(ansi xterm_mediumpurple2a)"
+    }
   } else {
     ""
   }
