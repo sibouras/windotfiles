@@ -68,6 +68,7 @@ let dark_theme = {
   shape_globpattern: cyan_bold
   shape_int: purple_bold
   shape_internalcall: cyan_bold
+  shape_keyword: cyan_bold
   shape_list: cyan_bold
   shape_literal: blue
   shape_match_pattern: green
@@ -161,7 +162,7 @@ $env.config = {
     }
   }
   filesize: {
-    metric: true # true => KB, MB, GB (ISO standard), false => KiB, MiB, GiB (Windows standard)
+    metric: false # true => KB, MB, GB (ISO standard), false => KiB, MiB, GiB (Windows standard)
     format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, auto
   }
   cursor_shape: {
