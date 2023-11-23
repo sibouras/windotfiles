@@ -526,7 +526,7 @@ $env.config = {
       mode: [emacs, vi_normal, vi_insert]
       event: {
         send: executehostcommand
-        cmd: "commandline -a (fd --hidden --type file -E .git | fzf)"
+        cmd: "commandline -a (fd --hidden --type file -E .git | fzf) | commandline -e"
       }
     }
   ]
@@ -670,8 +670,8 @@ def lsg [] {
 }
 
 # ls by type
-def l [] {
-  ls | sort-by type name | select name size modified
+def l [name: string = ''] {
+  ls $name | sort-by type name | select name size modified
 }
 
 # ls sorted by extension
@@ -986,27 +986,38 @@ def --env ce [...args] {
 
 # cd with lf
 def --env lc [args = "."] {
-  let cmd_file = $"($env.TEMP)\\" + (random chars -l 6) + ".tmp";
+  let cmd_file = $"($env.TEMP)(char path_sep)" + (random chars -l 6) + ".tmp";
   touch $cmd_file;
   lf -last-dir-path $cmd_file $args;
   let cmd = ((open $cmd_file) | str trim);
-  rm $cmd_file;
+  rm -p $cmd_file;
   cd ($cmd | str replace "cd" "" | str trim)
 }
 
 # cd with broot
 def --env br [args = "."] {
   # let cmd_file = (^mktemp | str trim);
-  let cmd_file = $"($env.TEMP)\\" + (random chars -l 6) + ".tmp";
+  let cmd_file = $"($env.TEMP)(char path_sep)" + (random chars -l 6) + ".tmp";
   touch $cmd_file;
   broot --outcmd $cmd_file $args;
   let cmd = ((open $cmd_file) | str trim);
-  rm $cmd_file;
+  rm -p $cmd_file;
   cd (if ($cmd | str contains '"') {
     ($cmd | str replace "cd" "" | str trim | str substring "1,-1")
   } else {
     ($cmd | str replace "cd" "" | str trim)
   })
+}
+
+# cd with yazi
+def --env ya [] {
+  let tmp = $"($env.TEMP)(char path_sep)yazi-cwd." + (random chars -l 6)
+	y --cwd-file $tmp
+	let cwd = (open $tmp)
+	if $cwd != "" and $cwd != $env.PWD {
+		cd $cwd
+	}
+	rm -p $tmp
 }
 
 # Add the given paths to PATH
