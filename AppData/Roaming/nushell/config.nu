@@ -554,7 +554,7 @@ alias gloo = git log --pretty=format:'%C(yellow)%h %Cred%ad %Cgreen%d %Creset%s'
 alias winconfig = git $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias dotfiles = lazygit $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias sfss = sfsu search
-alias sfsl = sfsu list
+alias sfsd = sfsu describe
 # alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
 alias vd = VirtualDesktop11
 alias b = buku --suggest
@@ -887,10 +887,14 @@ def tolink [name: string] {
 }
 
 # structured scoop list
-def sl [] {
+def sfsl [] {
   # sfsu list | lines | range 1.. | parse -r '(?<name>\S+)\s+\|\s(?<version>\S+)\s+\|\s(?<source>\S+)\s+\|\s(?<updated>\d{4}-\d{2}-\d{2})' | sort-by updated
   # or
   sfsu list | lines | skip 1 | split column '|' name version source updated | str trim | sort-by updated | update updated { |row| $row.updated | split row " " | first }
+}
+
+def sfso [] {
+  sfsu outdated | lines | skip 1 | split column '|' name current available | str trim
 }
 
 # scoop search structured wrapper (much faster)
