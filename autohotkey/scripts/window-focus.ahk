@@ -2,7 +2,7 @@
 ; source: https://github.com/lpke/config/blob/master/ahk/window-focus.ahk
 #Requires AutoHotkey v2.0
 
-calc_padding := -10 ; minimum direction/alignment overlap for target windows
+calc_padding := 20 ; minimum direction/alignment overlap for target windows
 
 !h:: FocusWin("left")
 !l:: FocusWin("right")
@@ -95,8 +95,8 @@ FocusWin(direction) {
     {
       case "left": is_direction := aXL - tXL >= calc_padding
       case "right": is_direction := tXR - aXR >= calc_padding
-      case "up": is_direction := aYT - tYT >= calc_padding
-      case "down": is_direction := tYB - aYB >= calc_padding
+      case "up": is_direction := aYT - tYT >= calc_padding - 30
+      case "down": is_direction := tYB - aYB >= calc_padding - 30
     }
     if (!is_direction)
       continue
@@ -121,7 +121,7 @@ FocusWin(direction) {
     ; update closest values if window is closer and to the left
     if (distance < closest_distance) {
       closest_id := tID
-      closest_distance := distance
+      closest_distance := distance - 10 ; -10 is a fix for firefox and devtools open on top of one another
     }
   }
 
