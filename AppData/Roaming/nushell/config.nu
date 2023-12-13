@@ -526,7 +526,7 @@ $env.config = {
       mode: [emacs, vi_normal, vi_insert]
       event: {
         send: executehostcommand
-        cmd: "commandline -a (fd --hidden --type file -E .git | fzf) | commandline -e"
+        cmd: "commandline -a (fd --hidden --type file -E .git -E node_modules | fzf) | commandline -e"
       }
     }
   ]
@@ -964,6 +964,14 @@ def "env details" [] {
 }
 
 def env [] { env details | flatten }
+
+# interactively select columns from a table
+export def iselect [] {
+  let tgt = $in
+  let cols = ($tgt | columns)
+  let choices = ($cols | input list -m "Pick columns to get: ")
+  $tgt | select $choices
+}
 
 # go up n directories
 def --env up [nb: int = 1] {
