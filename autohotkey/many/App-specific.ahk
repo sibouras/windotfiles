@@ -57,6 +57,11 @@
   ^;::Send, !^+{F7}
 #IfWinActive
 
+#If WinActive("ahk_exe alacritty.exe") || WinActive("ahk_exe windowsterminal.exe")
+  XButton1::Send ^o
+  XButton2::Send ^i
+#IfWinActive
+
 ; #IfWinNotActive, ahk_exe WindowsTerminal.exe
 ;   !BS::Send ^{BS}
 ; #IfWinNotActive
