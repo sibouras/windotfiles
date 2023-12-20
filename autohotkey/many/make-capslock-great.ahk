@@ -113,11 +113,17 @@ CapsLock & m::
   else if Key = v
   {
     Run neovide.exe --frame none,,, NewPID
-    WinWaitActive, ahk_pid %NewPID%,
+    WinWaitActive, ahk_pid %NewPID%
     WinSetTitle, Neovide
+    ; Send, !+{l}
   }
   else if Key = w
-    Run wt.exe
+  {
+    Run wt.exe,,, NewPID
+    WinWaitActive, ahk_pid %NewPID%
+    sleep 300
+    Send, !+{l}
+  }
   else if Key = e
     Run explorer.exe
   else if Key = x
@@ -125,15 +131,30 @@ CapsLock & m::
   else if Key = r
   {
     EnvGet, vUserProfile, USERPROFILE
-    Run %vUserProfile%\scoop\apps\alacritty\current\alacritty.exe --working-directory %vUserProfile%
     ; RunWait, alacritty.exe --working-directory "%vUserProfile%", , Min
+    Run %vUserProfile%\scoop\apps\alacritty\current\alacritty.exe --working-directory %vUserProfile%,,, NewPID
+    WinWaitActive, ahk_pid %NewPID%
+    Send, !+{l}
   }
   else if Key = g
   {
     ; place glasswire icon next to `#b` menu in taskbar
-    Send, #b{right}{space}
+    ; Send, #b{right}{space}
+    ; WinWaitActive, ahk_exe glasswire.exe
+    ; Send, !{Esc}+!{Esc}
+
     ; opening an app from taskbar then closing it focuses the taskbar
-    WinWaitActive, ahk_exe glasswire.exe
-    Send, !{Esc}+!{Esc}
+
+    if not WinExist("ahk_exe glasswire.exe") {
+      WinHide, ahk_class Shell_TrayWnd
+      WinHide, ahk_class Shell_SecondaryTrayWnd
+      Send, #b{right}{space}
+      sleep 100
+      WinActivate, ahk_exe glasswire.exe
+      WinWaitNotActive, ahk_exe glasswire.exe
+      sleep 100
+      WinShow, ahk_class Shell_TrayWnd
+      WinShow, ahk_class Shell_SecondaryTrayWnd
+    }
   }
 return
