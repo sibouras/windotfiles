@@ -4,8 +4,6 @@ SendMode Input ; Recommended for new scripts due to its superior speed and relia
 SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 #SingleInstance, force
 
-!F1::Send {Volume_Down}
-!F2::Send {Volume_Up}
 NumpadUp::Send {Volume_Up}
 NumpadClear::Send {Volume_Up}
 NumpadDown::Send {Volume_Down}

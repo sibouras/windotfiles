@@ -9,7 +9,7 @@ RAlt & z::
 return
 
 RAlt & c::
-  nvim = ahk_exe WindowsTerminal.exe
+  nvim = ahk_exe alacritty.exe
   edge = ahk_exe msedge.exe
   devtools = DevTools
   ; WinGetTitle, OutputVar, %devtools%
