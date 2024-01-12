@@ -529,7 +529,39 @@ $env.config = {
       mode: [emacs, vi_normal, vi_insert]
       event: {
         send: executehostcommand
-        cmd: "commandline -a (fd --hidden --type file -E .git -E node_modules | fzf) | commandline -e"
+        cmd: "commandline --insert (fd --hidden --type file -E node_modules | fzf --tiebreak=chunk --layout=reverse --multi --height=70% | lines | str join ' ')"
+      }
+    }
+    {
+      name: insert_sudo
+      modifier: alt_shift
+      keycode: char_s
+      mode: [emacs, vi_insert, vi_normal]
+      event: [
+        { edit: MoveToStart }
+        { send: ExecuteHostCommand,
+          cmd: 'if (commandline | split row -r '\s+' | first) != `sudo` { commandline --insert `sudo `;commandline --cursor-end; }'
+        }
+      ]
+    }
+    {
+      name: insert_last_arg_from_prev_cmd
+      modifier: alt
+      keycode: char_.
+      mode: [emacs, vi_normal, vi_insert]
+      event: {
+        send: executeHostCommand
+        cmd: "commandline --insert (history | last | get command | parse --regex '(?P<arg>[^ ]+)$' | get arg | first)"
+      }
+    }
+    {
+      name: clear
+      modifier: control
+      keycode: char_l
+      mode: [emacs , vi_normal, vi_insert]
+      event: {
+        send: executehostcommand
+        cmd: "clear"
       }
     }
   ]
@@ -541,7 +573,8 @@ alias md = mkdir
 alias pwd = echo $env.PWD
 alias v = nvim
 alias y = yazi
-alias ll = eza -la -s Name --git --icons --group-directories-first --no-permissions
+# alias y = ~/code/rust/yazi/target/debug/yazi.exe
+alias ll = eza -la -s Name --binary --git --icons --group-directories-first --no-permissions
 alias lg = lazygit
 alias gu = gitui -t tokyonight_night.ron
 alias gs = gswin64c
