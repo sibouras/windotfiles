@@ -60,6 +60,7 @@ let dark_theme = {
   shape_directory: cyan
   shape_external: cyan
   shape_externalarg: green_bold
+  shape_external_resolved: light_yellow_bold
   shape_filepath: cyan
   shape_flag: blue_bold
   shape_float: purple_bold
@@ -179,6 +180,8 @@ $env.config = {
   edit_mode: emacs # emacs, vi
   shell_integration: false # enables terminal markers and a workaround to arrow keys stop working issue
   render_right_prompt_on_last_line: false # true or false to enable or disable right prompt to be rendered on last line of the prompt.
+  use_kitty_protocol: true # enables keyboard enhancement protocol implemented by kitty console, only if your terminal support this.
+  highlight_resolved_externals: true # true enables highlighting of external commands in the repl resolved by which.
 
   hooks: {
     pre_prompt: [{||
@@ -564,15 +567,15 @@ alias sub = python ~\code\python\scripts\OpenSubtitlesDownload.py --cli
 
 ### Functions
 
-def t [...args] {
+def --wrapped t [...args] {
   NVIM_APPNAME=nvimtest nvim $args
 }
 
-def c [...args] {
+def --wrapped c [...args] {
   NVIM_APPNAME=nvimcode nvim $args
 }
 
-def lv [...args] {
+def --wrapped lv [...args] {
   NVIM_APPNAME=lazyvim nvim $args
 }
 
@@ -1023,7 +1026,8 @@ def --env br [args = "."] {
 
 # cd with yazi
 def --env ya [] {
-  let tmp = $"($env.TEMP)(char path_sep)yazi-cwd." + (random chars -l 6)
+  # let tmp = $"($env.TEMP)(char path_sep)yazi-cwd." + (random chars -l 6)
+  let tmp = mktemp -t "yazi-cwd.XXXXX"
 	y --cwd-file $tmp
 	let cwd = (open $tmp)
 	if $cwd != "" and $cwd != $env.PWD {
