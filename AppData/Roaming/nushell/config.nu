@@ -601,15 +601,15 @@ alias sub = python ~\code\python\scripts\OpenSubtitlesDownload.py --cli
 ### Functions
 
 def --wrapped t [...args] {
-  NVIM_APPNAME=nvimtest nvim $args
+  NVIM_APPNAME=nvimtest nvim ...$args
 }
 
 def --wrapped c [...args] {
-  NVIM_APPNAME=nvimcode nvim $args
+  NVIM_APPNAME=nvimcode nvim ...$args
 }
 
 def --wrapped lv [...args] {
-  NVIM_APPNAME=lazyvim nvim $args
+  NVIM_APPNAME=lazyvim nvim ...$args
 }
 
 def uptime [] {
@@ -652,7 +652,7 @@ def rghx [] {
 
 # search for files with fd and preview them with fzf
 def fs [...args] {
-  fd $args -H -t f -E .git | fzf --multi --ansi | str trim | lines
+  fd ...$args -H -t f -E .git | fzf --multi --ansi | str trim | lines
 }
 
 # search for files with fd and preview them with fzf and open them with nvim
@@ -660,13 +660,13 @@ def fe [...args] {
   # let file = (fd -H -e txt -e json -e js -e jsx -e ts -e tsx -e css -e html -e md -e lua | fzf --multi --preview 'bat --style=numbers --color=always --line-range :500 {}' | decode utf-8 | str trim | lines)
   let files = (fs ($args | to text))
   if not ($files | is-empty) {
-    nvim $files
+    nvim ...$files
   }
 }
 
 # search for media files with fd and fzf and open them with mpv
 def fm [...args] {
-  let files = (fd $args -e mp4 -e m4a -e webm -e mkv -e gif | fzf --multi | str trim | lines)
+  let files = (fd ...$args -e mp4 -e m4a -e webm -e mkv -e gif | fzf --multi | str trim | lines)
   if not ($files | is-empty) {
     let full_path = ($files | each {|it| $"($env.PWD)\\($it)"})
     mpv $full_path
@@ -675,7 +675,7 @@ def fm [...args] {
 
 # preview files with fzf
 def fp [...args] {
-  fd $args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim | lines
+  fd ...$args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim | lines
 }
 
 # histry with fzf
@@ -1028,7 +1028,7 @@ def --env which-cd [program] {
 
 # cd with tere(Terminal file explorer)
 def --env ce [...args] {
-  let result = ( tere --autocd-timeout=off $args | str trim )
+  let result = ( tere --autocd-timeout=off ...$args | str trim )
   cd $result
 }
 
