@@ -1,0 +1,467 @@
+working_directory = "/Users/ala"
+
+# [[indexed_colors]]
+# color = "0xff9e64"
+# index = 16
+
+# [[indexed_colors]]
+# color = "0xdb4b4b"
+# index = 17
+
+[colors.bright]
+black = "0x414868"
+blue = "0x7aa2f7"
+cyan = "0x7dcfff"
+green = "0x9ece6a"
+magenta = "0xbb9af7"
+red = "0xf7768e"
+white = "0xc0caf5"
+yellow = "0xe0af68"
+
+[colors.hints.end]
+background = "#1d1f21"
+foreground = "#e9ff5e"
+
+[colors.hints.start]
+background = "#1d1f21"
+foreground = "#f7768e"
+
+[colors.normal]
+black = "0x15161e"
+blue = "0x7aa2f7"
+cyan = "0x7dcfff"
+green = "0x9ece6a"
+magenta = "0xbb9af7"
+red = "0xf7768e"
+white = "0xa9b1d6"
+yellow = "0xe0af68"
+
+[colors.primary]
+background = "0x0c0d11"
+foreground = "0xc0caf5"
+
+[cursor.style]
+shape = "Beam"
+
+[cursor.vi_mode_style]
+shape = "Block"
+
+[font]
+size = 13.0
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "JetBrainsMono Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 1
+
+# [[keyboard.bindings]]
+# chars = "\u001B[47;5u" # <C-/>
+# chars = "\u001F"
+# key = "Slash"
+# mods = "Control"
+
+# [[keyboard.bindings]]
+# chars = "\u001B[44;5u"
+# key = "Comma"
+# mods = "Control"
+
+# [[keyboard.bindings]]
+# chars = "\u001B[46;5u"
+# key = "Period"
+# mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u001B[13;2u" # <S-CR>
+key = "Return"
+mods = "Shift"
+
+[[keyboard.bindings]]
+chars = "\u001B[13;5u" # <C-CR>
+key = "Return"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u0017" # <C-w>
+key = "Back"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u001B[15;8~" # <M-C-S-F5>
+key = "Space"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u001B[17;8~" # <M-C-S-F6>
+key = "I"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u001B[18;8~" # <M-C-S-F7>
+key = "Semicolon"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "CreateNewWindow"
+key = "Backslash"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ScrollLineUp"
+key = "PageUp"
+
+[[keyboard.bindings]]
+action = "ScrollLineDown"
+key = "PageDown"
+
+[[keyboard.bindings]]
+action = "ScrollToBottom"
+key = "Key9"
+mode = "Vi|~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ToggleViMode"
+key = "Key9"
+mode = "~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ClearSelection"
+key = "Escape"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "ScrollToBottom"
+key = "I"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "ToggleViMode"
+key = "I"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "ToggleViMode"
+key = "C"
+mode = "Vi|~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ScrollLineUp"
+key = "Y"
+mode = "Vi|~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ScrollLineDown"
+key = "E"
+mode = "Vi|~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ScrollToTop"
+key = "G"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "ScrollToBottom"
+key = "G"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "ScrollPageUp"
+key = "B"
+mode = "Vi|~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ScrollPageDown"
+key = "F"
+mode = "Vi|~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ScrollHalfPageUp"
+key = "U"
+mode = "Vi|~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ScrollHalfPageDown"
+key = "D"
+mode = "Vi|~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "Y"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "ClearSelection"
+key = "Y"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "ClearSelection"
+key = "Copy"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "ToggleNormalSelection"
+key = "V"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "ToggleLineSelection"
+key = "V"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "ToggleBlockSelection"
+key = "V"
+mode = "Vi|~Search"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ToggleSemanticSelection"
+key = "V"
+mode = "Vi|~Search"
+mods = "Alt"
+
+[[keyboard.bindings]]
+action = "Open"
+key = "Return"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "Up"
+key = "K"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "Down"
+key = "J"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "Left"
+key = "H"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "Right"
+key = "L"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "Up"
+key = "Up"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "Down"
+key = "Down"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "Left"
+key = "Left"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "Right"
+key = "Right"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "First"
+key = "Key0"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "Last"
+key = "Key4"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "FirstOccupied"
+key = "Key6"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "High"
+key = "H"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "Middle"
+key = "M"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "Low"
+key = "L"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "SemanticLeft"
+key = "B"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "SemanticRight"
+key = "W"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "SemanticRightEnd"
+key = "E"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "WordLeft"
+key = "B"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "WordRight"
+key = "W"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "WordRightEnd"
+key = "E"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "Bracket"
+key = "Key5"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "SearchForward"
+key = "Slash"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "SearchBackward"
+key = "Slash"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "SearchNext"
+key = "N"
+mode = "Vi|~Search"
+
+[[keyboard.bindings]]
+action = "SearchPrevious"
+key = "N"
+mode = "Vi|~Search"
+mods = "Shift"
+
+[mouse]
+hide_when_typing = true
+
+# [schemes.tokyo-night.bright]
+# black = "0x414868"
+# blue = "0x7aa2f7"
+# cyan = "0x7dcfff"
+# green = "0x9ece6a"
+# magenta = "0xbb9af7"
+# red = "0xf7768e"
+# white = "0xc0caf5"
+# yellow = "0xe0af68"
+
+# [schemes.tokyo-night.hints.end]
+# background = "#1d1f21"
+# foreground = "#e9ff5e"
+
+# [schemes.tokyo-night.hints.start]
+# background = "#1d1f21"
+# foreground = "#f7768e"
+
+# [schemes.tokyo-night.normal]
+# black = "0x15161e"
+# blue = "0x7aa2f7"
+# cyan = "0x7dcfff"
+# green = "0x9ece6a"
+# magenta = "0xbb9af7"
+# red = "0xf7768e"
+# white = "0xa9b1d6"
+# yellow = "0xe0af68"
+
+# [schemes.tokyo-night.primary]
+# background = "0x0c0d11"
+# foreground = "0xc0caf5"
+
+# [schemes.tokyo-night-storm.bright]
+# black = "0x444b6a"
+# blue = "0x7da6ff"
+# cyan = "0x0db9d7"
+# green = "0xb9f27c"
+# magenta = "0xbb9af7"
+# red = "0xff7a93"
+# white = "0xacb0d0"
+# yellow = "0xff9e64"
+
+# [schemes.tokyo-night-storm.normal]
+# black = "0x32344a"
+# blue = "0x7aa2f7"
+# cyan = "0x449dab"
+# green = "0x9ece6a"
+# magenta = "0xad8ee6"
+# red = "0xf7768e"
+# white = "0x9699a8"
+# yellow = "0xe0af68"
+
+# [schemes.tokyo-night-storm.primary]
+# background = "0x24283b"
+# foreground = "0xa9b1d6"
+
+[shell]
+program = "nu"
+
+[window]
+decorations = "none"
+dynamic_title = false
+title = "Alacritty"
+
+[window.dimensions]
+columns = 122
+lines = 32
+
+[window.padding]
+x = 0
+y = 2
+
+[window.position]
+x = 151
+y = 45
