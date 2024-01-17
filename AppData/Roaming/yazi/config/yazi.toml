@@ -1,5 +1,9 @@
+# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
+# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
 [manager]
-layout         = [ 0, 4, 4 ]
+ratio         = [ 0, 4, 4 ]
 sort_by        = "natural"
 sort_sensitive = true
 sort_reverse   = false
@@ -20,24 +24,24 @@ open = [
 reveal = [
 	{ exec = 'explorer /select,%1', orphan = true, desc = "Reveal", for = "windows" },
 	{ exec = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "unix" },
-	{ exec = 'exiftool "%1" | bat --paging always --style plain', block = true, desc = "Show EXIF", for = "windows" },
+	{ exec = 'exiftool "%1" | moar -no-statusbar', block = true, desc = "Show EXIF", for = "windows" },
 ]
 extract = [
 	{ exec = 'unar "$1"', desc = "Extract here", for = "unix" },
 	{ exec = 'ouch decompress --no --quiet "%1"', desc = "Extract here", for = "windows" },
-	{ exec = 'ouch list -t "%1" | bat --paging always --style plain', block = true, desc = "List contents of an archive", for = "windows" },
+	{ exec = 'ouch list -t "%1" | moar -no-statusbar', block = true, desc = "List contents of an archive", for = "windows" },
 ]
 play = [
 	{ exec = 'mpv "$@"', orphan = true, for = "unix" },
 	{ exec = 'mpv --force-window=yes "%1"', orphan = true, for = "windows" },
 	{ exec = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
-	{ exec = 'mediainfo "%1" | bat --paging always --style plain', block = true, desc = "Show media info", for = "windows" },
+	{ exec = 'mediainfo "%1" | moar -no-statusbar', block = true, desc = "Show media info", for = "windows" },
 ]
 audio = [
 	{ exec = 'mpc-hc "%1"', orphan = true, for = "windows" },
 	{ exec = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
-	{ exec = 'mediainfo "%1" | bat --paging always --style plain', block = true, desc = "Show media info", for = "windows" },
-	{ exec = '''ffprobe -v quiet -print_format json -show_format "%1" | jaq -r '.format.tags["lyrics-XXX"]' | bat --paging always --style plain''', block = true, desc = "Lyrics", for = "windows" },
+	{ exec = 'mediainfo "%1" | moar -no-statusbar', block = true, desc = "Show media info", for = "windows" },
+	{ exec = '''ffprobe -v quiet -print_format json -show_format "%1" | jaq -r '.format.tags["lyrics-XXX"]' | moar -no-statusbar''', block = true, desc = "Lyrics", for = "windows" },
 ]
 
 [open]
