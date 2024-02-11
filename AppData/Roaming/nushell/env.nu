@@ -92,6 +92,7 @@ $env.LF_ICONS = "tw=:st=:ow=:dt=:di=:fi=:ln=:or=:ex=:
 $env.EDITOR = "nvim"
 $env.BOOKMARK_MANAGER_CSV = $"($nu.home-path)/documents/bm/bm.csv"
 $env.LESS = '--quiet'
+$env.MOAR = '--no-statusbar --style=github-dark'
 
 ### zoxide config
 # zoxide init nushell | save -f ~/.cache/.zoxide.nu

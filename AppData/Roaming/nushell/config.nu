@@ -5,7 +5,7 @@
 let dark_theme = {
   # color for nushell primitives
   separator: white
-  leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
+  # leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
   header: green_bold
   empty: blue
   # Closures can be used to choose colors for specific values.
@@ -590,7 +590,7 @@ alias gloo = git log --pretty=format:'%C(yellow)%h %Cred%ad %Cgreen%d %Creset%s'
 alias winconfig = git $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias dotfiles = lazygit $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias sfss = sfsu search
-alias sfsd = sfsu describe
+alias sfsi = sfsu info
 # alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
 alias vd = VirtualDesktop11
 alias b = buku --suggest
@@ -1002,11 +1002,35 @@ def "env details" [] {
 def env [] { env details | flatten }
 
 # interactively select columns from a table
-export def iselect [] {
+def iselect [] {
   let tgt = $in
   let cols = ($tgt | columns)
   let choices = ($cols | input list -m "Pick columns to get: ")
   $tgt | select $choices
+}
+
+# print processes using a file (or, if a directory, anything under that directory)
+def whos-using [path: string] {
+  handle -v -nobanner | from csv | str trim | where { |it|
+    try {
+      $it."Name " | path expand | path relative-to ($path | path expand);
+      true
+    } catch { |e|
+      false
+    }
+  }
+}
+
+# example: ["http://tinyurl.com/nushell-gh" "https://bit.ly/1sNZMwL"] | url expand
+def "url expand" [$urls:any = []]: [string -> string, list -> table] {
+  let urls = ($in | default $urls)
+  def expand-link [] {
+    http head --redirect-mode manual $in | where name == location | get value.0
+  }
+  match ($urls | describe) {
+    string => { $urls | expand-link }
+    $type if ($type =~ list) => { $urls | wrap link | insert expanded {|url| $url.link | expand-link}}
+  }
 }
 
 # go up n directories
@@ -1024,6 +1048,18 @@ def --env mcd [name: path] {
 def --env which-cd [program] {
   let dir = (which $program | get path | path dirname)
   cd $dir.0
+}
+
+# go to a path like $nu.config-path | goto
+def --env goto [] {
+  let input = $in
+  cd (
+    if ($input | path type) == file {
+      ($input | path dirname)
+    } else {
+      $input
+    }
+  )
 }
 
 # cd with tere(Terminal file explorer)
