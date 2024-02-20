@@ -127,12 +127,13 @@ CapsLock & m::
   else if Key = e
     Run explorer.exe
   else if Key = x
-    Run %A_AppData%\Spotify\cache\hide_window.vbs
+    Run %A_AppData%\Spotify\spotify.exe
   else if Key = r
   {
-    EnvGet, vUserProfile, USERPROFILE
+    ; EnvGet, vUserProfile, USERPROFILE
     ; RunWait, alacritty.exe --working-directory "%vUserProfile%", , Min
-    Run %vUserProfile%\scoop\apps\alacritty\current\alacritty.exe --working-directory %vUserProfile%,,, NewPID
+    ; Run %vUserProfile%\scoop\apps\alacritty\current\alacritty.exe --working-directory %vUserProfile%,,, NewPID
+    Run alacritty.exe,,, NewPID
     WinWaitActive, ahk_pid %NewPID%
     Send, !+{l}
   }
