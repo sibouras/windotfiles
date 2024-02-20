@@ -1,11 +1,13 @@
 theme = "my_catppuccin_mocha"
 
 [editor]
+line-number = "relative"
 idle-timeout = 50
+completion-timeout = 50
 cursorline = true
 color-modes = true
 completion-trigger-len = 1
-shell = ["nu", "-c"]
+shell = ["nu", "--no-std-lib", "--no-config-file", "--stdin" ,"-c"]
 
 [editor.cursor-shape]
 normal = "block"
@@ -40,8 +42,8 @@ A-n = "repeat_last_motion"
 C-c = "no_op" # turn off the default comment functionality
 K = "hover"
 A-k = "keep_selections"
-# C-u = ["half_page_up", "align_view_center"]
-# C-d = ["half_page_down", "align_view_center"]
+C-u = ["page_cursor_half_up", "align_view_center"]
+C-d = ["page_cursor_half_down", "align_view_center"]
 C-y = "scroll_up"
 C-e = "scroll_down"
 C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"] # move line down
@@ -76,6 +78,9 @@ g.i = "goto_first_nonwhitespace"
 g.I = "extend_to_first_nonwhitespace"
 g.L = "extend_to_line_end"
 g.H = "extend_to_line_start"
+
+[keys.normal.space.t]
+i = ":toggle lsp.display-inlay-hints"
 
 [keys.insert]
 C-a = "goto_line_start"
