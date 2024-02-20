@@ -91,7 +91,7 @@ let dark_theme = {
 
 # External completer example
 # let carapace_completer = {|spans|
-#     carapace $spans.0 nushell $spans | from json
+#     carapace $spans.0 nushell ...$spans | from json
 # }
 
 
@@ -183,6 +183,8 @@ $env.config = {
   use_kitty_protocol: true # enables keyboard enhancement protocol implemented by kitty console, only if your terminal support this.
   highlight_resolved_externals: true # true enables highlighting of external commands in the repl resolved by which.
 
+  plugins: {} # Per-plugin configuration. See https://www.nushell.sh/contributor-book/plugins.html#configuration.
+
   hooks: {
     pre_prompt: [{||
       null  # replace with source code to run before the prompt is shown
@@ -217,8 +219,43 @@ $env.config = {
         }
         style: {
           text: green
-          selected_text: green_reverse
+          selected_text: {attr: r}
           description_text: yellow
+          match_text: {attr: u}
+          selected_match_text: {attr: ur}
+        }
+      }
+      {
+        name: ide_completion_menu
+        only_buffer_difference: false
+        marker: "| "
+        type: {
+          layout: ide
+          min_completion_width: 0,
+          max_completion_width: 50,
+          # max_completion_height: 10, # will be limited by the available lines in the terminal
+          padding: 0,
+          border: true,
+          cursor_offset: 0,
+          description_mode: "prefer_right"
+          min_description_width: 0
+          max_description_width: 50
+          max_description_height: 10
+          description_offset: 1
+          # If true, the cursor pos will be corrected, so the suggestions match up with the typed text
+          #
+          # C:\> str
+          #      str join
+          #      str trim
+          #      str split
+          correct_cursor_pos: false
+        }
+        style: {
+          text: green
+          selected_text: {attr: r}
+          description_text: yellow
+          match_text: {attr: u}
+          selected_match_text: {attr: ur}
         }
       }
       {
@@ -348,6 +385,19 @@ $env.config = {
       keycode: char_r
       mode: emacs
       event: { send: menu name: history_menu }
+    }
+    {
+      name: ide_completion_menu
+      modifier: control
+      keycode: char_n
+      mode: [emacs vi_normal vi_insert]
+      event: {
+        until: [
+            { send: menu name: ide_completion_menu }
+            { send: menunext }
+            { edit: complete }
+        ]
+      }
     }
     {
       name: next_page
@@ -706,7 +756,7 @@ def lsg [] {
 }
 
 # ls by type
-def l [name: string = ''] {
+def l [name: string = '.'] {
   ls $name | sort-by type name | select name size modified
 }
 
@@ -811,7 +861,7 @@ def cpp [
   to: string # target directory
   #
   # Example
-  # ls *.txt | first 5 | cp-pipe ~/temp
+  # ls *.txt | first 5 | cpp ~/temp
 ] {
   get name | each { |file| echo $"copying ($file)..." ; cp -r $file ($to | path expand) }
 }
