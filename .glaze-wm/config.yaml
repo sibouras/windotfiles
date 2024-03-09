@@ -15,6 +15,9 @@ general:
   # Amount to move floating windows by (eg. when using `alt+<hjkl>` on a floating window)
   floating_window_move_amount: "5%"
 
+  # Whether to center new floating windows.
+  center_new_floating_windows: true
+
   # *Strongly* recommended to set to 'false'. Whether to globally enable/disable
   # window transition animations (on minimize, close, etc). Set to 'unchanged'
   # to make no setting changes.
@@ -58,8 +61,21 @@ bar:
   components_center:
     - type: "window title"
   components_right:
+    - type: "tiling direction"
+      label_horizontal: "CPU: "
+      label_vertical: "CPU: "
+      foreground: "#999999"
     - type: "cpu"
-      label: "CPU: {percent_usage}%"
+      label: "{percent_usage}%"
+      # How often this counter is refreshed.
+      refresh_interval_ms: 1000
+      margin: "0 10px 0 0"
+    - type: "tiling direction"
+      label_horizontal: " RAM: "
+      label_vertical: " RAM: "
+      foreground: "#999999"
+    - type: "memory"
+      label: "{percent_usage}%"
       # How often this counter is refreshed.
       refresh_interval_ms: 1000
       margin: "0 10px 0 0"
@@ -77,7 +93,7 @@ bar:
     - type: "clock"
       # Documentation on formatting date/time string:
       # https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
-      time_formatting: "hh:mm tt  ddd MMM d"
+      time_formatting: "hh:mm tt"
       margin: "0 0 0 10px"
 
 workspaces:
@@ -107,6 +123,12 @@ window_rules:
   # Launches system dialogs as floating by default (eg. File Explorer save/open dialog).
   - command: "set floating"
     match_class_name: "#32770"
+
+  # Do not manage picture-in-picture windows for browsers. Note that the default is for
+  # English; change `match_title` to the window's title if you use another language.
+  - command: "ignore"
+    match_title: "[Pp]icture.in.[Pp]icture"
+    match_class_name: "Chrome_WidgetWin_1|MozillaDialogClass"
 
   - command: "move to workspace 3"
     match_process_name: "Spotify"
@@ -150,23 +172,23 @@ keybindings:
 
   # Move focused window in a given direction.
   - command: "move left"
-    binding: "Alt+Control+H"
+    binding: "Alt+Shift+H"
   - command: "move right"
-    binding: "Alt+Control+L"
+    binding: "Alt+Shift+L"
   - command: "move up"
-    binding: "Alt+Control+K"
+    binding: "Alt+Shift+K"
   - command: "move down"
-    binding: "Alt+Control+J"
+    binding: "Alt+Shift+J"
 
   # Resize focused window by a percentage or pixel amount.
   - command: "resize width -2%"
-    binding: "Alt+Shift+H"
+    binding: "Alt+OemMinus"
   - command: "resize width +2%"
-    binding: "Alt+Shift+L"
+    binding: "Alt+Oemplus"
   - command: "resize height +2%"
-    binding: "Alt+Shift+K"
+    binding: "Alt+Shift+Oemplus"
   - command: "resize height -2%"
-    binding: "Alt+Shift+J"
+    binding: "Alt+Shift+OemMinus"
 
   # As an alternative to the resize keybindings above, resize mode enables resizing via
   # HJKL or arrow keys. The binding mode is defined above with the name "resize".
