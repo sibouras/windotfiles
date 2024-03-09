@@ -513,7 +513,7 @@ $env.config = {
         cmd: "$env.temp_var = ($env | get -i temp_var | default 0 | $in + 1);
         let custom_var = (input 'enter variable name: ');
         let name = (if $custom_var == "" {$env.temp_var | into string | 't' + $in} else {$custom_var});
-        commandline ('let ' + ($name) + ' = (' + (commandline) + '); $' + ($name))"
+        commandline edit --replace ('let ' + ($name) + ' = (' + (commandline) + '); $' + ($name))"
       }
     }
 
@@ -565,11 +565,11 @@ $env.config = {
     {
       name: fuzzy_history
       modifier: control
-      keycode: Char_r
+      keycode: Char_g
       mode: [emacs , vi_normal, vi_insert]
       event: {
         send: executehostcommand
-        cmd: "commandline (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
+        cmd: "commandline edit --replace (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
       }
     }
     {
@@ -579,7 +579,7 @@ $env.config = {
       mode: [emacs, vi_normal, vi_insert]
       event: {
         send: executehostcommand
-        cmd: "commandline --insert (fd --hidden --type file -E node_modules | fzf --tiebreak=chunk --layout=reverse --multi --height=70% | lines | str join ' ')"
+        cmd: "commandline edit --insert (fd --hidden --type file -E node_modules | fzf --tiebreak=chunk --layout=reverse --multi --height=70% | lines | str join ' ')"
       }
     }
     {
@@ -590,18 +590,18 @@ $env.config = {
       event: [
         { edit: MoveToStart }
         { send: ExecuteHostCommand,
-          cmd: 'if (commandline | split row -r '\s+' | first) != `sudo` { commandline --insert `sudo `;commandline --cursor-end; }'
+          cmd: 'if (commandline | split row -r '\s+' | first) != `sudo` { commandline edit --insert `sudo `; commandline set-cursor --end }'
         }
       ]
     }
     {
       name: insert_last_arg_from_prev_cmd
-      modifier: alt
-      keycode: char_.
+      modifier: control
+      keycode: char_b
       mode: [emacs, vi_normal, vi_insert]
       event: {
         send: executeHostCommand
-        cmd: "commandline --insert (history | last | get command | parse --regex '(?P<arg>[^ ]+)$' | get arg | first)"
+        cmd: "commandline edit --insert (history | last | get command | parse --regex '(?P<arg>[^ ]+)$' | get arg | first)"
       }
     }
     {
@@ -644,7 +644,7 @@ alias sfsi = sfsu info
 # alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
 alias vd = VirtualDesktop11
 alias b = buku --suggest
-alias timeitt = commandline $"timeit {(history | last 1 | first | get command)}" # a shortcut to apply timeit to the previous command
+alias ti = commandline edit --replace $"timeit {(history | last 1 | first | get command)}" # a shortcut to apply timeit to the previous command
 alias sub = python ~\code\python\scripts\OpenSubtitlesDownload.py --cli
 
 
@@ -730,7 +730,7 @@ def fp [...args] {
 
 # histry with fzf
 def fh [] {
-  commandline (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --tiebreak=chunk --layout=reverse --multi  | decode utf-8 | str trim)
+  commandline edit --replace (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --tiebreak=chunk --layout=reverse --multi  | decode utf-8 | str trim)
 }
 
 # get aliases
@@ -963,6 +963,11 @@ def tr [
     | get responseData
     | get translatedText
   }
+}
+
+# Get weather using wttr
+def weather [location:string, --json] {
+  http get $"https://wttr.in/($location)?format=(if $json {'j1'} else { '3' })"
 }
 
 def tolink [name: string] {
