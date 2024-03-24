@@ -626,7 +626,7 @@ alias y = yazi
 # alias y = ~/code/rust/yazi/target/debug/yazi.exe
 alias ll = eza -la -s Name --binary --git --icons --group-directories-first --no-permissions
 alias lg = lazygit
-alias gu = gitui -t tokyonight_night.ron
+alias gu = gitui
 alias gs = gswin64c
 alias ga = git add
 alias gst = git status
@@ -782,7 +782,10 @@ def gci [] {
 
 # git diff preview
 def gdp [] {
-  git diff --name-only | fzf --preview 'git diff {} | delta'
+  let files = git diff --name-only | fzf --multi --preview 'git diff {} | delta' | lines
+  if ($files | is-not-empty) {
+    git diff ...$files | delta --paging=auto
+  }
 }
 
 # push to git
@@ -985,7 +988,7 @@ def sfsl [] {
 }
 
 def sfso [] {
-  sfsu outdated | lines | skip 1 | split column '|' name current available | str trim
+  sfsu outdated apps | lines | skip 1 | split column '|' name current available | str trim
 }
 
 # scoop search structured wrapper (much faster)
