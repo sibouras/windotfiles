@@ -2,6 +2,17 @@ return {
   'kylechui/nvim-surround',
   event = 'VeryLazy',
   opts = {
+    keymaps = {
+      normal = 'ms',
+      normal_cur = 'mss',
+      normal_line = 'mS',
+      normal_cur_line = 'mSS',
+      visual = 'ms',
+      visual_line = false,
+      delete = 'md',
+      change = 'mr',
+      change_line = false,
+    },
     surrounds = {
       ['l'] = {
         add = function()

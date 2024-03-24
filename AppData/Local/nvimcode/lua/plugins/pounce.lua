@@ -2,9 +2,10 @@ return {
   {
     'rlane/pounce.nvim',
     keys = {
-      { 's', '<cmd>Pounce<CR>', mode = { 'n', 'x' } },
-      { 'S', '<cmd>PounceRepeat<CR>', mode = 'n' },
-      { 'gs', '<cmd>Pounce<CR>', mode = 'o' },
+      { 's', '<Cmd>Pounce<CR>', mode = { 'n', 'x', 'o' } },
+      { 'S', '<Cmd>PounceRepeat<CR>', mode = 'n' },
+      { 'gs', '<Cmd>PounceExpand <cword><CR>', mode = 'n', desc = 'Pounce with the current word' },
+      { 'gs', 'y<Cmd>PounceReg "<CR>', mode = 'x', desc = 'Pounce using the selection as the input' },
     },
     opts = {
       accept_keys = 'JKLSDFAGHNUVRBYTMICEOXWPQZ',
