@@ -5,11 +5,12 @@
   editor = nvim
   eol = lf
   autocrlf = false
-  ; pager = delta
+  pager = delta --pager=moar
   excludesfile = ~/.config/git/ignore
 
 [interactive]
-	diffFilter = riff --color=on
+  diffFilter = delta --color-only
+	; diffFilter = riff --color=on
 
 [delta]
   navigate = true    # use n and N to move between diff sections
@@ -20,12 +21,13 @@
 
 [diff]
   colorMoved = default
+  tool = nvimdiff
 
 [alias]
   diff-words = diff --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 
-[pager]
-	diff = riff
-	show = riff
-	log = delta
+; [pager]
+; 	diff = riff
+; 	show = riff
+; 	log = delta
