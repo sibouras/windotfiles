@@ -1,5 +1,4 @@
 RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
-RAlt & f::ToggleWindowVisibility("ahk_exe mpv.exe")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & r::ToggleWindowVisibility("Alacritty")
 RAlt & w::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
@@ -7,9 +6,8 @@ RAlt & g::ToggleWindowVisibility("ahk_exe Glasswire.exe")
 RAlt & x::ToggleWindowVisibility("ahk_exe Spotify.exe")
 
 ToggleWindowVisibility(windowClass) {
-  IfWinExist, %windowClass%
-  {
-    IfWinActive, %windowClass%
+  if WinExist(windowClass) {
+    if WinActive(windowClass)
       WinMinimize, %windowClass%
     else
       WinActivate, %windowClass%
@@ -19,6 +17,24 @@ ToggleWindowVisibility(windowClass) {
   ;   MsgBox % word_array[2] " is not open!"
   ; }
 }
+
+RAlt & f::
+  mpv = ahk_exe mpv.exe
+  if WinExist(mpv) {
+    if WinActive(mpv) {
+      WinMinimize, %mpv%
+    } else {
+      WinGet, active_id, ID, A
+      WinGet, proc, ProcessName, ahk_id %active_id%
+      ; when the focus is on brave window, minimizing then activating mpv
+      ; causes keys to behave strangely.
+      if (proc == "brave.exe") {
+        WinRestore, ahk_exe %mpv%
+      }
+      WinActivate, %mpv%
+    }
+  }
+return
 
 RAlt & b::
   SetTitleMatchMode, 2
