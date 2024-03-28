@@ -68,13 +68,14 @@ GoToNextDesktop() {
 }
 
 GoToDesktopNumber(num) {
+  sleep 10 ; fix losing focus when switching desktops
   global GoToDesktopNumberProc
   DllCall(GoToDesktopNumberProc, "Int", num, "Int")
   return
 }
 MoveOrGotoDesktopNumber(num) {
-  ; If user is holding down Mouse left button, move the current window also
-  if (GetKeyState("LButton")) {
+  ; If user is holding down Shift, move the current window also
+  if (GetKeyState("Shift")) {
     MoveCurrentWindowToDesktop(num)
   } else {
     GoToDesktopNumber(num)
@@ -121,9 +122,6 @@ UnPinWindow() {
   return ran
 }
 
-!8:: PinWindow()
-; !7:: UnPinWindow()
-
 ; SetDesktopName(0, "It works! 🐱")
 DllCall(RegisterPostMessageHookProc, "Ptr", A_ScriptHwnd, "Int", 0x1400 + 30, "Int")
 OnMessage(0x1400 + 30, OnChangeDesktop)
@@ -138,23 +136,23 @@ OnChangeDesktop(wParam, lParam, msg, hwnd) {
   ; TraySetIcon(".\Icons\icon" NewDesktop ".ico")
 }
 
+; NOTE: when tapping alt then space mpv opens the context menu of the window's title bar even if alt-space is remapped.
+; use `Alt &` instead of `!` because when switching to a desktop that has mpv focused the above bug happens.
+; also `GetKeyState("Shift")` doesn' work with `!`
+
 ; goto previous desktop
 OldDesktop := 0
-!;:: GotoDesktopNumber(OldDesktop - 1)
+Alt & `;:: MoveOrGotoDesktopNumber(OldDesktop - 1)
 
-!9:: GoToPrevDesktop()
-!0:: GoToNextDesktop()
+Alt & 9:: GoToPrevDesktop()
+Alt & 0:: GoToNextDesktop()
+Alt & 1:: MoveOrGotoDesktopNumber(0)
+Alt & 2:: MoveOrGotoDesktopNumber(1)
+Alt & 3:: MoveOrGotoDesktopNumber(2)
+Alt & 4:: MoveOrGotoDesktopNumber(3)
+Alt & 5:: MoveOrGotoDesktopNumber(4)
 
-!1:: GotoDesktopNumber(0)
-!2:: GotoDesktopNumber(1)
-!3:: GotoDesktopNumber(2)
-!4:: GotoDesktopNumber(3)
-!5:: GotoDesktopNumber(4)
-
-!+1:: MoveCurrentWindowToDesktop(0)
-!+2:: MoveCurrentWindowToDesktop(1)
-!+3:: MoveCurrentWindowToDesktop(2)
-!+4:: MoveCurrentWindowToDesktop(3)
-!+5:: MoveCurrentWindowToDesktop(4)
+!8:: PinWindow()
+!7:: UnPinWindow()
 
 !r:: reload
