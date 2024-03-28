@@ -100,25 +100,29 @@ return
   q::Esc
 #IfWinActive
 
-; switch to previous window
-!o::
-  winNumber = 0
-  WinGet, ids, List
-  Loop, %ids% {
-    this_id := ids%A_Index%
-    id := % "ahk_id " this_id
-    WinGet, ExStyle, ExStyle, %id%
-    WinGetTitle, ttitle, %id% ; Window title
-    WinGet, proc, ProcessName, %id% ; Window process
-    WinGetClass, class, %id% ; Window class
-    ; https://www.autohotkey.com/docs/commands/WinGet.htm#ExStyle
-    ; 0x8 is WS_EX_TOPMOST(always-on-top)
-    winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > "" && !(ExStyle & 0x8)
-    && (ttitle != "Program Manager" || proc != "Explorer.exe") && proc != "FancyWM.exe"
-  } Until (winNumber = 2)
-  if (winNumber = 2)
-    WinActivate, %id%
-return
+; focus previous window
+; from: https://www.autohotkey.com/boards/viewtopic.php?t=97358
+!o::focus(2)
+!p::focus(3)
+!u::focus(4)
+
+focus(nInStack) {
+ winNumber := 0
+ WinGet win, List
+ Loop % win {
+  this_id := win%A_Index%
+  id := % "ahk_id " this_id
+  WinGet, ExStyle, ExStyle, %id%
+  WinGetTitle ttitle, % winTitle := "ahk_id " win%A_Index% ; Window title
+  WinGet proc, ProcessName, %winTitle%                     ; Window process
+  WinGetClass class, %winTitle%                            ; Window class
+  ; https://www.autohotkey.com/docs/commands/WinGet.htm#ExStyle
+  ; 0x8 is WS_EX_TOPMOST(always-on-top)
+  winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > "" && !(ExStyle & 0x8)
+               && (ttitle != "Program Manager" || proc != "Explorer.exe")
+ } Until Min(nInStack, win) = winNumber
+ WinActivate % winTitle
+}
 
 ; switch between all windows of the current window class
 listIndex = 1
