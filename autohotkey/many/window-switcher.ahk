@@ -24,11 +24,9 @@ RAlt & f::
     if WinActive(mpv) {
       WinMinimize, %mpv%
     } else {
-      WinGet, active_id, ID, A
-      WinGet, proc, ProcessName, ahk_id %active_id%
       ; when the focus is on brave window, minimizing then activating mpv
       ; causes keys to behave strangely.
-      if (proc == "brave.exe") {
+      if WinActive("ahk_exe brave.exe") {
         WinRestore, ahk_exe %mpv%
       }
       WinActivate, %mpv%
