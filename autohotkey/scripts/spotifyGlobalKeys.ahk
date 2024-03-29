@@ -16,41 +16,46 @@ spotifyKey(key) {
   spotifyHwnd := getSpotifyHwnd()
   ; Chromium ignores keys when it isn't focused.
   ; Focus the document window without bringing the app to the foreground.
+  ; NOTE: make sure spotify is not the topmost window and tha keys work before switcing to another desktop.
   ControlFocus, Chrome_RenderWidgetHostHWND1, ahk_id %spotifyHwnd%
-  ControlSend, , %key%, ahk_id %spotifyHwnd%
-  if WinExist("ahk_exe spotify.exe")
-  {
-    ; show the Windows OSD
-    hWnd := DllCall("User32\FindWindow", "Str","NativeHWNDHost", "Ptr",0)
-    PostMessage 0xC028, 0x0C, 0xA0000,, % "ahk_id" hWnd
-  }
-  Return
+  ControlSend, ahk_parent, %key%, ahk_id %spotifyHwnd%
 }
 
-; alt+shift+b
-!+b::spotifyKey("!+{b}")
-; Win+alt+p: Play/Pause
-#+p::spotifyKey("{Space}")
-; Win+alt+j: Next
-#]::spotifyKey("^{Right}")
-; Win+alt+k: Previous
-#[::spotifyKey("^{Left}")
-; Win+alt+l: Seek forward
-#+]::spotifyKey("+{Right}")
-; Win+alt+h: Seek backward
-#+[::spotifyKey("+{Left}")
-; Win+alt+0: Volume up
-#0::spotifyKey("^{Up}")
-; Win+alt+9: Volume down
-#9::spotifyKey("^{Down}")
-; Win+alt+o: Show Spotify
-#!o::
-  spotifyHwnd := getSpotifyHwnd()
-  WinGet, style, Style, ahk_id %spotifyHwnd%
-  if (style & 0x10000000) { ; WS_VISIBLE
-    WinHide, ahk_id %spotifyHwnd%
-  } Else {
-    WinShow, ahk_id %spotifyHwnd%
-    WinActivate, ahk_id %spotifyHwnd%
+#b::spotifyKey("!+{b}") ; like song
+#=::spotifyKey("{Space}") ; play/pause
+#0::spotifyKey("^{Right}") ; next
+#9::spotifyKey("^{Left}") ; previous
+#8::spotifyKey("+{Right}") ; Seek forward
+#7::spotifyKey("+{Left}") ; Seek backward
+#k::spotifyKey("^{Up}") ; Volume up
+#j::spotifyKey("^{Down}") ; Volume down
+
+#s::
+  ; DetectHiddenWindows, Off
+  spotify = ahk_exe spotify.exe
+  if WinExist(spotify) {
+    if WinActive(spotify) {
+      WinHide, %spotify%
+      Send !{tab}
+      ; NOTE: after hiding spotify and the current window is maximized,
+      ; the keys won't work until you unmaximize the window.
+      ; or we can send an empty key here.
+      ControlFocus, Chrome_RenderWidgetHostHWND1, %spotify%
+      ControlSend, ahk_parent, "", %spotify%
+    } else {
+      WinShow, %spotify%
+      WinActivate, %Spotify%
+      ; NOTE: if the current window is maximized when we press #s spotify's window
+      ; gets stuck so we click somewhere on the window
+      ControlClick, x500 y100, %spotify%
+    }
   }
-Return
+return
+
+; for debug: get ClassNN
+; F1::
+; 	WinGet, classNNlist, ControlList, A
+; 	MsgBox, % classNNlist
+; return
+
+; !f::reload
