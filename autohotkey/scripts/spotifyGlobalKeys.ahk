@@ -21,7 +21,7 @@ spotifyKey(key) {
   ControlSend, ahk_parent, %key%, ahk_id %spotifyHwnd%
 }
 
-#b::spotifyKey("!+{b}") ; like song
+#6::spotifyKey("!+{b}") ; like song
 #=::spotifyKey("{Space}") ; play/pause
 #0::spotifyKey("^{Right}") ; next
 #9::spotifyKey("^{Left}") ; previous

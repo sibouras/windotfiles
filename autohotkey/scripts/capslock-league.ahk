@@ -27,26 +27,27 @@ XButton1::Ctrl
 CapsLock::Shift
 !;::CapsLock
 
-!1:: Run nircmd.exe mutesysvolume 1 "external microphone" ; Mute
-!2:: Run nircmd.exe mutesysvolume 0 "external microphone" ; Unmute
-; !4:: Run nircmd.exe mutesysvolume 2 "external microphone"  ; Toggle
+!F1:: Run nircmd.exe mutesysvolume 1 "external microphone" ; Mute
+!F2:: Run nircmd.exe mutesysvolume 0 "external microphone" ; Unmute
+; !F4:: Run nircmd.exe mutesysvolume 2 "external microphone"  ; Toggle
 
-!Esc::
-  league = ahk_exe League of Legends.exe
-  If not WinActive(league)
-    WinActivate, %league%
-return
-
-!f1::
+#1::
   firefox = ahk_class MozillaWindowClass
-  If not WinActive(firefox)
+  if not WinActive(firefox) {
     WinActivate, %firefox%
+  }
 return
 
-!f2::
-  spotify = ahk_exe spotify.exe
-  If not WinActive(spotify)
-    WinActivate, %spotify%
+#2::
+  league = ahk_exe League of Legends.exe
+  client = ahk_exe LeagueClientUx.exe
+  if WinExist(client) {
+    if not WinActive(client) {
+      WinActivate, %client%
+    }
+  } else if not WinActive(league) {
+    WinActivate, %league%
+  }
 return
 
 ; enter::
