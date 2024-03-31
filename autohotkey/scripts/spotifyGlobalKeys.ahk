@@ -16,8 +16,9 @@ spotifyKey(key) {
   spotifyHwnd := getSpotifyHwnd()
   ; Chromium ignores keys when it isn't focused.
   ; Focus the document window without bringing the app to the foreground.
-  ; NOTE: make sure spotify is not the topmost window and tha keys work before switcing to another desktop.
-  ControlFocus, Chrome_RenderWidgetHostHWND1, ahk_id %spotifyHwnd%
+  ; NOTE: ControlClick just works unlike ControlFocus
+  ; `U` to release the mouse button and prevent focusing the window when spamming the keys.
+  ControlClick, x500 y100, ahk_id %spotifyHwnd%, , Left, 1, U
   ControlSend, ahk_parent, %key%, ahk_id %spotifyHwnd%
 }
 
@@ -31,22 +32,16 @@ spotifyKey(key) {
 #j::spotifyKey("^{Down}") ; Volume down
 
 #s::
-  ; DetectHiddenWindows, Off
   spotify = ahk_exe spotify.exe
   if WinExist(spotify) {
     if WinActive(spotify) {
       WinHide, %spotify%
       Send !{tab}
-      ; NOTE: after hiding spotify and the current window is maximized,
-      ; the keys won't work until you unmaximize the window.
-      ; or we can send an empty key here.
-      ControlFocus, Chrome_RenderWidgetHostHWND1, %spotify%
-      ControlSend, ahk_parent, "", %spotify%
     } else {
       WinShow, %spotify%
       WinActivate, %Spotify%
-      ; NOTE: if the current window is maximized when we press #s spotify's window
-      ; gets stuck so we click somewhere on the window
+      ; NOTE: if the current window is maximized when we activate spotify,
+      ; spotify's window gets stuck so we click somewhere on the window
       ControlClick, x500 y100, %spotify%
     }
   }
