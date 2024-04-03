@@ -1211,6 +1211,7 @@ source ~/Appdata/Roaming/nushell/scripts/youtube.nu
 
 ### Completions
 use ~/Appdata/Roaming/nushell/completions/git-completions.nu *
+use ~/Appdata/Roaming/nushell/completions/rg-completions.nu *
 
 ### zoxide
 source ~/.cache/.zoxide.nu
