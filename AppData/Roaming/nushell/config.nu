@@ -1188,25 +1188,6 @@ def --env ya [] {
 	rm -p $tmp
 }
 
-# Add the given paths to PATH
-def --env "path-add" [
-  --ret(-r) # return the env (useful in pipelines to avoid scoping)
-  --prepend(-p) # prepend instead of appending.
-  ...paths # the paths to add
-  ] {
-  let path_name = if "PATH" in $env { "PATH" } else { "Path" }
-  $env.$path_name = (
-    $env | get $path_name
-    | if $prepend { prepend $paths } else { append $paths }
-  )
-  if $ret {
-    $env | get $path_name
-  }
-}
-
-path-add $"($env.LOCALAPPDATA)\\Mozilla Firefox"
-path-add "C:\\Program Files (x86)\\Microsoft\\Edge\\Application"
-
 ### Scripts
 source ~/Appdata/Roaming/nushell/scripts/format-number.nu
 source ~/Appdata/Roaming/nushell/scripts/nu-sloc.nu
