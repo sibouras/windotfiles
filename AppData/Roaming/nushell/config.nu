@@ -719,7 +719,7 @@ def fm [...args] {
   let files = (fd ...$args -e mp4 -e m4a -e webm -e mkv -e gif | fzf --multi | str trim | lines)
   if not ($files | is-empty) {
     let full_path = ($files | each {|it| $"($env.PWD)\\($it)"})
-    mpv $full_path
+    mpv ...$full_path
   }
 }
 
@@ -798,7 +798,7 @@ def git-push [m: string] {
 
 # git log (count)
 def gl [count: int = 10] {
-  git log $'--max-count=($count)'
+  git log $'--max-count=($count)' --color=always | moar -quit-if-one-screen
 }
 
 # Universal help command, combining https://tldr.sh/ with nushell’s help for built-ins:
@@ -988,7 +988,7 @@ def sfsl [] {
 }
 
 def sfso [] {
-  sfsu outdated apps | lines | skip 1 | split column '|' name current available | str trim
+  sfsu status --only apps | lines | skip 1 | split column '|' name current available | str trim
 }
 
 # scoop search structured wrapper (much faster)
@@ -1088,6 +1088,31 @@ def "url expand" [$urls:any = []]: [string -> string, list -> table] {
   match ($urls | describe) {
     string => { $urls | expand-link }
     $type if ($type =~ list) => { $urls | wrap link | insert expanded {|url| $url.link | expand-link}}
+  }
+}
+
+# Nu-Fuzzy
+def nuf [ --multi (-m) ]: any -> any {
+  let data = $in
+  let display = $data | table --index false --theme light | lines
+  let border = char --unicode '2500'
+  let options = match ($display | where ($border in $it) | length) {
+    2 if ($data | is-empty) => [$display.1] # skip frame
+    2 => ($display | range 2..<-2) # skip header and footer
+    1 => ($display | skip 2) # skip header
+    0 => $display
+    _ => (error make { msg: 'unexpected table content' })
+  }
+  let list = match ($data | describe --detailed | get type) {
+    string => ($data | lines)
+    record => ($data | transpose key value)
+    _ => $data
+  }
+  match ($options | input list --index --fuzzy=(not $multi) --multi=$multi) {
+    _ if ($data | is-empty) => null
+    null => null
+    [..$indexes] => ($indexes | each { |it| $list | get $it })
+    $index => ($list | get $index)
   }
 }
 
