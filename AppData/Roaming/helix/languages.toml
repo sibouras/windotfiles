@@ -1,26 +1,57 @@
+[[language]]
+name = "html"
+auto-format = false
+
+[[language]]
+name = "javascript"
+language-servers = [
+  { name = 'biome' },
+  { name = 'typescript-language-server', except-features = ['format'] }
+]
+# auto-format = true
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
+
+[[language]]
+name = "typescript"
+language-servers = [
+  { name = 'biome' },
+  { name = 'typescript-language-server', except-features = ['format'] }
+]
+# auto-format = true
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
+
+[[language]]
+name = "jsx"
+language-servers = [
+  { name = 'biome' },
+  { name = 'typescript-language-server', except-features = ['format'] }
+]
+# auto-format = true
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
+
+[[language]]
+name = "tsx"
+language-servers = [
+  { name = 'biome' },
+  { name = 'typescript-language-server', except-features = ['format'] }
+]
+# auto-format = true
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
+
+
 [language-server.rust-analyzer]
 command = "rustup"
 args = ["run", "stable", "rust-analyzer"]
 
-[[language]]
-name = "javascript"
-language-servers = [{ name = "typescript-language-server" }, "eslint"]
-
-[[language]]
-name = "typescript"
-language-servers = [{ name = "typescript-language-server" }, "eslint"]
-
-[[language]]
-name = "jsx"
-language-servers = [{ name = "typescript-language-server" }, "eslint"]
-
-[[language]]
-name = "tsx"
-language-servers = [{ name = "typescript-language-server" }, "eslint"]
+[language-server.biome]
+command = "biome"
+args = ["lsp-proxy"]
+required-root-patterns = ["biome.json", "biome.jsonc"]
 
 [language-server.eslint]
 command = "vscode-eslint-language-server"
 args = ["--stdio"]
+required-root-patterns = [".eslintrc*", "eslint.config.*"]
 
 [language-server.eslint.config]
 # format = true

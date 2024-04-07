@@ -2,12 +2,17 @@ theme = "my_catppuccin_mocha"
 
 [editor]
 line-number = "relative"
+auto-format = false
 idle-timeout = 50
 completion-timeout = 50
 cursorline = true
 color-modes = true
 completion-trigger-len = 1
 shell = ["nu", "--no-std-lib", "--no-config-file", "--stdin" ,"-c"]
+bufferline = "multiple"
+default-line-ending = "lf"
+insert-final-newline = false
+popup-border = "all"
 
 [editor.cursor-shape]
 normal = "block"
@@ -18,20 +23,26 @@ select = "underline"
 render = true
 # character = "╎"
 
-# [editor.lsp]
-# display-messages = true
+[editor.lsp]
+display-messages = true
+
+[editor.gutters.line-numbers]
+min-width = 2
 
 [editor.statusline]
 left = ["mode", "spinner", "file-name", "file-modification-indicator", "diagnostics"]
 center = []
-right = ["version-control", "position", "selections", "file-encoding", "file-line-ending", "file-type"]
+right = ["version-control", "register", "position", "position-percentage", "spacer", "selections", "file-encoding", "file-line-ending"]
 
 [keys.normal]
 "\\" = {c = ":config-open", r = ":config-reload"}
+# esc = ["collapse_selection", "keep_primary_selection"]
+# "%" = ["save_selection", "select_all"]
+C-q = ":quit!"
 minus = "trim_selections"
 A-d = ":bc"
 A-F = ":format"
-A-s = ":w"
+A-s = ":update"
 A-w = "goto_last_accessed_file"
 C-A-S-F6 = "jump_forward"
 C-i = "jump_forward"
@@ -39,17 +50,16 @@ C-o = "jump_backward"
 "C-/" = "toggle_comments"
 "A-/" = "toggle_comments"
 A-n = "repeat_last_motion"
-C-c = "no_op" # turn off the default comment functionality
-K = "hover"
-A-k = "keep_selections"
+# C-c = "no_op" # turn off the default comment functionality
 C-u = ["page_cursor_half_up", "align_view_center"]
 C-d = ["page_cursor_half_down", "align_view_center"]
 C-y = "scroll_up"
 C-e = "scroll_down"
-C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"] # move line down
-C-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"] # move line up
+C-n = ["extend_to_line_bounds", "delete_selection", "paste_after", "flip_selections"] # move line down
+C-p = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before", "flip_selections"] # move line up
 # A-x = ["extend_to_line_bounds", "trim_selections"]
 # A-c = ["extend_to_line_bounds", "trim_selections", "change_selection"]
+# a = ["ensure_selections_forward", "collapse_selection", "move_char_right", "insert_mode"]
 
 # Muscle memory
 D = ["extend_to_line_end", "delete_selection"]
@@ -60,31 +70,43 @@ V = ["select_mode", "extend_to_line_bounds"]
 "{" = ["goto_prev_paragraph", "collapse_selection"]
 "}" = ["goto_next_paragraph", "collapse_selection"]
 
-# C-h = "select_prev_sibling"
-# C-j = "shrink_selection"
-# C-k = "expand_selection"
-# C-l = "select_next_sibling"
+H = "goto_window_top"
+L = "goto_window_bottom"
+M = "goto_window_center"
 
-H = "extend_char_left"
-# J = "extend_line_down"
-# K = "extend_line_up"
-L = "extend_char_right"
+# from: https://github.com/helix-editor/helix/pull/9080#issuecomment-2008964831
+# The bonus is that `X` pairs ergonomically with `C` and `(` `)`.
+J = "select_line_below"
+K = "select_line_above"
+X = "remove_primary_selection"
+x = "keep_selections"
+"A-x" = "remove_selections"
+"'" = "flip_selections"
 
-X = "extend_line_above"
+# X = "extend_line_above"
 # B = "extend_prev_word_start"
 # W = "extend_next_word_start"
+# H = "extend_char_left"
+# L = "extend_char_right"
 
-g.i = "goto_first_nonwhitespace"
-g.I = "extend_to_first_nonwhitespace"
+g.S = "extend_to_first_nonwhitespace"
 g.L = "extend_to_line_end"
 g.H = "extend_to_line_start"
+
+[keys.normal.space]
+l = "join_selections"
+L = "join_selections_space"
+
+[keys.select.space]
+l = "join_selections"
+L = "join_selections_space"
 
 [keys.normal.space.t]
 i = ":toggle lsp.display-inlay-hints"
 
 [keys.insert]
-C-a = "goto_line_start"
-C-e = "goto_line_end_newline"
+C-y = "scroll_up"
+C-e = "scroll_down"
 C-right = ["move_next_word_start", "move_char_right"]
 C-left = ["move_prev_word_end", "collapse_selection"]
 C-space = "completion"
@@ -95,12 +117,27 @@ C-i = "jump_forward"
 C-o = "jump_backward"
 "C-/" = "toggle_comments"
 "A-/" = "toggle_comments"
-A-s = ["normal_mode", ":w"]
+A-s = ["commit_undo_checkpoint", "normal_mode", ":update"]
 A-w = "goto_last_accessed_file"
 
 [keys.select]
+C-y = "scroll_up"
+C-e = "scroll_down"
+minus = "trim_selections"
 "C-/" = "toggle_comments"
 "A-/" = "toggle_comments"
 "{" = ["extend_to_line_bounds", "goto_prev_paragraph"]
 "}" = ["extend_to_line_bounds", "goto_next_paragraph"]
 G = "goto_file_end"
+A-n = "repeat_last_motion"
+
+H = "goto_window_top"
+L = "goto_window_bottom"
+M = "goto_window_center"
+
+J = "select_line_below"
+K = "select_line_above"
+X = "remove_primary_selection"
+x = "keep_selections"
+"A-x" = "remove_selections"
+"'" = "flip_selections"
