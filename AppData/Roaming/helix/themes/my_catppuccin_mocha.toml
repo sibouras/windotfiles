@@ -1,8 +1,12 @@
 inherits = "catppuccin_mocha"
 
+# remove italic
+"comment" = "overlay1"
+"variable.parameter" = "maroon"
+"keyword.control.conditional" = "mauve"
+"namespace" = "blue"
+
 [palette]
 base = "#0c0d11"
-
 surface0 = "#121218"
-
 cursorline = "#181a22"
