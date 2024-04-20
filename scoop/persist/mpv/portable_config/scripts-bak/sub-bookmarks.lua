@@ -2,6 +2,7 @@
 --     Ctrl+b - create new bookmark.
 --  Note:
 --     File *.bookmarks.txt will be written after closing the video file.
+-- NOTE: broken in 0.38
 
 function srt_time_to_seconds(time)
     major, minor = time:match("(%d%d:%d%d:%d%d),(%d%d%d)")

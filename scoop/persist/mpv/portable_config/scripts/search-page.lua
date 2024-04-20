@@ -1,23 +1,30 @@
 --[[
     For the full documentation see: https://github.com/CogentRedTester/mpv-search-page
+
     This script allows you to search for keybinds, properties, options and commands and have matching entries display on the OSD.
     The search is case insensitive, and the script sends the filter directly to a lua string match function,
     so you can use patterns to get more complex filtering.
+
     The keybind page searches and displays the key, command, section, and any comments.
     The command page searches just the command name, but also shows information about arguments.
     The properties page will search just the property name, but will also show contents of the property
     The options page will search the name and option choices, it shows default values, choices, and ranges
+
     The search page will remain open until told to close. This key is esc.
+
     The default commands are:
         f12 script-binding search-keybinds
         Ctrl+f12 script-binding search-commands
         Shift+f12 script-binding search-properties
         Alt+f12 script-binding search-options
         Ctrl+Shift+Alt script-binding search-all
+
     Once the command is sent the console will open with a pre-entered search command, simply add a query string as the first argument.
     Using the above keybinds will pre-enter the raw query command into the console, but you can modify it to search multiple criteria at once.
+
     The raw command is:
         script-message search_page/input [query types] [query string] {flags}
+
     The valid query types are as follows:
         key$    searches keybindings
         cmd$    searches commands
@@ -25,15 +32,19 @@
         opt$    searches options
         all$    searches all
     These queries can be combined, i.e. key$cmd$ to search multiple categories at once
+
     Sending a query message without any arguments (or with only the type argument) will reopen the last search.
+
     Flags are strings you can add to the end to customise the query, currently there are 3:
         wrap        search for a whole word only
         pattern     don't convert the query to lowercase, required for some Lua patterns
         exact       don't convert anything to lowercase
+
     These flags can be combined, so for example a query `t wrap` would normally result in both lower and upper case t binds, however,
     `t wrap+exact` will return only lowercase t. The pattern flag is only useful when doing some funky pattern stuff, for example:
     `f%A wrap+pattern` will return all complete words containing f followed by a non-letter. Often exact will work just fine for this,
     but in this example we might still want to find upper-case keys, like function keys, so using just pattern can be more useful.
+
     These may be subject to change
 ]]--
 
@@ -44,7 +55,7 @@ local utils = require 'mp.utils'
 
 local o = {
     --there seems to be a significant performance hit from having lots of text off the screen
-    max_list = 21,
+    max_list = 20,
 
     --number of pixels to pan on each click
     --this refers to the horizontal panning
@@ -103,6 +114,31 @@ local LATEST_SEARCH = {
     keyword = "",
     flags = ""
 }
+
+--in lua 5.1 there is only one return value which will be nil if run from the main thread
+--in lua 5.2 main will be true if running from the main thread
+function coroutine_assert(err)
+    local co, main = coroutine.running()
+    assert(not main and co, err or "error - function must be executed from within a coroutine")
+    return co
+end
+
+--resumes a coroutine and prints an error if it was not sucessful
+function coroutine_resume_err(...)
+    local success, err = coroutine.resume(...)
+    if not success then
+        msg.error(err)
+    end
+    return success
+end
+
+--creates a callback fuction to resume the current coroutine
+function coroutine_callback()
+    local co = coroutine_assert("cannot create a coroutine callback for the main thread")
+    return function(...)
+        return coroutine_resume_err(co, ...)
+    end
+end
 
 --loads the header
 function list_meta:format_header()
@@ -178,9 +214,13 @@ local PAGES = {
 }
 CURRENT_PAGE = KEYBINDS
 
-function list_meta:move_page(direction, match_search)
+local function cancel_user_input()
     ui.cancel_user_input("search_term")
     ui.cancel_user_input("flags")
+end
+
+function list_meta:move_page(direction, match_search)
+    cancel_user_input()
     self:close()
     local index = self.id
     index = (index + direction) % 4
@@ -451,15 +491,6 @@ function list_meta:run_search()
         })
     end
 
-    --error handling for users who enter an invalid pattern
-    if flag_set and flag_set.pattern then
-        local success, result = pcall(function() (""):find(keyword) end)
-        if not success then
-            msg.error(result:match("missing.+$"))
-            return
-        end
-    end
-
     self.selected = 1
     CURRENT_PAGE = self
     LATEST_SEARCH.keyword = self.keyword
@@ -481,33 +512,38 @@ local function strip_whitespace(str)
     return str:gsub("^(%s+)", ""):gsub("(%s+)$", "")
 end
 
-function list_meta:handle_query_input(input, wait_for_flag)
-    if input == nil then return end
-    self.keyword = strip_whitespace(input)
-    self.flags = nil
-    if not wait_for_flag then self:run_search() end
-end
-
-function list_meta:handle_flag_input(input, err)
-    if input == nil and err ~= "exitted" then return
-    elseif input == nil then self:run_search() ; return end
-
-    self.flags = strip_whitespace(input):gsub("%W+", "+")
-    self:run_search()
-end
-
 function list_meta:get_input(get_flags)
-    ui.get_user_input(function(input)
-        self:handle_query_input(input, get_flags)
-    end, {id = "search_term", text = "Enter query for "..(get_flags and "advanced " or "")..self.type.." search:", replace = true})
+    cancel_user_input()
 
-    if get_flags then
-        ui.get_user_input(function(input, err)
-            self:handle_flag_input(input, err)
-        end, {id = "flags", text = "Enter flags:"})
-    else
-        ui.cancel_user_input("flags")
-    end
+    local co = coroutine.create(function()
+        local line, err = coroutine.yield(
+            ui.get_user_input(coroutine_callback(), {
+                id = "search_term",
+                text = ("Enter query for %s%s%s search:"):format(get_flags and "advanced" or "", get_flags and " " or "", self.type),
+            })
+        )
+
+        if line == nil then return end
+        self.keyword = strip_whitespace(line)
+        self.flags = nil
+
+        if not get_flags then return self:run_search() end
+
+        line, err = coroutine.yield(
+            ui.get_user_input(coroutine_callback(), {
+                id = "flags",
+                text = "Enter flags:"
+            })
+        )
+
+        if line == nil and err == "exited" then return self:run_search()
+        elseif line == nil then return end
+
+        self.flags = strip_whitespace(line):gsub("%W+", "+")
+        self:run_search()
+    end)
+
+    coroutine_resume_err(co)
 end
 
 mp.add_key_binding("f12", "open-search-page", function()

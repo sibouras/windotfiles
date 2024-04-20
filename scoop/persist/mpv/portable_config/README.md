@@ -15,7 +15,6 @@
 - playlistmanager.lua from [jonniek/mpv-playlistmanager](https://github.com/jonniek/mpv-playlistmanager)
 - SimpleHistory.lua from [Eisa01/mpv-scripts](https://github.com/Eisa01/mpv-scripts)
 - UndoRedo.lua from [Eisa01/mpv-scripts](https://github.com/Eisa01/mpv-scripts)
-- sub-bookmarks.lua from [kelciour/mpv-scripts](https://github.com/kelciour/mpv-scripts)
 - autoload.lua from [official mpv](https://github.com/mpv-player/mpv/blob/master/TOOLS/lua/autoload.lua)
 - webm.lua from [ekisu/mpv-webm](https://github.com/ekisu/mpv-webm)
 
@@ -29,3 +28,4 @@
 - mpv_sort_script.lua from [TheAMM/mpv_sort_script](https://github.com/TheAMM/mpv_sort_script)
 - crop.lua from [occivink/mpv-scripts](https://github.com/occivink/mpv-scripts)
 - encode.lua from [occivink/mpv-scripts](https://github.com/occivink/mpv-scripts)
+- sub-bookmarks.lua from [kelciour/mpv-scripts](https://github.com/kelciour/mpv-scripts)
