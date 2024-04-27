@@ -69,6 +69,9 @@ style = "Regular"
 x = 0
 y = 1
 
+# lookup the decimal value of that capitalized unicode char (e.g. the decimal value for J is 74).
+# https://en.wikipedia.org/wiki/List_of_Unicode_characters
+
 # [[keyboard.bindings]]
 # chars = "\u001B[47;5u" # <C-/>
 # chars = "\u001F"
@@ -85,10 +88,11 @@ y = 1
 # key = "Period"
 # mods = "Control"
 
-[[keyboard.bindings]]
-chars = "\u001B[13;2u" # <S-CR>
-key = "Return"
-mods = "Shift"
+# doesn't work in search popup
+# [[keyboard.bindings]]
+# chars = "\u001B[13;2u" # <S-CR>
+# key = "Return"
+# mods = "Shift"
 
 [[keyboard.bindings]]
 chars = "\u001B[13;5u" # <C-CR>
@@ -447,7 +451,7 @@ hide_when_typing = true
 # foreground = "0xa9b1d6"
 
 [shell]
-program = "nu"
+program = "nu --no-std-lib"
 
 [window]
 decorations = "none"
