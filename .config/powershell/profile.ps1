@@ -1,3 +1,5 @@
+if ($PSVersionTable.PSVersion.Major -lt 7) { return }
+
 $scripts = "$HOME\.config\powershell\Scripts"
 $env:path += ";$scripts"
 $env:EDITOR = "nvim"
