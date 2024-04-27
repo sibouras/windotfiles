@@ -1,4 +1,6 @@
 gui:
+  enlargedSideViewLocation: 'top' # one of 'left' | 'top'
+  nerdFontsVersion: 3 # nerd fonts version to use ("2" or "3"); empty means don't show nerd font icons
   theme:
     selectedLineBgColor:
       - "#292e42" # set to `default` to have no background colour
