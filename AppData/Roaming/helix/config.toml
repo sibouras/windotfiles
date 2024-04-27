@@ -47,8 +47,6 @@ A-w = "goto_last_accessed_file"
 C-A-S-F6 = "jump_forward"
 C-i = "jump_forward"
 C-o = "jump_backward"
-"C-/" = "toggle_comments"
-"A-/" = "toggle_comments"
 A-n = "repeat_last_motion"
 # C-c = "no_op" # turn off the default comment functionality
 C-u = ["page_cursor_half_up", "align_view_center"]
@@ -96,6 +94,7 @@ g.H = "extend_to_line_start"
 [keys.normal.space]
 l = "join_selections"
 L = "join_selections_space"
+F = "file_picker_in_current_buffer_directory"
 
 [keys.select.space]
 l = "join_selections"
@@ -115,8 +114,6 @@ C-backspace = "delete_word_backward"
 A-C-S-F6 = "jump_forward"
 C-i = "jump_forward"
 C-o = "jump_backward"
-"C-/" = "toggle_comments"
-"A-/" = "toggle_comments"
 A-s = ["commit_undo_checkpoint", "normal_mode", ":update"]
 A-w = "goto_last_accessed_file"
 
@@ -124,8 +121,6 @@ A-w = "goto_last_accessed_file"
 C-y = "scroll_up"
 C-e = "scroll_down"
 minus = "trim_selections"
-"C-/" = "toggle_comments"
-"A-/" = "toggle_comments"
 "{" = ["extend_to_line_bounds", "goto_prev_paragraph"]
 "}" = ["extend_to_line_bounds", "goto_next_paragraph"]
 G = "goto_file_end"
