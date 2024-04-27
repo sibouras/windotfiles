@@ -376,6 +376,22 @@ $env.config = {
   ]
   keybindings: [
     {
+      name: copy_selection
+      modifier: control_shift
+      keycode: char_c
+      mode: emacs
+      event: { edit: copyselection }
+      # event: { edit: copyselectionsystem }
+    }
+    {
+      name: cut_selection
+      modifier: control_shift
+      keycode: char_x
+      mode: emacs
+      event: { edit: cutselection }
+      # event: { edit: cutselectionsystem }
+    }
+    {
       name: completion_menu
       modifier: none
       keycode: tab
@@ -575,7 +591,7 @@ $env.config = {
       event:{
         send: executehostcommand,
         # cmd: "cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)"
-        cmd: "cd (fd --hidden --type directory --exclude .git --exclude node_modules | fzf)"
+        cmd: "commandline edit --insert (fd --hidden --type directory --exclude .git --exclude node_modules | fzf --layout=reverse --height=-15)"
       }
     }
     {
@@ -615,10 +631,14 @@ $env.config = {
       modifier: control
       keycode: char_b
       mode: [emacs, vi_normal, vi_insert]
-      event: {
-        send: executeHostCommand
-        cmd: "commandline edit --insert (history | last | get command | parse --regex '(?P<arg>[^ ]+)$' | get arg | first)"
-      }
+      # event: {
+      #   send: executeHostCommand
+      #   cmd: "commandline edit --insert (history | last | get command | parse --regex '(?P<arg>[^ ]+)$' | get arg | first)"
+      # }
+      event: [
+        { edit: InsertString, value: "!$" }
+        { send: Enter }
+      ]
     }
     {
       name: clear
@@ -639,7 +659,9 @@ alias md = mkdir
 alias pwd = echo $env.PWD
 alias v = nvim
 alias y = yazi
+alias cht = cht -TA
 # alias y = ~/code/rust/yazi/target/debug/yazi.exe
+alias focus = ^start ~/scoop/apps/focus-editor/current/focus.exe
 alias ll = eza -la -s Name --binary --git --icons --group-directories-first --no-permissions
 alias lg = lazygit
 alias gu = gitui
