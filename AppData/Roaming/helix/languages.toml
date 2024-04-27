@@ -3,6 +3,22 @@ name = "html"
 auto-format = false
 
 [[language]]
+name = "json"
+language-servers = [
+  { name = 'biome' },
+  { name = 'vscode-json-language-server', except-features = ['format'] }
+]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.json"] }
+
+[[language]]
+name = "jsonc"
+language-servers = [
+  { name = 'biome' },
+  { name = 'vscode-json-language-server', except-features = ['format'] }
+]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.jsonc"] }
+
+[[language]]
 name = "javascript"
 language-servers = [
   { name = 'biome' },
