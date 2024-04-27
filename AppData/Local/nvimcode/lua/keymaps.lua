@@ -167,12 +167,12 @@ function! ScrollGolden(move)
     let key='gk'
     let post='zt'
   elseif a:move == 'down'
-    let prep='L'
+    let prep='Lgj'
     " let key="^E"
     let key='gj'
     let post='zb'
   endif
-  execute 'keepjumps normal! ' . prep . float2nr(round(height*0.24)) . key . post
+  execute 'keepjumps normal! ' . prep . float2nr(round(height*0.14)) . key . post
 endfunction
 nnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
 vnoremap <silent> <C-k> <cmd>call ScrollGolden('up')<CR>
@@ -183,10 +183,13 @@ vnoremap <silent> <C-j> <cmd>call ScrollGolden('down')<CR>
 -- -- center when scrolling
 -- map('n', '<C-d>', '<C-d>zz')
 -- map('n', '<C-u>', '<C-u>zz')
+map('n', 'H', 'H')
+map('n', 'L', 'Lgj')
 
 -- Faster scrolling
 map('n', '<C-e>', '2<C-e>')
 map('n', '<C-y>', '2<C-y>')
+
 
 -- More comfortable jumping to marks
 map('n', "'", '`')
