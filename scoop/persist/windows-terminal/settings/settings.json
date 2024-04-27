@@ -1,24 +1,24 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions":
+    "actions": 
     [
         {
-            "command":
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[18;8~"
+            },
+            "keys": "ctrl+;"
+        },
+        {
+            "command": 
             {
                 "action": "splitPane",
                 "split": "auto",
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
-        },
-        {
-            "command":
-            {
-                "action": "sendInput",
-                "input": "\u001b[18;8~"
-            },
-            "keys": "ctrl+;"
         },
         {
             "command": "find",
@@ -29,7 +29,7 @@
             "keys": "ctrl+shift+v"
         },
         {
-            "command":
+            "command": 
             {
                 "action": "sendInput",
                 "input": "\u001b[13;2u"
@@ -37,7 +37,7 @@
             "keys": "shift+enter"
         },
         {
-            "command":
+            "command": 
             {
                 "action": "sendInput",
                 "input": "\u001b[13;5u"
@@ -45,7 +45,7 @@
             "keys": "ctrl+enter"
         },
         {
-            "command":
+            "command": 
             {
                 "action": "copy",
                 "singleLine": false
@@ -53,7 +53,7 @@
             "keys": "ctrl+c"
         },
         {
-            "command":
+            "command": 
             {
                 "action": "sendInput",
                 "input": "\u0017"
@@ -61,7 +61,7 @@
             "keys": "ctrl+backspace"
         },
         {
-            "command":
+            "command": 
             {
                 "action": "sendInput",
                 "input": "\u001b[17;8~"
@@ -69,7 +69,7 @@
             "keys": "ctrl+i"
         },
         {
-            "command":
+            "command": 
             {
                 "action": "sendInput",
                 "input": "\u001b[15;8~"
@@ -83,28 +83,29 @@
     "disableAnimations": true,
     "firstWindowPreference": "defaultProfile",
     "initialCols": 98,
-    "initialPosition": "625,0",
+    "initialPosition": "645,0",
     "initialRows": 35,
-    "newTabMenu":
+    "launchMode": "default",
+    "newTabMenu": 
     [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles":
+    "profiles": 
     {
-        "defaults":
+        "defaults": 
         {
             "experimental.rightClickContextMenu": true,
-            "font":
+            "font": 
             {
-                "face": "JetBrainsMono NF",
+                "face": "JetBrainsMono Nerd Font",
                 "size": 13.0
             },
             "scrollbarState": "hidden",
             "useAtlasEngine": true
         },
-        "list":
+        "list": 
         [
             {
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
@@ -182,7 +183,7 @@
             }
         ]
     },
-    "schemes":
+    "schemes": 
     [
         {
             "background": "#0C0C0C",
@@ -369,7 +370,7 @@
             "yellow": "#C4A000"
         },
         {
-            "background": "#0c0d11",
+            "background": "#0C0D11",
             "black": "#15161E",
             "blue": "#7AA2F7",
             "brightBlack": "#686C98",
@@ -441,22 +442,22 @@
     "showTabsInTitlebar": true,
     "tabWidthMode": "equal",
     "theme": "my_theme",
-    "themes":
+    "themes": 
     [
         {
             "name": "my_theme",
-            "tab":
+            "tab": 
             {
                 "background": "terminalBackground",
                 "showCloseButton": "hover",
                 "unfocusedBackground": "#00000000"
             },
-            "tabRow":
+            "tabRow": 
             {
                 "background": "#2E2E2EFF",
                 "unfocusedBackground": "terminalBackground"
             },
-            "window":
+            "window": 
             {
                 "applicationTheme": "dark",
                 "useMica": false
