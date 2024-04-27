@@ -40,7 +40,7 @@ Capslock & BS::Del
 ; Mute
 ; CapsLock & x:: Run nircmd.exe mutesysvolume 1 microphone
 ; Toggle
-CapsLock & z:: Run nircmd.exe mutesysvolume 2 microphone
+; CapsLock & z:: Run nircmd.exe mutesysvolume 2 microphone
 CapsLock & a:: Send, ^a
 CapsLock & y:: Send, ^y
 CapsLock & c:: Send, ^{c}

@@ -155,4 +155,4 @@ Alt & 5:: MoveOrGotoDesktopNumber(4)
 !8:: PinWindow()
 !7:: UnPinWindow()
 
-!r:: reload
+; !r:: reload
