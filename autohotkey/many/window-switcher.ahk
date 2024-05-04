@@ -117,8 +117,7 @@ return
 ; focus previous window
 ; from: https://www.autohotkey.com/boards/viewtopic.php?t=97358
 !o::focus(2)
-!p::focus(3)
-!u::focus(4)
+!u::focus(3)
 
 focus(nInStack) {
  winNumber := 0
