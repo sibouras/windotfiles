@@ -226,7 +226,7 @@ $env.config = {
       {
         name: completion_menu
         only_buffer_difference: false
-        marker: "| "
+        marker: " | "
         type: {
           layout: columnar
           columns: 4
@@ -244,7 +244,7 @@ $env.config = {
       {
         name: ide_completion_menu
         only_buffer_difference: false
-        marker: "| "
+        marker: " | "
         type: {
           layout: ide
           min_completion_width: 0,
@@ -277,7 +277,7 @@ $env.config = {
       {
         name: history_menu
         only_buffer_difference: true
-        marker: "? "
+        marker: " ? "
         type: {
           layout: list
           page_size: 10
@@ -291,7 +291,7 @@ $env.config = {
       {
         name: help_menu
         only_buffer_difference: true
-        marker: "? "
+        marker: " ? "
         type: {
           layout: description
           columns: 4
@@ -312,7 +312,7 @@ $env.config = {
       {
         name: commands_menu
         only_buffer_difference: false
-        marker: "# "
+        marker: " # "
         type: {
           layout: columnar
           columns: 4
@@ -333,7 +333,7 @@ $env.config = {
       {
         name: vars_menu
         only_buffer_difference: true
-        marker: "# "
+        marker: " # "
         type: {
           layout: list
           page_size: 10
@@ -353,7 +353,7 @@ $env.config = {
       {
         name: commands_with_description
         only_buffer_difference: true
-        marker: "# "
+        marker: " # "
         type: {
           layout: description
           columns: 4
@@ -721,9 +721,9 @@ def dur [] {
 # Set tab title
 def title [name?: string] {
   if ($name == null) {
-    $"(ansi title)($env.PWD | path basename)(ansi st)"
+    $"(ansi title)($env.PWD | path basename)(ansi st)" | print -n
   } else {
-    $"(ansi title)($name)(ansi st)"
+    $"(ansi title)($name)(ansi st)" | print -n
   }
 }
 
@@ -1102,7 +1102,7 @@ def iselect [] {
   let tgt = $in
   let cols = ($tgt | columns)
   let choices = ($cols | input list -m "Pick columns to get: ")
-  $tgt | select $choices
+  $tgt | select ...$choices
 }
 
 # print processes using a file (or, if a directory, anything under that directory)

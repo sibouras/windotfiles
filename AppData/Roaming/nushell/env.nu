@@ -33,7 +33,7 @@ def create_left_prompt [] {
     ""
   }
 
-  [$path_segment, $exit_code_segment, $git_branch_segment, $duration_segment] | str join
+  print ([$path_segment, $exit_code_segment, $git_branch_segment, $duration_segment] | str join)
 }
 
 def create_right_prompt [] {
@@ -45,16 +45,16 @@ def create_right_prompt [] {
 }
 
 # Use nushell functions to define your right and left prompt
-$env.PROMPT_COMMAND = {|| create_left_prompt }
+$env.PROMPT_COMMAND = { || create_left_prompt }
 $env.PROMPT_COMMAND_RIGHT = ""
 
 # The prompt indicators are environmental variables that represent
 # the state of the prompt
 # $env.PROMPT_INDICATOR = "〉"
-$env.PROMPT_INDICATOR = "\r\n ➜ "
-$env.PROMPT_INDICATOR_VI_INSERT = ": "
-$env.PROMPT_INDICATOR_VI_NORMAL = "〉"
-$env.PROMPT_MULTILINE_INDICATOR = "::: "
+$env.PROMPT_INDICATOR = " ➜ "
+$env.PROMPT_INDICATOR_VI_INSERT = " : "
+$env.PROMPT_INDICATOR_VI_NORMAL = " 〉"
+$env.PROMPT_MULTILINE_INDICATOR = " ::: "
 
 # Specifies how environment variables are:
 # - converted from a string to a value on Nushell startup (from_string)
