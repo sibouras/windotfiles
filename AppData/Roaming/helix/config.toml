@@ -8,11 +8,11 @@ completion-timeout = 50
 cursorline = true
 color-modes = true
 completion-trigger-len = 1
-shell = ["nu", "--no-std-lib", "--no-config-file", "--stdin" ,"-c"]
+shell = ["nu", "--no-std-lib", "--no-config-file", "--no-newline", "--stdin" ,"-c"]
 bufferline = "multiple"
 default-line-ending = "lf"
 insert-final-newline = false
-popup-border = "all"
+# popup-border = "all"
 
 [editor.cursor-shape]
 normal = "block"
@@ -33,6 +33,9 @@ min-width = 2
 left = ["mode", "spinner", "file-name", "file-modification-indicator", "diagnostics"]
 center = []
 right = ["version-control", "register", "position", "position-percentage", "spacer", "selections", "file-encoding", "file-line-ending"]
+
+[editor.smart-tab]
+enable = false
 
 [keys.normal]
 "\\" = {c = ":config-open", r = ":config-reload"}
@@ -78,7 +81,7 @@ J = "select_line_below"
 K = "select_line_above"
 X = "remove_primary_selection"
 x = "keep_selections"
-"A-x" = "remove_selections"
+A-x = "remove_selections"
 "'" = "flip_selections"
 
 # X = "extend_line_above"
@@ -134,5 +137,5 @@ J = "select_line_below"
 K = "select_line_above"
 X = "remove_primary_selection"
 x = "keep_selections"
-"A-x" = "remove_selections"
+A-x = "remove_selections"
 "'" = "flip_selections"
