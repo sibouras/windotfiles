@@ -56,6 +56,9 @@ C-u = ["page_cursor_half_up", "align_view_center"]
 C-d = ["page_cursor_half_down", "align_view_center"]
 C-y = "scroll_up"
 C-e = "scroll_down"
+C-k = ["goto_window_top" ,"move_line_up", "move_line_up", "move_line_up", "move_line_up", "move_line_up"]
+C-j = ["goto_window_bottom", "move_line_down", "move_line_down", "move_line_down", "move_line_down", "move_line_down"]
+C-ret = ["goto_window_bottom", "move_line_down", "move_line_down", "move_line_down", "move_line_down", "move_line_down"]
 C-n = ["extend_to_line_bounds", "delete_selection", "paste_after", "flip_selections"] # move line down
 C-p = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before", "flip_selections"] # move line up
 # A-x = ["extend_to_line_bounds", "trim_selections"]
@@ -119,10 +122,19 @@ C-i = "jump_forward"
 C-o = "jump_backward"
 A-s = ["commit_undo_checkpoint", "normal_mode", ":update"]
 A-w = "goto_last_accessed_file"
+A-e = "move_parent_node_end"
+A-b = "move_parent_node_start"
+
+C-k = "goto_prev_tabstop"
+C-j = "goto_next_tabstop"
+C-ret = "goto_next_tabstop"
 
 [keys.select]
 C-y = "scroll_up"
 C-e = "scroll_down"
+C-k = ["goto_window_top" ,"extend_line_up", "extend_line_up", "extend_line_up", "extend_line_up", "extend_line_up"]
+C-j = ["goto_window_bottom", "extend_line_down", "extend_line_down", "extend_line_down", "extend_line_down", "extend_line_down"]
+C-ret = ["goto_window_bottom", "extend_line_down", "extend_line_down", "extend_line_down", "extend_line_down", "extend_line_down"]
 minus = "trim_selections"
 "{" = ["extend_to_line_bounds", "goto_prev_paragraph"]
 "}" = ["extend_to_line_bounds", "goto_next_paragraph"]
