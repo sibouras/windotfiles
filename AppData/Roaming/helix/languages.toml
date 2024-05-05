@@ -1,5 +1,6 @@
 [[language]]
 name = "html"
+language-servers = ["vscode-html-language-server", "emmet-lsp"]
 auto-format = false
 
 [[language]]
@@ -54,6 +55,9 @@ language-servers = [
 # auto-format = true
 formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
 
+[language-server.emmet-lsp]
+command = "emmet-language-server"
+args = ["--stdio"]
 
 [language-server.rust-analyzer]
 command = "rustup"
