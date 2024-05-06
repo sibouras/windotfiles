@@ -1,6 +1,10 @@
 [[language]]
 name = "html"
-language-servers = ["vscode-html-language-server", "emmet-lsp"]
+language-servers = [
+  { name = 'emmet-lsp' },
+  { name = 'vscode-html-language-server', except-features = ['format'] }
+]
+formatter = { command = "prettierd", args = ["--stdin-filepath", "a.html"] }
 auto-format = false
 
 [[language]]
