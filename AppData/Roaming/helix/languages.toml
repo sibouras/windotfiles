@@ -8,6 +8,10 @@ formatter = { command = "prettierd", args = ["--stdin-filepath", "a.html"] }
 auto-format = false
 
 [[language]]
+name = "markdown"
+formatter = { command = "prettierd", args = ["--stdin-filepath", "a.md"] }
+
+[[language]]
 name = "json"
 language-servers = [
   { name = 'biome' },
