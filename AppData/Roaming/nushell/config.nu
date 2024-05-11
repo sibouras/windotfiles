@@ -826,9 +826,9 @@ def gci [] {
 
 # git diff preview
 def gdp [] {
-  let files = git diff --name-only | fzf --multi --preview 'git diff {} | delta' | lines
+  let files = git diff --name-only | fzf --multi --preview 'git diff {} | delta --paging=never' | lines
   if ($files | is-not-empty) {
-    git diff ...$files | delta --paging=auto
+    git diff ...$files | delta --paging=never
   }
 }
 
@@ -842,7 +842,7 @@ def git-push [m: string] {
 
 # git log (count)
 def gl [count: int = 10] {
-  git log $'--max-count=($count)' --color=always | moar -quit-if-one-screen
+  git log $'--max-count=($count)' --color=always
 }
 
 # Universal help command, combining https://tldr.sh/ with nushell’s help for built-ins:
