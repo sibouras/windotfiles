@@ -15,6 +15,11 @@ border_style = { fg = "#181a22" }
 [status]
 separator_style = { fg = "#181a22", bg = "#181a22" }
 
+# Mode
+mode_normal = { bg = "blue", fg = "black", bold = true }
+mode_select = { bg = "red", fg = "black", bold = true }
+mode_unset  = { bg = "red", fg = "black", bold = true }
+
 [help]
 hovered = { bg = "#181a22", bold = true }
 footer = { fg = "gray", bg = "black" }
