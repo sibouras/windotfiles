@@ -48,7 +48,7 @@ let dark_theme = {
   list: white
   block: white
   hints: dark_gray
-  search_result: { bg: red fg: white }
+  search_result: { bg: dark_gray fg: white }
 
   shape_and: purple_bold
   shape_binary: purple_bold
@@ -214,7 +214,8 @@ $env.config = {
       }]
     }
     display_output: {||
-      if (term size).columns >= 100 { table -e } else { table }
+      # if (term size).columns >= 100 { table -e } else { table }
+      table
     }
     command_not_found: {||
       null  # replace with source code to return an error message when a command is not found
@@ -680,6 +681,7 @@ alias dotfiles = lazygit $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tre
 alias sfss = sfsu search
 alias sfsi = sfsu info
 # alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
+alias mpv = cmd /c mpv # fix output not showing
 alias vd = VirtualDesktop11
 alias b = buku --suggest
 alias ti = commandline edit --replace $"timeit {(history | last 1 | first | get command)}" # a shortcut to apply timeit to the previous command
@@ -698,6 +700,10 @@ def --wrapped c [...args] {
 
 def --wrapped lv [...args] {
   NVIM_APPNAME=lazyvim nvim ...$args
+}
+
+def --wrapped a [...args] {
+  NVIM_APPNAME=astronvim nvim ...$args
 }
 
 def uptime [] {
@@ -763,7 +769,7 @@ def fm [...args] {
 
 # preview files with fzf
 def fp [...args] {
-  fd ...$args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat --style=numbers --color=always --line-range :500 {}' | str trim | lines
+  fd ...$args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat -pp --color=always --line-range :300 {}' | str trim | lines
 }
 
 # histry with fzf
@@ -1026,7 +1032,7 @@ def sfsl [] {
 }
 
 def sfso [] {
-  sfsu status --only apps | lines | skip 1 | split column '|' name current available | str trim
+  sfsu status --only apps --json | from json | get packages | select name current available | sort-by name
 }
 
 # scoop search structured wrapper (much faster)
