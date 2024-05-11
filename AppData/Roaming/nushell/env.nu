@@ -93,6 +93,7 @@ $env.EDITOR = "nvim"
 # $env.BOOKMARK_MANAGER_CSV = $"($nu.home-path)/documents/bm/bm.csv"
 $env.LESS = '--quiet'
 $env.MOAR = '--no-statusbar --style=github-dark'
+$env.PAGER = 'moar --no-linenumbers -quit-if-one-screen'
 
 ### zoxide config
 # zoxide init nushell | save -f ~/.cache/.zoxide.nu
