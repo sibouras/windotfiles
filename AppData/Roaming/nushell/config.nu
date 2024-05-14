@@ -746,7 +746,7 @@ def rghx [] {
 
 # search for files with fd and preview them with fzf
 def fs [...args] {
-  fd ...$args -H -t f -E .git | fzf --multi --ansi | str trim | lines
+  fd ...$args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat -pp --color=always --line-range :300 {}' | str trim | lines
 }
 
 # search for files with fd and preview them with fzf and open them with nvim
@@ -765,11 +765,6 @@ def fm [...args] {
     let full_path = ($files | each {|it| $"($env.PWD)\\($it)"})
     mpv ...$full_path
   }
-}
-
-# preview files with fzf
-def fp [...args] {
-  fd ...$args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat -pp --color=always --line-range :300 {}' | str trim | lines
 }
 
 # histry with fzf
