@@ -120,7 +120,7 @@ CapsLock & m::
   else if Key = w
   {
     Run wt.exe,,, NewPID
-    WinWaitActive, ahk_pid %NewPID%
+    ; WinWaitActive, ahk_pid %NewPID% ; doesn't work
     sleep 400
     Send, !+{l}
   }
