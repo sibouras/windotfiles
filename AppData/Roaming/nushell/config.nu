@@ -663,7 +663,7 @@ alias y = yazi
 alias cht = cht -TA
 # alias y = ~/code/rust/yazi/target/debug/yazi.exe
 alias focus = ^start ~/scoop/apps/focus-editor/current/focus.exe
-alias ll = eza -la -s Name --binary --git --icons --group-directories-first --no-permissions
+alias ll = eza -la -s Name --binary --git --icons --group-directories-first --no-permissions --time-style relative
 alias lg = lazygit
 alias gu = gitui
 alias gs = gswin64c
@@ -778,30 +778,35 @@ def get-aliases [] {
   scope aliases | update expansion { |c| $c.expansion | nu-highlight }
 }
 
-# ls by date (newer last)
-def ld [
-  --reverse(-r) #reverse order
+# ls sorted by type and without the type column
+def l [
+  --all(-a) # show hidden files
+  --reverse(-r) # reverse order
+  --type(-t) # sort-by type
+  --modified(-m) # sort-by modified
+  ...args
 ] {
-  if ($reverse | is-empty) or (not $reverse) {
-    # ls | sort-by modified | reject type
-    ls | sort-by modified | select name size modified
+  let columns = if ($type and $modified) {
+    [type modified]
+  } else if ($modified) {
+    [modified]
   } else {
-    ls | sort-by modified -r | select name size modified
+    [type name]
   }
-}
-
-def lsg [] {
-  ls | sort-by type name -i | grid -c
-}
-
-# ls by type
-def l [name: string = '.'] {
-  ls $name | sort-by type name | select name size modified
+  if ($args | is-empty) {
+    ls --all=$all | sort-by --reverse=$reverse ...$columns | reject type
+  } else {
+    ls --all=$all ...($args | into glob) | sort-by --reverse=$reverse ...$columns | reject type
+  }
 }
 
 # ls sorted by extension
 def le [] {
-  ls | sort-by -i type name | insert ext {|| $in.name | path parse | get extension } | sort-by ext | reject ext type
+  ls | sort-by type name | insert ext {|| $in.name | path parse | get extension } | sort-by ext | reject ext type
+}
+
+def lsg [] {
+  ls | sort-by type name | grid -c
 }
 
 # search for specific process
