@@ -1,44 +1,9 @@
 working_directory = "/Users/ala"
 
-# [[indexed_colors]]
-# color = "0xff9e64"
-# index = 16
-
-# [[indexed_colors]]
-# color = "0xdb4b4b"
-# index = 17
-
-[colors.bright]
-black = "0x414868"
-blue = "0x7aa2f7"
-cyan = "0x7dcfff"
-green = "0x9ece6a"
-magenta = "0xbb9af7"
-red = "0xf7768e"
-white = "0xc0caf5"
-yellow = "0xe0af68"
-
-[colors.hints.end]
-background = "#1d1f21"
-foreground = "#e9ff5e"
-
-[colors.hints.start]
-background = "#1d1f21"
-foreground = "#f7768e"
-
-[colors.normal]
-black = "0x15161e"
-blue = "0x7aa2f7"
-cyan = "0x7dcfff"
-green = "0x9ece6a"
-magenta = "0xbb9af7"
-red = "0xf7768e"
-white = "0xa9b1d6"
-yellow = "0xe0af68"
-
-[colors.primary]
-background = "0x0c0d11"
-foreground = "0xc0caf5"
+import = [
+  # "~/AppData/Roaming/alacritty/themes/catppuccin-mocha.toml"
+  "~/AppData/Roaming/alacritty/themes/tokyonight-night.toml"
+]
 
 [cursor.style]
 shape = "Beam"
@@ -393,62 +358,6 @@ mods = "Shift"
 
 [mouse]
 hide_when_typing = true
-
-# [schemes.tokyo-night.bright]
-# black = "0x414868"
-# blue = "0x7aa2f7"
-# cyan = "0x7dcfff"
-# green = "0x9ece6a"
-# magenta = "0xbb9af7"
-# red = "0xf7768e"
-# white = "0xc0caf5"
-# yellow = "0xe0af68"
-
-# [schemes.tokyo-night.hints.end]
-# background = "#1d1f21"
-# foreground = "#e9ff5e"
-
-# [schemes.tokyo-night.hints.start]
-# background = "#1d1f21"
-# foreground = "#f7768e"
-
-# [schemes.tokyo-night.normal]
-# black = "0x15161e"
-# blue = "0x7aa2f7"
-# cyan = "0x7dcfff"
-# green = "0x9ece6a"
-# magenta = "0xbb9af7"
-# red = "0xf7768e"
-# white = "0xa9b1d6"
-# yellow = "0xe0af68"
-
-# [schemes.tokyo-night.primary]
-# background = "0x0c0d11"
-# foreground = "0xc0caf5"
-
-# [schemes.tokyo-night-storm.bright]
-# black = "0x444b6a"
-# blue = "0x7da6ff"
-# cyan = "0x0db9d7"
-# green = "0xb9f27c"
-# magenta = "0xbb9af7"
-# red = "0xff7a93"
-# white = "0xacb0d0"
-# yellow = "0xff9e64"
-
-# [schemes.tokyo-night-storm.normal]
-# black = "0x32344a"
-# blue = "0x7aa2f7"
-# cyan = "0x449dab"
-# green = "0x9ece6a"
-# magenta = "0xad8ee6"
-# red = "0xf7768e"
-# white = "0x9699a8"
-# yellow = "0xe0af68"
-
-# [schemes.tokyo-night-storm.primary]
-# background = "0x24283b"
-# foreground = "0xa9b1d6"
 
 [shell]
 program = "nu --no-std-lib"
