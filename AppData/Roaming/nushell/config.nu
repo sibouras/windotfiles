@@ -515,6 +515,13 @@ $env.config = {
       event: { edit: insertnewline }
     }
     {
+      name: insert_newline
+      modifier: control
+      keycode: enter
+      mode: emacs
+      event: { edit: insertnewline }
+    }
+    {
       name: swap_words
       modifier: alt
       keycode: char_s
