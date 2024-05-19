@@ -39,6 +39,7 @@ enable = false
 
 [keys.normal]
 "\\" = {c = ":config-open", r = ":config-reload"}
+m = {"'" = "save_selection"}
 # esc = ["collapse_selection", "keep_primary_selection"]
 # "%" = ["save_selection", "select_all"]
 C-q = ":quit!"
@@ -68,7 +69,7 @@ C-p = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_befor
 # Muscle memory
 D = ["extend_to_line_end", "delete_selection"]
 Z = { Z = ":wq", Q = ":q!" }
-G = "goto_file_end"
+G = "goto_last_line"
 # C = ["collapse_selection", "extend_to_line_end", "change_selection"]
 V = ["select_mode", "extend_to_line_bounds"]
 "{" = ["goto_prev_paragraph", "collapse_selection"]
