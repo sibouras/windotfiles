@@ -9,7 +9,6 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 ; #Include %A_ScriptDir%\Hotstrings.ahk
 #Include %A_ScriptDir%\app-specific.ahk
 #Include %A_ScriptDir%\window-switcher.ahk
-#Include %A_ScriptDir%\restore-maximize.ahk
 #Include %A_ScriptDir%\window-moving-vim.ahk
 #Include %A_ScriptDir%\google-selection.ahk
 
