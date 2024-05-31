@@ -816,6 +816,14 @@ def lsg [] {
   ls | sort-by type name | grid -c
 }
 
+# wrapper around the ldd utility 
+def wldd [path: string] {
+  match (which $path) {
+    [{ path: $p }] => { ldd $p },
+    _ => { error make { msg: $"No external command ($path)" } },
+  }
+}
+
 # search for specific process
 def psn [name: string] {
   ps | find $name
@@ -1141,6 +1149,9 @@ def "url expand" [$urls:any = []]: [string -> string, list -> table] {
     $type if ($type =~ list) => { $urls | wrap link | insert expanded {|url| $url.link | expand-link}}
   }
 }
+
+def "alternate screen enable" [] { print -ne (ansi -e '?1049h') }
+def "alternate screen disable" [] { print -ne (ansi -e '?1049l') }
 
 # Nu-Fuzzy
 def nuf [ --multi (-m) ]: any -> any {
