@@ -1,86 +1,84 @@
-# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
-# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
 [manager]
-ratio         = [ 0, 4, 4 ]
-sort_by        = "natural"
+ratio = [0, 4, 4]
+sort_by = "natural"
 sort_sensitive = true
-sort_reverse   = false
+sort_reverse = false
 sort_dir_first = true
-show_hidden    = true
-show_symlink   = true
-linemode       = "size"
+show_hidden = true
+show_symlink = true
+linemode = "size"
 
 [opener]
 edit = [
-	{ run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
-	{ run = 'hx %*', block = true, for = "windows" },
+  { run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
+  { run = 'hx %*', block = true, for = "windows" },
 ]
 open = [
-	{ run = 'xdg-open "$@"', desc = "Open", for = "linux" },
-	{ run = 'start "%1"', orphan = true, desc = "Open", for = "windows" }
+  { run = 'xdg-open "$@"', desc = "Open", for = "linux" },
+  { run = 'start "%1"', orphan = true, desc = "Open", for = "windows" },
 ]
 reveal = [
-	{ run = 'explorer /select,%1', orphan = true, desc = "Reveal", for = "windows" },
-	{ run = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "unix" },
-	{ run = 'exiftool "%1" | moar -no-statusbar', block = true, desc = "Show EXIF", for = "windows" },
+  { run = 'explorer /select,%1', orphan = true, desc = "Reveal", for = "windows" },
+  { run = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "unix" },
+  { run = 'exiftool "%1" | moar -no-statusbar', block = true, desc = "Show EXIF", for = "windows" },
 ]
 extract = [
-	{ run = 'unar "$1"', desc = "Extract here", for = "unix" },
-	{ run = 'ouch decompress --no --quiet "%1"', desc = "Extract here", for = "windows" },
-	{ run = 'ouch list -t "%1" | moar -no-statusbar', block = true, desc = "List contents of an archive", for = "windows" },
+  { run = 'unar "$1"', desc = "Extract here", for = "unix" },
+  { run = 'ouch decompress --no --quiet "%1"', desc = "Extract here", for = "windows" },
+  { run = 'ouch list -t "%1" | moar -no-statusbar', block = true, desc = "List contents of an archive", for = "windows" },
 ]
 play = [
-	{ run = 'mpv "$@"', orphan = true, for = "unix" },
-	{ run = 'mpv --force-window=yes "%1"', orphan = true, for = "windows" },
-	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
-	{ run = 'mediainfo "%1" | moar -no-statusbar', block = true, desc = "Show media info", for = "windows" },
+  { run = 'mpv "$@"', orphan = true, for = "unix" },
+  { run = 'mpv --force-window=yes "%1"', orphan = true, for = "windows" },
+  { run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
+  { run = 'mediainfo "%1" | moar -no-statusbar', block = true, desc = "Show media info", for = "windows" },
 ]
 audio = [
-	{ run = 'mpc-hc "%1"', orphan = true, for = "windows" },
-	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
-	{ run = 'mediainfo "%1" | moar -no-statusbar', block = true, desc = "Show media info", for = "windows" },
-	{ run = '''ffprobe -v quiet -print_format json -show_format "%1" | jaq -r '.format.tags["lyrics-XXX"]' | moar -no-statusbar''', block = true, desc = "Lyrics", for = "windows" },
+  { run = 'mpc-hc "%1"', orphan = true, for = "windows" },
+  { run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
+  { run = 'mediainfo "%1" | moar -no-statusbar', block = true, desc = "Show media info", for = "windows" },
+  { run = '''ffprobe -v quiet -print_format json -show_format "%1" | jaq -r '.format.tags["lyrics-XXX"]' | moar -no-statusbar''', block = true, desc = "Lyrics", for = "windows" },
 ]
 
 [open]
 rules = [
-	{ name = "*/", use = [ "edit", "open", "reveal" ] },
+  { name = "*/", use = ["edit", "open", "reveal"] },
 
-	{ mime = "text/*",          use = [ "edit", "reveal" ] },
-	{ mime = "image/*",         use = [ "open", "reveal" ] },
-	{ mime = "{audio,video}/*", use = [ "play", "reveal" ] },
-	{ mime = "inode/x-empty",   use = [ "edit", "reveal" ] },
+  { mime = "text/*", use = ["edit", "reveal"] },
+  { mime = "image/*", use = ["open", "reveal"] },
+  { mime = "{audio,video}/*", use = ["play", "reveal"] },
+  { mime = "inode/x-empty", use = ["edit", "reveal"] },
 
-	{ mime = "application/json", use = [ "edit", "reveal" ] },
-	{ mime = "*/javascript",     use = [ "edit", "reveal" ] },
+  { mime = "application/json", use = ["edit", "reveal"] },
+  { mime = "*/javascript", use = ["edit", "reveal"] },
 
-	{ mime = "application/*zip", use = [ "extract", "reveal" ] },
-	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", use = [ "extract", "reveal" ] },
+  { mime = "application/*zip", use = ["extract", "reveal"] },
+  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", use = ["extract", "reveal"] },
 
-	{ mime = "*", use = [ "open", "reveal" ] },
+  { mime = "*", use = ["open", "reveal"] },
 ]
 
 [plugin]
 preloaders = [
-	{ name = "*", cond = "!mime", run = "mime", multi = true, prio = "high" },
-	# NOTE: the preloader is different from the previewer - it will run all matched preloaders not only the first one
-	# # Image
-	# { mime = "image/vnd.djvu", run = "noop" },
-	# { mime = "image/*",        run = "image" },
-	# # Video
-	# { mime = "video/*", run = "video" },
-	# # PDF
-	# { mime = "application/pdf", run = "pdf" },
+  { name = "*", cond = "!mime", run = "mime", multi = true, prio = "high" },
+  # NOTE: the preloader is different from the previewer - it will run all matched preloaders not only the first one
+  # # Image
+  # { mime = "image/vnd.djvu", run = "noop" },
+  # { mime = "image/*",        run = "image" },
+  # # Video
+  # { mime = "video/*", run = "video" },
+  # # PDF
+  # { mime = "application/pdf", run = "pdf" },
 ]
 
 prepend_previewers = [
-	# archive previewer: https://github.com/ndtoan96/ouch.yazi
-	{ mime = "application/*zip",            run = "ouch" },
-	{ mime = "application/x-tar",           run = "ouch" },
-	{ mime = "application/x-bzip2",         run = "ouch" },
-	{ mime = "application/x-7z-compressed", run = "ouch" },
-	{ mime = "application/x-rar",           run = "ouch" },
-	{ mime = "application/xz",              run = "ouch" },
+  # archive previewer: https://github.com/ndtoan96/ouch.yazi
+  { mime = "application/*zip", run = "ouch" },
+  { mime = "application/x-tar", run = "ouch" },
+  { mime = "application/x-bzip2", run = "ouch" },
+  { mime = "application/x-7z-compressed", run = "ouch" },
+  { mime = "application/x-rar", run = "ouch" },
+  { mime = "application/xz", run = "ouch" },
 ]
