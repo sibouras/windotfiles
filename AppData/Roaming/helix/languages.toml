@@ -27,6 +27,14 @@ language-servers = [
 ]
 formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.jsonc"] }
 
+# fix taplo: https://github.com/tamasfe/taplo/issues/580#issuecomment-2004174721
+[[language]]
+name = 'toml'
+roots = ["."]
+
+[language-server.taplo]
+required-root-patterns = [".taplo.toml"]
+
 [[language]]
 name = "javascript"
 language-servers = [
