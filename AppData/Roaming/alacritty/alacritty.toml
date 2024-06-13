@@ -2,7 +2,7 @@ working_directory = "/Users/ala"
 
 import = [
   # "~/AppData/Roaming/alacritty/themes/catppuccin-mocha.toml"
-  "~/AppData/Roaming/alacritty/themes/tokyonight-night.toml"
+  "~/AppData/Roaming/alacritty/themes/tokyonight-night.toml",
 ]
 
 [cursor.style]
@@ -12,7 +12,7 @@ shape = "Beam"
 shape = "Block"
 
 [font]
-size = 13.0
+size = 12.5
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
