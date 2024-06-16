@@ -140,22 +140,25 @@ CapsLock & m::
   else if Key = g
   {
     ; place glasswire icon next to `#b` menu in taskbar
-    ; Send, #b{right}{space}
-    ; WinWaitActive, ahk_exe glasswire.exe
-    ; Send, !{Esc}+!{Esc}
+    if not WinExist("ahk_exe glasswire.exe") {
+      Send, #b{right}{space}
+      WinWaitActive, ahk_exe glasswire.exe
+      ; Send, !{Esc}+!{Esc}
+      MsgBox,,,,0.001 ; open msgbox for 1ms
+    }
 
     ; opening an app from taskbar then closing it focuses the taskbar
 
-    if not WinExist("ahk_exe glasswire.exe") {
-      WinHide, ahk_class Shell_TrayWnd
-      WinHide, ahk_class Shell_SecondaryTrayWnd
-      Send, #b{right}{space}
-      sleep 100
-      WinActivate, ahk_exe glasswire.exe
-      WinWaitNotActive, ahk_exe glasswire.exe
-      sleep 100
-      WinShow, ahk_class Shell_TrayWnd
-      WinShow, ahk_class Shell_SecondaryTrayWnd
-    }
+    ; if not WinExist("ahk_exe glasswire.exe") {
+    ;   WinHide, ahk_class Shell_TrayWnd
+    ;   WinHide, ahk_class Shell_SecondaryTrayWnd
+    ;   Send, #b{right}{space}
+    ;   sleep 100
+    ;   WinActivate, ahk_exe glasswire.exe
+    ;   WinWaitNotActive, ahk_exe glasswire.exe
+    ;   sleep 100
+    ;   WinShow, ahk_class Shell_TrayWnd
+    ;   WinShow, ahk_class Shell_SecondaryTrayWnd
+    ; }
   }
 return
