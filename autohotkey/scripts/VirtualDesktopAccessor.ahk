@@ -30,11 +30,19 @@ GetDesktopCount() {
   return count
 }
 
-MoveWindowToCurrentDesktop() {
-  global MoveWindowToDesktopNumberProc, GoToDesktopNumberProc
+MoveCurrentWindowToDesktop(number) {
+  global GetCurrentDesktopNumberProc
+  current := DllCall(GetCurrentDesktopNumberProc, "Int")
+  if (WinExist("A") && current != number) {
+    global MoveWindowToDesktopNumberProc
+    activeHwnd := WinGetID("A")
+    DllCall(MoveWindowToDesktopNumberProc, "Ptr", activeHwnd, "Int", number, "Int")
+    ; Send("!{Esc}") ; ALT+Esc activates last window(doesn't work with MoveWindowToCurrentDesktop)
+    MsgBox("",,"T0.001") ; show msgbox for 1ms (works with MoveWindowToCurrentDesktop)
+  }
 }
 
-MoveCurrentWindowToDesktop(number) {
+MoveCurrentWindowAndGoToDesktop(number) {
   global MoveWindowToDesktopNumberProc, GoToDesktopNumberProc
   activeHwnd := WinGetID("A")
   DllCall(MoveWindowToDesktopNumberProc, "Ptr", activeHwnd, "Int", number, "Int")
@@ -74,8 +82,10 @@ GoToDesktopNumber(num) {
   return
 }
 MoveOrGotoDesktopNumber(num) {
-  ; If user is holding down Shift, move the current window also
+  ; If user is holding down Shift, move the current window and go to desktop
   if (GetKeyState("Shift")) {
+    MoveCurrentWindowAndGoToDesktop(num)
+  } else if (GetKeyState("Ctrl"))  {
     MoveCurrentWindowToDesktop(num)
   } else {
     GoToDesktopNumber(num)
@@ -122,6 +132,31 @@ UnPinWindow() {
   return ran
 }
 
+TogglePinWindow() {
+  activeHwnd := WinGetID("A")
+  global IsPinnedWindowProc
+  isPinned := DllCall(IsPinnedWindowProc, "Int", activeHwnd, "Int")
+  if (isPinned) {
+    UnPinWindow()
+    Tooltip("unpinned", 0, 0)
+  } else {
+    PinWindow()
+    Tooltip("pinned", 0, 0)
+  }
+  SetTimer () => ToolTip(), -500
+}
+
+MoveWindowToCurrentDesktop(window) {
+  DetectHiddenWindows("On")
+  if (WinExist(window)) {
+    hwnd := WinGetID(window)
+    global GetCurrentDesktopNumberProc, MoveWindowToDesktopNumberProc
+    current := DllCall(GetCurrentDesktopNumberProc, "Int")
+    DllCall(MoveWindowToDesktopNumberProc, "Ptr", hwnd, "Int", current, "Int")
+    WinActivate(window)
+  }
+}
+
 ; SetDesktopName(0, "It works! 🐱")
 DllCall(RegisterPostMessageHookProc, "Ptr", A_ScriptHwnd, "Int", 0x1400 + 30, "Int")
 OnMessage(0x1400 + 30, OnChangeDesktop)
@@ -152,7 +187,7 @@ Alt & 3:: MoveOrGotoDesktopNumber(2)
 Alt & 4:: MoveOrGotoDesktopNumber(3)
 Alt & 5:: MoveOrGotoDesktopNumber(4)
 
-!8:: PinWindow()
-!7:: UnPinWindow()
+!8:: TogglePinWindow()
+!7:: MoveWindowToCurrentDesktop("ahk_exe alacritty.exe")
 
 ; !r:: reload
