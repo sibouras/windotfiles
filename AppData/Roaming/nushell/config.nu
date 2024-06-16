@@ -619,7 +619,7 @@ $env.config = {
       mode: [emacs, vi_normal, vi_insert]
       event: {
         send: executehostcommand
-        cmd: "commandline edit --insert (fd --hidden --type file -E node_modules | fzf --tiebreak=chunk --layout=reverse --multi --height=70% | lines | str join ' ')"
+        cmd: "commandline edit --insert (fd --hidden --type file -E .git -E node_modules | fzf --tiebreak=chunk --layout=reverse --multi --height=70% | lines | str join ' ')"
       }
     }
     {
@@ -670,7 +670,7 @@ alias y = yazi
 alias cht = cht -TA
 # alias y = ~/code/rust/yazi/target/debug/yazi.exe
 alias focus = ^start ~/scoop/apps/focus-editor/current/focus.exe
-alias ll = eza -la -s Name --binary --git --icons --group-directories-first --no-permissions --time-style relative
+alias ll = eza -la -s Name --binary --git --icons --group-directories-first --no-permissions
 alias lg = lazygit
 alias gu = gitui
 alias gs = gswin64c
@@ -1239,7 +1239,7 @@ def --env br [args = "."] {
 }
 
 # cd with yazi
-def --env ya [] {
+def --env yy [] {
   # let tmp = $"($env.TEMP)(char path_sep)yazi-cwd." + (random chars -l 6)
   let tmp = mktemp -t "yazi-cwd.XXXXX"
 	y --cwd-file $tmp
