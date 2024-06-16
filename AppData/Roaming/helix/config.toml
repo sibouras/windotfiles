@@ -37,6 +37,9 @@ right = ["version-control", "register", "position", "position-percentage", "spac
 [editor.smart-tab]
 enable = false
 
+[editor.file-picker]
+hidden = false
+
 [keys.normal]
 "\\" = {c = ":config-open", r = ":config-reload"}
 m = {"'" = "save_selection"}
@@ -107,8 +110,13 @@ F = "file_picker_in_current_buffer_directory"
 l = "join_selections"
 L = "join_selections_space"
 
-[keys.normal.space.t]
+[keys.normal.space.u]
+f = ":toggle auto-format"
 i = ":toggle lsp.display-inlay-hints"
+w = ":toggle soft-wrap.enable"
+l = ":toggle whitespace.render all none"
+r = ":toggle line-number relative absolute"
+z = ":toggle gutters.line-numbers.min-width 30 2" # limited zen mode
 
 [keys.insert]
 C-y = "scroll_up"
