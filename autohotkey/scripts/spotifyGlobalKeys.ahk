@@ -18,7 +18,7 @@ spotifyKey(key) {
   ; Focus the document window without bringing the app to the foreground.
   ; NOTE: ControlClick just works unlike ControlFocus
   ; `U` to release the mouse button and prevent focusing the window when spamming the keys.
-  ControlClick, x500 y100, ahk_id %spotifyHwnd%, , Left, 1, U
+  ControlClick, x500 y52, ahk_id %spotifyHwnd%, , Left, 1, U
   ControlSend, ahk_parent, %key%, ahk_id %spotifyHwnd%
 }
 
@@ -42,7 +42,7 @@ spotifyKey(key) {
       WinActivate, %Spotify%
       ; NOTE: if the current window is maximized when we activate spotify,
       ; spotify's window gets stuck so we click somewhere on the window
-      ControlClick, x500 y100, %spotify%
+      ControlClick, x500 y52, %spotify%
     }
   }
 return
