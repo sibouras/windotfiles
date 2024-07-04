@@ -1,0 +1,115 @@
+[
+  // disable ctrl-k bindings
+  {
+    "context": "Editor || Workspace || Pane",
+    "bindings": {
+      "ctrl-k enter": null,
+      // Editor
+      "ctrl-k ctrl-r": null,
+      "ctrl-k ctrl-d": null,
+      "ctrl-k ctrl-shift-d": null,
+      "ctrl-k ctrl-i": null,
+      // Workspace
+      "ctrl-k s": null,
+      "ctrl-k ctrl-s": null,
+      "ctrl-k ctrl-t": null,
+      "ctrl-k m": null,
+      "ctrl-k ctrl-left": null,
+      "ctrl-k ctrl-right": null,
+      "ctrl-k ctrl-up": null,
+      "ctrl-k ctrl-down": null,
+      "ctrl-k shift-left": null,
+      "ctrl-k shift-right": null,
+      "ctrl-k shift-up": null,
+      "ctrl-k shift-down": null,
+      // Pane
+      "ctrl-k u": null,
+      "ctrl-k w": null,
+      "ctrl-k up": null,
+      "ctrl-k down": null,
+      "ctrl-k left": null,
+      "ctrl-k right": null
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-s": "workspace::Save"
+    }
+  },
+  {
+    "context": "ProjectPanel || Editor",
+    "bindings": {
+      "alt-w": "pane::AlternateFile"
+    }
+  },
+  {
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "space k": "editor::Hover",
+      "`": ["vim::PushOperator", { "Jump": { "line": true } }],
+      "'": ["vim::PushOperator", { "Jump": { "line": false } }]
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
+    "bindings": {
+      "] g": "editor::GoToHunk",
+      "[ g": "editor::GoToPrevHunk",
+      "[ space": "editor::NewlineAbove",
+      "] space": "editor::NewlineBelow",
+      "g r": "editor::Rename",
+      "space g b": "editor::ToggleGitBlame",
+      "shift-y": ["workspace::SendKeystrokes", "y $"],
+      "space shift-y": ["workspace::SendKeystrokes", "\" + shift-y"],
+      "space shift-p": ["workspace::SendKeystrokes", "\" + shift-p"]
+    }
+  },
+  {
+    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
+    "bindings": {
+      "ctrl-shift-e": "workspace::ToggleLeftDock",
+      "ctrl-j": ["workspace::SendKeystrokes", "shift-l 5 j"],
+      "ctrl-k": ["workspace::SendKeystrokes", "shift-h 5 k"],
+      "space y": ["workspace::SendKeystrokes", "\" + y"],
+      "space p": ["workspace::SendKeystrokes", "\" + p"]
+    }
+  },
+  {
+    "context": "EmptyPane || SharedScreen || vim_operator == none && !VimWaiting && vim_mode != insert",
+    "bindings": {
+      "space e": "workspace::ToggleLeftDock",
+      "space b": "tab_switcher::Toggle",
+      "space f s": "file_finder::Toggle",
+      "space f p": "projects::OpenRecent",
+      "space f o": "pane::TogglePreviewTab"
+      // "space r l": "task::Rerun",
+      // "space r e": ["task::Rerun", { "reevaluate_context": true }],
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "alt-,": "pane::ActivatePrevItem",
+      "alt-.": "pane::ActivateNextItem",
+      "alt-d": "pane::CloseActiveItem",
+      "alt-n": "search::SelectNextMatch",
+      "alt-p": "search::SelectPrevMatch",
+      "ctrl-alt-shift-h": "search::ToggleReplace",
+      "ctrl-alt-shift-l": "search::ToggleSelection",
+      "alt-enter": "search::SelectAllMatches"
+    }
+  },
+  // enable surrounding the selection in visual mode
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
+    "bindings": {
+      "shift-s": [
+        "vim::PushOperator",
+        {
+          "AddSurrounds": {}
+        }
+      ]
+    }
+  }
+]

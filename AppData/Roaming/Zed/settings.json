@@ -1,0 +1,52 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "telemetry": {
+    "metrics": true,
+    "diagnostics": true
+  },
+  "theme": "Github Dark",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  "auto_update": false,
+  "git": {
+    "inline_blame": {
+      "enabled": false
+    }
+  },
+  "vim_mode": true,
+  "relative_line_numbers": true,
+  "vertical_scroll_margin": 5,
+  "vim": {
+    "use_system_clipboard": "never",
+    "use_multiline_find": true,
+    "use_smartcase_find": false
+  },
+  "terminal": {
+    "shell": {
+      "program": "nu"
+    }
+  },
+  "prettier": {
+    // Whether to consider prettier formatter or not when attempting to format a file.
+    "allowed": true,
+    // Use regular Prettier json configuration.
+    // If Prettier is allowed, Zed will use this for its Prettier instance for any applicable file, if
+    // the project has no other Prettier installed.
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
+  },
+  "languages": {
+    "HTML": {
+      "tab_size": 2
+    }
+  }
+}
