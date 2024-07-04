@@ -680,6 +680,7 @@ alias gss = git status -s
 alias gb = git branch --sort=committerdate
 alias gi = git rev-parse --abbrev-ref HEAD # in git
 alias gd = git diff
+alias gp = git push
 alias gr = cd (git rev-parse --show-toplevel)
 alias gg = git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold green)%d%Creset %s %C(bold yellow)(%cr) %C(blue)%ad%Creset' --abbrev-commit --date=short
 alias gloo = git log --pretty=format:'%C(yellow)%h %Cred%ad %Cgreen%d %Creset%s' --date=short
@@ -698,7 +699,8 @@ alias sub = python ~\code\python\scripts\OpenSubtitlesDownload.py --cli
 ### Functions
 
 def --wrapped t [...args] {
-  NVIM_APPNAME=nvimtest nvim ...$args
+  # NVIM_APPNAME=nvimtest nvim ...$args
+  with-env {NVIM_APPNAME: nvimtest} {nvim ...$args}
 }
 
 def --wrapped c [...args] {
