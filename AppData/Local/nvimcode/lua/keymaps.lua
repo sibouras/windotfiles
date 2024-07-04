@@ -65,44 +65,6 @@ map('n', '<C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease window height' })
 map('n', '<C-Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease window width' })
 map('n', '<C-Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase window width' })
 
---> Navigate buffers
--- NOTE: b# doesn't work with jumpoption=view
--- from: https://sharats.me/posts/automating-the-vim-workplace/#switching-to-alternate-buffer
--- My remapping of <C-^>. If there is no alternate file, and there's no count
--- given, then switch to next file. We use `bufloaded` to check for alternate
--- buffer presence. This will ignore deleted buffers, as intended. To get
--- default behaviour, use `bufexists` in it's place.
--- map("n", "<M-w>", ":<C-u>exe v:count ? v:count . 'b' : 'keepjumps b' . (bufloaded(0) ? '#' : 'n')<CR>")
--- map("i", "<M-w>", "<C-o>:keepjumps b#<CR>")
--- this switches to the last used buffer even if its deleted
--- map({ "n", "i" }, "<M-w>", "<Cmd>keepjumps normal <CR>")
-
--- switch to the most recent buffer that's not deleted
-map({ 'n', 'i' }, '<M-w>', function()
-  local curbufnr = vim.api.nvim_get_current_buf()
-  local buflist = vim.tbl_filter(function(buf)
-    return vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted and buf ~= curbufnr
-  end, vim.api.nvim_list_bufs())
-
-  -- table is empty if buffers are not loaded
-  if #buflist == 0 then
-    if #vim.fn.expand('#') > 0 then
-      vim.cmd('keepjumps b#')
-    end
-  else
-    local switch_bufnr
-    local switch_bufnr_lastused = -1
-    for _, bufnr in pairs(buflist) do
-      local bufinfo = vim.fn.getbufinfo(bufnr)[1]
-      if bufinfo.lastused > switch_bufnr_lastused then
-        switch_bufnr = bufnr
-        switch_bufnr_lastused = bufinfo.lastused
-      end
-    end
-    vim.cmd('keepjumps b' .. switch_bufnr)
-  end
-end)
-
 -- Navigate tabs
 -- Number + , to select a tab, i.e. type 1, to select the first tab.
 for i = 1, 9 do
@@ -352,40 +314,8 @@ map('n', '<leader>tn', '<C-w>T')
 -- map("n", "<leader>tk", ":tab drop $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>:Tz nvim<CR>")
 map('n', '<leader>tk', ':tab drop $LOCALAPPDATA/nvim/lua/user/keymaps.lua<CR>')
 
--- Quickly change font size in GUI
-vim.cmd([[
-command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
-command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
-]])
-map('n', '<M-=>', ':Bigger<CR>')
-map('n', '<M-->', ':Smaller<CR>')
-map('n', '<M-S-_>', ':set guifont=:h16<CR>')
-
--- Zoom / Restore window.
--- https://stackoverflow.com/questions/13194428/is-better-way-to-zoom-windows-in-vim-than-zoomwin
-vim.cmd([[
-function! ToggleZoom(toggle)
-  if exists("t:restore_zoom") && (t:restore_zoom.win != winnr() || a:toggle == v:true)
-    exec t:restore_zoom.cmd
-    unlet t:restore_zoom
-  elseif a:toggle
-    let t:restore_zoom = { 'win': winnr(), 'cmd': winrestcmd() }
-    vert resize | resize
-  endi
-endfunction
-
-augroup restorezoom
-  au WinEnter * silent! :call ToggleZoom(v:false)
-augroup END
-]])
-map('n', '<C-q>', ':call ToggleZoom(v:true)<CR>')
-map('t', '<C-q>', [[<C-\><C-n>:call ToggleZoom(v:true)<CR>i]])
-
--- search for regex pattern
--- map("n", "<M-l>", "<Cmd>call search('[([{<]')<CR>")
-
 -- open current file in explorer
-map('n', '<leader>ul', ':silent !start %:p:h<CR>', { desc = 'open current file in explorer' })
+map('n', '<leader>ue', ':silent !start %:p:h<CR>', { desc = 'open current file in explorer' })
 
 -- Toggle quickfix window
 map('n', '<leader>x', function()
@@ -405,11 +335,6 @@ map('n', '<leader>x', function()
     vim.cmd('copen')
   end
 end, { desc = 'toggle quickfix window' })
-
--- toggle cmp(mapped <C-;> to <M-C-S-F7> in ahk,terminal)
-map({ 'i', 'n' }, '<M-C-S-F7>', function()
-  vim.g.cmp_active = not vim.g.cmp_active
-end, { desc = 'toggle cmp' })
 
 -- Terminal Mappings
 map('t', '`', '<c-\\><c-n>', { desc = 'Enter Normal Mode' })
@@ -537,14 +462,6 @@ map({ 'n', 'x' }, 'gj', indent_traverse(1, true)) -- next equal indent
 map({ 'n', 'x' }, 'gk', indent_traverse(-1, true)) -- previous equal indent
 map({ 'n', 'x' }, 'gJ', indent_traverse(1, false)) -- next bigger indent
 map({ 'n', 'x' }, 'gK', indent_traverse(-1, false)) -- previous bigger indent
-
--- For moving quickly up and down,
--- Goes to the first line above/below that isn't whitespace
--- Thanks to: http://vi.stackexchange.com/a/213
-vim.cmd([[
-  nnoremap <silent> <leader>j :let _=&lazyredraw<CR>:set lazyredraw<CR>/\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
-  nnoremap <silent> <leader>k :let _=&lazyredraw<CR>:set lazyredraw<CR>?\%<C-R>=virtcol(".")<CR>v\S<CR>:nohl<CR>:let &lazyredraw=_<CR>
-]])
 
 -- toggle options
 local toggle = require('utils.toggle')
