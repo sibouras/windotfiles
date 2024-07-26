@@ -17,7 +17,6 @@ language-servers = [
   { name = 'biome' },
   { name = 'vscode-json-language-server', except-features = ['format'] }
 ]
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.json"] }
 
 [[language]]
 name = "jsonc"
@@ -25,7 +24,6 @@ language-servers = [
   { name = 'biome' },
   { name = 'vscode-json-language-server', except-features = ['format'] }
 ]
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.jsonc"] }
 
 # fix taplo: https://github.com/tamasfe/taplo/issues/580#issuecomment-2004174721
 [[language]]
@@ -42,7 +40,6 @@ language-servers = [
   { name = 'typescript-language-server', except-features = ['format'] }
 ]
 # auto-format = true
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
 
 [[language]]
 name = "typescript"
@@ -51,7 +48,6 @@ language-servers = [
   { name = 'typescript-language-server', except-features = ['format'] }
 ]
 # auto-format = true
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
 
 [[language]]
 name = "jsx"
@@ -60,7 +56,6 @@ language-servers = [
   { name = 'typescript-language-server', except-features = ['format'] }
 ]
 # auto-format = true
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
 
 [[language]]
 name = "tsx"
@@ -69,7 +64,6 @@ language-servers = [
   { name = 'typescript-language-server', except-features = ['format'] }
 ]
 # auto-format = true
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
 
 [language-server.emmet-lsp]
 command = "emmet-language-server"

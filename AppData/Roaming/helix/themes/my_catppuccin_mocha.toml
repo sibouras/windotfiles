@@ -6,6 +6,8 @@ inherits = "catppuccin_mocha"
 "keyword.control.conditional" = "mauve"
 "namespace" = "blue"
 
+"ui.picker.header.active" = { modifiers = ["underlined"] }
+
 [palette]
 base = "#0c0d11"
 surface0 = "#121218"

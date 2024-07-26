@@ -1,0 +1,17 @@
+inherits = "tokyonight"
+
+# remove italic
+"comment" = { fg = "comment" }
+"function" = { fg = "blue" }
+
+"ui.cursor.primary.normal" = { fg = "bg", bg = "lavender" }
+"ui.cursor.normal" = { fg = "bg", bg = "blue" }
+"ui.cursor.insert" = { fg = "bg", bg = "light-green" }
+"ui.cursor.select" = { fg = "bg", bg = "magenta" }
+
+"ui.text" = {}
+"ui.picker.header.active" = { modifiers = ["underlined"] }
+
+[palette]
+bg = "#0c0d11"
+lavender = "#b4befe"
