@@ -65,7 +65,7 @@ let dark_theme = {
   shape_flag: blue_bold
   shape_float: purple_bold
   # shapes are used to change the cli syntax highlighting
-  shape_garbage: { fg: white bg: red attr: b}
+  shape_garbage: { fg: white bg: red attr: b }
   shape_glob_interpolation: cyan_bold
   shape_globpattern: cyan_bold
   shape_int: purple_bold
@@ -170,7 +170,7 @@ $env.config = {
   }
   color_config: $dark_theme   # if you want a light theme, replace `$dark_theme` to `$light_theme`
   use_grid_icons: true
-  footer_mode: "25" # always, never, number_of_rows, auto
+  footer_mode: 25 # always, never, number_of_rows, auto
   float_precision: 2 # the precision for displaying floats in tables
   buffer_editor: "hx" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
   use_ansi_coloring: true
@@ -617,7 +617,7 @@ $env.config = {
     }
     {
       name: change_dir_with_fzf
-      modifier: control
+      modifier: alt
       keycode: char_d
       mode: emacs
       event:{
