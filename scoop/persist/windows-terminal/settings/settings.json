@@ -6,19 +6,19 @@
         {
             "command": 
             {
-                "action": "sendInput",
-                "input": "\u001b[18;8~"
-            },
-            "keys": "ctrl+;"
-        },
-        {
-            "command": 
-            {
                 "action": "splitPane",
                 "split": "auto",
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[18;8~"
+            },
+            "keys": "ctrl+;"
         },
         {
             "command": "find",
@@ -147,6 +147,7 @@
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": false,
                 "name": "Ubuntu",
+                "padding": "0",
                 "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
             },
             {
@@ -449,6 +450,7 @@
             "tab": 
             {
                 "background": "terminalBackground",
+                "iconStyle": "default",
                 "showCloseButton": "hover",
                 "unfocusedBackground": "#00000000"
             },
@@ -460,6 +462,9 @@
             "window": 
             {
                 "applicationTheme": "dark",
+                "experimental.rainbowFrame": false,
+                "frame": null,
+                "unfocusedFrame": null,
                 "useMica": false
             }
         }
