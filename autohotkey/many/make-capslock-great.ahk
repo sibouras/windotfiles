@@ -112,10 +112,7 @@ CapsLock & m::
   }
   else if Key = v
   {
-    Run neovide.exe --frame none,,, NewPID
-    WinWaitActive, ahk_pid %NewPID%
-    WinSetTitle, Neovide
-    ; Send, !+{l}
+    Run neovide.exe --frame none
   }
   else if Key = w
   {
