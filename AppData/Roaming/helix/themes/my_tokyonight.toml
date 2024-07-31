@@ -4,6 +4,7 @@ inherits = "tokyonight"
 "comment" = { fg = "comment" }
 "function" = { fg = "blue" }
 
+"ui.virtual" = "comment"
 "ui.cursor.primary.normal" = { fg = "bg", bg = "lavender" }
 "ui.cursor.normal" = { fg = "bg", bg = "blue" }
 "ui.cursor.insert" = { fg = "bg", bg = "light-green" }
