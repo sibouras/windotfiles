@@ -3,9 +3,10 @@
 [manager]
 
 prepend_keymap = [
-  { on = ["F"], run = "plugin --sync max-preview", desc = "Maximize preview" },
-  { on = ["T"], run = "plugin --sync hide-preview", desc = "Hide preview" },
-  { on = ["6"], run = "plugin test", desc = "test" },
+  { on = ["F"], run = "plugin --sync max-preview", desc = "Maximize or restore preview" },
+  { on = ["T"], run = "plugin --sync hide-preview", desc = "Hide or show preview" },
+  { on = ["C"], run = "plugin ouch --args=zip", desc = "Compress with ouch" },
+  { on = ["6"], run = "plugin test --sync", desc = "test" },
 
   { on = ["<C-k>"], run = "arrow -5", desc = "Move cursor up 5 lines" },
   { on = ["<C-j>"], run = "arrow 5", desc = "Move cursor down 5 lines" },

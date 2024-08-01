@@ -62,7 +62,6 @@ rules = [
 
 [plugin]
 preloaders = [
-  { name = "*", cond = "!mime", run = "mime", multi = true, prio = "high" },
   # NOTE: the preloader is different from the previewer - it will run all matched preloaders not only the first one
   # # Image
   # { mime = "image/vnd.djvu", run = "noop" },
