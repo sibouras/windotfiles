@@ -842,6 +842,19 @@ def lsg [] {
   ls | sort-by type name | grid -c
 }
 
+# structured eza
+def la [path:glob = '.'] {
+  eza $path -la -s Name --binary --git --header --group-directories-first --time-style long-iso | detect columns -c 2..3 |
+  update Size {|row|
+    if ($row.Size == '-') {
+      null
+    } else {
+      $row.Size | str replace ',' '' | into filesize
+    }
+  } | into datetime Date | reject Mode | rename --block {str downcase} | metadata set -l
+  | move size date --after name | rename --column {date: modified}
+}
+
 # wrapper around the ldd utility
 def wldd [path: string] {
   match (which $path) {
