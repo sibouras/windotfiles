@@ -2,7 +2,7 @@
 name = "html"
 language-servers = [
   { name = 'emmet-lsp' },
-  { name = 'vscode-html-language-server', except-features = ['format'] }
+  { name = 'vscode-html-language-server', except-features = ['format'] },
 ]
 formatter = { command = "prettierd", args = ["--stdin-filepath", "a.html"] }
 auto-format = false
@@ -15,14 +15,14 @@ formatter = { command = "prettierd", args = ["--stdin-filepath", "a.md"] }
 name = "json"
 language-servers = [
   { name = 'biome' },
-  { name = 'vscode-json-language-server', except-features = ['format'] }
+  { name = 'vscode-json-language-server', except-features = ['format'] },
 ]
 
 [[language]]
 name = "jsonc"
 language-servers = [
   { name = 'biome' },
-  { name = 'vscode-json-language-server', except-features = ['format'] }
+  { name = 'vscode-json-language-server', except-features = ['format'] },
 ]
 
 # fix taplo: https://github.com/tamasfe/taplo/issues/580#issuecomment-2004174721
@@ -37,7 +37,7 @@ required-root-patterns = [".taplo.toml"]
 name = "javascript"
 language-servers = [
   { name = 'biome' },
-  { name = 'typescript-language-server', except-features = ['format'] }
+  { name = 'typescript-language-server', except-features = ['format'] },
 ]
 # auto-format = true
 
@@ -45,7 +45,7 @@ language-servers = [
 name = "typescript"
 language-servers = [
   { name = 'biome' },
-  { name = 'typescript-language-server', except-features = ['format'] }
+  { name = 'typescript-language-server', except-features = ['format'] },
 ]
 # auto-format = true
 
@@ -53,7 +53,7 @@ language-servers = [
 name = "jsx"
 language-servers = [
   { name = 'biome' },
-  { name = 'typescript-language-server', except-features = ['format'] }
+  { name = 'typescript-language-server', except-features = ['format'] },
 ]
 # auto-format = true
 
@@ -61,7 +61,7 @@ language-servers = [
 name = "tsx"
 language-servers = [
   { name = 'biome' },
-  { name = 'typescript-language-server', except-features = ['format'] }
+  { name = 'typescript-language-server', except-features = ['format'] },
 ]
 # auto-format = true
 
@@ -95,6 +95,6 @@ useESLintClass = false
 validate = "on"
 codeAction = { disableRuleComment = { enable = true, location = "separateLine" }, showDocumentation = { enable = true } }
 codeActionOnSave = { mode = "all" }
-experimental = { }
+experimental = {}
 problems = { shortenToSingleLine = false }
 workingDirectory = { mode = "auto" }
