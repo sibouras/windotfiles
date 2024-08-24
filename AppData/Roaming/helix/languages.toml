@@ -8,6 +8,11 @@ formatter = { command = "prettierd", args = ["--stdin-filepath", "a.html"] }
 auto-format = false
 
 [[language]]
+name = "css"
+language-servers = [{ name = 'vscode-css-language-server', except-features = ['format'] }]
+formatter = { command = "prettierd", args = ["--stdin-filepath", "a.css"] }
+
+[[language]]
 name = "markdown"
 formatter = { command = "prettierd", args = ["--stdin-filepath", "a.md"] }
 
