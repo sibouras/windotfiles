@@ -1,6 +1,7 @@
 theme = "my_tokyonight"
 
 [editor]
+scrolloff = 5
 line-number = "relative"
 auto-format = false
 idle-timeout = 50
@@ -26,6 +27,7 @@ select = "underline"
 [editor.indent-guides]
 render = true
 # character = "╎"
+skip-levels = 1
 
 [editor.lsp]
 display-messages = true
@@ -154,6 +156,7 @@ X = "remove_primary_selection"
 x = "keep_selections"
 A-x = "remove_selections"
 "'" = "flip_selections"
+A-A = "select_all_siblings"
 
 # X = "extend_line_above"
 # B = "extend_prev_word_start"
@@ -176,11 +179,13 @@ L = "join_selections_space"
 
 [keys.normal.space.u]
 f = ":toggle auto-format"
+g = ":toggle indent-guides.render"
 i = ":toggle lsp.display-inlay-hints"
 w = ":toggle soft-wrap.enable"
 l = ":toggle whitespace.render all none"
 r = ":toggle line-number relative absolute"
-z = ":toggle gutters.line-numbers.min-width 30 2" # limited zen mode
+z = ":toggle gutters.line-numbers.min-width 30 2"  # limited zen mode
+d = ":toggle end-of-line-diagnostics hint disable"
 
 [keys.insert]
 C-y = "scroll_up"
@@ -245,3 +250,4 @@ X = "remove_primary_selection"
 x = "keep_selections"
 A-x = "remove_selections"
 "'" = "flip_selections"
+A-A = "select_all_siblings"
