@@ -1,8 +1,9 @@
 [plugin]
 deps = [
-  { use = "yazi-rs/plugins#max-preview", commit = "06e5fe1" },
-  { use = "yazi-rs/plugins#hide-preview", commit = "06e5fe1" },
-  { use = "ndtoan96/ouch", commit = "251da69" },
+  { use = "yazi-rs/plugins:max-preview", rev = "b659791" },
+  { use = "yazi-rs/plugins:hide-preview", rev = "b659791" },
+  { use = "ndtoan96/ouch", rev = "251da69" },
+  { use = "Ape/open-with-cmd", rev = "8d7abc8" },
 ]
 
 [flavor]
