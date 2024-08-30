@@ -17,6 +17,15 @@
 - UndoRedo.lua from [Eisa01/mpv-scripts](https://github.com/Eisa01/mpv-scripts)
 - autoload.lua from [official mpv](https://github.com/mpv-player/mpv/blob/master/TOOLS/lua/autoload.lua)
 - webm.lua from [ekisu/mpv-webm](https://github.com/ekisu/mpv-webm)
+- uosc from [tomasklaen/uosc](https://github.com/tomasklaen/uosc)
+- thumbfast.lua from [po5/thumbfast](https://github.com/po5/thumbfast)
+
+```bash
+# install uosc in pwsh
+irm https://raw.githubusercontent.com/tomasklaen/uosc/HEAD/installers/windows.ps1 | iex
+# downlaod scripts
+curl -L https://github.com/po5/thumbfast/raw/master/thumbfast.lua | save -f scripts/thumbfast.lua
+```
 
 ## not using
 
