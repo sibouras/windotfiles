@@ -1,9 +1,10 @@
 [plugin]
 deps = [
-  { use = "yazi-rs/plugins:max-preview", rev = "b659791" },
-  { use = "yazi-rs/plugins:hide-preview", rev = "b659791" },
+  { use = "yazi-rs/plugins:max-preview", rev = "2b001d2" },
+  { use = "yazi-rs/plugins:hide-preview", rev = "2b001d2" },
   { use = "ndtoan96/ouch", rev = "251da69" },
   { use = "Ape/open-with-cmd", rev = "8d7abc8" },
+  { use = "yazi-rs/plugins:mime-ext", rev = "2b001d2" },
 ]
 
 [flavor]
