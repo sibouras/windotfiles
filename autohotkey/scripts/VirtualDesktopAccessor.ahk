@@ -82,6 +82,12 @@ GoToDesktopNumber(num) {
   return
 }
 MoveOrGotoDesktopNumber(num) {
+  ; fix powertoys layout shortcuts(Alt+LWin+Ctrl+num)
+  ; The Blind mode avoids releasing the modifier keys so Alt + LWin would not release
+  if (GetKeyState("LWin")) {
+    Send("{Blind}" num + 1)
+    return
+  }
   ; If user is holding down Shift, move the current window and go to desktop
   if (GetKeyState("Shift")) {
     MoveCurrentWindowAndGoToDesktop(num)
