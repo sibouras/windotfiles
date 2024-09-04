@@ -285,6 +285,17 @@ map(
 )
 -- nnoremap <silent> <leader>yf :call setreg(v:register, expand('%:p'))<CR>
 
+-- Saner behavior of n and N(from vim-galore)
+vim.cmd([[
+nnoremap <expr> n 'Nn'[v:searchforward]
+xnoremap <expr> n 'Nn'[v:searchforward]
+onoremap <expr> n 'Nn'[v:searchforward]
+
+nnoremap <expr> N 'nN'[v:searchforward]
+xnoremap <expr> N 'nN'[v:searchforward]
+onoremap <expr> N 'nN'[v:searchforward]
+]])
+
 -- Quickly edit your macros(from vim-galore)
 -- Use it like this <leader>m or "q<leader>m.
 map(
