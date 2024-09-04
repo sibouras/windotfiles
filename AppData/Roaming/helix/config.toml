@@ -56,7 +56,6 @@ enable = false
 hidden = false
 
 [keys.normal]
-"\\" = { c = ":config-open", r = ":config-reload" }
 m = { "'" = "save_selection" }
 # esc = ["collapse_selection", "keep_primary_selection"]
 # "%" = ["save_selection", "select_all"]
@@ -168,6 +167,13 @@ g.S = "extend_to_first_nonwhitespace"
 g.L = "extend_to_line_end"
 g.H = "extend_to_line_start"
 
+[keys.normal."\\"]
+c = ":config-open"
+r = ":config-reload"
+w = "move_next_sub_word_start"
+b = "move_prev_sub_word_start"
+e = "move_next_sub_word_end"
+
 [keys.normal.space]
 l = "join_selections"
 L = "join_selections_space"
@@ -251,3 +257,8 @@ x = "keep_selections"
 A-x = "remove_selections"
 "'" = "flip_selections"
 A-A = "select_all_siblings"
+
+[keys.select."\\"]
+w = "extend_next_sub_word_start"
+b = "extend_prev_sub_word_start"
+e = "extend_next_sub_word_end"
