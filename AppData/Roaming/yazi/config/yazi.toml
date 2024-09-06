@@ -8,7 +8,7 @@ sort_reverse = false
 sort_dir_first = true
 show_hidden = true
 show_symlink = true
-linemode = "size"
+# linemode = "size"
 
 [opener]
 edit = [
@@ -94,4 +94,6 @@ prepend_previewers = [
 prepend_fetchers = [
   # mime-ext plugin: https://github.com/yazi-rs/plugins/tree/main/mime-ext.yazi
   { id = "mime", if = "!mime", name = "*", run = "mime-ext", prio = "high" },
+  { id = "git", name = "*", run = "git" },
+  { id = "git", name = "*/", run = "git" },
 ]
