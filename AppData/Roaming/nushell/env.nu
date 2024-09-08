@@ -7,14 +7,21 @@ def create_left_prompt [] {
     $" (ansi green_bold)($env.PWD | str replace $nu.home-path '~')"
   }
 
-  let duration_segment = (do {
+  let duration_segment = do {
     let duration_secs = ($env.CMD_DURATION_MS | into int) / 1000
     if ($duration_secs >= 1) {
       $" (ansi yellow_bold)($duration_secs | math round | into string | append "sec" | str join | into duration)"
     } else {
       ""
     }
-  })
+  }
+
+  let yazi_segment = do -i {
+    let yazi_level = ($env.YAZI_LEVEL | into int)
+    if ($yazi_level >= 1) {
+      $" (ansi yellow)(1..$yazi_level | each {''} | str join ' ')"
+    }
+  }
 
   let exit_code_segment = if ($env.LAST_EXIT_CODE == 0) {
     ""
@@ -33,7 +40,7 @@ def create_left_prompt [] {
     ""
   }
 
-  print ([$path_segment, $exit_code_segment, $git_branch_segment, $duration_segment] | str join)
+  print ([$yazi_segment, $path_segment, $exit_code_segment, $git_branch_segment, $duration_segment] | str join)
 }
 
 def create_right_prompt [] {
