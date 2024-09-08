@@ -683,6 +683,16 @@ $env.config = {
         cmd: "clear"
       }
     }
+    {
+      name: copy_command
+      modifier: alt_shift
+      keycode: char_c
+      mode: [emacs, vi_normal, vi_insert]
+      event: {
+        send: executehostcommand
+        cmd: "commandline | bp"
+      }
+    }
   ]
 }
 
@@ -705,6 +715,7 @@ alias gss = git status -s
 alias gb = git branch --sort=committerdate
 alias gi = git rev-parse --abbrev-ref HEAD # in git
 alias gd = git diff
+alias gds = git diff --staged
 alias gp = git push
 alias gr = cd (git rev-parse --show-toplevel)
 alias gg = git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold green)%d%Creset %s %C(bold yellow)(%cr) %C(blue)%ad%Creset' --abbrev-commit --date=short
