@@ -240,7 +240,12 @@ $env.config = {
     }
     display_output: {||
       # if (term size).columns >= 100 { table -e } else { table }
-      table
+      # fix prompt when the output is an empty list
+      if (($in | describe --detailed).type == 'list' and ($in | is-empty)) {
+        table | str trim
+      } else {
+        table
+      }
     }
     command_not_found: {||
       null  # replace with source code to return an error message when a command is not found
