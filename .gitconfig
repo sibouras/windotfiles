@@ -18,6 +18,13 @@
 
 [merge]
   conflictstyle = diff3
+  tool = nvimdiff
+
+[mergetool]
+  keepBackup = false
+
+[mergetool "nvimdiff"]
+  layout = LOCAL,BASE,REMOTE / MERGED
 
 [diff]
   colorMoved = default
