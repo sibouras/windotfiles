@@ -2,7 +2,7 @@
   defaultBranch = main
 
 [core]
-  editor = nvim
+  editor = hx
   eol = lf
   autocrlf = false
   pager = # empty pager for faster `git branch` or use `git --no-pager`
@@ -31,8 +31,9 @@
   tool = nvimdiff
 
 [alias]
-  diff-words = diff --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  wdiff = diff --color-words='[^[:space:]]|([[:alnum:]]|UTF_8_GUARD)+'
+  lg = log --graph --pretty=tformat:'%C(auto)%h%C(auto)%d%Creset %s %C(dim white)(%cd)%Creset' --date=relative
+  ld = log --pretty=tformat:'%C(auto)%h %Cred%cd%C(auto)%d %Creset%s' --date=short
   ll = log --stat -p
   b = branch -vv --sort=-committerdate
 
