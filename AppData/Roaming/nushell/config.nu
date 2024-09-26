@@ -714,6 +714,7 @@ alias ll = eza -la -s Name --binary --git --icons --group-directories-first --no
 alias lg = lazygit
 alias gu = gitui
 alias gs = gswin64c
+alias g = git --no-pager
 alias ga = git add
 alias gst = git status
 alias gss = git status -s
@@ -723,8 +724,6 @@ alias gd = git diff
 alias gds = git diff --staged
 alias gp = git push
 alias gr = cd (git rev-parse --show-toplevel)
-alias gg = git log --graph --pretty=format:'%C(bold red)%h%Creset -%C(bold green)%d%Creset %s %C(bold yellow)(%cr) %C(blue)%ad%Creset' --abbrev-commit --date=short
-alias gloo = git log --pretty=format:'%C(yellow)%h %Cred%ad %Cgreen%d %Creset%s' --date=short
 alias winconfig = git $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias dotfiles = lazygit $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias sfss = sfsu search
@@ -830,7 +829,6 @@ def get-aliases [] {
 
 # ls sorted by type and without the type column
 def l [
-  --all(-a) # show hidden files
   --reverse(-r) # reverse order
   --type(-t) # sort-by type
   --modified(-m) # sort-by modified
@@ -844,9 +842,9 @@ def l [
     [type name]
   }
   if ($args | is-empty) {
-    ls --all=$all | sort-by --reverse=$reverse ...$columns | reject type
+    ls --all | sort-by --reverse=$reverse ...$columns | reject type
   } else {
-    ls --all=$all ...($args | into glob) | sort-by --reverse=$reverse ...$columns | reject type
+    ls --all ...($args | into glob) | sort-by --reverse=$reverse ...$columns | reject type
   }
 }
 
