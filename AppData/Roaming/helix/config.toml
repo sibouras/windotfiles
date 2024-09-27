@@ -162,6 +162,7 @@ x = "keep_selections"
 A-x = "remove_selections"
 "'" = "flip_selections"
 A-A = "select_all_siblings"
+A-N = "split_selection_on_newline"
 
 # X = "extend_line_above"
 # B = "extend_prev_word_start"
@@ -263,6 +264,7 @@ x = "keep_selections"
 A-x = "remove_selections"
 "'" = "flip_selections"
 A-A = "select_all_siblings"
+A-N = "split_selection_on_newline"
 
 [keys.select."\\"]
 w = "extend_next_sub_word_start"
