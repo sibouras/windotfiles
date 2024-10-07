@@ -2,7 +2,6 @@
 --     Ctrl+b - create new bookmark.
 --  Note:
 --     File *.bookmarks.txt will be written after closing the video file.
--- NOTE: broken in 0.38
 
 function srt_time_to_seconds(time)
     major, minor = time:match("(%d%d:%d%d:%d%d),(%d%d%d)")
@@ -33,6 +32,7 @@ function add_bookmark()
 end
 
 function table_length(t)
+    t = t or {}
     local count = 0
     for _ in pairs(t) do
         count = count + 1
@@ -63,8 +63,9 @@ function write_bookmarks()
     end
 end
 
+bookmarks = {}
+
 function load_bookmarks()
-    bookmarks = {}
     local f, err = io.open(txt_bookmarks_filename, "r")
     if f then
         for line in f:lines() do
@@ -74,8 +75,19 @@ function load_bookmarks()
     end
 end
 
+function getPath(str)
+    return str:match("(.*[/\\])")
+end
+
 function init()
-    txt_bookmarks_filename = mp.get_property("working-directory") .. "/" .. mp.get_property("filename/no-ext") .. ".bookmarks.txt"
+    -- NOTE: when loading a video with SimpleHistory, working-directory is still set to where the mpv process started
+    if(mp.get_property('working-directory'):match('^' .. os.getenv('home') .. '\\autohotkey') or
+      mp.get_property('working-directory'):match('^' .. os.getenv('home') .. '\\scoop'))
+    then
+      txt_bookmarks_filename = getPath(mp.get_property("stream-path")) .. mp.get_property("filename/no-ext") .. ".bookmarks.txt"
+    else
+      txt_bookmarks_filename = mp.get_property("working-directory") .. "/" .. mp.get_property("filename/no-ext") .. ".bookmarks.txt"
+    end
 
     load_bookmarks()
 end
