@@ -119,6 +119,17 @@ $env.config = {
       truncating_suffix: "..." # A suffix used by the 'truncating' methodology
     }
     header_on_separator: false # show header text on separator/border line
+    # abbreviated_row_count: 10 # limit data rows from top and bottom after reaching a set point
+  }
+
+  error_style: "fancy" # "fancy" or "plain" for screen reader-friendly error messages
+
+  # Whether an error message should be printed if an error of a certain kind is triggered.
+  display_errors: {
+    exit_code: false # assume the external command prints an error message
+    # Core dump errors are always printed, and SIGPIPE never triggers an error.
+    # The setting below controls message printing for termination by all other signals.
+    termination_signal: true
   }
 
   # datetime_format determines what a datetime rendered in the shell would look like.
@@ -170,7 +181,6 @@ $env.config = {
     vi_normal: underscore # block, underscore, line, blink_block, blink_underscore, blink_line, inherit to skip setting cursor shape (underscore is the default) is the default)
   }
   color_config: $dark_theme   # if you want a light theme, replace `$dark_theme` to `$light_theme`
-  use_grid_icons: true
   footer_mode: 25 # always, never, number_of_rows, auto
   float_precision: 2 # the precision for displaying floats in tables
   buffer_editor: "hx" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
@@ -358,7 +368,7 @@ $env.config = {
         source: { |buffer, position|
           scope commands
           | where name =~ $buffer
-          | each { |it| {value: $it.name description: $it.usage} }
+          | each { |it| {value: $it.name description: $it.description} }
         }
       }
       {
@@ -685,7 +695,7 @@ $env.config = {
       mode: [emacs , vi_normal, vi_insert]
       event: {
         send: executehostcommand
-        cmd: "clear"
+        cmd: "clear --keep-scrollback"
       }
     }
     {
@@ -854,7 +864,7 @@ def le [] {
 }
 
 def lsg [] {
-  ls | sort-by type name | grid -c
+  ls | sort-by type name | grid -ic
 }
 
 # structured eza
@@ -936,7 +946,7 @@ def "nu-complete help categories" [] {
 }
 
 def hc [category?: string@"nu-complete help categories"] {
-  help commands | select name category usage | move usage --after name | where category =~ $category
+  help commands | select name category description | move description --after name | where category =~ $category
 }
 
 def show_banner [] {
