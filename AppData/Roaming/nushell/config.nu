@@ -250,12 +250,6 @@ $env.config = {
     }
     display_output: {||
       # if (term size).columns >= 100 { table -e } else { table }
-      # fix prompt when the output is an empty list
-      if (($in | describe --detailed).type == 'list' and ($in | is-empty)) {
-        table | str trim
-      } else {
-        table
-      }
     }
     command_not_found: {||
       null  # replace with source code to return an error message when a command is not found
@@ -842,25 +836,25 @@ def l [
   --reverse(-r) # reverse order
   --type(-t) # sort-by type
   --modified(-m) # sort-by modified
+  --extension(-e) # sort-by extension
   ...args
 ] {
   let columns = if ($type and $modified) {
-    [type modified]
+    [$.type $.modified]
   } else if ($modified) {
-    [modified]
+    [$.modified]
   } else {
-    [type name]
+    [$.type $.name]
   }
   if ($args | is-empty) {
-    ls --all | sort-by --reverse=$reverse ...$columns | reject type
+    if ($extension) {
+      ls --all | where type == file | sort-by --reverse=$reverse { get name | path parse | get extension } ...$columns | reject type
+    } else {
+      ls --all | sort-by --reverse=$reverse ...$columns | reject type
+    }
   } else {
     ls --all ...($args | into glob) | sort-by --reverse=$reverse ...$columns | reject type
   }
-}
-
-# ls sorted by extension
-def le [] {
-  ls | sort-by type name | insert ext {|| $in.name | path parse | get extension } | sort-by ext | reject ext type
 }
 
 def lsg [] {

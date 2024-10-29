@@ -40,7 +40,7 @@ def create_left_prompt [] {
     ""
   }
 
-  print ([$yazi_segment, $path_segment, $exit_code_segment, $git_branch_segment, $duration_segment] | str join)
+  [$yazi_segment, $path_segment, $exit_code_segment, $git_branch_segment, $duration_segment, "\n\n"] | str join
 }
 
 def create_right_prompt [] {
