@@ -1,8 +1,9 @@
+[general]
 working_directory = "/Users/ala"
 
 import = [
-  # "~/AppData/Roaming/alacritty/themes/catppuccin-mocha.toml"
-  "~/AppData/Roaming/alacritty/themes/tokyonight-night.toml",
+  # "themes/catppuccin-mocha.toml"
+  "themes/tokyonight-night.toml",
 ]
 
 [cursor.style]
@@ -359,7 +360,7 @@ mods = "Shift"
 [mouse]
 hide_when_typing = true
 
-[shell]
+[terminal.shell]
 program = "nu --no-std-lib"
 
 [window]
