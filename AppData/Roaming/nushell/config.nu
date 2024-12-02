@@ -1237,6 +1237,22 @@ def nuf [ --multi (-m) ]: any -> any {
   }
 }
 
+# flatten-keys $env.config '$env.config'
+# => list of all keys and subkeys in the config
+def flatten-keys [rec: record, root: string] {
+  $rec | columns | each {|key|    
+    let is_record = (
+      $rec | get $key | describe --detailed | get type | $in == record
+    )
+ 
+    # Recusively return each key plus its subkeys
+    [$'($root).($key)'] ++  match $is_record {
+      true  => (flatten-keys ($rec | get $key) $'($root).($key)')
+      false => []
+    }
+   } | flatten
+} 
+
 # go up n directories
 def --env up [nb: int = 1] {
   let path = (1..($nb) | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
