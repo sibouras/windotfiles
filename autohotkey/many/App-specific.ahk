@@ -1,8 +1,16 @@
-!q::Send, !{f4}
-#!h::Send, #{Left}
-#!l::Send, #{Right}
+!q::WinClose, A
 #v::SendInput, {Raw}%Clipboard%
 !+m::PostMessage, 0x112, 0xF100, 0x20,, A ; context menu of the window's title bar
+
+ProcessExist(Name){
+	Process, Exist, %Name%
+	return Errorlevel
+}
+
+#If not ProcessExist("glazewm.exe")
+  !+h::Send, {Alt up}#{Left}
+  !+l::Send, {Alt up}#{Right}
+#If
 
 #If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe")
 {
