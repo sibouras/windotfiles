@@ -63,7 +63,7 @@ CapsLock & F7:: Send, {Media_Prev}
 CapsLock & F8:: Send, {Media_Next}
 
 CapsLock & t::Send, ^{t}
-CapsLock & r::Send, ^{Tab}
+CapsLock & r::Send, #{t}
 CapsLock & e::Send, ^+{Tab}
 CapsLock & w:: Send, ^{w}
 CapsLock & q::
@@ -118,8 +118,8 @@ CapsLock & m::
   {
     Run wt.exe,,, NewPID
     ; WinWaitActive, ahk_pid %NewPID% ; doesn't work
-    sleep 400
-    Send, !+{l}
+    ; sleep 400
+    ; Send, !+{l}
   }
   else if Key = e
     Run explorer.exe
@@ -131,8 +131,8 @@ CapsLock & m::
     ; RunWait, alacritty.exe --working-directory "%vUserProfile%", , Min
     ; Run %vUserProfile%\scoop\apps\alacritty\current\alacritty.exe --working-directory %vUserProfile%,,, NewPID
     Run alacritty.exe,,, NewPID
-    WinWaitActive, ahk_pid %NewPID%
-    Send, !+{l}
+    ; WinWaitActive, ahk_pid %NewPID%
+    ; Send, !+{l}
   }
   else if Key = g
   {
