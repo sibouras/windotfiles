@@ -36,7 +36,7 @@ play = [
   { run = 'mediainfo "%1" | moar -no-statusbar', block = true, desc = "Show media info", for = "windows" },
 ]
 audio = [
-  { run = 'aimp %*', orphan = true, for = "windows" },
+  { run = 'mpc-hc %*', orphan = true, for = "windows" },
   { run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
   { run = 'mediainfo "%1" | moar -no-statusbar', block = true, desc = "Show media info", for = "windows" },
   { run = 'ffprobe -v quiet -print_format json -show_format "%1" | jaq -r .format.tags[\"lyrics-XXX\"] | moar -no-statusbar', block = true, desc = "Lyrics", for = "windows" },
@@ -93,7 +93,7 @@ prepend_previewers = [
 
 prepend_fetchers = [
   # mime-ext plugin: https://github.com/yazi-rs/plugins/tree/main/mime-ext.yazi
-  { id = "mime", if = "!mime", name = "*", run = "mime-ext", prio = "high" },
+  # { id = "mime", if = "!mime", name = "*", run = "mime-ext", prio = "high" },
   { id = "git", name = "*", run = "git" },
   { id = "git", name = "*/", run = "git" },
 ]
