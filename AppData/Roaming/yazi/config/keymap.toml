@@ -19,6 +19,8 @@ prepend_keymap = [
 
   { on = ["w"], run = 'shell "nu --no-std-lib" --block --confirm', desc = "Open shell here" },
   { on = ["W"], run = "tasks_show", desc = "Show the tasks manager" },
+  { on = ["i"], run = 'shell --block --interactive --cursor=0 " %* & pause"' },
+  { on = ["R"], run = "refresh", desc = "Refresh" },
 ]
 
 [tasks]
