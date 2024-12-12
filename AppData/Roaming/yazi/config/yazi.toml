@@ -8,7 +8,7 @@ sort_reverse = false
 sort_dir_first = true
 show_hidden = true
 show_symlink = true
-# linemode = "size"
+linemode = "size"
 
 [opener]
 edit = [
@@ -44,21 +44,26 @@ audio = [
 
 [open]
 rules = [
+  # Folder
   { name = "*/", use = ["edit", "open", "reveal"] },
-
+  # Text
   { mime = "text/*", use = ["edit", "reveal"] },
+  # Image
   { mime = "image/*", use = ["open", "reveal"] },
+  # Media
+  # { mime = "{audio,video}/*", use = ["play", "reveal"] },
   { mime = "video/*", use = ["play", "reveal"] },
   { mime = "audio/*", use = ["audio", "reveal"] },
-  { mime = "inode/x-empty", use = ["edit", "reveal"] },
-
-  { mime = "application/json", use = ["edit", "reveal"] },
+  # Archive
+  { mime = "application/{,g}zip", use = ["extract", "reveal"] },
+  { mime = "application/{tar,bzip*,7z*,xz,rar}", use = ["extract", "reveal"] },
+  # JSON
+  { mime = "application/{json,ndjson}", use = ["edit", "reveal"] },
   { mime = "*/javascript", use = ["edit", "reveal"] },
-
-  { mime = "application/*zip", use = ["extract", "reveal"] },
-  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", use = ["extract", "reveal"] },
-
-  { mime = "*", use = ["open", "reveal"] },
+  # Empty file
+  { mime = "inode/empty", use = ["edit", "reveal"] },
+  # Fallback
+  { name = "*", use = ["open", "reveal"] },
 ]
 
 [plugin]
@@ -73,7 +78,7 @@ preloaders = [
   # { mime = "application/pdf", run = "pdf" },
   # # Font
   # { mime = "font/*", run = "font" },
-  # { mime = "application/vnd.ms-opentype", run = "font" },
+  # { mime = "application/ms-opentype", run = "font" },
 ]
 
 prepend_previewers = [
@@ -93,7 +98,7 @@ prepend_previewers = [
 
 prepend_fetchers = [
   # mime-ext plugin: https://github.com/yazi-rs/plugins/tree/main/mime-ext.yazi
-  # { id = "mime", if = "!mime", name = "*", run = "mime-ext", prio = "high" },
+  # { id = "mime", if = "!(mime|dummy)", name = "*", run = "mime-ext", prio = "high" },
   { id = "git", name = "*", run = "git" },
   { id = "git", name = "*/", run = "git" },
 ]
