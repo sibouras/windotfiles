@@ -1,3 +1,4 @@
+--- @sync entry
 return {
   entry = function(state)
     state.i = state.i or 0
