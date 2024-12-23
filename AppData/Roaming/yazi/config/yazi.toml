@@ -2,7 +2,7 @@
 
 [manager]
 # ratio = [0, 4, 4]
-sort_by = "natural"
+sort_by = "alphabetical"
 sort_sensitive = true
 sort_reverse = false
 sort_dir_first = true
