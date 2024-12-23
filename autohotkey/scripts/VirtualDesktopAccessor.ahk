@@ -76,7 +76,8 @@ GoToNextDesktop() {
 }
 
 GoToDesktopNumber(num) {
-  sleep 10 ; fix losing focus when switching desktops
+  ; fix losing focus when switching desktops, https://www.reddit.com/r/AutoHotkey/comments/qvkjhh/comment/hkx42s7
+  DllCall("User32\AllowSetForegroundWindow", "Int",-1)
   global GoToDesktopNumberProc
   DllCall(GoToDesktopNumberProc, "Int", num, "Int")
   return
@@ -194,6 +195,6 @@ Alt & 4:: MoveOrGotoDesktopNumber(3)
 Alt & 5:: MoveOrGotoDesktopNumber(4)
 
 !8:: TogglePinWindow()
-!7:: MoveWindowToCurrentDesktop("ahk_exe alacritty.exe")
+!7:: MoveWindowToCurrentDesktop("ahk_exe WindowsTerminal.exe")
 
 ; !r:: reload
