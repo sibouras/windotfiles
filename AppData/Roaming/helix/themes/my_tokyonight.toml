@@ -1,8 +1,16 @@
 inherits = "tokyonight"
 
 # remove italic
-"comment" = { fg = "comment" }
-"function" = { fg = "blue" }
+comment = { fg = "comment" }
+function = { fg = "blue" }
+keyword = { fg = "purple" }
+"keyword.control.return" = { fg = "purple" }
+"variable.parameter" = { fg = "yellow" }
+
+# colors from poimadres
+punctuation = "#a6accd"
+"punctuation.bracket" = "desaturatedBlue"
+operator = "desaturatedBlue"
 
 "ui.virtual" = "comment"
 "ui.cursor.primary.normal" = { fg = "bg", bg = "lavender" }
@@ -16,3 +24,4 @@ inherits = "tokyonight"
 [palette]
 bg = "#0c0d11"
 lavender = "#b4befe"
+desaturatedBlue = "#91B4D5"
