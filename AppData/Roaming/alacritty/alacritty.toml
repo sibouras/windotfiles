@@ -361,7 +361,7 @@ mods = "Shift"
 hide_when_typing = true
 
 [terminal.shell]
-program = "nu --no-std-lib"
+program = "nu"
 
 [window]
 decorations = "none"
