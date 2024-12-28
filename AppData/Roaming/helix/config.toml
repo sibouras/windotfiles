@@ -16,10 +16,10 @@ insert-final-newline = false
 popup-border = "all"
 end-of-line-diagnostics = "hint"
 # persistent state pr needed
-persist-old-files = true
-persist-commands = true
-persist-search = true
-persist-clipboard = true
+# persist-old-files = true
+# persist-commands = true
+# persist-search = true
+# persist-clipboard = true
 
 
 [editor.inline-diagnostics]
@@ -216,9 +216,9 @@ A-w = "goto_last_accessed_file"
 A-e = "move_parent_node_end"
 A-b = "move_parent_node_start"
 
-# C-k = "goto_prev_tabstop"
-# C-j = "goto_next_tabstop"
-# C-ret = "goto_next_tabstop"
+C-k = "goto_prev_tabstop"
+C-j = "goto_next_tabstop"
+C-ret = "goto_next_tabstop"
 
 [keys.select]
 C-y = "scroll_up"
