@@ -1,0 +1,22 @@
+{
+	"console.log": {
+		"prefix": "cl",
+		"body": "console.log(${1})"
+	},
+	"console.table": {
+		"prefix": "ct",
+		"body": "console.table(${1})"
+	},
+	"console.log a variable": {
+		"prefix": "cv",
+		"body": "console.log('${1}:', ${1})"
+	},
+	"arrow function with body": {
+		"prefix": "af",
+		"body": "(${1}) => {\n\t${2}\n}"
+	},
+	"for-of loop": {
+		"prefix": "forof",
+		"body": ["for (const ${1} of ${2}) {", "\t$3", "}"]
+	}
+}
