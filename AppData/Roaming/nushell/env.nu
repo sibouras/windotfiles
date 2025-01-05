@@ -29,8 +29,8 @@ def create_left_prompt [] {
     $" (ansi red_bold)($env.LAST_EXIT_CODE)"
   }
 
-  let git_branch_segment = if ('.git' | path exists) {
-    let content = open .git\HEAD
+  let git_branch_segment = if ('.git/HEAD' | path exists) {
+    let content = open .git/HEAD
     if ($content | str starts-with 'ref') {
       $" (ansi xterm_mediumpurple2a)($content | split words | last)"
     } else {
