@@ -9,6 +9,7 @@
                 "action": "commandPalette",
                 "launchMode": "commandLine"
             },
+            "id": "User.commandPalette.2A0DA8E0",
             "keys": "ctrl+alt+p"
         },
         {
@@ -24,11 +25,11 @@
         {
             "command": 
             {
-                "action": "sendInput",
-                "input": "\u001b[18;8~"
+                "action": "resizePane",
+                "direction": "left"
             },
-            "id": "User.sendInput.F14AFF9C",
-            "keys": "ctrl+;"
+            "id": "User.resizePane.2A0DA8E0",
+            "keys": "ctrl+alt+shift+h"
         },
         {
             "command": "find",
@@ -38,25 +39,20 @@
         {
             "command": 
             {
-                "action": "resizePane",
-                "direction": "left"
+                "action": "sendInput",
+                "input": "\u001b[18;8~"
             },
-            "id": "User.resizePane.2A0DA8E0",
-            "keys": "ctrl+alt+shift+h"
-        },
-        {
-            "command": "paste",
-            "id": "User.paste",
-            "keys": "ctrl+shift+v"
+            "id": "User.sendInput.F14AFF9C",
+            "keys": "ctrl+;"
         },
         {
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u001b[13;5u"
+                "input": "\u001b[13;2u"
             },
-            "id": "User.sendInput.F8A79DCB",
-            "keys": "ctrl+enter"
+            "id": "User.sendInput.8882FD6D",
+            "keys": "shift+enter"
         },
         {
             "command": 
@@ -71,10 +67,15 @@
             "command": 
             {
                 "action": "sendInput",
-                "input": "\u001b[13;2u"
+                "input": "\u001b[13;5u"
             },
-            "id": "User.sendInput.8882FD6D",
-            "keys": "shift+enter"
+            "id": "User.sendInput.F8A79DCB",
+            "keys": "ctrl+enter"
+        },
+        {
+            "command": "paste",
+            "id": "User.paste",
+            "keys": "ctrl+shift+v"
         },
         {
             "command": 
@@ -122,6 +123,11 @@
             "keys": "ctrl+alt+l"
         },
         {
+            "command": "markMode",
+            "id": "User.markMode",
+            "keys": "ctrl+9"
+        },
+        {
             "command": 
             {
                 "action": "moveFocus",
@@ -167,6 +173,10 @@
             "keys": "alt+shift+up"
         },
         {
+            "command": "unbound",
+            "keys": "alt+enter"
+        },
+        {
             "command": 
             {
                 "action": "moveFocus",
@@ -201,6 +211,11 @@
             },
             "id": "User.resizePane.87C324ED",
             "keys": "ctrl+alt+shift+l"
+        },
+        {
+            "command": "toggleFocusMode",
+            "id": "User.toggleFocusMode",
+            "keys": "ctrl+shift+m"
         }
     ],
     "copyFormatting": "none",
@@ -211,7 +226,7 @@
     "initialCols": 98,
     "initialPosition": "645,0",
     "initialRows": 35,
-    "launchMode": "default",
+    "launchMode": "focus",
     "newTabMenu": 
     [
         {
@@ -228,7 +243,7 @@
                 "face": "JetBrainsMono Nerd Font",
                 "size": 12.5
             },
-            "scrollbarState": "hidden"
+            "scrollbarState": "visible"
         },
         "list": 
         [
