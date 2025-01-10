@@ -59,230 +59,227 @@ $env.config.hooks.display_output = "table"
 $env.config.highlight_resolved_externals = true
 $env.config.color_config = $dark_theme
 
-# The default config record. This is where much of your global configuration is setup.
-$env.config = {
-  menus: [
-    # Example of extra menus created using a nushell source
-    # Use the source field to create a list of records that populates
-    # the menu
-    {
-      name: commands_menu
-      only_buffer_difference: false
-      marker: "# "
-      type: {
-        layout: columnar
-        columns: 4
-        col_width: 20
-        col_padding: 2
-      }
-      style: {
-        text: green
-        selected_text: green_reverse
-        description_text: yellow
-      }
-      source: { |buffer, position|
-        scope commands
-        | where name =~ $buffer
-        | each { |it| {value: $it.name description: $it.description} }
-      }
+$env.config.menus ++= [
+  # Example of extra menus created using a nushell source Use the source field
+  # to create a list of records that populates the menu
+  {
+    name: commands_menu
+    only_buffer_difference: false
+    marker: "# "
+    type: {
+      layout: columnar
+      columns: 4
+      col_width: 20
+      col_padding: 2
     }
-    {
-      name: vars_menu
-      only_buffer_difference: true
-      marker: "# "
-      type: {
-        layout: list
-        page_size: 10
-      }
-      style: {
-        text: green
-        selected_text: green_reverse
-        description_text: yellow
-      }
-      source: { |buffer, position|
-        scope variables
-        | where name =~ $buffer
-        | sort-by name
-        | each { |it| {value: $it.name description: $it.type} }
-      }
+    style: {
+      text: green
+      selected_text: green_reverse
+      description_text: yellow
     }
-  ]
-  keybindings: [
-    {
-      name: copy_selection
-      modifier: control_shift
-      keycode: char_c
-      mode: emacs
-      event: { edit: copyselection }
+    source: { |buffer, position|
+      scope commands
+      | where name =~ $buffer
+      | each { |it| {value: $it.name description: $it.description} }
     }
-    {
-      name: cut_selection
-      modifier: control_shift
-      keycode: char_x
-      mode: emacs
-      event: { edit: cutselection }
+  }
+  {
+    name: vars_menu
+    only_buffer_difference: true
+    marker: "# "
+    type: {
+      layout: list
+      page_size: 10
     }
-    {
-      name: ide_completion_menu
-      modifier: control
-      keycode: char_n
-      mode: [emacs vi_normal vi_insert]
-      event: {
-        until: [
-          { send: menu name: ide_completion_menu }
-          { send: menunext }
-          { edit: complete }
-        ]
-      }
+    style: {
+      text: green
+      selected_text: green_reverse
+      description_text: yellow
     }
-    {
-      name: cut_current_line
-      modifier: alt
-      keycode: char_r
-      mode: emacs
-      event: {
-        until: [
-          { edit: CutCurrentLine }
-        ]
-      }
+    source: { |buffer, position|
+      scope variables
+      | where name =~ $buffer
+      | sort-by name
+      | each { |it| {value: $it.name description: $it.type} }
     }
-    {
-      name: insert_newline
-      modifier: control
-      keycode: char_j
-      mode: emacs
-      event: { edit: insertnewline }
-    }
-    {
-      name: swap_words
-      modifier: alt
-      keycode: char_s
-      mode: emacs
-      event: {
-        until: [
-          { edit: SwapWords }
-        ]
-      }
-    }
-    {
-      name: reload_config
-      modifier: none
-      keycode: f5
-      mode: emacs
-      event: {
-        send: executehostcommand,
-        cmd: $"source '($nu.config-path)'"
-      }
-    }
-    # encapsulate current command into brackets and give it a name.
-    {
-      name: temp_var
-      modifier: alt
-      keycode: char_v
-      mode: [emacs , vi_normal, vi_insert]
-      event: {
-        send: executehostcommand
-        cmd: "$env.temp_var = ($env | get -i temp_var | default 0 | $in + 1);
-        let custom_var = (input 'enter variable name: ');
-        let name = (if $custom_var == "" {$env.temp_var | into string | 't' + $in} else {$custom_var});
-        commandline edit --replace ('let ' + ($name) + ' = (' + (commandline) + '); $' + ($name))"
-      }
-    }
+  }
+]
 
-    # Keybindings used to trigger the user defined menus
-    {
-      name: commands_menu
-      modifier: control
-      keycode: char_t
-      mode: [emacs, vi_normal, vi_insert]
-      event: { send: menu name: commands_menu }
-    }
-    {
-      name: vars_menu
-      modifier: shift_alt
-      keycode: char_v
-      mode: [emacs, vi_normal, vi_insert]
-      event: { send: menu name: vars_menu }
-    }
-    {
-      name: change_dir_with_fzf
-      modifier: alt
-      keycode: char_d
-      mode: emacs
-      event:{
-        send: executehostcommand,
-        # cmd: "cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)"
-        cmd: "commandline edit --insert (fd --hidden --type directory --exclude .git --exclude node_modules | fzf --layout=reverse --height=-15)"
-      }
-    }
-    {
-      name: fuzzy_history
-      modifier: control
-      keycode: Char_g
-      mode: [emacs , vi_normal, vi_insert]
-      event: {
-        send: executehostcommand
-        cmd: "commandline edit --replace (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
-      }
-    }
-    {
-      name: fuzzy_file
-      modifier: control
-      keycode: char_f
-      mode: [emacs, vi_normal, vi_insert]
-      event: {
-        send: executehostcommand
-        cmd: "commandline edit --insert (fd --hidden --type file -E .git -E node_modules | fzf --tiebreak=chunk --layout=reverse --multi --height=70% | lines | str join ' ')"
-      }
-    }
-    {
-      name: insert_sudo
-      modifier: control
-      keycode: char_s
-      mode: [emacs, vi_insert, vi_normal]
-      event: [
-        { edit: MoveToStart }
-        { send: ExecuteHostCommand,
-          cmd: `if (commandline | split row -r '\s+' | first) != 'sudo' { commandline edit --insert 'sudo '; commandline set-cursor --end }`
-        }
+$env.config.keybindings ++= [
+  {
+    name: copy_selection
+    modifier: control_shift
+    keycode: char_c
+    mode: emacs
+    event: { edit: copyselection }
+  }
+  {
+    name: cut_selection
+    modifier: control_shift
+    keycode: char_x
+    mode: emacs
+    event: { edit: cutselection }
+  }
+  {
+    name: ide_completion_menu
+    modifier: control
+    keycode: char_n
+    mode: [emacs vi_normal vi_insert]
+    event: {
+      until: [
+        { send: menu name: ide_completion_menu }
+        { send: menunext }
+        { edit: complete }
       ]
     }
-    {
-      name: insert_last_arg_from_prev_cmd
-      modifier: control
-      keycode: char_b
-      mode: [emacs, vi_normal, vi_insert]
-      # event: {
-      #   send: executeHostCommand
-      #   cmd: "commandline edit --insert (history | last | get command | parse --regex '(?P<arg>[^ ]+)$' | get arg | first)"
-      # }
-      event: [
-        { edit: InsertString, value: "!$" }
-        { send: Enter }
+  }
+  {
+    name: cut_current_line
+    modifier: alt
+    keycode: char_r
+    mode: emacs
+    event: {
+      until: [
+        { edit: CutCurrentLine }
       ]
     }
-    {
-      name: clear
-      modifier: control
-      keycode: char_l
-      mode: [emacs , vi_normal, vi_insert]
-      event: {
-        send: executehostcommand
-        cmd: "clear --keep-scrollback"
-      }
+  }
+  {
+    name: insert_newline
+    modifier: control
+    keycode: char_j
+    mode: emacs
+    event: { edit: insertnewline }
+  }
+  {
+    name: swap_words
+    modifier: alt
+    keycode: char_s
+    mode: emacs
+    event: {
+      until: [
+        { edit: SwapWords }
+      ]
     }
-    {
-      name: copy_command
-      modifier: alt_shift
-      keycode: char_c
-      mode: [emacs, vi_normal, vi_insert]
-      event: {
-        send: executehostcommand
-        cmd: "commandline | bp"
-      }
+  }
+  {
+    name: reload_config
+    modifier: none
+    keycode: f5
+    mode: emacs
+    event: {
+      send: executehostcommand,
+      cmd: $"source '($nu.config-path)'"
     }
-  ]
-}
+  }
+  # encapsulate current command into brackets and give it a name.
+  {
+    name: temp_var
+    modifier: alt
+    keycode: char_v
+    mode: [emacs , vi_normal, vi_insert]
+    event: {
+      send: executehostcommand
+      cmd: "$env.temp_var = ($env | get -i temp_var | default 0 | $in + 1);
+      let custom_var = (input 'enter variable name: ');
+      let name = (if $custom_var == "" {$env.temp_var | into string | 't' + $in} else {$custom_var});
+      commandline edit --replace ('let ' + ($name) + ' = (' + (commandline) + '); $' + ($name))"
+    }
+  }
+
+  # Keybindings used to trigger the user defined menus
+  {
+    name: commands_menu
+    modifier: control
+    keycode: char_t
+    mode: [emacs, vi_normal, vi_insert]
+    event: { send: menu name: commands_menu }
+  }
+  {
+    name: vars_menu
+    modifier: shift_alt
+    keycode: char_v
+    mode: [emacs, vi_normal, vi_insert]
+    event: { send: menu name: vars_menu }
+  }
+  {
+    name: change_dir_with_fzf
+    modifier: alt
+    keycode: char_d
+    mode: emacs
+    event:{
+      send: executehostcommand,
+      # cmd: "cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)"
+      cmd: "commandline edit --insert (fd --hidden --type directory --exclude .git --exclude node_modules | fzf --layout=reverse --height=-15)"
+    }
+  }
+  {
+    name: fuzzy_history
+    modifier: control
+    keycode: Char_g
+    mode: [emacs , vi_normal, vi_insert]
+    event: {
+      send: executehostcommand
+      cmd: "commandline edit --replace (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
+    }
+  }
+  {
+    name: fuzzy_file
+    modifier: control
+    keycode: char_f
+    mode: [emacs, vi_normal, vi_insert]
+    event: {
+      send: executehostcommand
+      cmd: "commandline edit --insert (fd --hidden --type file -E .git -E node_modules | fzf --tiebreak=chunk --layout=reverse --multi --height=70% | lines | str join ' ')"
+    }
+  }
+  {
+    name: insert_sudo
+    modifier: control
+    keycode: char_s
+    mode: [emacs, vi_insert, vi_normal]
+    event: [
+      { edit: MoveToStart }
+      { send: ExecuteHostCommand,
+        cmd: `if (commandline | split row -r '\s+' | first) != 'sudo' { commandline edit --insert 'sudo '; commandline set-cursor --end }`
+      }
+    ]
+  }
+  {
+    name: insert_last_arg_from_prev_cmd
+    modifier: control
+    keycode: char_b
+    mode: [emacs, vi_normal, vi_insert]
+    # event: {
+    #   send: executeHostCommand
+    #   cmd: "commandline edit --insert (history | last | get command | parse --regex '(?P<arg>[^ ]+)$' | get arg | first)"
+    # }
+    event: [
+      { edit: InsertString, value: "!$" }
+      { send: Enter }
+    ]
+  }
+  {
+    name: clear
+    modifier: control
+    keycode: char_l
+    mode: [emacs , vi_normal, vi_insert]
+    event: {
+      send: executehostcommand
+      cmd: "clear --keep-scrollback"
+    }
+  }
+  {
+    name: copy_command
+    modifier: alt_shift
+    keycode: char_c
+    mode: [emacs, vi_normal, vi_insert]
+    event: {
+      send: executehostcommand
+      cmd: "commandline | bp"
+    }
+  }
+]
 
 ### Aliases
 alias :q = exit
