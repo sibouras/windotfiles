@@ -243,7 +243,8 @@
                 "face": "JetBrainsMono Nerd Font",
                 "size": 12.5
             },
-            "scrollbarState": "visible"
+            "scrollbarState": "visible",
+            "intenseTextStyle": "all"
         },
         "list": 
         [
