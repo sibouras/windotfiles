@@ -1,3 +1,7 @@
+[user]
+  name = sibouras
+  email = sibouras@users.noreply.github.com
+
 [init]
   defaultBranch = main
 
@@ -6,7 +10,7 @@
   eol = lf
   autocrlf = false
   pager = # empty pager for faster `git branch` or use `git --no-pager`
-  excludesfile = ~/.config/git/ignore
+  # excludesfile = ~/.config/git/ignore # this is the default ignore path
 
 [interactive]
   diffFilter = delta --color-only
