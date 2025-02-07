@@ -266,11 +266,23 @@ keybindings:
   # - commands: ['shell-exec cmd']
   #   bindings: ['alt+enter']
 
-  # Focus the next/previous active workspace defined in `workspaces` config.
-  - commands: ['focus --next-active-workspace']
+  # Focus the next/previous workspace defined in `workspaces` config.
+  - commands: ['focus --next-workspace']
     bindings: ['alt+0']
-  - commands: ['focus --prev-active-workspace']
+  - commands: ['focus --prev-workspace']
     bindings: ['alt+9']
+
+  # Move focused window to the next/previous workspace and focus it
+  - commands: ['move --next-workspace', 'focus --next-workspace']
+    bindings: ['alt+shift+0']
+  - commands: ['move --prev-workspace', 'focus --prev-workspace']
+    bindings: ['alt+shift+9']
+
+  # Move focused window to the next/previous workspace
+  - commands: ['move --next-workspace']
+    bindings: ['alt+ctrl+0']
+  - commands: ['move --prev-workspace']
+    bindings: ['alt+ctrl+9']
 
   # Focus the workspace that last had focus.
   - commands: ['focus --recent-workspace']
@@ -303,7 +315,7 @@ keybindings:
   # - commands: ['move-workspace --direction down']
   #   bindings: ['alt+shift+s']
 
-  # Move focused window to a workspace defined in `workspaces` config.
+  # Move focused window to a workspace defined in `workspaces` config and focus it.
   - commands: ['move --workspace 1', 'focus --workspace 1']
     bindings: ['alt+shift+1']
   - commands: ['move --workspace 2', 'focus --workspace 2']
@@ -318,3 +330,19 @@ keybindings:
     bindings: ['alt+shift+6']
   - commands: ['move --workspace 7', 'focus --workspace 7']
     bindings: ['alt+shift+7']
+
+  # Move focused window to a workspace defined in `workspaces` config.
+  - commands: ['move --workspace 1']
+    bindings: ['alt+ctrl+1']
+  - commands: ['move --workspace 2']
+    bindings: ['alt+ctrl+2']
+  - commands: ['move --workspace 3']
+    bindings: ['alt+ctrl+3']
+  - commands: ['move --workspace 4']
+    bindings: ['alt+ctrl+4']
+  - commands: ['move --workspace 5']
+    bindings: ['alt+ctrl+5']
+  - commands: ['move --workspace 6']
+    bindings: ['alt+ctrl+6']
+  - commands: ['move --workspace 7']
+    bindings: ['alt+ctrl+7']
