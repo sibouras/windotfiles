@@ -235,7 +235,7 @@ $env.config.keybindings ++= [
   }
   {
     name: insert_sudo
-    modifier: control
+    modifier: alt
     keycode: char_s
     mode: [emacs, vi_insert, vi_normal]
     event: [
@@ -277,6 +277,36 @@ $env.config.keybindings ++= [
     event: {
       send: executehostcommand
       cmd: "commandline | bp"
+    }
+  }
+  {
+    name: ls
+    modifier: control_alt_shift
+    keycode: F6
+    mode: [emacs, vi_normal, vi_insert]
+    event: [
+      { edit: InsertString, value: "l" }
+      { send: Enter }
+    ]
+  }
+  {
+    name: dirs_next
+    modifier: alt
+    keycode: right
+    mode: [emacs vi_insert vi_normal]
+    event: {
+      send: executehostcommand
+      cmd: 'dirs next'
+    }
+  }
+  {
+    name: dirs_prev
+    modifier: alt
+    keycode: left
+    mode: [emacs vi_insert vi_normal]
+    event: {
+      send: executehostcommand
+      cmd: 'dirs prev'
     }
   }
 ]
@@ -434,7 +464,7 @@ def l [
 }
 
 def lsg [] {
-  ls | sort-by type name | grid -ic
+  ls --all | sort-by type name | grid -ic
 }
 
 # structured eza
@@ -466,6 +496,11 @@ def psn [name: string] {
 # kill specified process in name
 def killn [name: string] {
   ps | find $name | each {|| kill -f $in.pid }
+}
+
+# tldr with fzf
+def tldrfzf [] {
+  tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | tldr $in
 }
 
 # git checkout interactive
@@ -899,6 +934,9 @@ def --env yy [] {
 	}
 	rm -p $tmp
 }
+
+### Standard Library
+use std/dirs
 
 ### Scripts
 source format-number.nu
