@@ -69,11 +69,11 @@ rules = [
 [plugin]
 preloaders = [
   # NOTE: the preloader is different from the previewer - it will run all matched preloaders not only the first one
-  # # Image
-  # { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
-  # { mime = "image/*", run = "image" },
-  # # Video
-  # { mime = "video/*", run = "video" },
+  # Image
+  { mime = "image/{avif,hei?,jxl,svg+xml}", run = "magick" },
+  { mime = "image/*", run = "image" },
+  # Video
+  { mime = "video/*", run = "video" },
   # # PDF
   # { mime = "application/pdf", run = "pdf" },
   # # Font
@@ -90,10 +90,10 @@ prepend_previewers = [
   { mime = "application/x-rar", run = "ouch" },
   { mime = "application/xz", run = "ouch" },
   # Image
-  { mime = "image/{heic,jxl,svg+xml}", run = "noop" },
-  { mime = "image/*", run = "noop" },
+  # { mime = "image/{heic,jxl,svg+xml}", run = "noop" },
+  # { mime = "image/*", run = "noop" },
   # Video
-  { mime = "video/*", run = "noop" },
+  # { mime = "video/*", run = "noop" },
 ]
 
 prepend_fetchers = [
