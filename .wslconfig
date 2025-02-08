@@ -1,0 +1,2 @@
+[wsl2]
+guiapplications = false # setting this to false also disables wl-paste and xclip
