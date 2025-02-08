@@ -160,6 +160,10 @@ window_rules:
     match:
       - window_process: { equals: 'Spotify' }
 
+  - commands: ['adjust-borders --bottom -2px']
+    match:
+      - window_process: { equals: 'Spotify' }
+
 binding_modes:
   # When enabled, the focused window can be resized via arrow keys or HJKL.
   - name: 'resize'
@@ -210,8 +214,8 @@ keybindings:
   # As an alternative to the resize keybindings above, resize mode enables
   # resizing via arrow keys or HJKL. The binding mode is defined above with
   # the name 'resize'.
-  - commands: ['wm-enable-binding-mode --name resize']
-    bindings: ['alt+r']
+  # - commands: ['wm-enable-binding-mode --name resize']
+  #   bindings: ['alt+r']
 
   # Disables window management and all other keybindings until alt+shift+p
   # is pressed again.
@@ -287,6 +291,14 @@ keybindings:
   # Focus the workspace that last had focus.
   - commands: ['focus --recent-workspace']
     bindings: ['alt+;']
+
+  # Move focused windot to the workspace that last had focus and focus it
+  - commands: ['move --recent-workspace', 'focus --recent-workspace']
+    bindings: ['alt+shift+;']
+
+  # Move focused windot to the workspace that last had focus
+  - commands: ['move --recent-workspace']
+    bindings: ['alt+ctrl+;']
 
   # Change focus to a workspace defined in `workspaces` config.
   - commands: ['focus --workspace 1']
