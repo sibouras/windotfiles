@@ -5,9 +5,9 @@
 prepend_keymap = [
   { on = ["F"], run = "plugin max-preview", desc = "Maximize or restore preview" },
   { on = ["T"], run = "plugin hide-preview", desc = "Hide or show preview" },
-  { on = ["C"], run = "plugin ouch --args=zip", desc = "Compress with ouch" },
+  { on = ["C"], run = "plugin ouch zip", desc = "Compress with ouch" },
   { on = ["6"], run = "plugin test", desc = "test" },
-  { on = ["e"], run = "plugin open-with-cmd --args=block", desc = "Execute command in the terminal" },
+  { on = ["e"], run = "plugin open-with-cmd block", desc = "Execute command in the terminal" },
   { on = ["E"], run = "plugin open-with-cmd", desc = "Execute command" },
   { on = ["g", "f"], run = "plugin first-file", desc = "Jump to the first file" },
 
