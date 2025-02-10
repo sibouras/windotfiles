@@ -145,6 +145,10 @@
             "id": "User.moveFocus.6CD791B"
         },
         {
+            "command": "toggleSplitOrientation",
+            "id": "User.toggleSplitOrientation"
+        },
+        {
             "command": 
             {
                 "action": "resizePane",
@@ -290,6 +294,26 @@
         {
             "id": "User.toggleFocusMode",
             "keys": "ctrl+shift+m"
+        },
+        {
+            "id": "Terminal.DuplicatePaneDown",
+            "keys": "ctrl+alt+minus"
+        },
+        {
+            "id": "Terminal.DuplicatePaneRight",
+            "keys": "ctrl+alt+plus"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+minus"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+plus"
+        },
+        {
+            "id": "User.toggleSplitOrientation",
+            "keys": "ctrl+alt+t"
         }
     ],
     "launchMode": "default",
