@@ -51,6 +51,14 @@
         {
             "command": 
             {
+                "action": "moveTab",
+                "direction": "forward"
+            },
+            "id": "User.moveTab.793E2350"
+        },
+        {
+            "command": 
+            {
                 "action": "sendInput",
                 "input": "\u001b[13;2u"
             },
@@ -119,6 +127,14 @@
         {
             "command": "markMode",
             "id": "User.markMode"
+        },
+        {
+            "command": 
+            {
+                "action": "moveTab",
+                "direction": "backward"
+            },
+            "id": "User.moveTab.EF07D31B"
         },
         {
             "command": 
@@ -314,6 +330,14 @@
         {
             "id": "User.toggleSplitOrientation",
             "keys": "ctrl+alt+t"
+        },
+        {
+            "id": "User.moveTab.793E2350",
+            "keys": "alt+shift+period"
+        },
+        {
+            "id": "User.moveTab.EF07D31B",
+            "keys": "alt+shift+comma"
         }
     ],
     "launchMode": "default",
