@@ -1,6 +1,3 @@
-require("git"):setup()
-require("folder-rules"):setup()
-
 -- Show modified time of the file under the cursor on the status line
 Status:children_add(function()
   local h = cx.active.current.hovered
@@ -10,3 +7,6 @@ Status:children_add(function()
     ui.Span(" "),
   }
 end, 500, Status.RIGHT)
+
+require("git"):setup()
+require("pref-by-location"):setup({})
