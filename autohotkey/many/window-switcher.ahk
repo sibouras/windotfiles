@@ -111,7 +111,8 @@ return
   l::Right
   d::Delete
   i::Enter
-  q::Esc
+  q::Send, !{Esc}
+  Capslock::Send, !{Esc}
 #IfWinActive
 
 ; focus previous window
