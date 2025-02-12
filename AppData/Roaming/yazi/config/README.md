@@ -15,7 +15,6 @@ ya pack -u
 plugins
 
 ```bash
-ya pack -a yazi-rs/plugins:max-preview
 ya pack -a yazi-rs/plugins:hide-preview
 ya pack -a yazi-rs/plugins:mime-ext
 ya pack -a yazi-rs/plugins:git

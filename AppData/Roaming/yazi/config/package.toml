@@ -1,9 +1,4 @@
 [[plugin.deps]]
-use = "yazi-rs/plugins:max-preview"
-rev = "8945e54"
-hash = "15b2ff7f6563c14d5b2e93b3e9da35de"
-
-[[plugin.deps]]
 use = "yazi-rs/plugins:hide-preview"
 rev = "8945e54"
 hash = "55904f17e1053cfb91dacd9015a99f9d"
@@ -25,8 +20,8 @@ hash = "771f18427fb75fb19990ce602bb322f4"
 
 [[plugin.deps]]
 use = "boydaihungst/pref-by-location"
-rev = "ce34f73"
-hash = "92145b174ecb17dde63d55ac90911794"
+rev = "5770c67"
+hash = "e494edfbed8c78d9c77ecc740f968165"
 
 [flavor]
 deps = []
