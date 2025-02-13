@@ -10,3 +10,15 @@ end, 500, Status.RIGHT)
 
 require("git"):setup()
 require("pref-by-location"):setup({})
+
+require("mime-ext"):setup {
+  -- Expand the existing extension database (lowercase), for example:
+  with_exts = {
+    mk = "text/makefile",
+    ahk = "text/autohotkey",
+  },
+
+  -- If the mime-type is not in both filename and extension databases,
+  -- then fallback to Yazi's preset `mime` plugin, which uses `file(1)`
+  fallback_file1 = true,
+}
