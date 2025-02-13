@@ -17,6 +17,7 @@
 - webm.lua from [ekisu/mpv-webm](https://github.com/ekisu/mpv-webm)
 - uosc from [tomasklaen/uosc](https://github.com/tomasklaen/uosc)
 - thumbfast.lua from [po5/thumbfast](https://github.com/po5/thumbfast)
+- memo.lua from [po5/memo](https://github.com/po5/memo)
 - sub-bookmarks.lua from [kelciour/mpv-scripts](https://github.com/kelciour/mpv-scripts)
 
 ```bash
