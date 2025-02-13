@@ -3,7 +3,7 @@
 [manager]
 
 prepend_keymap = [
-  { on = ["F"], run = "plugin max-preview", desc = "Maximize or restore preview" },
+  { on = ["F"], run = "plugin zoom-preview", desc = "Zoom or restore preview" },
   { on = ["T"], run = "plugin hide-preview", desc = "Hide or show preview" },
   { on = ["C"], run = "plugin ouch zip", desc = "Compress with ouch" },
   { on = ["6"], run = "plugin test", desc = "test" },
