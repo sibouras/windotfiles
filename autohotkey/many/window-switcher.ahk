@@ -111,8 +111,8 @@ return
   l::Right
   d::Delete
   i::Enter
-  q::Send, !{Esc}
-  Capslock::Send, !{Esc}
+  q::Send, !{Esc Down} ; `Down` to not escape from fullscreen video in a browser
+  Capslock::Send, !{Esc Down}
 #IfWinActive
 
 ; focus previous window
