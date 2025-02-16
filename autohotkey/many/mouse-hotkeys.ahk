@@ -34,7 +34,7 @@ XButton2 & WheelDown::AltTab
 XButton2 & LButton::Send, ^!{Tab}
 XButton2 & RButton::Send, #{Tab}
 XButton2 UP::return
-#IfWinActive ahk_exe mpv.exe
+#If WinActive("ahk_exe mpv.exe") || WinActive("ahk_exe qview.exe")
   XButton2 UP::Send, {XButton2}
 #IfWinActive
 
