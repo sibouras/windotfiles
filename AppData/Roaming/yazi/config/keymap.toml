@@ -3,8 +3,9 @@
 [manager]
 
 prepend_keymap = [
-  { on = ["F"], run = "plugin zoom-preview", desc = "Zoom or restore preview" },
-  { on = ["T"], run = "plugin hide-preview", desc = "Hide or show preview" },
+  { on = ["F"], run = "plugin zoom-preview", desc = "Zoom or restore preview pane" },
+  { on = ["T"], run = "plugin toggle-pane min-preview", desc = "Hide or show preview pane" },
+  { on = ["R"], run = "plugin toggle-pane min-parent", desc = "Hide or show parent pane" },
   { on = ["C"], run = "plugin ouch zip", desc = "Compress with ouch" },
   { on = ["6"], run = "plugin test", desc = "test" },
   { on = ["e"], run = "plugin open-with-cmd block", desc = "Execute command in the terminal" },

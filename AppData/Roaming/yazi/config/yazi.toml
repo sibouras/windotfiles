@@ -10,6 +10,9 @@ show_hidden = true
 show_symlink = true
 linemode = "size"
 
+[preview]
+max_width = 1000
+
 [opener]
 edit = [
   { run = '${EDITOR:=vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
@@ -25,7 +28,7 @@ reveal = [
   { run = 'exiftool "%1" | moar -no-statusbar', block = true, desc = "Show EXIF", for = "windows" },
 ]
 extract = [
-  { run = 'unar "$1"', desc = "Extract here", for = "unix" },
+  { run = 'ouch decompress --no --quiet "$1"', desc = "Extract here", for = "unix" },
   { run = 'ouch decompress --no --quiet "%1"', desc = "Extract here", for = "windows" },
   { run = 'ouch list -t "%1" | moar -no-statusbar', block = true, desc = "List contents of an archive", for = "windows" },
 ]
