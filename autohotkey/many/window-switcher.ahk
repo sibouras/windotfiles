@@ -139,32 +139,26 @@ focus(nInStack) {
 }
 
 ; switch between all windows of the current window class
-listIndex = 1
-#WinActivateForce
+; https://superuser.com/a/1783158
 !+o::
-Beginning:
-  WinGetClass, activeWindowClass, A
-  WinGet, activeWindowID, ID, A
-  ; get window list
-  WinGet, List, List, ahk_class %activeWindowClass%,, Program Manager
-  listIndex++
-  if (listIndex > List)
-    listIndex = %List%
+  WinGetClass, win_class, A
+  WinGet, win_id, ID, A
+  WinGet, active_process_name, ProcessName, A
 
-  Id := List%listIndex%
-  if (activeWindowID != Id) {
-    WinGetTitle, title, ahk_id %Id%
-    if (title) {
-      ; exclude windows without a size
-      WinGetPos,,,W,H,ahk_id %Id%
-      if (W AND H) {
-        WinActivate, ahk_id %Id%
-        return
-      }
-    }
-    WinActivate, ahk_id %Id%
-    Goto, Beginning
+  ; We have to be extra careful about explorer.exe since that process is responsible for more than file explorer
+  if (active_process_name = "explorer.exe") {
+    WinGet, win_list, List, ahk_exe %active_process_name% ahk_class %win_class%
+  } else {
+    ; WinGet, win_list, List, ahk_exe %active_process_name% ; alacritty spawns 2 windows
+    WinGet, win_list, List, ahk_exe %active_process_name% ahk_class %win_class%
   }
+
+  ; Calculate index of next window. Since activating a window puts it at the top of the list, we have to take from the bottom.
+  next_window_i := win_list
+  next_window_id := win_list%next_window_i%
+
+  ; Activate the next window and send it to the top.
+  WinActivate, ahk_id %next_window_id%
 return
 
 ; RAlt & b::
