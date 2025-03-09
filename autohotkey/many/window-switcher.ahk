@@ -9,8 +9,14 @@ ToggleWindowVisibility(windowClass) {
   if WinExist(windowClass) {
     if WinActive(windowClass)
       WinMinimize, %windowClass%
-    else
+    else {
+      ; fix alt key getting stuck in mpv when holding RAtl then focusing wt -> firefox -> mpv
+      if WinActive("ahk_exe mpv.exe") {
+        Send, {Ralt up}
+      }
+      ; Send, {RAlt up}
       WinActivate, %windowClass%
+    }
   }
   ; else {
   ;   word_array := StrSplit(windowClass, A_Space, "") ; Omits periods.
@@ -61,8 +67,13 @@ RAlt & s::
   GroupAdd, firefoxGroup, %firefoxClass%
   If WinActive(firefoxClass)
     GroupActivate, firefoxGroup, r
-  else
+  else {
+    ; fix alt key getting stuck in mpv when holding RAtl then focusing firefox -> mpv
+    if WinActive("ahk_exe mpv.exe") {
+      Send, {Ralt up}
+    }
     WinActivate %firefoxClass%
+  }
 return
 
 RAlt & t::
@@ -121,21 +132,25 @@ return
 !\::focus(3)
 
 focus(nInStack) {
- winNumber := 0
- WinGet win, List
- Loop % win {
-  this_id := win%A_Index%
-  id := % "ahk_id " this_id
-  WinGet, ExStyle, ExStyle, %id%
-  WinGetTitle ttitle, % winTitle := "ahk_id " win%A_Index% ; Window title
-  WinGet proc, ProcessName, %winTitle%                     ; Window process
-  WinGetClass class, %winTitle%                            ; Window class
-  ; https://www.autohotkey.com/docs/commands/WinGet.htm#ExStyle
-  ; 0x8 is WS_EX_TOPMOST(always-on-top)
-  winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > "" && !(ExStyle & 0x8)
-               && (ttitle != "Program Manager" || proc != "Explorer.exe")
- } Until Min(nInStack, win) = winNumber
- WinActivate % winTitle
+  winNumber := 0
+  WinGet win, List
+  Loop % win {
+    this_id := win%A_Index%
+    id := % "ahk_id " this_id
+    WinGet, ExStyle, ExStyle, %id%
+    WinGetTitle ttitle, % winTitle := "ahk_id " win%A_Index% ; Window title
+    WinGet proc, ProcessName, %winTitle%                     ; Window process
+    WinGetClass class, %winTitle%                            ; Window class
+    ; https://www.autohotkey.com/docs/commands/WinGet.htm#ExStyle
+    ; 0x8 is WS_EX_TOPMOST(always-on-top)
+    winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > "" && !(ExStyle & 0x8)
+                 && (ttitle != "Program Manager" || proc != "Explorer.exe")
+  } Until Min(nInStack, win) = winNumber
+  if WinActive("ahk_exe mpv.exe") {
+    ; fix alt key getting stuck when switching away from mpv
+    Send, {LAlt up}{RAlt up} ; send both {LAlt up} and {RAlt up} instead of {Alt up} to make it work when when holding Ralt+o
+  }
+  WinActivate % winTitle
 }
 
 ; switch between all windows of the current window class
