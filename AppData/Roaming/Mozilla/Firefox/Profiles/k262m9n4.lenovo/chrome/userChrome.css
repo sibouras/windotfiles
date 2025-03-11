@@ -7,6 +7,11 @@
   --tab-min-height: 32px !important;
 }
 
+/* remove titlebar and use minMaxCloseButton.uc.js instead */
+.titlebar-buttonbox-container {
+  display: none;
+}
+
 /* Remove titlebar buttons on small screen*/
 @media (width < 900px) {
   .titlebar-buttonbox-container {

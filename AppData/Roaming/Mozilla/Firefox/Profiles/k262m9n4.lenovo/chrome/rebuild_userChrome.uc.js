@@ -27,7 +27,7 @@ UC.rebuild = {
 
     let mi = event.target.appendChild(this.elBuilder(document, 'menuitem', {
       label: enabled ? 'Enabled' : 'Disabled (click to Enable)',
-      oncommand: 'xPref.set(_uc.PREF_ENABLED, ' + !enabled + ');',
+      oncommand: _ => xPref.set(_uc.PREF_ENABLED, ' + !enabled + '),
       type: 'checkbox',
       checked: enabled
     }));
@@ -42,8 +42,8 @@ UC.rebuild = {
 
       mi = event.target.appendChild(this.elBuilder(document, 'menuitem', {
         label: script.name ? script.name : script.filename,
-        onclick: 'UC.rebuild.clickScriptMenu(event)',
-        onmouseup: 'UC.rebuild.shouldPreventHide(event)',
+        onclick: event => UC.rebuild.clickScriptMenu(event),
+        onmouseup: event => UC.rebuild.shouldPreventHide(event),
         type: 'checkbox',
         checked: script.isEnabled,
         class: 'userChromejs_script',
@@ -86,7 +86,7 @@ UC.rebuild = {
         return;
 
       let scriptMenuItem = UC.rebuild.createMenuItem(scriptsSeparator.ownerDocument, null, null, script.name ? script.name : script.filename);
-      scriptMenuItem.setAttribute('onclick', 'UC.rebuild.clickScriptMenu(event)');
+      scriptMenuItem.onclick = event => UC.rebuild.clickScriptMenu(event);
       scriptMenuItem.type = 'checkbox';
       scriptMenuItem.checked = script.isEnabled;
       scriptMenuItem.setAttribute('restartless', !!script.shutdown);
@@ -206,7 +206,7 @@ UC.rebuild = {
       xPref.set(_uc.PREF_SCRIPTSDISABLED, xPref.get(_uc.PREF_SCRIPTSDISABLED).replace(new RegExp('^' + script.filename + ',|,' + script.filename), ''));
     }
 
-    if (script.isEnabled && !_uc.everLoaded.includes(script.id)) {
+    if (xPref.get(_uc.PREF_ENABLED) && script.isEnabled && !_uc.everLoaded.includes(script.id)) {
       this.install(script);
     } else if (script.isRunning && !!script.shutdown) {
       this.shutdown(script);
@@ -238,7 +238,7 @@ UC.rebuild = {
     menuItem.label = label;
     menuItem.style.listStyleImage = icon;
     if (command)
-      menuItem.setAttribute('oncommand', command);
+      menuItem.addEventListener('command', command);
     return menuItem;
   },
 
@@ -281,12 +281,64 @@ UC.rebuild = {
   elBuilder: function (doc, tag, props) {
     let el = doc.createXULElement(tag);
     for (let p in props) {
-      el.setAttribute(p, props[p]);
+      if(p.startsWith('on')) 
+        el.addEventListener(p.slice(2), props[p]);
+      else 
+        el.setAttribute(p, props[p]);
     }
     return el;
   },
 
+  setStyle: function () {
+    _uc.sss.loadAndRegisterSheet(Services.io.newURI('data:text/css;charset=UTF-8,' + encodeURIComponent(`
+      @-moz-document url('${_uc.BROWSERCHROME}') {
+        #userChromejs_options menuitem[restartless="true"] {
+          color: blue;
+        }
+        #userChromejs_restartApp {
+          padding-right: 4px;
+        }
+        #userChromejs_restartApp > .menu-iconic-left {
+          margin-inline-end: 0 !important;
+          padding-inline-end: 0 !important;
+        }
+
+        #userChromejs_openChromeFolder {
+          padding-inline-start: 12px;
+        }
+
+        #userChromejs_restartApp > .menu-accel-container {
+          display: none;
+        }
+
+        /* bug 1828413: checkbox is only rendering on mouseover/mouseout */
+        menuitem[type="checkbox"][checked="true"] .menu-iconic-icon {
+          appearance: checkbox !important;
+        }
+
+        @media (-moz-platform: windows) {
+          #userChromejs_openChromeFolder {
+            padding-block: 0.5em;
+          }
+          #userChromejs_restartApp {
+            padding: 0 8px !important;
+          }
+          #userChromejs_restartApp > .menu-iconic-left {
+            padding-top: 0;
+          }
+        }
+
+        @media (-moz-platform: linux) {
+          #userChromejs_restartApp {
+            padding-right: 4px !important;
+          }
+        }
+      }
+    `)), _uc.sss.USER_SHEET);
+  },
+
   init: function () {
+    this.setStyle();
     this.showToolButton = xPref.get(this.PREF_TOOLSBUTTON);
     if (this.showToolButton === undefined) {
       this.showToolButton = xPref.set(this.PREF_TOOLSBUTTON, false, true);
@@ -315,30 +367,12 @@ UC.rebuild = {
         type: 'custom',
         defaultArea: CustomizableUI.AREA_NAVBAR,
         onBuild: (doc) => {
+          this.createPanel(doc);
           return this.createButton(doc);
         }
       });
     } else {
-      const { document, location } = window;
-      const btn = this.createButton(document);
-      btn.setAttribute('removable', true);
-      const toolbar = document.querySelector('toolbar[customizable=true].chromeclass-toolbar');
-      if (toolbar.parentElement.palette)
-        toolbar.parentElement.palette.appendChild(btn);
-      else
-        toolbar.appendChild(btn);
-
-      if (xPref.get('userChromeJS.firstRun') !== false) {
-        xPref.set('userChromeJS.firstRun', false);
-        if (!toolbar.getAttribute('currentset').split(',').includes(btn.id)) {
-          toolbar.appendChild(btn);
-          toolbar.setAttribute('currentset', toolbar.currentSet);
-          Services.xulStore.persist(toolbar, 'currentset');
-        }
-      } else {
-        toolbar.currentSet = Services.xulStore.getValue(location.href, toolbar.id, 'currentset');
-        toolbar.setAttribute('currentset', toolbar.currentSet);
-      }
+      this.createPanel(window.document);
     }
   },
 
@@ -350,13 +384,12 @@ UC.rebuild = {
       type: 'menu',
       class: 'toolbarbutton-1 chromeclass-toolbar-additional',
       style: 'list-style-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABeSURBVDhPY6AKSCms+x+SkPMfREOFwACXOAYYNQBVITrGJQ7CUO0IA0jFUO0QA3BhkEJs4iAM1Y4bgBTBDIAKkQYGlwHYMFQZbgBSBDIAF4Yqww3QbUTHUGWUAAYGAEyi7ERKirMnAAAAAElFTkSuQmCC)',
-      popup: 'userChromejs_options'
     });
 
     let mp = UC.rebuild.elBuilder(aDocument, 'menupopup', {
       id: 'userChromejs_options',
-      onpopupshowing: 'UC.rebuild.onpopup(event);',
-      oncontextmenu: 'event.preventDefault();'
+      onpopupshowing: event => UC.rebuild.onpopup(event),
+      oncontextmenu: event => event.preventDefault()
     });
     toolbaritem.appendChild(mp);
 
@@ -369,15 +402,16 @@ UC.rebuild = {
       class: 'menuitem-iconic',
       flex: '1',
       style: 'list-style-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABe0lEQVQ4jc3N2ytDARwH8J83/wRKefU3zFBCSnlQSnkQpSiFFLk8OMQmxLBZLos2I7ckM3PmMmEredF23Ma2GrPjkuFsvh7mstTqnDff+jx+v1+ifxEZ43zPYFyIld3FHWYxzlRRA5mdXFi3c4vpvbuo3TvU6z2CnHEKf4djRd9bLYnyDldkYtuPqZ1b0TIYF2StlkTK6eaQ080ht+eLgkPeH/nflGc/8hRRVNB7BuVaAGPWILRsDCsfl4bl0bMaQGHfOaho4AL9pns0GPyo04vTYPCjz3SP4sELUInqEkObPNoXA5IMmoMoHbkClWncUG8/QLnOS6K2PqJc6wZVjl9jyvYMtfVJEp3tGVWTN6Bq3Q2M9hBmDl4kMTpCqJ32gOr1XmHp+BUrJ2+SLB2/onHWK1DLvG95lOU/Nk4FbLnCcbHcL/OpgFGWj7Qt+AxUo7an12qOHM1Gb6R5zgcxmozecLVq31YxvJ9GRJRARElElExEKSIlf3USPgHT/mSv7iPTOwAAAABJRU5ErkJggg==)',
-      oncommand: 'Services.dirsvc.get(\'UChrm\', Ci.nsIFile).launch();'
+      oncommand: _ => Services.dirsvc.get('UChrm', Ci.nsIFile).launch()
     });
     mg.appendChild(mi1);
 
-    let tb = UC.rebuild.elBuilder(aDocument, 'toolbarbutton', {
+    let tb = UC.rebuild.elBuilder(aDocument, 'menuitem', {
       id: 'userChromejs_restartApp',
+      class: 'menuitem-iconic',
       tooltiptext: 'Restart ' + _uc.BROWSERNAME,
       style: 'list-style-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB20lEQVQ4jY2Tv2sUURDHZ/bX7eW0ChJBRFKIRRCRIEHuzVvfrYmkSiFXSSoLERERy5B/wcIuqG9mN5VecUWwCqkOEQsLKysLsQgSxEJEgsVYeJfsHXuY4tvN9zMzzHxBVXFS8Gy1kRaZi8U+iCV7HIq73Xqez9XWThoDsRvg6QDY6Ji8+RMK9dLSztcCoMhnkc27YxPth0I7oVAPhT5WYD9ScfkYALYWYxQa/OvU/h5ztg5bi3G1U2vbXUFPb4fT/EzELRwBYraPRvSE7eW6XVUV4en1JjLtARtFoYGqInRfd0Nk8wXYaCzZ/WnmkZrengc2v4GNNr1bglPiFoaj/5orV1r/A6gqhkI9YKMB0yY0OF9GsV/jIts9iVlVMeJscwhgOKmpqoDpGNDg5YuB0HYg9lUotINCuxFn/bN+9czUFZj6wEYDsRsQle7W+NPQ/uhEdUpLOw/cPgQ2OlPcvAoJZ90qICnc2tQzlist9GYAbDRk2lNVhFDs3YmXPUjkxp3JR2qWbgk9fRj9S+Olu6SqCJHYJ+DN5xnOryHT+wrsG7J9g0x9ZPup2iAS1z6aKi076+mLzoVRmKJpYeL2YSC2aBadc1PTOB7n3AXe3guYHiberZ0u8tm62r99Gyd0lo7sIAAAAABJRU5ErkJggg==)',
-      oncommand: 'UC.rebuild.restart();'
+      oncommand: _ => UC.rebuild.restart()
     });
     mg.appendChild(tb);
 
@@ -396,7 +430,7 @@ UC.rebuild = {
       label: 'Switch display mode',
       class: 'menuitem-iconic',
       style: 'list-style-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADdklEQVQ4jXWTbUwUdADG/7zccZ6lQ/pgcDJEEEGBO8/hmLQY9mKOmFvyEi93IIISSSMGxx0Hw0QKJJCOI3CxGM0IhEASjDsQ1lgdRuqcE4N0RznTjPFSDGJwvz64nOX6bc+35+XTI8R/KRXOG6LFwcAEj+7d2b4PI3L8ltQZiuuKaGmp5yER8JT/Sco/0e+JylP1xNfuXTrWEU/+BQ26Pi3vnk8ioyWG10pU9lj9S4VjY2Pyp4cbcxP36PyW83tTKBnMwDhwiCJrGkXWVIzWNIoH0ikezCTxTBRROcG9k5O2dY/Dp5qKwyN0W5aMgxkYLKkYrakYB7XorAnorPEUWOLJ749D159E6dBRIj7cRIhW8fmj5dJI16jc4L78vhQK+zUYrCkUDrxJtS0P6+12hu3dDNu7sNw+R8vVahK+2E1onQyvHOE4YIyIFOv3i7gEU+RyoUVD2dBbXL9v46tbLRiHkum8cYbv7SNcsdsA6L/RTVCVMzvNMkJq5GyMF50iMNnDktV2gNPfGrj3xxT/MDL1NcXDSRgGEzh+6TArLNM+2sy2SkFYgxxVnZwtWdK7Iizbe67hu3Lml2bAAQ6H43HJ+IOrvDeiRdunYmFllnOXWwioEuxqlKGskxGgk/4lIt7xX6keLsJ06QSnLAbG719jaXmJin4d+t5UDraGENOhYGFlnq4fWlHXyon6dCORTV5s1UkdQpn+/ERa66tkdu0jpTOcb36+yIO5GcJN7rzS5kHPZAe/LPzK7Moq9/6cY2LWzs2Htzjc+gbe2U4zwnO/c2XQcRlq81p2mASt45/x4+/TKKsk7GoW7DuroGein99WYRqYnJsn5eM4fIwueGucrojgrPW+vkekUyEmN7bXCppvtnFnEYoHijhxWU/yhRcIa1xLzWg9vT9d48X31XiXCALL3AjUuhcIIYSI0ccU+BgEwSZX3u49Qr2tjXrblzSMnueD4QZebtqGss4FZYUH/icFoSY5Co3T3cT6LHchhBCx5thnFAnSi0FlMnbUSgg46UxguQtBFS4EV7qhrn0WtXkNyjo3Qj+Ss/moZHF7uvvr//qC37EN6xSxLmf98iSOkBoZKvMadtY/ksosR2mSE1Qmw0cjsXunuUT/7yO9tK57vZMl7ZuzpHf8C6SLW/XSVf9cybRPquvopmRng2emeO5J/98W5fyDGAVpggAAAABJRU5ErkJggg==)',
-      oncommand: 'UC.rebuild.toggleUI();'
+      oncommand: _ => UC.rebuild.toggleUI()
     });
     mp2.appendChild(mi2);
 
@@ -415,21 +449,14 @@ UC.rebuild = {
     let menupopup = aDocument.getElementById('userChromejs_options');
     UC.rebuild.menues.forEach(menu => {
       menupopup.insertBefore(menu, aDocument.getElementById('uc-menuseparator'));            
-    })
-
-    let pi = aDocument.createProcessingInstruction(
-      'xml-stylesheet',
-      'type="text/css" href="data:text/css;utf-8,' + encodeURIComponent(`
-      #userChromejs_options menuitem[restartless="true"] {
-        color: blue;
-      }
-      #uc-menugroup .menu-iconic-icon {margin-left:2px;}
-      `.replace(/[\r\n\t]/g, '')) + '"'
-    );
-    aDocument.insertBefore(pi, aDocument.documentElement);
+    });
 
     aDocument.defaultView.setTimeout((() => UC.rebuild.toggleUI(false, true)), 1000);
 
+    return toolbaritem;
+  },
+
+  createPanel (aDocument) {
     const viewCache = aDocument.getElementById('appMenu-viewCache')?.content || aDocument.getElementById('appMenu-multiView');
 
     if (viewCache) {          
@@ -439,10 +466,10 @@ UC.rebuild = {
       userChromeJsPanel.addEventListener('ViewShowing', UC.rebuild.onHamPopup);
       const subviewBody = aDocument.createXULElement('vbox');
       subviewBody.className = 'panel-subview-body';
-      subviewBody.appendChild(UC.rebuild.createMenuItem(aDocument, 'openChrome', 'url(chrome://browser/skin/folder.svg)', 'Open chrome directory', 'Services.dirsvc.get(\'UChrm\', Ci.nsIFile).launch();'));
-      subviewBody.appendChild(UC.rebuild.createMenuItem(aDocument, 'restart', 'url(chrome://browser/skin/reload.svg)', 'Restart ' + _uc.BROWSERNAME, 'UC.rebuild.restart();'));
+      subviewBody.appendChild(UC.rebuild.createMenuItem(aDocument, 'openChrome', 'url(chrome://browser/skin/folder.svg)', 'Open chrome directory', _ => Services.dirsvc.get('UChrm', Ci.nsIFile).launch()));
+      subviewBody.appendChild(UC.rebuild.createMenuItem(aDocument, 'restart', 'url(chrome://browser/skin/reload.svg)', 'Restart ' + _uc.BROWSERNAME, _ => UC.rebuild.restart()));
       subviewBody.appendChild(aDocument.createXULElement('toolbarseparator'));
-      const enabledMenuItem = UC.rebuild.createMenuItem(aDocument, 'enabled', null, 'Enabled', 'xPref.set(_uc.PREF_ENABLED, !!this.checked)');
+      const enabledMenuItem = UC.rebuild.createMenuItem(aDocument, 'enabled', null, 'Enabled', _ => xPref.set(_uc.PREF_ENABLED, !!this.checked));
       enabledMenuItem.type = 'checkbox';
       subviewBody.appendChild(enabledMenuItem);
       const scriptsSeparator = aDocument.createXULElement('toolbarseparator');
@@ -457,13 +484,11 @@ UC.rebuild = {
       scriptsButton.label = 'User Scripts';
       scriptsButton.style.listStyleImage = 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABeSURBVDhPY6AKSCms+x+SkPMfREOFwACXOAYYNQBVITrGJQ7CUO0IA0jFUO0QA3BhkEJs4iAM1Y4bgBTBDIAKkQYGlwHYMFQZbgBSBDIAF4Yqww3QbUTHUGWUAAYGAEyi7ERKirMnAAAAAElFTkSuQmCC)';
       scriptsButton.setAttribute('closemenu', 'none');
-      scriptsButton.setAttribute('oncommand', 'PanelUI.showSubView(\'appMenu-userChromeJsView\', this)');
+      scriptsButton.addEventListener('command', function() {Cu.getGlobalForObject(this).PanelUI.showSubView('appMenu-userChromeJsView', this)});
 
       const addonsButton = aDocument.getElementById('appMenu-extensions-themes-button') ?? aDocument.getElementById('appmenu_addons') ?? viewCache.querySelector('#appMenu-extensions-themes-button');
       addonsButton.parentElement.insertBefore(scriptsButton, addonsButton);
     }
-
-    return toolbaritem;
   }
 }
 

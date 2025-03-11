@@ -1,9 +1,6 @@
-let EXPORTED_SYMBOLS = [];
-
-const Services = globalThis.Services || ChromeUtils.import("resource://gre/modules/Services.jsm").Services;
-const { xPref } = ChromeUtils.import('chrome://userchromejs/content/xPref.jsm');
-const { Management } = ChromeUtils.import('resource://gre/modules/Extension.jsm');
-const { AppConstants } = ChromeUtils.import('resource://gre/modules/AppConstants.jsm');
+const { xPref } = ChromeUtils.importESModule('chrome://userchromejs/content/xPref.mjs');
+const { Management } = ChromeUtils.importESModule('resource://gre/modules/Extension.sys.mjs');
+const { AppConstants } = ChromeUtils.importESModule('resource://gre/modules/AppConstants.sys.mjs');
 
 let UC = {
   webExts: new Map(),
@@ -151,7 +148,10 @@ let _uc = {
   createElement: function (doc, tag, atts, XUL = true) {
     let el = XUL ? doc.createXULElement(tag) : doc.createElement(tag);
     for (let att in atts) {
-      el.setAttribute(att, atts[att]);
+      if(att.startsWith('on')) 
+        el.addEventListener(att.slice(2), typeof atts[att] == "string" ? new Function("event", "let t = ChromeUtils.shallowClone(event.view);t['event'] = event;with(t){" + atts[att] + "}") : atts[att]);
+      else 
+        el.setAttribute(att, atts[att]);
     }
     return el
   }
@@ -173,13 +173,17 @@ let UserChrome_js = {
   handleEvent: function (aEvent) {
     let document = aEvent.originalTarget;
     let window = document.defaultView;
+    this.load(window);
+  },
+
+  load: function (window) {
     let location = window.location;
 
     if (!this.sharedWindowOpened && location.href == 'chrome://extensions/content/dummy.xhtml') {
       this.sharedWindowOpened = true;
 
       Management.on('extension-browser-inserted', function (topic, browser) {
-        browser.messageManager.addMessageListener('Extension:ExtensionViewLoaded', this.messageListener.bind(this));
+        browser.messageManager.addMessageListener('Extension:BackgroundViewLoaded', this.messageListener.bind(this));
       }.bind(this));
     } else if (/^(chrome:(?!\/\/global\/content\/commonDialog\.x?html)|about:(?!blank))/i.test(location.href)) {
       window.UC = UC;
@@ -202,7 +206,7 @@ let UserChrome_js = {
     const browser = msg.target;
     const { addonId } = browser._contentPrincipal;
 
-    browser.messageManager.removeMessageListener('Extension:ExtensionViewLoaded', this.messageListener);
+    browser.messageManager.removeMessageListener('Extension:BackgroundViewLoaded', this.messageListener);
 
     if (browser.ownerGlobal.location.href == 'chrome://extensions/content/dummy.xhtml') {
       UC.webExts.set(addonId, browser);
@@ -218,5 +222,11 @@ let UserChrome_js = {
 if (!Services.appinfo.inSafeMode) {
   _uc.chromedir.append(_uc.scriptsDir);
   _uc.getScripts();
+  let windows = Services.wm.getEnumerator(null);
+  while (windows.hasMoreElements()) {
+    let win = windows.getNext();
+    if (!('UC' in win))
+      UserChrome_js.load(win)
+  }
   Services.obs.addObserver(UserChrome_js, 'chrome-document-global-created', false);
 }
