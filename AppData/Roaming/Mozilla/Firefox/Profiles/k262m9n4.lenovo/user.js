@@ -1,9 +1,17 @@
+// https://github.com/yokoffing/Betterfox/blob/main/Peskyfox.js
+
 /****************************************************************************
  * SECTION: PESKYFOX                                                        *
  ****************************************************************************/
 
+// PREF: new profile switcher
+// user_pref("browser.profiles.enabled", true); // default=false
+
 // PREF: Allow Firefox to use userChome, userContent, etc.
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+
+// PREF: Disable built-in Pocket extension
+user_pref("extensions.pocket.enabled", false);
 
 // PREF: Disable Accessibility services
 // Performance improvement
@@ -16,8 +24,23 @@ user_pref("full-screen-api.transition-duration.leave", "0 0");
 user_pref("full-screen-api.warning.delay", 0);
 user_pref("full-screen-api.warning.timeout", 0);
 
-// PREF: Disable built-in Pocket extension
-user_pref("extensions.pocket.enabled", false);
+// limit fullscreen to browser window
+user_pref("full-screen-api.ignore-widgets", true); // default=false
+
+// zoom with alt+wheel
+user_pref("mousewheel.with_alt.action", 5); // default=2
+
+/****************************************************************************
+ * SECTION: URL BAR                                                         *
+ ****************************************************************************/
+
+// PREF: adjust the amount of Address bar / URL bar dropdown results
+// This value controls the total number of entries to appear in the location bar dropdown.
+// [NOTE] Items (bookmarks/history/openpages) with a high "frequency"/"bonus" will always
+// be displayed (no we do not know how these are calculated or what the threshold is),
+// and this does not affect the search by search engine suggestion.
+// disable=0
+user_pref("browser.urlbar.maxRichResults", 12); // default=10
 
 /******************************************************************************
  * SECTION: DOWNLOADS                                 *
@@ -49,13 +72,79 @@ user_pref("browser.download.always_ask_before_handling_new_types", true);
 // PREF: autohide the downloads button
 //user_pref("browser.download.autohideButton", true); // DEFAULT
 
+/****************************************************************************
+ * SECTION: TAB BEHAVIOR                                                    *
+ ****************************************************************************/
+
+// PREF: restore "View image info" on right-click
+user_pref("browser.menu.showViewImageInfo", true);
+
+// PREF: enable Tab Previews [FF122+, FF128+]
+// user_pref("browser.tabs.hoverPreview.enabled", true); // default=true
+user_pref("browser.tabs.hoverPreview.showThumbnails", false); // default=true
+
+/****************************************************************************
+ * SECTION: KEYBOARD AND SHORTCUTS                                          *
+ ****************************************************************************/
+
 // PREF: Disable ALT key toggling the menu bar
 //user_pref("ui.key.menuAccessKey", 0);
-user_pref("ui.key.menuAccessKeyFocuses", false);
+user_pref("ui.key.menuAccessKeyFocuses", false); // default=true
+
+// PREF: cycle through tabs in recently used order
+// [SETTING] Ctrl+Tab cycles through tabs in recently used order
+user_pref("browser.ctrlTab.sortByRecentlyUsed", true); // default=false
+
+// PREF: disable websites overriding Firefox's keyboard shortcuts [FF58+]
+// 0=ask (default), 1=allow, 2=block
+// [SETTING] to add site exceptions: Ctrl+I>Permissions>Override Keyboard Shortcuts ***/
+//user_pref("permissions.default.shortcuts", 2);
+
+/****************************************************************************
+ * SECTION: BOOKMARK MANAGEMENT                                             *
+ ****************************************************************************/
+
+// PREF: limit the number of bookmark backups Firefox keeps
+//user_pref("browser.bookmarks.max_backups", 1); // default=15
+
+/****************************************************************************
+ * SECTION: ZOOM AND DISPLAY SETTINGS                                       *
+ ****************************************************************************/
+
+// PREF: zoom only text on webpage, not other elements
+//user_pref("browser.zoom.full", false);
+
+// PREF: allow for more granular control of zoom levels
+// Especially useful if you want to set your default zoom to a custom level.
+// This does not seem to work for Ctrl+Wheel
+// biome-ignore format: do not format this line, firefox doesn't parse the trailing comma
+user_pref("toolkit.zoomManager.zoomValues", ".3,.5,.67,.8,.9,1,1.05,1.1,1.15,1.2,1.25,1.3,1.35,1.4,1.45,1.5,1.7,2,2.4,3,4,5");
+
+// PREF: adjust the minimum tab width
+// Can be overridden by userChrome.css
+user_pref("browser.tabs.tabMinWidth", 90); // default=76
+
+// PREF: always underline links [FF120+]
+//user_pref("layout.css.always_underline_links", false); // DEFAULT
 
 /****************************************************************************
  * SECTION: TRACKING PROTECTION                                             *
  ****************************************************************************/
+// https://github.com/yokoffing/Betterfox/blob/main/Securefox.js
+
+/******************************************************************************
+ * SECTION: SEARCH / URL BAR                                                 *
+ ******************************************************************************/
+
+// PREF: trim HTTPS from the URL bar [FF119+]
+// Firefox will hide https:// from the address bar, but not subdomains like www.
+// It saves some space. Betterfox already uses HTTPS-by-Default and insecure sites
+// get a padlock with a red stripe. Copying the URL still copies the scheme,
+// so it's not like we need to see https. It's not a privacy issue, so you can add to your overrides.
+// [TEST] http://www.http2demo.io/
+// [1] https://www.ghacks.net/2023/09/19/firefox-119-will-launch-with-an-important-address-bar-change/
+user_pref("browser.urlbar.trimHttps", true); // default=false
+user_pref("browser.urlbar.untrimOnUserInteraction.featureGate", true); // default=false
 
 /******************************************************************************
  * SECTION: TELEMETRY                                                   *
