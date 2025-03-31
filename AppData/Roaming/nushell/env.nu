@@ -40,7 +40,7 @@ def create_left_prompt [] {
     ""
   }
 
-  [$yazi_segment, $path_segment, $exit_code_segment, $git_branch_segment, $duration_segment, "\n\r "] | str join
+  [$yazi_segment, $path_segment, $exit_code_segment, $git_branch_segment, $duration_segment, $"(char eol) "] | str join
 }
 
 def create_right_prompt [] {
@@ -55,6 +55,8 @@ def create_right_prompt [] {
 $env.PROMPT_COMMAND = { || create_left_prompt }
 $env.PROMPT_COMMAND_RIGHT = ""
 $env.PROMPT_INDICATOR = "➜ "
+$env.PROMPT_INDICATOR_VI_NORMAL = ": "
+$env.PROMPT_INDICATOR_VI_INSERT = "> "
 
 $env.EDITOR = "hx"
 $env.LESS = '--quiet'

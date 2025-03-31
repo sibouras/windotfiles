@@ -43,10 +43,10 @@ $env.config.history.max_size = 100_000
 $env.config.history.file_format = "plaintext"
 $env.config.completions.algorithm = "fuzzy"
 $env.config.cursor_shape.emacs = "line"
-$env.config.cursor_shape.vi_insert = "block"
-$env.config.cursor_shape.vi_normal = "underscore"
+$env.config.cursor_shape.vi_insert = "line"
+$env.config.cursor_shape.vi_normal = "block"
 $env.config.buffer_editor = "hx"
-$env.config.edit_mode = "emacs"
+$env.config.edit_mode = "vi"
 
 $env.config.shell_integration.osc7 = false
 $env.config.shell_integration.osc9_9 = true
@@ -110,15 +110,98 @@ $env.config.keybindings ++= [
     name: copy_selection
     modifier: control_shift
     keycode: char_c
-    mode: emacs
+    mode: [emacs vi_insert]
     event: { edit: copyselection }
   }
   {
     name: cut_selection
     modifier: control_shift
     keycode: char_x
-    mode: emacs
+    mode: [emacs vi_insert]
     event: { edit: cutselection }
+  }
+  # missing keys from vi mode
+  {
+    name: redo_vi_normal
+    modifier: shift
+    keycode: char_u
+    mode: vi_normal
+    event: { edit: Redo }
+  }
+  {
+    name: redo_vi_insert
+    modifier: control
+    keycode: char_g
+    mode: vi_insert
+    event: { edit: Redo }
+  }
+  {
+    name: paste_cut_buffer_before
+    modifier: control
+    keycode: char_y
+    mode: vi_insert
+    event: { edit: PasteCutBufferBefore }
+  }
+  {
+    name: cut_from_start
+    modifier: control
+    keycode: char_u
+    mode: [emacs vi_normal vi_insert]
+    event: { edit: CutFromStart }
+  }
+  {
+    name: cut_to_line_end
+    modifier: control
+    keycode: char_k
+    mode: vi_insert
+    event: { edit: CutToLineEnd }
+  }
+  {
+    name: cut_current_line
+    modifier: control_shift
+    keycode: char_k
+    mode: [emacs vi_normal vi_insert]
+    event: { edit: CutCurrentLine }
+  }
+  {
+    name: cut_word_right
+    modifier: alt
+    keycode: char_d
+    mode: vi_insert
+    event: { edit: CutWordRight }
+  }
+  {
+    name: move_word_left
+    modifier: alt
+    keycode: char_b
+    mode: vi_insert
+    event: { edit: MoveWordLeft }
+  }
+  {
+    name: move_word_right
+    modifier: alt
+    keycode: char_f
+    mode: vi_insert
+    event: {
+      until: [
+        { send: HistoryHintWordComplete }
+        { edit: MoveWordRight }
+      ]
+    }
+  }
+  {
+    name: uppercase_word
+    modifier: control_shift
+    keycode: char_u
+    mode: [emacs vi_normal vi_insert]
+    event: { edit: UppercaseWord }
+  }
+  {
+    name: LowercaseWord
+    modifier: control_shift
+    keycode: char_l
+    mode: [emacs vi_normal vi_insert]
+    event: { edit: LowercaseWord }
   }
   {
     name: ide_completion_menu
@@ -134,28 +217,17 @@ $env.config.keybindings ++= [
     }
   }
   {
-    name: cut_current_line
-    modifier: alt
-    keycode: char_r
-    mode: emacs
-    event: {
-      until: [
-        { edit: CutCurrentLine }
-      ]
-    }
-  }
-  {
     name: insert_newline
     modifier: control
     keycode: char_j
-    mode: emacs
+    mode: [emacs vi_normal vi_insert]
     event: { edit: insertnewline }
   }
   {
     name: swap_words
     modifier: alt
     keycode: char_s
-    mode: emacs
+    mode: [emacs vi_normal vi_insert]
     event: {
       until: [
         { edit: SwapWords }
@@ -166,7 +238,7 @@ $env.config.keybindings ++= [
     name: reload_config
     modifier: none
     keycode: f5
-    mode: emacs
+    mode: [emacs , vi_normal, vi_insert]
     event: {
       send: executehostcommand,
       cmd: $"source '($nu.config-path)'"
@@ -186,7 +258,6 @@ $env.config.keybindings ++= [
       commandline edit --replace ('let ' + ($name) + ' = (' + (commandline) + '); $' + ($name))"
     }
   }
-
   # Keybindings used to trigger the user defined menus
   {
     name: commands_menu
@@ -203,20 +274,9 @@ $env.config.keybindings ++= [
     event: { send: menu name: vars_menu }
   }
   {
-    name: change_dir_with_fzf
-    modifier: alt
-    keycode: char_d
-    mode: emacs
-    event:{
-      send: executehostcommand,
-      # cmd: "cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)"
-      cmd: "commandline edit --insert (fd --hidden --type directory --exclude .git --exclude node_modules | fzf --layout=reverse --height=-15)"
-    }
-  }
-  {
     name: fuzzy_history
-    modifier: control
-    keycode: Char_g
+    modifier: control_shift
+    keycode: Char_h
     mode: [emacs , vi_normal, vi_insert]
     event: {
       send: executehostcommand
@@ -234,8 +294,19 @@ $env.config.keybindings ++= [
     }
   }
   {
+    name: fuzzy_dir
+    modifier: control
+    keycode: char_v
+    mode: [emacs, vi_normal, vi_insert]
+    event:{
+      send: executehostcommand,
+      # cmd: "cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)"
+      cmd: "commandline edit --insert (fd --hidden --type directory -E .git -E node_modules | fzf --layout=reverse --height=-15)"
+    }
+  }
+  {
     name: insert_sudo
-    modifier: alt
+    modifier: control
     keycode: char_s
     mode: [emacs, vi_insert, vi_normal]
     event: [
