@@ -51,8 +51,17 @@ CapsLock & f:: Send, {Esc}
 CapsLock & [:: Send, {Esc}
 CapsLock & ]:: Send, {insert}
 
-CapsLock & 9:: ControlClick,, A,, WheelUp
-CapsLock & 0:: ControlClick,, A,, WheelDown
+; firefox and wt need y to be longer than the titlebar
+CapsLock & 9:: ControlClick, x500 y200, A,, WheelDown,, NA
+CapsLock & 0:: ControlClick, x500 y200, A,, WheelUp,, NA
+; wheel(direction){
+;   WinGetPos,,, Width, Height, A
+;   CenterX := Width / 2
+;   CenterY := Height / 2
+;   ControlClick, x%CenterX% y200, A,, %direction%,, NA
+; }
+; CapsLock & 9::wheel("WheelDown")
+; CapsLock & 0::wheel("WheelUp")
 
 CapsLock & F2:: Send, {Volume_Down}
 CapsLock & F3:: Send, {Volume_Up}
