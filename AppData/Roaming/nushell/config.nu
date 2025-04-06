@@ -574,6 +574,10 @@ def tldrfzf [] {
   tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | tldr $in
 }
 
+def countryfzf [] {
+  countryfetch --list-countries | lines | skip 3 | to text | fzf --multi --accept-nth -1 | lines | countryfetch ...$in
+}
+
 # git checkout interactive
 def gci [] {
   git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff {1} | delta" | str trim | git checkout $in
