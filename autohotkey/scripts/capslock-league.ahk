@@ -12,12 +12,14 @@ many := "\many.ahk - AutoHotkey"
 host := "\Host.ahk - AutoHotkey"
 spicykeys := "\spicykeys.ahk - AutoHotkey"
 screenClippingTool := "\screen-clipping-tool.ahk - AutoHotkey"
+hide_mouse_cursor := "\hide-mouse-cursor.ahk - AutoHotkey"
 
 ; WinGetTitle, Var, %selectedScript%
 ; msgbox % Var
 
 ; ahk_class AutoHotkey to close AHK scripts only
 WinClose, %many% ahk_class AutoHotkey
+WinClose, %hide_mouse_cursor% ahk_class AutoHotkey
 ; WinClose, %host% ahk_class AutoHotkey
 ; WinClose, %spicykeys% ahk_class AutoHotkey
 ; WinClose, %screenClippingTool% ahk_class AutoHotkey
@@ -74,6 +76,7 @@ return
   EnvGet, vUserProfile, USERPROFILE
   ; Run, %vUserProfile%\Public-AutoHotKey-Scripts\Host.ahk
   Run, %vUserProfile%\autohotkey\many\many.ahk
+  Run, %vUserProfile%\autohotkey\scripts\hide-mouse-cursor.ahk
   ; Run, %vUserProfile%\autohotkey\spicykeys\spicykeys.ahk
   ; Run, %vUserProfile%\autohotkey\screen-clipping-tool\screen-clipping-tool.ahk
   ; Run, "C:\tools\WinSize2\WinSize2.EXE"
