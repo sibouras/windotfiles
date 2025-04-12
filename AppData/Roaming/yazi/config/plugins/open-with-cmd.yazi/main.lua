@@ -9,7 +9,7 @@ return {
 
 		if event == 1 then
 			local s = ya.target_family() == "windows" and " %*" or ' "$@"'
-			ya.manager_emit("shell", {
+			ya.mgr_emit("shell", {
 				value .. s,
 				block = block,
 				orphan = true,

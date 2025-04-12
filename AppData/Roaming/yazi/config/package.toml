@@ -1,27 +1,27 @@
 [[plugin.deps]]
 use = "ndtoan96/ouch"
-rev = "ce6fb75"
-hash = "ed6c185514109d7c5463f609282b220c"
+rev = "2496cd9"
+hash = "5b9dea47776a30946cfbf83232d18fb1"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mime-ext"
-rev = "5186af7"
-hash = "b03f3d80d26b6d7bb490b1380e9cb754"
+rev = "7112e91"
+hash = "b644a1f360d1adfccf76ab01ff2b3b2d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "5186af7"
-hash = "771f18427fb75fb19990ce602bb322f4"
+rev = "7112e91"
+hash = "67b545921d00ba3350be48c3e5a7379"
 
 [[plugin.deps]]
 use = "boydaihungst/pref-by-location"
-rev = "21f9f76"
-hash = "49d35f2c5820c74416bcec39bd28008f"
+rev = "21f0c34"
+hash = "5bb928ef11a87430e5eac6a65f815e21"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:toggle-pane"
-rev = "5186af7"
-hash = "2391805528b59d562a51f9b33f4a8236"
+rev = "7112e91"
+hash = "c1344fafe8c468b2e3ce4103d493aeb1"
 
 [flavor]
 deps = []
