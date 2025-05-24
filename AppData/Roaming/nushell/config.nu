@@ -16,7 +16,7 @@ let dark_theme = {
       'cyan'
     } else { 'blue' }
   }
-  date: {|| (date now) - $in |
+  datetime: {|| (date now) - $in |
     if $in < 1hr {
       'purple'
     } else if $in < 6hr {
@@ -41,7 +41,7 @@ $env.config.rm.always_trash = true
 $env.config.explore.selected_cell = { bg: dark_gray }
 $env.config.history.max_size = 100_000
 $env.config.history.file_format = "plaintext"
-$env.config.completions.algorithm = "fuzzy"
+$env.config.completions.algorithm = "substring"
 $env.config.cursor_shape.emacs = "line"
 $env.config.cursor_shape.vi_insert = "line"
 $env.config.cursor_shape.vi_normal = "block"
