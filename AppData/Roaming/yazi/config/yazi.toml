@@ -1,6 +1,6 @@
 "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
-[manager]
+[mgr]
 ratio = [1, 3, 3]
 sort_by = "alphabetical"
 sort_sensitive = true
@@ -28,8 +28,8 @@ reveal = [
   { run = 'exiftool "%1" | moar -no-statusbar', block = true, desc = "Show EXIF", for = "windows" },
 ]
 extract = [
-  { run = 'ouch decompress --no --quiet "$1"', desc = "Extract here", for = "unix" },
-  { run = 'ouch decompress --no --quiet "%1"', desc = "Extract here", for = "windows" },
+  { run = 'ouch decompress --no --quiet "$@"', desc = "Extract here", for = "unix" },
+  { run = 'ouch decompress --no --quiet %*', desc = "Extract here", for = "windows" },
   { run = 'ouch list -t "%1" | moar -no-statusbar', block = true, desc = "List contents of an archive", for = "windows" },
 ]
 play = [

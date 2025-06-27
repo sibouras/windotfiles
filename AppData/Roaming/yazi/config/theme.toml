@@ -1,10 +1,7 @@
 "$schema" = "https://yazi-rs.github.io/schemas/theme.json"
 
-[manager]
+[mgr]
 cwd = { fg = "#27a1b9" }
-
-# Tab
-tab_inactive = { fg = "white", bg = "#181a22" }
 
 # Count
 count_copied = { fg = "black", bg = "green" }
@@ -14,6 +11,10 @@ count_selected = { fg = "black", bg = "yellow" }
 # Border
 border_symbol = "│"
 border_style = { fg = "#181a22" }
+
+[tabs]
+active = { fg = "#24273a", bg = "#8aadf4", bold = true }
+inactive = { fg = "#8aadf4", bg = "#363a4f" }
 
 [mode]
 normal_main = { bg = "blue", fg = "black", bold = true }

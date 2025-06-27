@@ -1,6 +1,6 @@
 "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
-[manager]
+[mgr]
 
 prepend_keymap = [
   { on = ["F"], run = "plugin zoom-preview", desc = "Zoom or restore preview pane" },
@@ -25,6 +25,7 @@ prepend_keymap = [
 
   { on = ["c", "c"], run = "copy path --separator=unix", desc = "Copy the file path" },
   { on = ["c", "d"], run = "copy dirname --separator=unix", desc = "Copy the directory path" },
+  { on = ["c", "r"], run = "plugin nu -- '$all | path relative-to (git rev-parse --show-toplevel) | to text | clip'", desc = "Copy relative path" },
 
   # https://github.com/boydaihungst/pref-by-location.yazi
   # Any changes during disabled state won't be saved to save file.
