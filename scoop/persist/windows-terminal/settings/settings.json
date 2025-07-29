@@ -12,13 +12,8 @@
             "id": "User.commandPalette.2A0DA8E0"
         },
         {
-            "command": 
-            {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
-            },
-            "id": "User.splitPane.A6751878"
+            "command": "find",
+            "id": "User.find"
         },
         {
             "command": 
@@ -37,16 +32,13 @@
             "id": "User.resizePane.2A0DA8E0"
         },
         {
-            "command": "find",
-            "id": "User.find"
-        },
-        {
             "command": 
             {
-                "action": "sendInput",
-                "input": "\u001b[18;8~"
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
             },
-            "id": "User.sendInput.F14AFF9C"
+            "id": "User.splitPane.A6751878"
         },
         {
             "command": 
@@ -55,6 +47,14 @@
                 "direction": "forward"
             },
             "id": "User.moveTab.793E2350"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[18;8~"
+            },
+            "id": "User.sendInput.F14AFF9C"
         },
         {
             "command": 
@@ -131,6 +131,14 @@
         {
             "command": 
             {
+                "action": "moveFocus",
+                "direction": "left"
+            },
+            "id": "User.moveFocus.2A0DA8E0"
+        },
+        {
+            "command": 
+            {
                 "action": "moveTab",
                 "direction": "backward"
             },
@@ -143,14 +151,6 @@
                 "direction": "down"
             },
             "id": "User.resizePane.F747588A"
-        },
-        {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "left"
-            },
-            "id": "User.moveFocus.2A0DA8E0"
         },
         {
             "command": 
@@ -188,32 +188,32 @@
     "keybindings": 
     [
         {
-            "id": "User.commandPalette.2A0DA8E0",
-            "keys": "ctrl+alt+p"
-        },
-        {
             "id": null,
-            "keys": "alt+right"
-        },
-        {
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
+            "keys": "alt+shift+up"
         },
         {
             "id": "User.sendInput.F8A79DCB",
             "keys": "ctrl+enter"
         },
         {
-            "id": null,
-            "keys": "alt+shift+up"
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
         },
         {
-            "id": "User.splitPane.A6751878",
-            "keys": "alt+shift+d"
+            "id": null,
+            "keys": "alt+right"
+        },
+        {
+            "id": "User.commandPalette.2A0DA8E0",
+            "keys": "ctrl+alt+p"
         },
         {
             "id": "User.sendInput.8882FD6D",
             "keys": "shift+enter"
+        },
+        {
+            "id": "User.splitPane.A6751878",
+            "keys": "alt+shift+d"
         },
         {
             "id": "User.resizePane.2A0DA8E0",
@@ -385,7 +385,7 @@
                 "commandline": "nu.exe",
                 "guid": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
                 "hidden": false,
-                "icon": "C:\\Users\\ala\\Pictures\\icons\\nushell-icon.png",
+                "icon": "%USERPROFILE%\\Pictures\\icons\\nushell-icon.png",
                 "name": "Nu Shell",
                 "padding": "0",
                 "startingDirectory": "%USERPROFILE%"
@@ -401,15 +401,10 @@
                 "colorScheme": "Tokyo Night",
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": false,
+                "icon": "%USERPROFILE%\\Pictures\\icons\\ubuntu-icon.png",
                 "name": "Ubuntu",
                 "padding": "0",
                 "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
-            },
-            {
-                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-                "hidden": true,
-                "name": "Ubuntu",
-                "source": "Windows.Terminal.Wsl"
             },
             {
                 "colorScheme": "Tokyo Night",
