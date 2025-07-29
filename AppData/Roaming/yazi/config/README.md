@@ -20,4 +20,5 @@ ya pkg add yazi-rs/plugins:mime-ext
 ya pkg add yazi-rs/plugins:git
 ya pkg add ndtoan96/ouch
 ya pkg add boydaihungst/pref-by-location
+ya pkg add Tyarel8/nu
 ```

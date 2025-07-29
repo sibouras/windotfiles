@@ -945,6 +945,19 @@ def flatten-keys [rec: record, root: string] {
    } | flatten
 } 
 
+# Append to the end and beginning of a string.
+@example "add backticks" { "test" | str sandwich "`" } --result "`test`"
+def "str sandwich" [ append_str: string ]: string -> string {
+  $append_str ++ $in ++ $append_str
+}
+
+# Convert path to url.
+@example "windows" { "C:/test_file.txt" | path url } --result "file:///C:/test%5Ffile.txt"
+@example "linux" { "/rust-build-artifacts" | path url } --result "file:///rust%2Dbuild%2Dartifacts"
+def "path url" []: [path -> string, list<path> -> list<string>] {
+  each { path expand | str replace -a '\' '/' | url encode | $"file://(if $nu.os-info.name == windows {'/'})($in)" }
+}
+
 # go up n directories
 def --env up [nb: int = 1] {
   let path = (1..($nb) | each {|_| ".."} | reduce {|it, acc| $acc + "\\" + $it})
