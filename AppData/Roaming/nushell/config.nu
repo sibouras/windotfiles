@@ -41,15 +41,15 @@ $env.config.rm.always_trash = true
 $env.config.explore.selected_cell = { bg: dark_gray }
 $env.config.history.max_size = 100_000
 $env.config.history.file_format = "plaintext"
-$env.config.completions.algorithm = "substring"
+$env.config.completions.algorithm = "fuzzy"
 $env.config.cursor_shape.emacs = "line"
 $env.config.cursor_shape.vi_insert = "line"
 $env.config.cursor_shape.vi_normal = "block"
 $env.config.buffer_editor = "hx"
 $env.config.edit_mode = "vi"
 
-$env.config.shell_integration.osc7 = false
-$env.config.shell_integration.osc9_9 = true
+$env.config.shell_integration.osc7 = ($nu.os-info.name != windows)
+$env.config.shell_integration.osc9_9 = ($nu.os-info.name == windows)
 $env.config.shell_integration.osc133 = false
 
 # Before Nushell output is displayed in the terminal
@@ -153,8 +153,8 @@ $env.config.keybindings ++= [
     name: cut_to_line_end
     modifier: control
     keycode: char_k
-    mode: vi_insert
-    event: { edit: CutToLineEnd }
+    mode: [emacs vi_normal vi_insert]
+    event: { edit: KillLine }
   }
   {
     name: cut_current_line
@@ -162,6 +162,13 @@ $env.config.keybindings ++= [
     keycode: char_k
     mode: [emacs vi_normal vi_insert]
     event: { edit: CutCurrentLine }
+  }
+  {
+    name: clear_all_lines
+    modifier: alt
+    keycode: char_r
+    mode: [emacs vi_normal vi_insert]
+    event: { edit: clear }
   }
   {
     name: cut_word_right
@@ -252,7 +259,7 @@ $env.config.keybindings ++= [
     mode: [emacs , vi_normal, vi_insert]
     event: {
       send: executehostcommand
-      cmd: "$env.temp_var = ($env | get -i temp_var | default 0 | $in + 1);
+      cmd: "$env.temp_var = ($env | get -o temp_var | default 0 | $in + 1);
       let custom_var = (input 'enter variable name: ');
       let name = (if $custom_var == "" {$env.temp_var | into string | 't' + $in} else {$custom_var});
       commandline edit --replace ('let ' + ($name) + ' = (' + (commandline) + '); $' + ($name))"
