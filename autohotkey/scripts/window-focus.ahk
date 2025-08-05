@@ -62,7 +62,8 @@ WinIsDiscounted(id, &visible, &desktop, &taskbar, &startmenu) {
   WS_VISIBLE := 0x10000000
 
   visible := (wstyle & WS_VISIBLE) ? true : false
-  desktop := (wclass = "Progman" || wclass = "WorkerW" || wclass = "ApplicationManager_ImmersiveShellWindow")
+  desktop := (wclass = "Progman" || wclass = "WorkerW" || wclass = "ApplicationManager_ImmersiveShellWindow"
+    || wclass = "Winit Thread Event Target" || wclass = "XamlExplorerHostIslandWindow")
   taskbar := (wclass = "Shell_TrayWnd" || wclass = "Shell_SecondaryTrayWnd")
   startmenu := (wclass = "DV2ControlHost" || wclass = "Windows.UI.Core.CoreWindow")
 
