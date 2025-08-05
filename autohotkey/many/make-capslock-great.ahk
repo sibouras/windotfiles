@@ -8,7 +8,7 @@ else
   SetCapsLockState, AlwaysOn
 return
 
-CapsLock::Send, {ESC}
+; CapsLock::Send, {ESC}
 +CapsLock::Send, +{ESC}
 
 ; this needs to be above CapsLock & j and CapsLock & k
@@ -30,10 +30,13 @@ CapsLock & i::Home
 CapsLock & o::End
 CapsLock & u::PgUp
 CapsLock & p::PgDn
+CapsLock & 0::Del
 
-CapsLock & n::BS
-CapsLock & b::Del
-Capslock & BS::Del
+9:: Send, {BS}
+^9:: Send, ^{BS}
+q:: Send, {Esc}
+CapsLock & q:: q
+!q::WinClose, A
 
 ; Unmute
 ; CapsLock & c:: Run nircmd.exe mutesysvolume 0 microphone
