@@ -146,10 +146,13 @@ focus(nInStack) {
     winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > "" && !(ExStyle & 0x8)
                  && (ttitle != "Program Manager" || proc != "Explorer.exe")
   } Until Min(nInStack, win) = winNumber
-  if WinActive("ahk_exe mpv.exe") {
-    ; fix alt key getting stuck when switching away from mpv
-    Send, {LAlt up}{RAlt up} ; send both {LAlt up} and {RAlt up} instead of {Alt up} to make it work when when holding Ralt+o
-  }
+  ; fix alt key getting stuck when switching away from mpv
+  ; if WinActive("ahk_exe mpv.exe") {
+    ; Send, {LAlt up}{RAlt up} ; send both {LAlt up} and {RAlt up} instead of {Alt up} to make it work when when holding Ralt+o
+  ; }
+  ; some programs like explorer, msedge, brave.. focus the menu when pressing !o fast
+  ; NOTE: this also fixes the mpv issue above
+  Send, {o up}
   WinActivate % winTitle
 }
 
