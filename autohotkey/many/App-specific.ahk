@@ -1,4 +1,3 @@
-!q::WinClose, A
 #v::SendInput, {Raw}%Clipboard%
 !+m::PostMessage, 0x112, 0xF100, 0x20,, A ; context menu of the window's title bar
 
@@ -16,14 +15,14 @@ ProcessExist(Name){
 {
   !,::Send, ^+{Tab}
   !.::Send, ^{Tab}
-
+  !+,::Send, ^+{PgUp}
+  !+.::Send, ^+{PgDn}
   ; tab picker
   !e::Send, ^+a
-
   ; No single alt
   Alt::KeyWait Alt
-}
 
+}
 
 #If WinActive("ahk_exe firefox.exe")
 {

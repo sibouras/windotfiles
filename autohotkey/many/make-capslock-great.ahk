@@ -45,15 +45,15 @@ CapsLock & a:: Send, ^a
 CapsLock & y:: Send, ^y
 CapsLock & c:: Send, ^{c}
 CapsLock & v:: Send, ^{v}
-CapsLock & s:: Shift
-CapsLock & d:: Ctrl
-CapsLock & f:: Send, {Esc}
-CapsLock & [:: Send, {Esc}
-CapsLock & ]:: Send, {insert}
+CapsLock & s:: Alt
+CapsLock & d:: Shift
+CapsLock & f:: Ctrl
+CapsLock & [:: Esc
+CapsLock & ]:: Insert
 
 ; firefox and wt need y to be longer than the titlebar
-CapsLock & 9:: ControlClick, x500 y200, A,, WheelDown,, NA
-CapsLock & 0:: ControlClick, x500 y200, A,, WheelUp,, NA
+CapsLock & ,:: ControlClick, x500 y200, A,, WheelDown,, NA
+CapsLock & .:: ControlClick, x500 y200, A,, WheelUp,, NA
 ; wheel(direction){
 ;   WinGetPos,,, Width, Height, A
 ;   CenterX := Width / 2
@@ -71,19 +71,10 @@ CapsLock & F6:: Send, {Media_Stop}
 CapsLock & F7:: Send, {Media_Prev}
 CapsLock & F8:: Send, {Media_Next}
 
-CapsLock & t::Send, ^{t}
-CapsLock & r::Send, #{t}
-CapsLock & e::Send, ^+{Tab}
+CapsLock & t:: Send, ^{t}
+CapsLock & r:: Send, #{t}
+CapsLock & e:: Send, ^+{Tab}
 CapsLock & w:: Send, ^{w}
-CapsLock & q::
-  if GetKeyState("alt") = 0 {
-    Send, ^w
-  }
-  else {
-    Send, !{F4}
-    return
-  }
-return
 CapsLock & g:: Send, {AppsKey}
 
 CapsLock & m::
