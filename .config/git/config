@@ -6,7 +6,7 @@
   defaultBranch = main
 
 [core]
-  editor = hx
+  editor = nvim
   eol = lf
   autocrlf = false
   pager = # empty pager for faster `git branch` or use `git --no-pager`
