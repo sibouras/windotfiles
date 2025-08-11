@@ -244,6 +244,10 @@
             "keys": "ctrl+backspace"
         },
         {
+            "id": null,
+            "keys": "ctrl+shift+home"
+        },
+        {
             "id": "User.sendInput.73B98BEF",
             "keys": "ctrl+i"
         },
@@ -262,10 +266,6 @@
         {
             "id": "User.moveFocus.87C324ED",
             "keys": "ctrl+alt+l"
-        },
-        {
-            "id": "User.markMode",
-            "keys": "ctrl+9"
         },
         {
             "id": "User.moveFocus.F747588A",
@@ -304,12 +304,20 @@
             "keys": "ctrl+alt+shift+j"
         },
         {
+            "id": "Terminal.ScrollDownPage",
+            "keys": "shift+pgdn"
+        },
+        {
             "id": "User.resizePane.87C324ED",
             "keys": "ctrl+alt+shift+l"
         },
         {
             "id": "User.toggleFocusMode",
             "keys": "ctrl+shift+m"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+down"
         },
         {
             "id": "Terminal.DuplicatePaneDown",
@@ -322,6 +330,10 @@
         {
             "id": null,
             "keys": "alt+shift+minus"
+        },
+        {
+            "id": "User.markMode",
+            "keys": "ctrl+["
         },
         {
             "id": null,
@@ -338,6 +350,34 @@
         {
             "id": "User.moveTab.EF07D31B",
             "keys": "alt+shift+comma"
+        },
+        {
+            "id": "Terminal.ScrollDown",
+            "keys": "pgdn"
+        },
+        {
+            "id": "Terminal.ScrollUp",
+            "keys": "pgup"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+up"
+        },
+        {
+            "id": "Terminal.ScrollUpPage",
+            "keys": "shift+pgup"
+        },
+        {
+            "id": "Terminal.ScrollToBottom",
+            "keys": "ctrl+shift+pgdn"
+        },
+        {
+            "id": "Terminal.ScrollToTop",
+            "keys": "ctrl+shift+pgup"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+end"
         }
     ],
     "launchMode": "default",
