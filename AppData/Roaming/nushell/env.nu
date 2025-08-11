@@ -58,7 +58,8 @@ $env.PROMPT_INDICATOR = "➜ "
 $env.PROMPT_INDICATOR_VI_NORMAL = ": "
 $env.PROMPT_INDICATOR_VI_INSERT = "> "
 
-$env.EDITOR = "hx"
+$env.EDITOR = 'nvim'
+$env.VISUAL = $env.EDITOR
 $env.LESS = '--quiet'
 $env.MOAR = '--no-statusbar --style=github-dark'
 $env.PAGER = 'moar --no-linenumbers -quit-if-one-screen'

@@ -45,7 +45,7 @@ $env.config.completions.algorithm = "fuzzy"
 $env.config.cursor_shape.emacs = "line"
 $env.config.cursor_shape.vi_insert = "line"
 $env.config.cursor_shape.vi_normal = "block"
-$env.config.buffer_editor = "hx"
+$env.config.buffer_editor = "nvim"
 $env.config.edit_mode = "vi"
 
 $env.config.shell_integration.osc7 = ($nu.os-info.name != windows)
@@ -920,13 +920,14 @@ def "alternate screen enable" [] { print -ne (ansi -e '?1049h') }
 def "alternate screen disable" [] { print -ne (ansi -e '?1049l') }
 
 # Nu-Fuzzy
+@example "cd with nuf" { ls | sort-by -r modified | where type == dir | nuf | cd $in.nam }
 def nuf [ --multi (-m) ]: any -> any {
   let data = $in
   let display = $data | table --index false --theme light | lines
   let border = char --unicode '2500'
   let options = match ($display | where ($border in $it) | length) {
     2 if ($data | is-empty) => [$display.1] # skip frame
-    2 => ($display | range 2..<-2) # skip header and footer
+    2 => ($display | slice 2..<-2) # skip header and footer
     1 => ($display | skip 2) # skip header
     0 => $display
     _ => (error make { msg: 'unexpected table content' })
@@ -944,21 +945,22 @@ def nuf [ --multi (-m) ]: any -> any {
   }
 }
 
-# flatten-keys $env.config '$env.config'
+# flatten-keys
 # => list of all keys and subkeys in the config
+@example "flatten $env.config.ls keys" { flatten-keys $env.config '$env.config.ls' }
 def flatten-keys [rec: record, root: string] {
-  $rec | columns | each {|key|    
+  $rec | columns | each {|key|
     let is_record = (
       $rec | get $key | describe --detailed | get type | $in == record
     )
- 
+
     # Recusively return each key plus its subkeys
     [$'($root).($key)'] ++  match $is_record {
       true  => (flatten-keys ($rec | get $key) $'($root).($key)')
       false => []
     }
    } | flatten
-} 
+}
 
 # Append to the end and beginning of a string.
 @example "add backticks" { "test" | str sandwich "`" } --result "`test`"
