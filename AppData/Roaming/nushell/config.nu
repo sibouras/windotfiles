@@ -571,9 +571,24 @@ def psn [name: string] {
   ps | find $name
 }
 
-# kill specified process in name
-def killn [name: string] {
-  ps | find $name | each {|| kill -f $in.pid }
+# # kill specified process in name
+# def killn [name: string] {
+#   ps | find $name | each {|| kill -f $in.pid }
+# }
+
+# Kill all processes matching search
+def killn [
+  --ignore-case(-i) # Ignore capitalization
+  --force(-f) # Force close processes
+  regex: string # Pattern to match proceeses on
+]: nothing -> list {
+  let ignore = if $ignore_case { '(?i)' } else { '' }
+  ps | where name =~ $'($ignore)($regex)' | tee {
+    match $in.pid? { [$a ..$b] => {
+      if $force { kill --force $a ...$b } else {
+        kill $a ...$b }
+    }}
+  }
 }
 
 # tldr with fzf
