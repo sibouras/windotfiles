@@ -8,9 +8,9 @@
 }
 
 /* remove titlebar and use minMaxCloseButton.uc.js instead */
-.titlebar-buttonbox-container {
-  display: none;
-}
+/* .titlebar-buttonbox-container { */
+/*   display: none; */
+/* } */
 
 /* Remove titlebar buttons on small screen*/
 @media (width < 900px) {
