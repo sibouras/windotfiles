@@ -99,14 +99,20 @@ action = "ScrollLineDown"
 key = "PageDown"
 
 [[keyboard.bindings]]
+action = "ScrollToTop"
+key = "PageUp"
+mode = "~Alt"
+mods = "Shift|Control"
+
+[[keyboard.bindings]]
 action = "ScrollToBottom"
-key = "Key9"
-mode = "Vi|~Search"
-mods = "Control"
+key = "PageDown"
+mode = "~Alt"
+mods = "Shift|Control"
 
 [[keyboard.bindings]]
 action = "ToggleViMode"
-key = "Key9"
+key = "["
 mode = "~Search"
 mods = "Control"
 
