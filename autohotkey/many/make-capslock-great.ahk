@@ -9,7 +9,7 @@ else
 return
 
 ; CapsLock::Send, {ESC}
-+CapsLock::Send, +{ESC}
+; +CapsLock::Send, +{ESC}
 
 ; this needs to be above CapsLock & j and CapsLock & k
 ; !j::
@@ -22,63 +22,58 @@ return
 ;     Send, {ALTDOWN}{SHIFTDOWN}{TAB}{SHIFTUP}ALTUP}
 ; return
 
-CapsLock & k::Up
-CapsLock & j::Down
-CapsLock & h::Left
-CapsLock & l::Right
-CapsLock & i::Home
-CapsLock & o::End
-CapsLock & u::PgUp
-CapsLock & p::PgDn
-CapsLock & 0::Del
-
-9:: Send, {BS}
-^9:: Send, ^{BS}
 q:: Send, {Esc}
 CapsLock & q:: q
-!q::WinClose, A
+$!q::WinClose, A
 
-; Unmute
-; CapsLock & c:: Run nircmd.exe mutesysvolume 0 microphone
-; Mute
-; CapsLock & x:: Run nircmd.exe mutesysvolume 1 microphone
-; Toggle
-; CapsLock & z:: Run nircmd.exe mutesysvolume 2 microphone
-CapsLock & a:: Send, ^a
-CapsLock & y:: Send, ^y
-CapsLock & c:: Send, ^{c}
-CapsLock & v:: Send, ^{v}
+CapsLock & k:: Up
+CapsLock & j:: Down
+CapsLock & h:: Left
+CapsLock & l:: Right
+CapsLock & i:: BS
+CapsLock & o:: Del
+CapsLock & ,:: Home
+CapsLock & .:: End
+CapsLock & u:: PgUp
+CapsLock & p:: PgDn
 CapsLock & s:: Alt
 CapsLock & d:: Shift
 CapsLock & f:: Ctrl
-CapsLock & [:: Esc
+CapsLock & g:: AppsKey
+CapsLock & a:: Send, ^a
+CapsLock & y:: Send, ^y
+CapsLock & c:: Send, ^c
+CapsLock & v:: Send, ^v
+CapsLock & [:: Send, ^[
 CapsLock & ]:: Insert
+CapsLock & t:: Send, ^t
+CapsLock & r:: Send, #t
+CapsLock & e:: Send, ^+{Tab}
+CapsLock & w:: Send, ^w
+
+; CapsLock & c:: Run nircmd.exe mutesysvolume 0 microphone ; unmute
+; CapsLock & x:: Run nircmd.exe mutesysvolume 1 microphone ; Mute
+; CapsLock & z:: Run nircmd.exe mutesysvolume 2 microphone ; Toggle
 
 ; firefox and wt need y to be longer than the titlebar
-CapsLock & ,:: ControlClick, x500 y200, A,, WheelDown,, NA
-CapsLock & .:: ControlClick, x500 y200, A,, WheelUp,, NA
-; wheel(direction){
-;   WinGetPos,,, Width, Height, A
-;   CenterX := Width / 2
-;   CenterY := Height / 2
-;   ControlClick, x%CenterX% y200, A,, %direction%,, NA
-; }
-; CapsLock & 9::wheel("WheelDown")
-; CapsLock & 0::wheel("WheelUp")
+; CapsLock & 9:: ControlClick, x500 y200, A,, WheelDown,, NA
+; CapsLock & 0:: ControlClick, x500 y200, A,, WheelUp,, NA
+wheel(direction){
+  WinGetPos,,, Width, Height, A
+  CenterX := Width / 2
+  CenterY := Height / 2
+  ControlClick, x%CenterX% y%Centery%, A,, %direction%,, NA
+}
+CapsLock & 9::wheel("WheelDown")
+CapsLock & 0::wheel("WheelUp")
 
 CapsLock & F2:: Send, {Volume_Down}
 CapsLock & F3:: Send, {Volume_Up}
-CapsLock & F4:: Send, {Media_Mute}
+CapsLock & F4:: Send, {Volume_Mute}
 CapsLock & F5:: Send, {Media_Play_Pause}
 CapsLock & F6:: Send, {Media_Stop}
 CapsLock & F7:: Send, {Media_Prev}
 CapsLock & F8:: Send, {Media_Next}
-
-CapsLock & t:: Send, ^{t}
-CapsLock & r:: Send, #{t}
-CapsLock & e:: Send, ^+{Tab}
-CapsLock & w:: Send, ^{w}
-CapsLock & g:: Send, {AppsKey}
 
 CapsLock & m::
   Input Key, L1 M
