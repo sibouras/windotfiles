@@ -42,6 +42,6 @@
   b = branch -vv --sort=-committerdate
 
 [pager]
-  diff = delta --pager='moar --no-linenumbers -quit-if-one-screen'
-  show = delta --pager='moar -quit-if-one-screen'
-  log = delta --pager='moar -quit-if-one-screen'
+  diff = delta --pager='moor --no-linenumbers -quit-if-one-screen'
+  show = delta --pager='moor -quit-if-one-screen'
+  log = delta --pager='moor -quit-if-one-screen'
