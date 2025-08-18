@@ -128,8 +128,8 @@ return
 
 ; focus previous window
 ; from: https://www.autohotkey.com/boards/viewtopic.php?t=97358
-!o::focus(2)
-!\::focus(3)
+$!o::focus(2)
+$!\::focus(3)
 
 focus(nInStack) {
   winNumber := 0
@@ -152,7 +152,8 @@ focus(nInStack) {
   ; }
   ; some programs like explorer, msedge, brave.. focus the menu when pressing !o fast
   ; NOTE: this also fixes the mpv issue above
-  Send, {o up}
+  ; Send, {o up}
+  ; NOTE: this is also fixed by using $ https://www.autohotkey.com/docs/v1/Hotkeys.htm#Symbols
   WinActivate % winTitle
 }
 
