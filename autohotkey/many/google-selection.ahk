@@ -7,11 +7,6 @@ if not A_IsAdmin
   ExitApp
 }
 
-#NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
-#SingleInstance Force
 SetTitleMatchMode 2
 
 !g::
@@ -36,8 +31,8 @@ SetTitleMatchMode 2
     StringReplace, Clipboard, Clipboard, &, `%26, All
     StringReplace, Clipboard, Clipboard, +, `%2b, All
     StringReplace, Clipboard, Clipboard, ", `%22, All
-    ; Run % "https://www.google.com/search?hl=en&q=" . clipboard ; uriEncode(clipboard)
-    Run % "https://paulgo.io/search?q=" . clipboard ; uriEncode(clipboard)
+    Run % "https://www.google.com/search?hl=en&q=" . clipboard ; uriEncode(clipboard)
+    ; Run % "https://paulgo.io/search?q=" . clipboard ; uriEncode(clipboard)
   }
   Clipboard := MyClip
 return
