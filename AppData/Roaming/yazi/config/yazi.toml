@@ -25,24 +25,24 @@ open = [
 reveal = [
   { run = 'explorer /select,%1', orphan = true, desc = "Reveal", for = "windows" },
   { run = '''exiftool "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show EXIF", for = "unix" },
-  { run = 'exiftool "%1" | moar -no-statusbar', block = true, desc = "Show EXIF", for = "windows" },
+  { run = 'exiftool "%1" | moor -no-statusbar', block = true, desc = "Show EXIF", for = "windows" },
 ]
 extract = [
   { run = 'ouch decompress --no --quiet "$@"', desc = "Extract here", for = "unix" },
   { run = 'ouch decompress --no --quiet %*', desc = "Extract here", for = "windows" },
-  { run = 'ouch list -t "%1" | moar -no-statusbar', block = true, desc = "List contents of an archive", for = "windows" },
+  { run = 'ouch list -t "%1" | moor -no-statusbar', block = true, desc = "List contents of an archive", for = "windows" },
 ]
 play = [
   { run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
   { run = 'mpv --force-window %*', orphan = true, for = "windows" },
   { run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
-  { run = 'mediainfo "%1" | moar -no-statusbar', block = true, desc = "Show media info", for = "windows" },
+  { run = 'mediainfo "%1" | moor -no-statusbar', block = true, desc = "Show media info", for = "windows" },
 ]
 audio = [
   { run = 'mpc-hc %*', orphan = true, for = "windows" },
   { run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
-  { run = 'mediainfo "%1" | moar -no-statusbar', block = true, desc = "Show media info", for = "windows" },
-  { run = 'ffprobe -v quiet -print_format json -show_format "%1" | jaq -r .format.tags[\"lyrics-XXX\"] | moar -no-statusbar', block = true, desc = "Lyrics", for = "windows" },
+  { run = 'mediainfo "%1" | moor -no-statusbar', block = true, desc = "Show media info", for = "windows" },
+  { run = 'ffprobe -v quiet -print_format json -show_format "%1" | jaq -r .format.tags[\"lyrics-XXX\"] | moor -no-statusbar', block = true, desc = "Lyrics", for = "windows" },
 ]
 
 [open]
