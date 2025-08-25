@@ -25,15 +25,17 @@ return
 q:: Send, {Esc}
 CapsLock & q:: q
 $!q::WinClose, A
+9:: Send, {BS}
+CapsLock & 9:: ^BS
+CapsLock & 0:: 9
 
 CapsLock & k:: Up
 CapsLock & j:: Down
 CapsLock & h:: Left
 CapsLock & l:: Right
-CapsLock & i:: BS
-CapsLock & o:: Del
-CapsLock & ,:: Home
-CapsLock & .:: End
+CapsLock & i:: Home
+CapsLock & o:: End
+CapsLock & ':: Del
 CapsLock & u:: PgUp
 CapsLock & p:: PgDn
 CapsLock & s:: Alt
@@ -64,8 +66,8 @@ wheel(direction){
   CenterY := Height / 2
   ControlClick, x%CenterX% y%Centery%, A,, %direction%,, NA
 }
-CapsLock & 9::wheel("WheelDown")
-CapsLock & 0::wheel("WheelUp")
+CapsLock & ,::wheel("WheelDown")
+CapsLock & .::wheel("WheelUp")
 
 CapsLock & F2:: Send, {Volume_Down}
 CapsLock & F3:: Send, {Volume_Up}
