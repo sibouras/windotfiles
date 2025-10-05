@@ -11,9 +11,8 @@ calc_padding := 20 ; minimum direction/alignment overlap for target windows
 
 ; ==== DEVELOPMENT SHORTCUTS ====
 ; Reload this script
-#+r:: {
-  Reload
-}
+#+r:: Reload
+
 ; Get active window position data
 #+t:: {
   aID := WinGetID("A")
@@ -88,6 +87,9 @@ FocusWin(direction) {
       continue
     is_discounted_win := WinIsDiscounted(tID, &visible, &desktop, &taskbar, &startmenu)
     if (is_discounted_win)
+      continue
+    is_max := WinGetMinMax(tID)
+    if (is_max)
       continue
 
     WinGetFullPos(&tXL, &tXR, &tYT, &tYB, &tW, &tH, tID) ; get pos/size of target window
