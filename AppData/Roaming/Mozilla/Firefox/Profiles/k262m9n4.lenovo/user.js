@@ -42,6 +42,9 @@ user_pref("mousewheel.with_alt.action", 5); // default=2
 // disable=0
 user_pref("browser.urlbar.maxRichResults", 12); // default=10
 
+// remove `Add tab to taskbar` icon
+user_pref("browser.taskbarTabs.enabled", false); // default=true
+
 /******************************************************************************
  * SECTION: DOWNLOADS                                 *
  ******************************************************************************/
