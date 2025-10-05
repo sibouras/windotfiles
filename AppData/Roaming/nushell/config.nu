@@ -363,7 +363,7 @@ $env.config.keybindings ++= [
     keycode: F6
     mode: [emacs, vi_normal, vi_insert]
     event: [
-      { edit: InsertString, value: "l" }
+      { edit: InsertString, value: " l" }
       { send: Enter }
     ]
   }
