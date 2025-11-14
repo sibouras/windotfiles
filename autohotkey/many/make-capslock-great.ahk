@@ -22,9 +22,11 @@ return
 ;     Send, {ALTDOWN}{SHIFTDOWN}{TAB}{SHIFTUP}ALTUP}
 ; return
 
-q:: Send, {Esc}
+q:: Esc
+^q:: Send, ^q
+^!q:: Send, ^!q
+$!q:: WinClose, A
 CapsLock & q:: q
-$!q::WinClose, A
 9:: Send, {BS}
 CapsLock & 9:: ^BS
 CapsLock & 0:: 9
