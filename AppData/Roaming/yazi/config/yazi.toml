@@ -2,7 +2,7 @@
 
 [mgr]
 ratio = [1, 3, 3]
-sort_by = "alphabetical"
+sort_by = "natural"
 sort_sensitive = true
 sort_reverse = false
 sort_dir_first = true
@@ -39,7 +39,7 @@ play = [
   { run = 'mediainfo "%1" | moor -no-statusbar', block = true, desc = "Show media info", for = "windows" },
 ]
 audio = [
-  { run = 'mpc-hc %*', orphan = true, for = "windows" },
+  { run = 'aimp %*', orphan = true, for = "windows" },
   { run = '''mediainfo "$1"; echo "Press enter to exit"; read''', block = true, desc = "Show media info", for = "unix" },
   { run = 'mediainfo "%1" | moor -no-statusbar', block = true, desc = "Show media info", for = "windows" },
   { run = 'ffprobe -v quiet -print_format json -show_format "%1" | jaq -r .format.tags[\"lyrics-XXX\"] | moor -no-statusbar', block = true, desc = "Lyrics", for = "windows" },
