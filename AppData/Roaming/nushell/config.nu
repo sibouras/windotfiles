@@ -130,8 +130,8 @@ $env.config.keybindings ++= [
   }
   {
     name: redo_vi_insert
-    modifier: control
-    keycode: char_g
+    modifier: control_shift
+    keycode: char_z
     mode: vi_insert
     event: { edit: Redo }
   }
@@ -287,7 +287,7 @@ $env.config.keybindings ++= [
     mode: [emacs , vi_normal, vi_insert]
     event: {
       send: executehostcommand
-      cmd: "commandline edit --replace (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
+      cmd: "commandline edit --replace (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --scheme=history --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
     }
   }
   {
@@ -297,18 +297,18 @@ $env.config.keybindings ++= [
     mode: [emacs, vi_normal, vi_insert]
     event: {
       send: executehostcommand
-      cmd: "commandline edit --insert (fd --hidden --type file -E .git -E node_modules | fzf --tiebreak=chunk --layout=reverse --multi --height=70% | lines | str join ' ')"
+      cmd: "commandline edit --insert (fd --hidden --type file -E .git -E node_modules | fzf --scheme=path --layout=reverse --multi --height=70% | lines | each {|e| if ($e | str contains ' ') {$'`($e)`'} else $e} | str join ' ')"
     }
   }
   {
     name: fuzzy_dir
     modifier: control
-    keycode: char_v
+    keycode: char_g
     mode: [emacs, vi_normal, vi_insert]
     event:{
       send: executehostcommand,
       # cmd: "cd (ls | where type == dir | each { |it| $it.name} | str join (char nl) | fzf | decode utf-8 | str trim)"
-      cmd: "commandline edit --insert (fd --hidden --type directory -E .git -E node_modules | fzf --layout=reverse --height=-15)"
+      cmd: "commandline edit --insert (fd --hidden --type directory -E .git -E node_modules | fzf --scheme=path --layout=reverse --height=-15)"
     }
   }
   {
@@ -483,7 +483,8 @@ def rghx [] {
 
 # search for files with fd and preview them with fzf
 def fs [...args] {
-  fd ...$args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat -pp --color=always --line-range :300 {}' | str trim | lines
+  # fd ...$args -H -t f -E .git -E node_modules | fzf --multi --preview 'bat -pp --color=always --line-range :300 {}' | str trim | lines
+  fzf --with-shell 'nu --no-std-lib --no-config-file -c' --multi --preview='use fzf-utils.nu *; preview-file {}' | str trim | lines
 }
 
 # search for files with fd and preview them with fzf and open them with nvim
@@ -497,7 +498,7 @@ def fe [...args] {
 
 # search for media files with fd and fzf and open them with mpv
 def fm [...args] {
-  let files = (fd ...$args -e mp4 -e m4a -e webm -e mkv -e gif | fzf --multi | str trim | lines)
+  let files = (fd ...$args -e mp4 -e m4a -e webm -e mkv -e gif | fzf --scheme=path --multi | str trim | lines)
   if not ($files | is-empty) {
     let full_path = ($files | each {|it| $"($env.PWD)\\($it)"})
     mpv ...$full_path
@@ -506,7 +507,7 @@ def fm [...args] {
 
 # histry with fzf
 def fh [] {
-  commandline edit --replace (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --tiebreak=chunk --layout=reverse --multi  | decode utf-8 | str trim)
+  commandline edit --replace (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --scheme=history --layout=reverse --multi  | decode utf-8 | str trim)
 }
 
 # get aliases
