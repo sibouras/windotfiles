@@ -1060,3 +1060,4 @@ use rg-completions.nu *
 
 ### zoxide
 source ~/.cache/.zoxide.nu
+source ./atuin.nu
