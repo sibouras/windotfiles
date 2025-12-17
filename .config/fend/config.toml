@@ -1,0 +1,10 @@
+enable-colors = 'always'
+
+[colors]
+number = { foreground = 'yellow' }
+string = { foreground = 'green' }
+identifier = { foreground = 'white' }
+keyword = { foreground = 'blue', bold = true }
+built-in-function = { foreground = 'blue', bold = true }
+date = { foreground = 'magenta' }
+other = {}
