@@ -248,7 +248,7 @@ $env.config.keybindings ++= [
     mode: [emacs , vi_normal, vi_insert]
     event: {
       send: executehostcommand,
-      cmd: $"source '($nu.config-path)'"
+      cmd: $"source '($nu.config-path)'; source ($nu.env-path)"
     }
   }
   # encapsulate current command into brackets and give it a name.
@@ -287,7 +287,7 @@ $env.config.keybindings ++= [
     mode: [emacs , vi_normal, vi_insert]
     event: {
       send: executehostcommand
-      cmd: "commandline edit --replace (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --scheme=history --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
+      cmd: "commandline edit --replace (history | get command | uniq | reverse | str join (char -i 0) | fzf --read0 --scheme=history --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
     }
   }
   {
@@ -325,7 +325,7 @@ $env.config.keybindings ++= [
   }
   {
     name: insert_last_arg_from_prev_cmd
-    modifier: control
+    modifier: control_shift
     keycode: char_b
     mode: [emacs, vi_normal, vi_insert]
     # event: {
@@ -414,7 +414,6 @@ alias gp = git push
 alias gr = cd (git rev-parse --show-toplevel)
 alias winconfig = git $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias dotfiles = lazygit $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
-alias sfss = sfsu search
 alias sfsi = sfsu info
 # alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
 alias mpv = cmd /c mpv # fix output not showing
@@ -507,7 +506,7 @@ def fm [...args] {
 
 # histry with fzf
 def fh [] {
-  commandline edit --replace (history | each { |it| $it.command } | uniq | reverse | str join (char -i 0) | fzf --read0 --scheme=history --layout=reverse --multi  | decode utf-8 | str trim)
+  commandline edit --replace (history | get command | uniq | reverse | str join (char -i 0) | fzf --read0 --scheme=history --layout=reverse --multi  | decode utf-8 | str trim)
 }
 
 # get aliases
@@ -569,7 +568,7 @@ def wldd [path: string] {
 
 # search for specific process
 def psn [name: string] {
-  ps | find $name
+  ps | find -i $name
 }
 
 # # kill specified process in name
@@ -719,7 +718,7 @@ def mvr [
 # last n elements in history with highlight(default 100)
 def h [n = 20] {
   # history | last $n | update command { |f| $f.command | nu-highlight }
-  history | each { |it| $it.command } | uniq | last $n | each { |it| $it | nu-highlight } | wrap command
+  history | get command | uniq | last $n | each { |it| $it | nu-highlight } | wrap command
 }
 
 
@@ -808,9 +807,7 @@ def tolink [name: string] {
 
 # structured scoop list
 def sfsl [] {
-  # sfsu list | lines | range 1.. | parse -r '(?<name>\S+)\s+\|\s(?<version>\S+)\s+\|\s(?<source>\S+)\s+\|\s(?<updated>\d{4}-\d{2}-\d{2})' | sort-by updated
-  # or
-  sfsu list | lines | skip 1 | split column '|' name version source updated | str trim | sort-by updated | update updated { |row| $row.updated | split row " " | first }
+  sfsu list --json | from json | reject notes | sort-by updated | update updated { |row| $row.updated | split row " " | first }
 }
 
 def sfso [] {
@@ -818,10 +815,11 @@ def sfso [] {
 }
 
 # scoop search structured wrapper (much faster)
-def "sfsss" [
+def "sfss" [
   term:string # the term to search for
 ] {
-  sfsu search $term | parse -r '\s*(.*)\s*\((.*)\)' | rename package version
+  # sfsu search $term | parse -r '\s*(.*)\s*\((.*)\)' | rename package version
+  sfsu search --json $term | from json | transpose | reject column0 | flatten -a | sort-by bucket | reject bins
 }
 
 def "list todos" [] {
