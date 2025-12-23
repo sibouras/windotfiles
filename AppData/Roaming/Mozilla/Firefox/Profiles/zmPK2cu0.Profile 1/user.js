@@ -1,8 +1,48 @@
 // https://github.com/yokoffing/Betterfox/blob/main/Peskyfox.js
 
 /****************************************************************************
+ * SECTION: my_prefs                                                        *
+ ****************************************************************************/
+user_pref("signon.management.page.breach-alerts.enabled", false);
+user_pref("signon.rememberSignons", false);
+user_pref("datareporting.usage.uploadEnabled", false);
+user_pref("privacy.sanitize.cpd.hasMigratedToNewPrefs3", true);
+user_pref("browser.urlbar.shortcuts.actions", false);
+user_pref("browser.urlbar.shortcuts.bookmarks", false);
+user_pref("browser.urlbar.shortcuts.history", false);
+user_pref("browser.urlbar.shortcuts.tabs", false);
+user_pref("privacy.userContext.enabled", true); // enable container tabs
+user_pref("privacy.userContext.ui.enabled", true); // show container tabs in settings
+
+/****************************************************************************
+ * SECTION: Securefox                                                        *
+ ****************************************************************************/
+user_pref("browser.contentblocking.category", "strict"); // [HIDDEN PREF]
+
+/** SEARCH / URL BAR ***/
+user_pref("browser.urlbar.trimHttps", true);
+user_pref("browser.urlbar.untrimOnUserInteraction.featureGate", true);
+user_pref("browser.search.separatePrivateDefault.ui.enabled", true);
+user_pref("browser.search.suggest.enabled", false);
+user_pref("browser.urlbar.quicksuggest.enabled", false);
+user_pref("browser.urlbar.groupLabels.enabled", false);
+user_pref("browser.formfill.enable", false);
+user_pref("network.IDN_show_punycode", true);
+
+/** HTTPS-ONLY MODE ***/
+user_pref("dom.security.https_only_mode", true);
+// PREF: offer suggestion for HTTPS site when available
+// [1] https://x.com/leli_gibts_scho/status/1371463866606059528
+user_pref("dom.security.https_only_mode_error_page_user_suggestions", true);
+
+/****************************************************************************
  * SECTION: PESKYFOX                                                        *
  ****************************************************************************/
+
+/** MOZILLA UI ***/
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
+user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
+user_pref("media.videocontrols.picture-in-picture.video-toggle.enabled", false);
 
 // PREF: new profile switcher
 // user_pref("browser.profiles.enabled", true); // default=false
@@ -24,11 +64,21 @@ user_pref("full-screen-api.transition-duration.leave", "0 0");
 user_pref("full-screen-api.warning.delay", 0);
 user_pref("full-screen-api.warning.timeout", 0);
 
+/** NEW TAB PAGE ***/
+user_pref("browser.newtabpage.activity-stream.topSitesRows", 2);
+user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
+user_pref("browser.newtabpage.activity-stream.showSponsoredCheckboxes", false);
+user_pref("browser.newtabpage.activity-stream.showSearch", false);
+
 // limit fullscreen to browser window
 user_pref("full-screen-api.ignore-widgets", true); // default=false
 
 // zoom with alt+wheel
 user_pref("mousewheel.with_alt.action", 5); // default=2
+
+/** AI ***/
+user_pref("browser.tabs.groups.smart.userEnabled", false);
+user_pref("browser.ml.linkPreview.collapsed", true);
 
 /****************************************************************************
  * SECTION: URL BAR                                                         *
