@@ -396,7 +396,6 @@ alias pwd = echo $env.PWD
 alias v = nvim
 alias y = yazi
 alias cht = cht -TA
-# alias y = ~/code/rust/yazi/target/debug/yazi.exe
 alias focus = ^start ~/scoop/apps/focus-editor/current/focus.exe
 alias ll = eza -la -s Name --binary --git --icons --group-directories-first --no-permissions
 alias lg = lazygit
@@ -415,7 +414,6 @@ alias gr = cd (git rev-parse --show-toplevel)
 alias winconfig = git $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias dotfiles = lazygit $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias sfsi = sfsu info
-# alias mpv = mpv $"--config-dir=($env.APPDATA)\\mpv" --no-border
 alias mpv = cmd /c mpv # fix output not showing
 alias vd = VirtualDesktop11
 alias b = buku --suggest
@@ -512,7 +510,7 @@ def fh [] {
 # get aliases
 def get-aliases [] {
   # open $nu.config-path | lines | find alias | find -v aliases | split column '=' | select column1 column2 | rename Alias Command | update Alias {|f| $f.Alias | split row ' ' | last} | sort-by Alias
-  scope aliases | update expansion { |c| $c.expansion | nu-highlight }
+  scope aliases | update expansion { |c| $c.expansion | nu-highlight } | select name expansion description
 }
 
 # ls sorted by type and without the type column
