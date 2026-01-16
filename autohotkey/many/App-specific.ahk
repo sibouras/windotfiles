@@ -1,5 +1,10 @@
 #v::SendInput, {Raw}%Clipboard%
 !+m::PostMessage, 0x112, 0xF100, 0x20,, A ; context menu of the window's title bar
+; Turn Monitor Off:
+#o::
+Sleep 1000  ; Give user a chance to release keys (in case their release would wake up the monitor again).
+SendMessage, 0x0112, 0xF170, 2,, Program Manager  ; 0x0112 is WM_SYSCOMMAND, 0xF170 is SC_MONITORPOWER.
+return
 
 ProcessExist(Name){
 	Process, Exist, %Name%
