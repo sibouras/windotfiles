@@ -2,7 +2,7 @@
 F13::Alt
 
 ; Keep RButton working (mostly) normally.
-RButton::Send {RButton}
+RButton::RButton
 RButton & WheelUp::Send, {Volume_Up}
 RButton & WheelDown::Send, {Volume_Down}
 RButton & MButton::Send, {Volume_Mute}
