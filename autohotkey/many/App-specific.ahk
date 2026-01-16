@@ -16,7 +16,7 @@ ProcessExist(Name){
   !+l::Send, {Alt up}#{Right}
 #If
 
-#If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe")
+#If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe") || WinActive("ahk_exe chrome.exe")
 {
   !,::Send, ^+{Tab}
   !.::Send, ^{Tab}
@@ -26,7 +26,6 @@ ProcessExist(Name){
   !e::Send, ^+a
   ; No single alt
   Alt::KeyWait Alt
-
 }
 
 #If WinActive("ahk_exe firefox.exe")
@@ -36,23 +35,15 @@ ProcessExist(Name){
   !+,::Send, ^+{PgUp}
   !+.::Send, ^+{PgDn}
   !w::Send, ^{Tab}
+  !s::Send, ^+{.}
 }
 
 #IfWinActive, ahk_class CabinetWClass
-  ^BS::Send ^+{Left}{del}
-  ^u:: Send +{home}{del}
-
-  +Backspace::Send !{Up}
-
+  ^BS::Send, ^+{Left}{del}
+  ^u:: Send, +{home}{del}
+  !q:: Send, !{F4}
   !,::Send, ^+{Tab}
   !.::Send, ^{Tab}
-
-  F1::
-    Clipboard =
-    Send, ^c
-    ClipWait, 1
-    Clipboard = %Clipboard%
-  return
 #IfWinActive
 
 #IfWinActive, ahk_class #32770 Run

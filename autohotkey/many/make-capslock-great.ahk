@@ -68,8 +68,14 @@ wheel(direction){
   CenterY := Height / 2
   ControlClick, x%CenterX% y%Centery%, A,, %direction%,, NA
 }
-CapsLock & ,::wheel("WheelDown")
-CapsLock & .::wheel("WheelUp")
+F2::
+CapsLock & ,::
+  wheel("WheelDown")
+return
+F1::
+CapsLock & .::
+  wheel("WheelUp")
+return
 
 CapsLock & F2:: Send, {Volume_Down}
 CapsLock & F3:: Send, {Volume_Up}
