@@ -101,6 +101,8 @@ CapsLock & m::
     }
   }
   else if Key = s
+    Run helium.exe
+  else if Key = a
     Run firefox.exe
   else if Key = d
     Run code.exe

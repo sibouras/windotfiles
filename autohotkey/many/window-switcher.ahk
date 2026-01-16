@@ -2,7 +2,6 @@ RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & r::ToggleWindowVisibility("Alacritty")
 RAlt & w::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
-RAlt & g::ToggleWindowVisibility("ahk_exe Glasswire.exe")
 RAlt & x::ToggleWindowVisibility("ahk_exe Spotify.exe")
 
 ToggleWindowVisibility(windowClass) {
@@ -46,7 +45,7 @@ RAlt & b::
     WinActivate %brave%
 return
 
-RAlt & a::
+RAlt & g::
   SetTitleMatchMode, 2
   edge = ahk_exe msedge.exe
   GroupAdd, edgeGroup, Edge
@@ -58,6 +57,17 @@ RAlt & a::
 return
 
 RAlt & s::
+  SetTitleMatchMode, 2
+  helium = ahk_exe chrome.exe
+  GroupAdd, heliumGroup, - Helium
+  GroupAdd, heliumGroup, DevTools
+  If WinActive(helium)
+    GroupActivate, heliumGroup, r
+  else
+    WinActivate %helium%
+return
+
+RAlt & a::
   firefoxClass = ahk_class MozillaWindowClass
   GroupAdd, firefoxGroup, %firefoxClass%
   If WinActive(firefoxClass)
