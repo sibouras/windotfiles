@@ -12,16 +12,13 @@
             "id": "User.commandPalette.2A0DA8E0"
         },
         {
-            "command": "find",
-            "id": "User.find"
-        },
-        {
             "command": 
             {
-                "action": "moveFocus",
-                "direction": "down"
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
             },
-            "id": "User.moveFocus.F747588A"
+            "id": "User.splitPane.A6751878"
         },
         {
             "command": 
@@ -34,11 +31,14 @@
         {
             "command": 
             {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
+                "action": "moveFocus",
+                "direction": "down"
             },
-            "id": "User.splitPane.A6751878"
+            "id": "User.moveFocus.F747588A"
+        },
+        {
+            "command": "find",
+            "id": "User.find"
         },
         {
             "command": 
@@ -139,18 +139,18 @@
         {
             "command": 
             {
-                "action": "moveTab",
-                "direction": "backward"
-            },
-            "id": "User.moveTab.EF07D31B"
-        },
-        {
-            "command": 
-            {
                 "action": "resizePane",
                 "direction": "down"
             },
             "id": "User.resizePane.F747588A"
+        },
+        {
+            "command": 
+            {
+                "action": "moveTab",
+                "direction": "backward"
+            },
+            "id": "User.moveTab.EF07D31B"
         },
         {
             "command": 
@@ -161,16 +161,16 @@
             "id": "User.moveFocus.6CD791B"
         },
         {
-            "command": "toggleSplitOrientation",
-            "id": "User.toggleSplitOrientation"
-        },
-        {
             "command": 
             {
                 "action": "resizePane",
                 "direction": "right"
             },
             "id": "User.resizePane.87C324ED"
+        },
+        {
+            "command": "toggleSplitOrientation",
+            "id": "User.toggleSplitOrientation"
         },
         {
             "command": "toggleFocusMode",
@@ -193,18 +193,6 @@
     [
         {
             "id": null,
-            "keys": "alt+shift+up"
-        },
-        {
-            "id": "User.sendInput.F8A79DCB",
-            "keys": "ctrl+enter"
-        },
-        {
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
-        },
-        {
-            "id": null,
             "keys": "alt+right"
         },
         {
@@ -212,20 +200,32 @@
             "keys": "ctrl+alt+p"
         },
         {
-            "id": "User.sendInput.8882FD6D",
-            "keys": "shift+enter"
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+up"
+        },
+        {
+            "id": "User.sendInput.F8A79DCB",
+            "keys": "ctrl+enter"
         },
         {
             "id": "User.splitPane.A6751878",
             "keys": "alt+shift+d"
         },
         {
-            "id": "Terminal.MoveFocusPrevious",
-            "keys": "ctrl+period"
+            "id": "User.sendInput.8882FD6D",
+            "keys": "shift+enter"
         },
         {
             "id": "User.resizePane.2A0DA8E0",
             "keys": "ctrl+alt+shift+h"
+        },
+        {
+            "id": "Terminal.MoveFocusPrevious",
+            "keys": "ctrl+period"
         },
         {
             "id": "User.sendInput.F14AFF9C",
@@ -244,36 +244,36 @@
             "keys": "ctrl+c"
         },
         {
-            "id": null,
-            "keys": "alt+shift+right"
-        },
-        {
             "id": "User.sendInput.817164EE",
             "keys": "ctrl+backspace"
         },
         {
             "id": null,
-            "keys": "ctrl+shift+home"
+            "keys": "alt+shift+right"
         },
         {
             "id": "User.sendInput.73B98BEF",
             "keys": "ctrl+i"
         },
         {
+            "id": null,
+            "keys": "ctrl+shift+home"
+        },
+        {
             "id": "User.sendInput.A714A44F",
             "keys": "ctrl+space"
         },
         {
-            "id": "User.moveFocus.6CD791B",
-            "keys": "ctrl+alt+k"
+            "id": "User.moveFocus.87C324ED",
+            "keys": "ctrl+alt+l"
         },
         {
             "id": null,
             "keys": "alt+down"
         },
         {
-            "id": "User.moveFocus.87C324ED",
-            "keys": "ctrl+alt+l"
+            "id": "User.moveFocus.6CD791B",
+            "keys": "ctrl+alt+k"
         },
         {
             "id": "User.moveFocus.F747588A",
@@ -300,36 +300,40 @@
             "keys": "alt+shift+left"
         },
         {
-            "id": "User.moveFocus.2A0DA8E0",
-            "keys": "ctrl+alt+h"
-        },
-        {
             "id": null,
             "keys": "alt+enter"
+        },
+        {
+            "id": "User.moveFocus.2A0DA8E0",
+            "keys": "ctrl+alt+h"
         },
         {
             "id": "User.resizePane.F747588A",
             "keys": "ctrl+alt+shift+j"
         },
         {
-            "id": "Terminal.ScrollDownPage",
-            "keys": "shift+pgdn"
-        },
-        {
             "id": "User.resizePane.87C324ED",
             "keys": "ctrl+alt+shift+l"
+        },
+        {
+            "id": "Terminal.ScrollDownPage",
+            "keys": "shift+pgdn"
         },
         {
             "id": "User.toggleFocusMode",
             "keys": "ctrl+shift+m"
         },
         {
+            "id": "Terminal.DuplicatePaneDown",
+            "keys": "ctrl+alt+minus"
+        },
+        {
             "id": null,
             "keys": "ctrl+shift+down"
         },
         {
-            "id": "Terminal.DuplicatePaneDown",
-            "keys": "ctrl+alt+minus"
+            "id": null,
+            "keys": "alt+shift+minus"
         },
         {
             "id": "Terminal.DuplicatePaneRight",
@@ -337,15 +341,11 @@
         },
         {
             "id": null,
-            "keys": "alt+shift+minus"
+            "keys": "alt+shift+plus"
         },
         {
             "id": "User.markMode",
             "keys": "ctrl+["
-        },
-        {
-            "id": null,
-            "keys": "alt+shift+plus"
         },
         {
             "id": "User.toggleSplitOrientation",
@@ -376,12 +376,12 @@
             "keys": "shift+pgup"
         },
         {
-            "id": "Terminal.ScrollToBottom",
-            "keys": "ctrl+shift+pgdn"
-        },
-        {
             "id": "Terminal.ScrollToTop",
             "keys": "ctrl+shift+pgup"
+        },
+        {
+            "id": "Terminal.ScrollToBottom",
+            "keys": "ctrl+shift+pgdn"
         },
         {
             "id": null,
