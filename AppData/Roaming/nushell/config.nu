@@ -287,7 +287,7 @@ $env.config.keybindings ++= [
     mode: [emacs , vi_normal, vi_insert]
     event: {
       send: executehostcommand
-      cmd: "commandline edit --replace (history | get command | uniq | reverse | str join (char -i 0) | fzf --read0 --scheme=history --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
+      cmd: "commandline edit --replace (history | get command | uniq | reverse | str join (char -i 0) | fzf --read0 --scheme=history --layout=reverse --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) | decode utf-8 | str trim)"
     }
   }
   {
@@ -330,7 +330,7 @@ $env.config.keybindings ++= [
     mode: [emacs, vi_normal, vi_insert]
     # event: {
     #   send: executeHostCommand
-    #   cmd: "commandline edit --insert (history | last | get command | parse --regex '(?P<arg>[^ ]+)$' | get arg | first)"
+    #   cmd: "history | last | get command | ast -f $in | last | get content | commandline edit --insert $in"
     # }
     event: [
       { edit: InsertString, value: "!$" }
