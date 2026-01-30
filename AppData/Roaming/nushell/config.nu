@@ -54,7 +54,7 @@ $env.config.shell_integration.osc133 = false
 
 # Before Nushell output is displayed in the terminal
 # $env.config.hooks.display_output = "if (term size).columns >= 100 { table -e } else { table }"
-$env.config.hooks.display_output = "table"
+$env.config.hooks.display_output = "table --icons"
 
 $env.config.highlight_resolved_externals = true
 $env.config.color_config = $dark_theme
@@ -722,7 +722,7 @@ def h [n = 20] {
 
 # short pwd
 def pwds [] {
-  $env.PWD | str replace $nu.home-path '~'
+  $env.PWD | str replace $nu.home-dir '~'
 }
 
 # shorter pwd
@@ -733,7 +733,7 @@ def pwdss [sep?: string] {
 
   let tokens = (
     ["!" $env.PWD] | str join
-    | str replace (["!" $nu.home-path] | str join) "~"
+    | str replace (["!" $nu.home-dir] | str join) "~"
     | split row $sep
   )
 

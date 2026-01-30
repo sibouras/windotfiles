@@ -2,9 +2,9 @@
 
 def create_left_prompt [] {
   let path_segment = if (is-admin) {
-    $" (ansi red_bold)($env.PWD | str replace $nu.home-path '~')"
+    $" (ansi red_bold)($env.PWD | str replace $nu.home-dir '~')"
   } else {
-    $" (ansi green_bold)($env.PWD | str replace $nu.home-path '~')"
+    $" (ansi green_bold)($env.PWD | str replace $nu.home-dir '~')"
   }
 
   let duration_segment = do {
