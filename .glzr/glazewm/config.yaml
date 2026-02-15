@@ -45,10 +45,16 @@ gaps:
   # Gap between adjacent windows.
   inner_gap: '-2px'
 
-  # Gap between windows and the screen edge.
+  # Standard gap between windows and screen edges
   outer_gap:
-    # top: '40px'
-    top: '-8px'
+    top: '-4px'
+    right: '-1px'
+    bottom: '0px'
+    left: '-1px'
+
+  # Overrides `outer_gap` when there is just one window on a workspace.
+  single_window_outer_gap:
+    top: '-4px'
     right: '-1px'
     bottom: '2px'
     left: '-1px'
@@ -91,7 +97,7 @@ window_effects:
       enabled: true
       style: 'square'
     transparency:
-      enabled: true
+      enabled: false
       opacity: '95%'
 
 window_behavior:
@@ -144,6 +150,9 @@ window_rules:
         window_title: { regex: '.*? - Peek' }
       - window_process: { equals: 'Lively' }
         window_class: { regex: 'HwndWrapper' }
+      - window_title: { regex: 'Window Spy' }
+      - window_process: { equals: 'ShareX' }
+      - window_process: { equals: 'wireguard' }
 
   - commands: ['set-floating']
     match:
@@ -153,7 +162,7 @@ window_rules:
       # - window_process: { equals: "crow" }
       # - window_process: { equals: "Taskmgr" }
       # - window_process: { equals: "Deceive" }
-      - window_title: { regex: 'Window Spy' }
+      - window_title: { regex: 'File Explorer' }
       - window_title: { equals: 'Calculator' }
       - window_title: { equals: 'Library' } # firefox bookmarks
 
