@@ -76,3 +76,12 @@ $env.FZF_DEFAULT_OPTS = (
   + "ctrl-down:preview-half-page-down,ctrl-up:preview-half-page-up,ctrl-a:toggle-all,alt-s:toggle-sort,alt-w:toggle-preview-wrap,"
   + "ctrl-f:page-down,ctrl-b:page-up,ctrl-j:half-page-down,ctrl-k:half-page-up"
 )
+
+# prepend binaries to path to improve their startup time
+$env.PATH = [
+  $"($env.USERPROFILE)\\a\\links", # links to scoop shims(they slow down startup time)
+  $"($env.USERPROFILE)\\a\\bin",
+  $"($env.USERPROFILE)\\.local\\bin",
+  $"($env.USERPROFILE)\\AppData\\Local\\Microsoft\\WinGet\\Links",
+  ...$env.PATH
+] | uniq
