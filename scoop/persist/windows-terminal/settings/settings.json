@@ -181,14 +181,13 @@
             "id": "User.togglePaneZoom"
         }
     ],
+    "centerOnLaunch": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
     "disableAnimations": true,
     "firstWindowPreference": "defaultProfile",
-    "initialCols": 98,
-    "initialPosition": "645,0",
-    "initialRows": 35,
+    "initialPosition": ",",
     "keybindings": 
     [
         {
@@ -396,7 +395,7 @@
             "keys": "ctrl+alt+left"
         }
     ],
-    "launchMode": "default",
+    "launchMode": "maximized",
     "newTabMenu": 
     [
         {
