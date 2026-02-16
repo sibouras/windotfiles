@@ -11,7 +11,7 @@ end, 500, Status.RIGHT)
 require("git"):setup()
 require("pref-by-location"):setup({})
 
-require("mime-ext"):setup {
+require("mime-ext.local"):setup {
   -- Expand the existing extension database (lowercase), for example:
   with_exts = {
     mk = "text/makefile",

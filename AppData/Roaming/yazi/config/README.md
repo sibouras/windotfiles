@@ -12,6 +12,12 @@ To upgrade all the plugins to the latest version:
 ya pkg upgrade
 ```
 
+To upgrade specific packages
+
+```bash
+ya pkg upgrade yazi-rs/plugins:mime-ext yazi-rs/plugins:git
+```
+
 plugins
 
 ```bash

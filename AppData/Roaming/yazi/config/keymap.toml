@@ -3,25 +3,31 @@
 [mgr]
 
 prepend_keymap = [
-  { on = ["F"], run = "plugin zoom-preview", desc = "Zoom or restore preview pane" },
-  { on = ["T"], run = "plugin toggle-pane min-preview", desc = "Hide or show preview pane" },
-  { on = ["R"], run = "plugin toggle-pane min-parent", desc = "Hide or show parent pane" },
-  { on = ["C"], run = "plugin ouch zip", desc = "Compress with ouch" },
-  { on = ["6"], run = "plugin test", desc = "test" },
-  { on = ["e"], run = "plugin open-with-cmd block", desc = "Execute command in the terminal" },
-  { on = ["E"], run = "plugin open-with-cmd", desc = "Execute command" },
+  { on = "1", run = "plugin change-ratio -- 2 4 4" },
+  { on = "2", run = "plugin change-ratio -- 1 4 0" },
+  { on = "3", run = "plugin change-ratio -- 0 1 3" },
+  { on = "4", run = "plugin change-ratio -- 0 0 1" },
+  # { on = "F", run = "plugin zoom-preview", desc = "Zoom or restore preview pane" },
+  # { on = "T", run = "plugin toggle-pane min-preview", desc = "Hide or show preview pane" },
+  # { on = "R", run = "plugin toggle-pane min-parent", desc = "Hide or show parent pane" },
+  { on = "C", run = "plugin ouch zip", desc = "Compress with ouch" },
+  { on = "6", run = "plugin test", desc = "test" },
+  { on = "e", run = "plugin open-with-cmd block", desc = "Execute command in the terminal" },
+  { on = "E", run = "plugin open-with-cmd", desc = "Execute command" },
   { on = ["g", "s"], run = "plugin first-file", desc = "Jump to the first file" },
 
-  { on = ["<C-k>"], run = "arrow -5", desc = "Move cursor up 5 lines" },
-  { on = ["<C-j>"], run = "arrow 5", desc = "Move cursor down 5 lines" },
-  { on = ["<C-Enter>"], run = "arrow 5", desc = "Move cursor down 5 lines" },
-  { on = ["K"], run = "seek -5", desc = "Seek up 5 units in the preview" },
-  { on = ["J"], run = "seek 5", desc = "Seek down 5 units in the preview" },
+  { on = "<C-k>", run = "arrow -5", desc = "Move cursor up 5 lines" },
+  { on = "<C-j>", run = "arrow 5", desc = "Move cursor down 5 lines" },
+  { on = "<C-Enter>", run = "arrow 5", desc = "Move cursor down 5 lines" },
+  { on = "K", run = "seek -5", desc = "Seek up 5 units in the preview" },
+  { on = "J", run = "seek 5", desc = "Seek down 5 units in the preview" },
 
-  { on = ["w"], run = 'shell "nu" --block', desc = "Open shell here" },
-  { on = ["W"], run = "tasks:show", desc = "Show the tasks manager" },
-  { on = ["i"], run = 'shell --block --interactive --cursor=0 " %* & pause"' },
-  { on = ["R"], run = "refresh", desc = "Refresh" },
+  { on = "w", run = 'shell "$SHELL" --block', desc = "Open shell here", for = "linux" },
+  { on = "w", run = 'shell "nu" --block', desc = "Open shell here", for = "windows" },
+  { on = "W", run = "tasks:show", desc = "Show the tasks manager" },
+  { on = "i", run = 'shell --block --interactive --cursor=0 " %s ; read _"', for = "linux" },
+  { on = "i", run = 'shell --block --interactive --cursor=0 " %s & pause"', for = "windows" },
+  { on = "R", run = "refresh", desc = "Refresh" },
 
   { on = ["c", "c"], run = "copy path --separator=unix", desc = "Copy the file path" },
   { on = ["c", "d"], run = "copy dirname --separator=unix", desc = "Copy the directory path" },
@@ -69,43 +75,40 @@ prepend_keymap = [
 
 [tasks]
 
-prepend_keymap = [{ on = ["W"], run = "close", desc = "Hide the task manager" }]
+prepend_keymap = [{ on = "W", run = "close", desc = "Hide the task manager" }]
 
 [pick]
 
 prepend_keymap = [
-  { on = ["q"], run = "close", desc = "Cancel selection" },
-  { on = ["l"], run = "close --submit", desc = "Submit the selection" },
-
-  { on = ["<C-k>"], run = "arrow -5", desc = "Move cursor up 5 lines" },
-  { on = ["<C-j>"], run = "arrow 5", desc = "Move cursor down 5 lines" },
-  { on = ["<C-Enter>"], run = "arrow 5", desc = "Move cursor down 5 lines" },
+  { on = "q", run = "close", desc = "Cancel selection" },
+  { on = "l", run = "close --submit", desc = "Submit the selection" },
+  { on = "<C-k>", run = "arrow -5", desc = "Move cursor up 5 lines" },
+  { on = "<C-j>", run = "arrow 5", desc = "Move cursor down 5 lines" },
+  { on = "<C-Enter>", run = "arrow 5", desc = "Move cursor down 5 lines" },
 ]
 
 [input]
 
 prepend_keymap = [
-  # { on = ["<Esc>"], run = "close", desc = "Cancel input" },
-  # { on = ["<Esc>"], run = "escape", desc = "Go back the normal mode, or cancel input" },
-  { on = ["<Esc>"], run = ["close", "mgr:escape --filter"], desc = "Close input and cancel the filter" },
-
-  { on = ["<C-Left>"], run = "backward", desc = "Move back to the start of the current or previous word" },
-  { on = ["<C-Right>"], run = "forward --after-last-char", desc = "Move forward to the end of the current or next word" },
-  { on = ["<C-Delete>"], run = "kill forward", desc = "Kill forwards to the end of the current word" },
+  { on = "<C-c>", run = "escape", desc = "Back to normal mode, or cancel input" },
+  { on = "<Esc>", run = ["close", "mgr:escape --filter"], desc = "Close input and cancel the filter" },
+  { on = "<C-Right>", run = "forward --after-last-char", desc = "Move forward to the end of the current or next word" },
+  { on = "u", run = ["undo", "casefy lower"], desc = "Undo, or lowercase if in visual mode" },
+  { on = "U", run = ["redo", "casefy upper"], desc = "Undo, or uppercase if in visual mode" },
 ]
 
 [cmp]
 
 prepend_keymap = [
-  { on = ["<C-k>"], run = "arrow prev", desc = "Previous item" },
-  { on = ["<C-j>"], run = "arrow next", desc = "Next item" },
-  { on = ["<C-Enter>"], run = "arrow next", desc = "Next item" },
+  { on = "<C-k>", run = "arrow prev", desc = "Previous item" },
+  { on = "<C-j>", run = "arrow next", desc = "Next item" },
+  { on = "<C-Enter>", run = "arrow next", desc = "Next item" },
 ]
 
 [help]
 
 prepend_keymap = [
-  { on = ["<C-k>"], run = "arrow -5", desc = "Move cursor up 5 lines" },
-  { on = ["<C-j>"], run = "arrow 5", desc = "Move cursor down 5 lines" },
-  { on = ["<C-Enter>"], run = "arrow 5", desc = "Move cursor down 5 lines" },
+  { on = "<C-k>", run = "arrow -5", desc = "Move cursor up 5 lines" },
+  { on = "<C-j>", run = "arrow 5", desc = "Move cursor down 5 lines" },
+  { on = "<C-Enter>", run = "arrow 5", desc = "Move cursor down 5 lines" },
 ]
