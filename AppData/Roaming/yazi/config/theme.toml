@@ -1,13 +1,9 @@
-"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
-
 [mgr]
 cwd = { fg = "#27a1b9" }
-
 # Count
 count_copied = { fg = "black", bg = "green" }
 count_cut = { fg = "black", bg = "red" }
 count_selected = { fg = "black", bg = "yellow" }
-
 # Border
 border_symbol = "│"
 border_style = { fg = "#181a22" }

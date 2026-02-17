@@ -1,0 +1,19 @@
+[files]
+include = ["*.toml"]
+
+[format]
+[format.rules]
+line-width = 150
+string-quote-style = "double"
+
+[[schemas]]
+path = "https://yazi-rs.github.io/schemas/yazi.json"
+include = ["yazi.toml"]
+
+[[schemas]]
+path = "https://yazi-rs.github.io/schemas/keymap.json"
+include = ["keymap.toml"]
+
+[[schemas]]
+path = "https://yazi-rs.github.io/schemas/theme.json"
+include = ["theme.toml"]
