@@ -406,6 +406,10 @@
     {
         "defaults": 
         {
+            "environment":
+            {
+                "COLORTERM": "truecolor"
+            },
             "font": 
             {
                 "face": "JetBrainsMono Nerd Font",
