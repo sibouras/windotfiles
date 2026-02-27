@@ -1,5 +1,5 @@
 ---
-# The editor to use with 'cheat -e <sheet>'. Defaults to $EDITOR or $VISUAL.
+# The editor to use with 'cheat -e <sheet>'. Overridden by $VISUAL or $EDITOR.
 editor: nvim
 
 # Should 'cheat' always colorize output?
@@ -41,19 +41,20 @@ pager: moor -quit-if-one-screen
 cheatpaths:
   # Cheatsheets that are tagged "personal" are stored here by default:
   - name: personal
-    path: ~\scoop\apps\cheat\current\cheatsheets\personal
+    path: ~\scoop\persist\cheat\cheatsheets\personal
     tags: [personal]
     readonly: false
 
   # Cheatsheets that are tagged "work" are stored here by default:
   # - name: work
-  #   path: WORK_PATH
-  #   tags: [ work ]
+  #   path: ~\scoop\persist\cheat\cheatsheets\work
+  #   tags: [work]
   #   readonly: false
 
-  # Community cheatsheets are stored here by default:
+  # Community cheatsheets (https://github.com/cheat/cheatsheets):
+  # To install: git clone https://github.com/cheat/cheatsheets ~\scoop\persist\cheat\cheatsheets\community
   - name: community
-    path: ~\scoop\apps\cheat\current\cheatsheets\community
+    path: ~\scoop\persist\cheat\cheatsheets\community
     tags: [community]
     readonly: true
 
