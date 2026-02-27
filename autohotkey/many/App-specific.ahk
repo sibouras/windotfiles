@@ -11,10 +11,10 @@ ProcessExist(Name){
 	return Errorlevel
 }
 
-#If not ProcessExist("glazewm.exe")
-  !+h::Send, {Alt up}#{Left}
-  !+l::Send, {Alt up}#{Right}
-#If
+; #If not ProcessExist("glazewm.exe")
+;   !+h::Send, {Alt up}#{Left}
+;   !+l::Send, {Alt up}#{Right}
+; #If
 
 #If WinActive("ahk_exe brave.exe") || WinActive("ahk_exe msedge.exe") || WinActive("ahk_exe chrome.exe")
 {

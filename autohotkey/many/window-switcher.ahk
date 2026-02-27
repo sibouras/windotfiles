@@ -133,7 +133,10 @@ return
 
 ; focus previous window
 ; from: https://www.autohotkey.com/boards/viewtopic.php?t=97358
-$!o::focus(2)
+$!o::
+$!`::
+  focus(2)
+return
 $!\::focus(3)
 
 focus(nInStack) {
