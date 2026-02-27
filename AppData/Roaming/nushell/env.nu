@@ -64,6 +64,7 @@ $env.COLORTERM = "truecolor"
 $env.LESS = '--quiet'
 $env.MOOR = '--no-statusbar --style=github-dark'
 $env.PAGER = 'moor --no-linenumbers -quit-if-one-screen'
+$env.BAT_THEME = 'base16'
 $env.TAILSPIN_PAGER = "moor --follow [FILE]"
 $env.YAZI_FILE_ONE = 'C:\Program Files\Git\usr\bin\file.exe'
 $env.NU_HELPER = '--help'

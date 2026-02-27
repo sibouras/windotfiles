@@ -16,6 +16,7 @@ require("mime-ext.local"):setup {
   with_exts = {
     mk = "text/makefile",
     ahk = "text/autohotkey",
+    nu = "text/nu",
   },
 
   -- If the mime-type is not in both filename and extension databases,
