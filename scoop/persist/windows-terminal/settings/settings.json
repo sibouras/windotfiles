@@ -359,12 +359,8 @@
             "keys": "alt+shift+comma"
         },
         {
-            "id": "Terminal.ScrollDown",
-            "keys": "pgdn"
-        },
-        {
             "id": "Terminal.ScrollUp",
-            "keys": "pgup"
+            "keys": "ctrl+pgup"
         },
         {
             "id": null,
@@ -393,6 +389,10 @@
         {
             "id": null,
             "keys": "ctrl+alt+left"
+        },
+        {
+            "id": "Terminal.ScrollDown",
+            "keys": "ctrl+pgdn"
         }
     ],
     "launchMode": "maximized",
@@ -406,7 +406,7 @@
     {
         "defaults": 
         {
-            "environment":
+            "environment": 
             {
                 "COLORTERM": "truecolor"
             },
