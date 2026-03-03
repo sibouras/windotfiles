@@ -50,11 +50,9 @@ core: # See `dircolors -p` for explanations
 
   directory:
     foreground: blue6
-    font-style: bold
 
   executable_file: # Files with exec permissions
     foreground: green1
-    font-style: bold
 
   file_with_capability:
     background: gray1
@@ -71,12 +69,10 @@ core: # See `dircolors -p` for explanations
   sticky_other_writable: # Usually a directory on Linux
     foreground: bg
     background: blue6
-    font-style: bold
 
   other_writable: # Ditto ^
     foreground: blue6
     background: gray1
-    font-style: bold
 
   symlink:
     foreground: blue4
@@ -94,55 +90,43 @@ core: # See `dircolors -p` for explanations
   socket:
     foreground: green2
     background: bg_green2
-    font-style: bold
 
   fifo:
     foreground: orange
     background: bg_orange
-    font-style: bold
 
   door:
     foreground: green1
     background: bg_green1
-    font-style: bold
 
   block_device:
     foreground: red1
     background: bg_red1
-    font-style: bold
 
   character_device:
     foreground: yellow
     background: bg_yellow
-    font-style: bold
 
 executable: # Libs and exec binaries (without exec permissions)
   foreground: green2
 
 archives:
   foreground: red1
-  font-style: bold
 
 media:
   audio:
     foreground: blue3
-    font-style: bold
   image:
     foreground: purple1
-    font-style: bold
   video:
     foreground: green3
-    font-style: bold
   fonts:
     foreground: green2
-    font-style: bold
   3d:
     foreground: purple1
-    font-style: bold
 
 office:
   foreground: purple2
-  font-style: bold
 
 text:
   foreground: fg
@@ -152,13 +136,10 @@ text:
       foreground: blue2
   licenses:
     foreground: fg
-    font-style: bold
   special:
     foreground: blue5
-    font-style: bold
   todo:
     foreground: blue1
-    font-style: bold
 
 markup:
   foreground: fg
