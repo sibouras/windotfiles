@@ -4,10 +4,10 @@
 
 calc_padding := 20 ; minimum direction/alignment overlap for target windows
 
-!h:: FocusWin("left")
-!l:: FocusWin("right")
-!k:: FocusWin("up")
-!j:: FocusWin("down")
+$!h:: FocusWin("left")
+$!l:: FocusWin("right")
+$!k:: FocusWin("up")
+$!j:: FocusWin("down")
 
 ; ==== DEVELOPMENT SHORTCUTS ====
 ; Reload this script
