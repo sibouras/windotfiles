@@ -186,6 +186,10 @@
     "copyOnSelect": false,
     "defaultProfile": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
     "disableAnimations": true,
+    "disabledProfileSources": 
+    [
+        "Windows.Terminal.Azure"
+    ],
     "firstWindowPreference": "defaultProfile",
     "initialPosition": ",",
     "keybindings": 
@@ -432,12 +436,6 @@
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "Command Prompt"
-            },
-            {
-                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": false,
-                "name": "Azure Cloud Shell",
-                "source": "Windows.Terminal.Azure"
             },
             {
                 "colorScheme": "Tokyo Night",
