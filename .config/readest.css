@@ -1,0 +1,10 @@
+body > * {
+	max-width: 750px;
+	margin-inline: auto !important;
+}
+span.cf.ic {
+	color: cornflowerblue;
+}
+em.comment {
+	color: forestgreen;
+}
