@@ -572,9 +572,9 @@ def l [
     [$.type $.name]
   }
   if ($extension) {
-    ls --all | where type == file | sort-by --reverse=$reverse { get name | path parse | get extension } ...$columns | reject type
+    ls --all | where type == file | sort-by --reverse=$reverse { get name | path parse | get extension } ...$columns | select name size modified
   } else {
-    ls --all ...$pattern | sort-by --reverse=$reverse ...$columns | reject type
+    ls --all ...$pattern | sort-by --reverse=$reverse ...$columns | select name size modified
   }
 }
 
@@ -591,7 +591,7 @@ def la [path:glob = '.'] {
     } else {
       $row.Size | str replace ',' '' | into filesize
     }
-  } | into datetime Date | reject Mode | rename --block {str downcase} | metadata set -l
+  } | into datetime Date | reject Mode | rename --block {str downcase} | metadata set --path-columns [name]
   | move size date --after name | rename --column {date: modified}
 }
 
@@ -661,6 +661,10 @@ def git-push [m: string] {
 # git log (count)
 def gl [count: int = 10] {
   git log $'--max-count=($count)' --color=always
+}
+
+def git-branches [] {
+  git branch --list | lines | each { parse -r '(\*)?\s+(\S+)' | get 0 } | rename active name | update active { $in == "*" }
 }
 
 # Universal help command, combining https://tldr.sh/ with nushell’s help for built-ins:
@@ -852,11 +856,15 @@ def sfso [] {
 }
 
 # scoop search structured wrapper (much faster)
-def "sfss" [
+def sfss [
   term:string # the term to search for
 ] {
   # sfsu search $term | parse -r '\s*(.*)\s*\((.*)\)' | rename package version
   sfsu search --json $term | from json | transpose | reject column0 | flatten -a | sort-by bucket | reject bins
+}
+
+def binl [] {
+  bin list | str trim | detect columns --guess | str replace $'($env.USERPROFILE)\a\bin\' '' Path
 }
 
 def "list todos" [] {

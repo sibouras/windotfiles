@@ -66,6 +66,7 @@ $env.MOOR = '--no-statusbar --style=github-dark'
 $env.PAGER = 'moor --no-linenumbers -quit-if-one-screen'
 $env.BAT_THEME = 'base16'
 $env.TAILSPIN_PAGER = "moor --follow [FILE]"
+$env.HELIX_RUNTIME = $'($env.USERPROFILE)\src\helix\runtime'
 $env.YAZI_FILE_ONE = 'C:\Program Files\Git\usr\bin\file.exe'
 $env.NU_HELPER = '--help'
 # vivid generate my_tokyonight-night | save -f ($nu.data-dir | path join ls_colors.txt)
