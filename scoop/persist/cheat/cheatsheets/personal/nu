@@ -1,0 +1,8 @@
+# date difference to another timezone
+(date now) - (date now | date to-timezone (date list-timezone | get timezone | to text | fzf --height=60%) | format date '%F %r' | into datetime) | format duration hr
+
+# get video duration
+ffprobe -v error -show_entries format=duration -of csv=p=0 'input.mp4' | into duration --unit sec
+
+# get duration of all mp4 files in current directory
+ls *.mp4 | get name | par-each {|it| ffprobe -v error -show_entries format=duration -of csv=p=0 $it} | into duration --unit sec | math sum

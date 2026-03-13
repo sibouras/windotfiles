@@ -1,0 +1,14 @@
+# -t mp4 is a preset alias: https://www.mankier.com/1/yt-dlp#Options-Preset_Aliases
+yt-dlp -r 5.0M -t mp4 -o '%(title)s.%(ext)s' URL_here
+
+# Download the best video available with the largest resolution but no better than 1080p, no hdr, in mp4 container
+yt-dlp -S 'res:1080,hdr:HLG' --merge-output-format mp4 --remux-video mp4 URL_here
+
+# Download youtube video with thumbnail, metadata, subs and sponsorblock
+yt-dlp -S 'res:1080,hdr:HLG' --merge-output-format mp4 --remux-video mp4 --embed-thumbnail --embed-metadata --embed-subs --sponsorblock-remove default URL_here
+
+# tip: add bit rate metadata to opus audio in mp4/mkv container
+mkvpropedit --add-track-statistics-tags video.mk4
+
+# Extract best audio from a video
+yt-dlp --extract-audio --embed-thumbnail --embed-chapters --embed-metadata URL_here

@@ -1,0 +1,17 @@
+# delete duplicates
+atuin history dedup --before now --dupkeep=1
+
+# list history the nushell way
+atuin history list --format "{time}\t{command}" | lines | split column "\t" time command
+
+# search for commands that ran 10 minutes ago
+atuin search --after '10 minutes ago'
+
+# delete commands that ran 10 minutes ago
+atuin search --delete '' --after '10 minutes ago'
+
+# delete all commands that failed
+atuin search --delete '' --exclude-exit 0 --before now
+
+# search for commands that failed 10 minutes ago
+atuin search --exclude-exit 0 --after '10 minutes ago'

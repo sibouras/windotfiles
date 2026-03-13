@@ -1,0 +1,2 @@
+# onefetch custom structure
+onefetch --disabled-fields description head pending version dependencies authors last-change url churn license --no-art --no-title --no-color-palette

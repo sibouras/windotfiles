@@ -1,0 +1,14 @@
+# display the current time zone ID
+tzutil /g
+
+# start Photos app with a specific file
+start ms-photos:viewer?fileName=($env.pwd)\(ls | first | get name)
+
+# request a detailed display of the tasks scheduled on the local computer in table format
+schtasks /query /fo LIST /v | moor
+
+# request a detailed display of the tasks scheduled on the local computer
+schtasks /query /v | moor
+
+# show wifi profiles
+netsh wlan show profile

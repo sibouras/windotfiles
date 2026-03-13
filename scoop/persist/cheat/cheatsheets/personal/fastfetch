@@ -1,0 +1,2 @@
+# fastfetch custom structure
+fastfetch -l none --structure battery:brightness:memory:display:monitor:kernel:uptime:users:wifi

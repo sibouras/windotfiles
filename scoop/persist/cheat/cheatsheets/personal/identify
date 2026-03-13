@@ -1,0 +1,2 @@
+# show image info
+identify -format "%f, width:%w, height:%h, size:%b, quality:%Q\n" -precision 4 file_name
