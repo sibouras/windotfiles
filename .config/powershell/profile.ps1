@@ -5,7 +5,7 @@ $env:path += ";$scripts"
 $env:EDITOR = "nvim"
 $env:PAGER = "bat"
 $env:FX_SHOW_SIZE = "true"
-. "$HOME\.config\powershell\lf_icons.ps1"
+# . "$HOME\.config\powershell\lf_icons.ps1"
 
 Set-Alias l lsd
 Set-Alias v nvim
@@ -335,12 +335,6 @@ Set-PSReadLineKeyHandler -Key Ctrl+V `
   }
 }
 
-### Chocolatey profile
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
-}
-
 ### fzf config
 $env:FZF_DEFAULT_COMMAND = 'fd --type f'
 $env:FZF_CTRL_T_COMMAND = "$FZF_DEFAULT_COMMAND"
@@ -371,5 +365,4 @@ Set-PSReadlineKeyHandler `
 # Usage: Add 'Invoke-Expression (&starship init powershell)' to the end of your
 # PowerShell $PROFILE. Prerequisites: A Powerline font installed and enabled in
 # your terminal. 'starship' suggests installing 'extras/vcredist2019'.
-Invoke-Expression (&starship init powershell)
-
+# Invoke-Expression (&starship init powershell)
