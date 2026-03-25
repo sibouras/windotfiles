@@ -848,7 +848,12 @@ def tolink [name: string] {
 
 # structured scoop list
 def sfsl [] {
-  sfsu list --json | from json | reject notes | sort-by updated | update updated { |row| $row.updated | split row " " | first }
+  sfsu list --json | from json | reject notes | sort-by updated | update updated {format date %F}
+}
+
+# structured scoop export
+def scoope [] {
+  scoop export | from json | get apps | select Name Version Source Updated | rename name version source updated | sort-by updated | update updated {format date %F}
 }
 
 def sfso [] {
