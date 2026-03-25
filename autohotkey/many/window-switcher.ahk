@@ -1,7 +1,6 @@
 RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
 RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & r::ToggleWindowVisibility("Alacritty")
-RAlt & w::ToggleWindowVisibility("ahk_exe WindowsTerminal.exe")
 RAlt & x::ToggleWindowVisibility("ahk_exe Spotify.exe")
 
 ToggleWindowVisibility(windowClass) {
@@ -31,6 +30,16 @@ RAlt & f::
     } else {
       WinActivate, %mpv%
     }
+  }
+return
+
+RAlt & w::
+  wt = ahk_exe WindowsTerminal.exe
+  GroupAdd, wtGroup, %wt%
+  If WinActive(wt)
+    GroupActivate, wtGroup, r
+  else {
+    WinActivate %wt%
   }
 return
 
