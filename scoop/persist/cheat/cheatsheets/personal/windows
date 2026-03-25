@@ -12,3 +12,6 @@ schtasks /query /v | moor
 
 # show wifi profiles
 netsh wlan show profile
+
+# Show the status of all service
+sc query | moor
