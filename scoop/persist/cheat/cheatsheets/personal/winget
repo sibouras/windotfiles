@@ -1,0 +1,5 @@
+# winget info
+winget --info
+
+# Show detailed information about packages
+winget list --details package_name

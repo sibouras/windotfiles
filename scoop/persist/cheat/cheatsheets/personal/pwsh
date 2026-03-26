@@ -1,0 +1,5 @@
+# Get the maximum ram capacity
+Get-CimInstance Win32_PhysicalMemoryArray | Select-Object MaxCapacity
+
+# List current RAM sticks
+Get-CimInstance Win32_PhysicalMemory | Select-Object DeviceLocator, Capacity
