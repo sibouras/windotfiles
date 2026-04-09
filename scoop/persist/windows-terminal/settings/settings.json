@@ -331,7 +331,7 @@
             "keys": "ctrl+alt+minus"
         },
         {
-            "id": null,
+            "id": "Terminal.ScrollDown",
             "keys": "ctrl+shift+down"
         },
         {
@@ -364,10 +364,6 @@
         },
         {
             "id": "Terminal.ScrollUp",
-            "keys": "ctrl+pgup"
-        },
-        {
-            "id": null,
             "keys": "ctrl+shift+up"
         },
         {
@@ -393,10 +389,6 @@
         {
             "id": null,
             "keys": "ctrl+alt+left"
-        },
-        {
-            "id": "Terminal.ScrollDown",
-            "keys": "ctrl+pgdn"
         }
     ],
     "launchMode": "maximized",
