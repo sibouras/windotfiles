@@ -1,26 +1,6 @@
 SetCapsLockState, AlwaysOff
 
-CapsLock & `;::
-GetKeyState, CapsLockState, CapsLock, T
-if CapsLockState = D
-  SetCapsLockState, AlwaysOff
-else
-  SetCapsLockState, AlwaysOn
-return
-
-; CapsLock::Send, {ESC}
-; +CapsLock::Send, +{ESC}
-
-; this needs to be above CapsLock & j and CapsLock & k
-; !j::
-;   if (not GetKeyState("Control") and not getKeyState("Shift"))
-;     Send, {ALTDOWN}{TAB}ALTUP}
-; return
-
-; !k::
-;   if (not GetKeyState("Control") and not getKeyState("Shift"))
-;     Send, {ALTDOWN}{SHIFTDOWN}{TAB}{SHIFTUP}ALTUP}
-; return
+CapsLock & `;::Capslock
 
 q:: Esc
 ^q:: Send, ^q
