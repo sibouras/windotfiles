@@ -20,20 +20,21 @@ CapsLock & o:: End
 CapsLock & ':: Del
 CapsLock & u:: PgUp
 CapsLock & p:: PgDn
+CapsLock & a:: Lwin
 CapsLock & s:: Alt
 CapsLock & d:: Shift
 CapsLock & f:: Ctrl
 CapsLock & g:: AppsKey
-CapsLock & a:: Send, ^a
-CapsLock & y:: Send, ^y
-CapsLock & c:: Send, ^c
-CapsLock & v:: Send, ^v
-CapsLock & [:: Send, ^[
-CapsLock & ]:: Insert
-CapsLock & t:: Send, ^t
-CapsLock & r:: Send, #t
-CapsLock & e:: Send, ^+{Tab}
-CapsLock & w:: Send, ^w
+CapsLock & y:: ^y
+CapsLock & c:: MButton
+CapsLock & v:: LButton
+CapsLock & [:: ^[
+CapsLock & ]:: ^]
+CapsLock & \:: Insert
+CapsLock & t:: ^t
+CapsLock & w:: ^w
+CapsLock & .:: ^PgDn
+CapsLock & ,:: ^PgUp
 
 ; CapsLock & c:: Run nircmd.exe mutesysvolume 0 microphone ; unmute
 ; CapsLock & x:: Run nircmd.exe mutesysvolume 1 microphone ; Mute
@@ -48,22 +49,23 @@ wheel(direction){
   CenterY := Height / 2
   ControlClick, x%CenterX% y%Centery%, A,, %direction%,, NA
 }
-F2::
-CapsLock & ,::
-  wheel("WheelDown")
-return
-F1::
-CapsLock & .::
-  wheel("WheelUp")
-return
+CapsLock & e:: wheel("WheelDown")
+CapsLock & r:: wheel("WheelUp")
 
-CapsLock & F2:: Send, {Volume_Down}
-CapsLock & F3:: Send, {Volume_Up}
-CapsLock & F4:: Send, {Volume_Mute}
-CapsLock & F5:: Send, {Media_Play_Pause}
-CapsLock & F6:: Send, {Media_Stop}
-CapsLock & F7:: Send, {Media_Prev}
-CapsLock & F8:: Send, {Media_Next}
+F2:: Volume_Down
+F3:: Volume_Up
+F4:: Volume_Mute
+
+CapsLock & 1:: F1
+CapsLock & 2:: F2
+CapsLock & 3:: F3
+CapsLock & 4:: F4
+
+CapsLock & F5:: Media_Play_Pause
+CapsLock & F6:: Media_Stop
+CapsLock & F7:: Media_Prev
+CapsLock & F8:: Media_Next
+
 
 CapsLock & m::
   Input Key, L1 M
