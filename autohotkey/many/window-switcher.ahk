@@ -127,7 +127,7 @@ return
 ;   }
 ; return
 
-!i::Send, ^!{Tab}
+!i::^!Tab
 ; #IfWinActive, ahk_class MultitaskingViewFrame ; doesn't work in windows 11
 #IfWinActive, ahk_class XamlExplorerHostIslandWindow
   h::Left
@@ -143,7 +143,6 @@ return
 ; focus previous window
 ; from: https://www.autohotkey.com/boards/viewtopic.php?t=97358
 $!o::
-$!`::
   focus(2)
 return
 $!\::focus(3)
@@ -177,6 +176,7 @@ focus(nInStack) {
 ; switch between all windows of the current window class
 ; https://superuser.com/a/1783158
 !+o::
+$!`::
   WinGetClass, win_class, A
   WinGet, win_id, ID, A
   WinGet, active_process_name, ProcessName, A
