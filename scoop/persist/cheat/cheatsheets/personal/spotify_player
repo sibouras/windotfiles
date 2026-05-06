@@ -1,0 +1,2 @@
+# play a specific playlist
+spotify_player playback start context playlist --id 'playlist_id'
