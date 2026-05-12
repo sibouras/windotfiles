@@ -9,10 +9,8 @@ DetectHiddenWindows,on ;allow detecting hidden windows
 
 ; backslash to avoid any other matching window (e.g. a text file named 'Test Script 2.ahk - AutoHotkey.txt')
 many := "\many.ahk - AutoHotkey"
-host := "\Host.ahk - AutoHotkey"
-spicykeys := "\spicykeys.ahk - AutoHotkey"
-screenClippingTool := "\screen-clipping-tool.ahk - AutoHotkey"
 hide_mouse_cursor := "\hide-mouse-cursor.ahk - AutoHotkey"
+show_time := "\show-time.ahk - AutoHotkey"
 
 ; WinGetTitle, Var, %selectedScript%
 ; msgbox % Var
@@ -20,14 +18,13 @@ hide_mouse_cursor := "\hide-mouse-cursor.ahk - AutoHotkey"
 ; ahk_class AutoHotkey to close AHK scripts only
 WinClose, %many% ahk_class AutoHotkey
 WinClose, %hide_mouse_cursor% ahk_class AutoHotkey
-; WinClose, %host% ahk_class AutoHotkey
-; WinClose, %spicykeys% ahk_class AutoHotkey
-; WinClose, %screenClippingTool% ahk_class AutoHotkey
-; WinClose, C:\tools\WinSize2\WinSize2.EXE
+WinClose, %show_time% ahk_class AutoHotkey
 
 XButton1::Ctrl
 CapsLock::Shift
 !;::CapsLock
+9:: Send, {BS}
++9:: Send, ^{BS}
 
 !F1:: Run nircmd.exe mutesysvolume 1 "external microphone" ; Mute
 !F2:: Run nircmd.exe mutesysvolume 0 "external microphone" ; Unmute
@@ -74,11 +71,8 @@ return
 
 !+c::
   EnvGet, vUserProfile, USERPROFILE
-  ; Run, %vUserProfile%\Public-AutoHotKey-Scripts\Host.ahk
   Run, %vUserProfile%\autohotkey\many\many.ahk
   Run, %vUserProfile%\autohotkey\scripts\hide-mouse-cursor.ahk
-  ; Run, %vUserProfile%\autohotkey\spicykeys\spicykeys.ahk
-  ; Run, %vUserProfile%\autohotkey\screen-clipping-tool\screen-clipping-tool.ahk
-  ; Run, "C:\tools\WinSize2\WinSize2.EXE"
+  Run, %vUserProfile%\autohotkey\NotifyClass-NotifyCreator\show-time.ahk
 ExitApp
 return
