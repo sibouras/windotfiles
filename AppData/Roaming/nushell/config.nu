@@ -389,28 +389,29 @@ $env.config.keybindings ++= [
   }
 ]
 
+$env.config.abbreviations = {
+  v: 'nvim'
+  y: 'yazi'
+  gu: 'gitu'
+  lg: 'lazygit'
+  ga: 'git add'
+  gd: 'git diff'
+  gds: 'git diff --staged'
+  gp: 'git push'
+  gb: 'git branch --sort=committerdate'
+  gst: 'git status'
+  gr: 'cd (git rev-parse --show-toplevel)'
+}
+
 ### Aliases
-alias :q = exit
 alias md = mkdir
 alias pwd = echo $env.PWD
-alias v = nvim
-alias y = yazi
 alias cht = cht -TA
 alias focus = ^start ~/scoop/apps/focus-editor/current/focus.exe
 alias ll = eza -la -s Name --binary --git --icons --group-directories-first --no-permissions
-alias lg = lazygit
-alias gu = gitui
 alias gs = gswin64c
 alias g = git --no-pager
-alias ga = git add
-alias gst = git status
-alias gss = git status -s
-alias gb = git branch --sort=committerdate
 alias gi = git rev-parse --abbrev-ref HEAD # in git
-alias gd = git diff
-alias gds = git diff --staged
-alias gp = git push
-alias gr = cd (git rev-parse --show-toplevel)
 alias winconfig = git $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias dotfiles = lazygit $"--git-dir=($env.USERPROFILE)\\.dotfiles" $"--work-tree=($env.USERPROFILE)"
 alias sfsi = sfsu info
@@ -591,7 +592,7 @@ def la [path:glob = '.'] {
     } else {
       $row.Size | str replace ',' '' | into filesize
     }
-  } | into datetime Date | reject Mode | rename --block {str downcase} | metadata set --path-columns [name]
+  } | into datetime Date | reject Mode | rename --block {str lowercase} | metadata set --path-columns [name]
   | move size date --after name | rename --column {date: modified}
 }
 
