@@ -69,11 +69,13 @@ $env.TAILSPIN_PAGER = "moor --follow [FILE]"
 $env.HELIX_RUNTIME = $'($env.USERPROFILE)\src\helix\runtime'
 $env.YAZI_FILE_ONE = 'C:\Program Files\Git\usr\bin\file.exe'
 $env.NU_HELPER = '--help'
+$env.BTTF_LOCALE = 'en-US'
 # vivid generate my_tokyonight-night | save -f ($nu.data-dir | path join ls_colors.txt)
 $env.LS_COLORS = open -r ($nu.data-dir | path join ls_colors.txt)
 
-$env.RESTIC_REPOSITORY = ($env.USERPROFILE)\a\restic-repo
-$env.RESTIC_PASSWORD = 'pass'
+$env.RESTIC_REPOSITORY = $'($env.USERPROFILE)\a\test\restic\repo'
+# $env.RESTIC_PASSWORD = 'pass'
+$env.RESTIC_PASSWORD_FILE = $'($env.USERPROFILE)\a\test\restic\password.txt'
 
 $env.FZF_DEFAULT_COMMAND = "fd --hidden --exclude .git --exclude node_modules"
 $env.FZF_DEFAULT_OPTS = (
