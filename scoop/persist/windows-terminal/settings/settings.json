@@ -409,7 +409,7 @@
             "font": 
             {
                 "face": "JetBrainsMono Nerd Font",
-                "size": 13
+                "size": 12.5
             },
             "intenseTextStyle": "all",
             "rightClickContextMenu": true,
@@ -489,6 +489,7 @@
             "background": "#0C0D11",
             "black": "#15161E",
             "blue": "#7AA2F7",
+            // "blue": "#2c2e35",
             "brightBlack": "#686C98",
             "brightBlue": "#7AA2F7",
             "brightCyan": "#7DCFFF",
