@@ -392,7 +392,7 @@ $env.config.keybindings ++= [
 $env.config.abbreviations = {
   v: 'nvim'
   y: 'yazi'
-  gu: 'gitu'
+  gu: 'gitui'
   lg: 'lazygit'
   ga: 'git add'
   gd: 'git diff'
@@ -1089,7 +1089,7 @@ def --env br [args = "."] {
 def --env yy [] {
   # let tmp = $"($env.TEMP)(char path_sep)yazi-cwd." + (random chars -l 6)
   let tmp = mktemp -t "yazi-cwd.XXXXX"
-	y --cwd-file $tmp
+	yazi --cwd-file $tmp
 	let cwd = (open $tmp)
 	if $cwd != "" and $cwd != $env.PWD {
 		cd $cwd
@@ -1104,11 +1104,9 @@ use std/dirs
 source format-number.nu
 source nu-sloc.nu
 source youtube.nu
+source zoxide.nu
+source atuin.nu
 
 ### Completions
 use git-completions.nu *
 use rg-completions.nu *
-
-### zoxide
-source ~/.cache/.zoxide.nu
-source ./atuin.nu
