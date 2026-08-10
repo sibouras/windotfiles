@@ -2,9 +2,24 @@ SetCapsLockState, AlwaysOff
 
 CapsLock & `;::Capslock
 
-q:: Esc
-^q:: Send, ^q
-^!q:: Send, ^!q
+!i::^!Tab
+; #IfWinActive, ahk_class MultitaskingViewFrame ; doesn't work in windows 11
+#IfWinActive, ahk_class XamlExplorerHostIslandWindow
+  h::Left
+  j::Down
+  k::Up
+  l::Right
+  d::Delete
+  i::Enter
+  WheelUp::Left
+  WheelDown::Right
+  ; q::Send, !{Esc Down} ; `Down` to not escape from fullscreen video in a browser
+  q::Send, {Home}{Enter}
+  Capslock::Send, !{Esc Down}
+#IfWinActive
+
+q:: Send, {Esc} ; changing this to `q::Esc` breaks q hotkey in XamlExplorerHostIslandWindow
+shift & q:: Send, +{Esc}
 $!q:: WinClose, A
 CapsLock & q:: q
 9:: Send, {BS}
