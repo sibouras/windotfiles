@@ -62,7 +62,7 @@ $env.EDITOR = 'nvim'
 $env.VISUAL = $env.EDITOR
 $env.COLORTERM = "truecolor"
 $env.LESS = '--quiet'
-$env.MOOR = '--no-statusbar --style=github-dark'
+$env.MOOR = '--no-statusbar --style=github-dark --terminal-fg'
 $env.PAGER = 'moor --no-linenumbers -quit-if-one-screen'
 $env.BAT_THEME = 'base16'
 $env.TAILSPIN_PAGER = "moor --follow [FILE]"

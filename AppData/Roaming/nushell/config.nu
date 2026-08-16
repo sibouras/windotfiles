@@ -5,7 +5,6 @@
 let dark_theme = {
   # leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
   header: green_bold
-  empty: blue
   # Closures can be used to choose colors for specific values.
   # The value (in this case, a bool) is piped into the closure.
   bool: {|| if $in { 'light_cyan' } else { 'light_gray' } }
@@ -58,6 +57,10 @@ $env.config.hooks.display_output = "table --icons"
 
 $env.config.highlight_resolved_externals = true
 $env.config.color_config = $dark_theme
+
+# test with [{a: 1} {b: 2} {c: 3}]
+$env.config.table.missing_value_symbol = "∅"
+$env.config.color_config.empty = {attr: d, fg: red}
 
 $env.config.menus ++= [
   # Example of extra menus created using a nushell source Use the source field
