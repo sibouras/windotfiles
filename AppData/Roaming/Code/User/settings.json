@@ -27,20 +27,19 @@
   "prettier.singleQuote": true,
   "prettier.jsxSingleQuote": true,
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[javascript]": {
-    // "editor.defaultFormatter": "esbenp.prettier-vscode"
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "terminal.integrated.profiles.windows": {
     "PowerShell": {
@@ -249,5 +248,6 @@
   "telemetry.telemetryLevel": "off",
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.minimap.enabled": false,
-  "update.showReleaseNotes": false
+  "update.showReleaseNotes": false,
+  "update.mode": "manual"
 }
