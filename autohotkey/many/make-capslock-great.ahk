@@ -67,14 +67,10 @@ wheel(direction){
 CapsLock & e:: wheel("WheelDown")
 CapsLock & r:: wheel("WheelUp")
 
-F2:: Volume_Down
-F3:: Volume_Up
-F4:: Volume_Mute
-
-CapsLock & 1:: F1
-CapsLock & 2:: F2
-CapsLock & 3:: F3
-CapsLock & 4:: F4
+CapsLock & 1:: Media_Play_Pause
+CapsLock & 2:: Volume_Down
+CapsLock & 3:: Volume_Up
+CapsLock & 4:: Volume_Mute
 
 CapsLock & F5:: Media_Play_Pause
 CapsLock & F6:: Media_Stop
