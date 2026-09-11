@@ -26,6 +26,7 @@ irm https://raw.githubusercontent.com/tomasklaen/uosc/HEAD/installers/windows.ps
 # downlaod scripts
 curl -L https://github.com/po5/thumbfast/raw/master/thumbfast.lua | save -f ./scripts/thumbfast.lua
 curl -L https://raw.githubusercontent.com/Eisa01/mpv-scripts/refs/heads/master/scripts/SimpleHistory.lua | save -f ./scripts/SimpleHistory.lua
+curl -LO https://github.com/Idlusen/mpv-ytsub/blob/main/ytsub.lua?raw=true | save -f ./scripts/ytsub.lua
 ```
 
 ## not using
