@@ -13,16 +13,21 @@ CapsLock & `;::Capslock
   i::Enter
   WheelUp::Left
   WheelDown::Right
-  ; q::Send, !{Esc Down} ; `Down` to not escape from fullscreen video in a browser
-  q::Send, {Home}{Enter}
-  Capslock::Send, !{Esc Down}
+  o:: Send, {Home}{Enter}
+  q::
+    KeyWait, q ; wait for the physical release of q so it doesn't trigger Esc
+    Send, {Home}{Enter}
+  return
 #IfWinActive
 
-q:: Send, {Esc} ; changing this to `q::Esc` breaks q hotkey in XamlExplorerHostIslandWindow
-shift & q:: Send, +{Esc}
+q::Esc
+^q:: ^q
+^!q:: ^!q
+^+q:: ^+Esc
 $!q:: WinClose, A
 CapsLock & q:: q
-9:: Send, {BS}
+9:: BS
++9:: (
 CapsLock & 9:: ^BS
 CapsLock & 0:: 9
 
