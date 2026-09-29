@@ -9,7 +9,8 @@
   editor = nvim
   eol = lf
   autocrlf = false
-  pager = # empty pager for faster `git branch` or use `git --no-pager`
+  ; pager = # empty pager for faster `git branch` or use `git --no-pager`
+  pager = delta # empty pager for faster `git branch` or use `git --no-pager`
   # excludesfile = ~/.config/git/ignore # this is the default ignore path
 
 [interactive]
@@ -41,7 +42,9 @@
   ll = log --stat -p
   b = branch -vv --sort=-committerdate
 
-[pager]
-  diff = delta --pager='moor --no-linenumbers -quit-if-one-screen'
-  show = delta --pager='moor -quit-if-one-screen'
-  log = delta --pager='moor -quit-if-one-screen'
+; this causes fugitive to run the pager
+; [pager]
+  ; diff = delta --pager='moor --no-linenumbers -quit-if-one-screen'
+  ; show = delta --pager='moor -quit-if-one-screen'
+  ; log = delta --pager='moor -quit-if-one-screen'
+  ; blame = delta --pager='moor -quit-if-one-screen'
