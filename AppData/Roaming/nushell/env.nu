@@ -78,12 +78,7 @@ $env.RESTIC_REPOSITORY = $'($env.USERPROFILE)\a\test\restic\repo'
 $env.RESTIC_PASSWORD_FILE = $'($env.USERPROFILE)\a\test\restic\password.txt'
 
 $env.FZF_DEFAULT_COMMAND = "fd --hidden --exclude .git --exclude node_modules"
-$env.FZF_DEFAULT_OPTS = (
-  "--cycle --highlight-line --color=bg+:#1d1e22, "
-  + "--bind ctrl-right:forward-word,ctrl-left:backward-word,ctrl-p:toggle-preview,ctrl-s:change-multi,"
-  + "ctrl-down:preview-half-page-down,ctrl-up:preview-half-page-up,ctrl-a:toggle-all,alt-s:toggle-sort,alt-w:toggle-preview-wrap,"
-  + "ctrl-f:page-down,ctrl-b:page-up,ctrl-j:half-page-down,ctrl-k:half-page-up"
-)
+$env.FZF_DEFAULT_OPTS_FILE = $'($env.USERPROFILE)\.config\fzf\fzfrc'
 
 # prepend binaries to path to improve their startup time
 $env.PATH = [

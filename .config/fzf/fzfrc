@@ -1,0 +1,2 @@
+--cycle --highlight-line --color=bg+:#1d1e22
+--bind="ctrl-bs:backward-kill-word,ctrl-right:forward-word,ctrl-left:backward-word,ctrl-p:toggle-preview,ctrl-s:change-multi,ctrl-down:preview-half-page-down,ctrl-up:preview-half-page-up,ctrl-a:toggle-all,alt-s:toggle-sort,alt-w:toggle-preview-wrap-word,ctrl-f:page-down,ctrl-b:page-up,ctrl-j:half-page-down,ctrl-k:half-page-up"
