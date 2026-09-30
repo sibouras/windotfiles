@@ -5,7 +5,15 @@ gui:
     selectedLineBgColor:
       - '#292e42' # set to `default` to have no background colour
   statusPanelView: allBranchesLog
-  useHunkModeInStagingView: true
+  useHunkModeInStagingView: true # If true, hunk selection mode will be enabled by default when entering the stage view
+  shrinkSidePanelsToContent: false # If true, don't give a side panel more height than it needs to show its content
 git:
+  diffRenderers:
+    - command: delta --dark --paging=never
+    - type: rawGit
+      args: [--color-words]
+      name: color-words
+    - type: rawGit # git's default diff
+      name: default
   allBranchesLogCmds:
-    - git log --color=always --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset" --abbrev-commit --date=relative
+    - git log --graph --color=always --graph --pretty=tformat:"%C(auto)%h%C(auto)%d%Creset %s %C(dim white)(%cd)%Creset" --date=relative
