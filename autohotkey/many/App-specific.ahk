@@ -74,6 +74,13 @@ ProcessExist(Name){
   !.::Send, ^{Tab}
 #IfWinActive
 
+#IfWinActive,ahk_class SUMATRA_PDF_FRAME
+  !,::Send, ^{PgUp}
+  !.::Send, ^{PgDn}
+  !+,::Send, ^+{PgUp}
+  !+.::Send, ^+{PgDn}
+#IfWinActive
+
 ; CapsLock & Space::^!+1 ; launch switcheroo
 #IfWinNotActive, ahk_exe keypirinha-x64.exe
   CapsLock & Space::

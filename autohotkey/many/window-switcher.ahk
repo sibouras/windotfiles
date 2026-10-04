@@ -1,5 +1,5 @@
 RAlt & e::ToggleWindowVisibility("ahk_class CabinetWClass")
-RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
+; RAlt & d::ToggleWindowVisibility("ahk_exe code.exe")
 RAlt & r::ToggleWindowVisibility("Alacritty")
 RAlt & x::ToggleWindowVisibility("ahk_exe Spotify.exe")
 
@@ -8,11 +8,6 @@ ToggleWindowVisibility(windowClass) {
     if WinActive(windowClass)
       WinMinimize, %windowClass%
     else {
-      ; fix alt key getting stuck in mpv when holding RAtl then focusing wt -> firefox -> mpv
-      if WinActive("ahk_exe mpv.exe") {
-        Send, {Ralt up}
-      }
-      ; Send, {RAlt up}
       WinActivate, %windowClass%
     }
   }
@@ -38,9 +33,8 @@ RAlt & w::
   GroupAdd, wtGroup, %wt%
   If WinActive(wt)
     GroupActivate, wtGroup, r
-  else {
+  else
     WinActivate %wt%
-  }
 return
 
 RAlt & b::
@@ -81,13 +75,8 @@ RAlt & a::
   GroupAdd, firefoxGroup, %firefoxClass%
   If WinActive(firefoxClass)
     GroupActivate, firefoxGroup, r
-  else {
-    ; fix alt key getting stuck in mpv when holding RAtl then focusing firefox -> mpv
-    if WinActive("ahk_exe mpv.exe") {
-      Send, {Ralt up}
-    }
+  else
     WinActivate %firefoxClass%
-  }
 return
 
 RAlt & t::
@@ -105,8 +94,16 @@ return
 
 RAlt & v::
   neovide = ahk_exe neovide.exe
-  IfWinExist, %neovide%
+  if WinExist(neovide) {
     WinActivate, %neovide%
+  }
+return
+
+RAlt & d::
+  sumatrapdf = ahk_class SUMATRA_PDF_FRAME
+  if WinExist(sumatrapdf) {
+    WinActivate, %sumatrapdf%
+  }
 return
 
 ; minimize active window and restore it
@@ -149,14 +146,9 @@ focus(nInStack) {
     winNumber += !(class ~= "i)Toolbar|#32770") && ttitle > "" && !(ExStyle & 0x8)
                  && (ttitle != "Program Manager" || proc != "Explorer.exe")
   } Until Min(nInStack, win) = winNumber
-  ; fix alt key getting stuck when switching away from mpv
-  ; if WinActive("ahk_exe mpv.exe") {
-    ; Send, {LAlt up}{RAlt up} ; send both {LAlt up} and {RAlt up} instead of {Alt up} to make it work when when holding Ralt+o
-  ; }
-  ; some programs like explorer, msedge, brave.. focus the menu when pressing !o fast
-  ; NOTE: this also fixes the mpv issue above
-  ; Send, {o up}
-  ; NOTE: this is also fixed by using $ https://www.autohotkey.com/docs/v1/Hotkeys.htm#Symbols
+  ; some programs like explorer, msedge, brave.. focus the menu by triggering alt when using alt-tab then pressing !o fast
+  ; NOTE: this is fixed by using $ https://www.autohotkey.com/docs/v1/Hotkeys.htm#Symbols
+  ; Send, {o up} ; another solution
   WinActivate % winTitle
 }
 
