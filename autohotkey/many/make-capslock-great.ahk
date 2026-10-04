@@ -20,16 +20,35 @@ CapsLock & `;::Capslock
   return
 #IfWinActive
 
-q::Esc
+q:: Esc
 ^q:: ^q
 ^!q:: ^!q
 ^+q:: ^+Esc
 $!q:: WinClose, A
 CapsLock & q:: q
-9:: BS
-+9:: (
-CapsLock & 9:: ^BS
 CapsLock & 0:: 9
+
+; 9:: BS ; this remaps 9 and the modifier keys
+; only remap 9, not the modifier keys(i'm using !9 in another script)
+; https://www.autohotkey.com/docs/v1/misc/Remap.htm#actually
+9::
+  SetKeyDelay -1
+  Send {BS DownR}
+return
+9 up::
+  SetKeyDelay -1
+  Send {BS up}
+return
+
+; CapsLock & 9::^BS ; this sends an extra character in system informer
+CapsLock & 9::
+  SetKeyDelay -1
+  Send {Ctrl down}{BS DownR}
+return
+CapsLock & 9 up::
+  SetKeyDelay -1
+  Send {Ctrl up}{BS up}
+return
 
 CapsLock & k:: Up
 CapsLock & j:: Down
@@ -99,7 +118,7 @@ CapsLock & m::
     }
   }
   else if Key = s
-    Run helium.exe
+    Run chrome.exe
   else if Key = a
     Run firefox.exe
   else if Key = d
