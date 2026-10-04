@@ -4,10 +4,10 @@
 
 calc_padding := 20 ; minimum direction/alignment overlap for target windows
 
-$!h:: FocusWin("left")
-$!l:: FocusWin("right")
-$!k:: FocusWin("up")
-$!j:: FocusWin("down")
+!h:: FocusWin("left")
+!l:: FocusWin("right")
+!k:: FocusWin("up")
+!j:: FocusWin("down")
 
 ; ==== DEVELOPMENT SHORTCUTS ====
 ; Reload this script
@@ -62,7 +62,7 @@ WinIsDiscounted(id, &visible, &desktop, &taskbar, &startmenu) {
 
   visible := (wstyle & WS_VISIBLE) ? true : false
   desktop := (wclass = "Progman" || wclass = "WorkerW" || wclass = "ApplicationManager_ImmersiveShellWindow"
-    || wclass = "Winit Thread Event Target" || wclass = "XamlExplorerHostIslandWindow")
+    || wclass = "Winit Thread Event Target" || wclass = "XamlExplorerHostIslandWindow" || wclass = "CatimeWindowClass")
   taskbar := (wclass = "Shell_TrayWnd" || wclass = "Shell_SecondaryTrayWnd")
   startmenu := (wclass = "DV2ControlHost" || wclass = "Windows.UI.Core.CoreWindow")
 
@@ -128,6 +128,15 @@ FocusWin(direction) {
     }
   }
 
+  ; fix alt key getting stuck when focusing another app
+  ; could use $ instead of this, but it conflicts with make-capslock-great.ahk
+  switch direction
+  {
+    case "left": Send("{h up}")
+    case "right": Send("{l up}")
+    case "up": Send("{k up}")
+    case "down": Send("{j up}")
+  }
   ; activate closest window
   if (closest_id)
     WinActivate("ahk_id" closest_id)
