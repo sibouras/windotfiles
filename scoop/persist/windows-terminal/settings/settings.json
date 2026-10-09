@@ -1,10 +1,10 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
-            "command": 
+            "command":
             {
                 "action": "commandPalette",
                 "launchMode": "commandLine"
@@ -16,7 +16,7 @@
             "id": "User.find"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "resizePane",
                 "direction": "left"
@@ -24,7 +24,7 @@
             "id": "User.resizePane.2A0DA8E0"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveFocus",
                 "direction": "down"
@@ -32,7 +32,7 @@
             "id": "User.moveFocus.F747588A"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -41,7 +41,7 @@
             "id": "User.splitPane.A6751878"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[18;8~"
@@ -49,7 +49,7 @@
             "id": "User.sendInput.F14AFF9C"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveTab",
                 "direction": "forward"
@@ -57,7 +57,7 @@
             "id": "User.moveTab.793E2350"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[13;2u"
@@ -65,7 +65,7 @@
             "id": "User.sendInput.8882FD6D"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "resizePane",
                 "direction": "up"
@@ -73,7 +73,7 @@
             "id": "User.resizePane.6CD791B"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[13;5u"
@@ -85,7 +85,7 @@
             "id": "User.paste"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "copy",
                 "singleLine": false
@@ -93,7 +93,7 @@
             "id": "User.copy.644BA8F2"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u0017"
@@ -101,7 +101,7 @@
             "id": "User.sendInput.817164EE"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[17;8~"
@@ -109,7 +109,7 @@
             "id": "User.sendInput.73B98BEF"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "sendInput",
                 "input": "\u001b[15;8~"
@@ -117,7 +117,7 @@
             "id": "User.sendInput.A714A44F"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveFocus",
                 "direction": "right"
@@ -129,7 +129,7 @@
             "id": "User.markMode"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "resizePane",
                 "direction": "down"
@@ -137,7 +137,7 @@
             "id": "User.resizePane.F747588A"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveTab",
                 "direction": "backward"
@@ -145,7 +145,7 @@
             "id": "User.moveTab.EF07D31B"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveFocus",
                 "direction": "left"
@@ -153,7 +153,7 @@
             "id": "User.moveFocus.2A0DA8E0"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveFocus",
                 "direction": "up"
@@ -161,7 +161,7 @@
             "id": "User.moveFocus.6CD791B"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "resizePane",
                 "direction": "right"
@@ -186,13 +186,13 @@
     "copyOnSelect": false,
     "defaultProfile": "{2b372ca1-1ee2-403d-a839-6d63077ad871}",
     "disableAnimations": true,
-    "disabledProfileSources": 
+    "disabledProfileSources":
     [
         "Windows.Terminal.Azure"
     ],
     "firstWindowPreference": "defaultProfile",
     "initialPosition": ",",
-    "keybindings": 
+    "keybindings":
     [
         {
             "id": "User.sendInput.F8A79DCB",
@@ -259,7 +259,7 @@
             "keys": "ctrl+i"
         },
         {
-            "id": null,
+            "id": "Terminal.ScrollToTop",
             "keys": "ctrl+shift+home"
         },
         {
@@ -319,10 +319,6 @@
             "keys": "ctrl+alt+shift+l"
         },
         {
-            "id": "Terminal.ScrollDownPage",
-            "keys": "shift+pgdn"
-        },
-        {
             "id": "User.toggleFocusMode",
             "keys": "ctrl+shift+m"
         },
@@ -367,19 +363,15 @@
             "keys": "ctrl+shift+up"
         },
         {
-            "id": "Terminal.ScrollUpPage",
-            "keys": "shift+pgup"
+            "id": "Terminal.ScrollDownPage",
+            "keys": "ctrl+shift+pgdn"
         },
         {
-            "id": "Terminal.ScrollToTop",
+            "id": "Terminal.ScrollUpPage",
             "keys": "ctrl+shift+pgup"
         },
         {
             "id": "Terminal.ScrollToBottom",
-            "keys": "ctrl+shift+pgdn"
-        },
-        {
-            "id": null,
             "keys": "ctrl+shift+end"
         },
         {
@@ -392,21 +384,21 @@
         }
     ],
     "launchMode": "maximized",
-    "newTabMenu": 
+    "newTabMenu":
     [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
-            "environment": 
+            "environment":
             {
                 "COLORTERM": "truecolor"
             },
-            "font": 
+            "font":
             {
                 "face": "JetBrainsMono Nerd Font",
                 "size": 12.5
@@ -415,7 +407,7 @@
             "rightClickContextMenu": true,
             "scrollbarState": "visible"
         },
-        "list": 
+        "list":
         [
             {
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
@@ -485,7 +477,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0D11",
@@ -514,23 +506,23 @@
     "showTabsInTitlebar": true,
     "tabWidthMode": "equal",
     "theme": "my_theme",
-    "themes": 
+    "themes":
     [
         {
             "name": "my_theme",
-            "tab": 
+            "tab":
             {
                 "background": "terminalBackground",
                 "iconStyle": "default",
                 "showCloseButton": "hover",
                 "unfocusedBackground": "#00000000"
             },
-            "tabRow": 
+            "tabRow":
             {
                 "background": "#2E2E2EFF",
                 "unfocusedBackground": "terminalBackground"
             },
-            "window": 
+            "window":
             {
                 "applicationTheme": "dark",
                 "experimental.rainbowFrame": false,
