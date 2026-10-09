@@ -13,7 +13,7 @@ shape = "Beam"
 shape = "Block"
 
 [font]
-size = 13.1
+size = 12.5
 
 [font.bold]
 family = "JetBrainsMono Nerd Font"
@@ -90,23 +90,42 @@ action = "CreateNewWindow"
 key = "Backslash"
 mods = "Control"
 
+# the mode "~Alt" means that the shortcut will only trigger when the terminal
+# is not using the Alternate Screen Buffer.
+# The tilde ~ acts as a logical NOT operator.
 [[keyboard.bindings]]
 action = "ScrollLineUp"
-key = "PageUp"
+key = "ArrowUp"
+mode = "~Alt"
+mods = "Shift|Control"
 
 [[keyboard.bindings]]
 action = "ScrollLineDown"
-key = "PageDown"
+key = "ArrowDown"
+mode = "~Alt"
+mods = "Shift|Control"
 
 [[keyboard.bindings]]
-action = "ScrollToTop"
+action = "ScrollPageUp"
 key = "PageUp"
 mode = "~Alt"
 mods = "Shift|Control"
 
 [[keyboard.bindings]]
-action = "ScrollToBottom"
+action = "ScrollPageDown"
 key = "PageDown"
+mode = "~Alt"
+mods = "Shift|Control"
+
+[[keyboard.bindings]]
+action = "ScrollToTop"
+key = "Home"
+mode = "~Alt"
+mods = "Shift|Control"
+
+[[keyboard.bindings]]
+action = "ScrollToBottom"
+key = "End"
 mode = "~Alt"
 mods = "Shift|Control"
 
