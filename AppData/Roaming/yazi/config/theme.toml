@@ -13,13 +13,12 @@ active = { fg = "#24273a", bg = "#8aadf4", bold = true }
 inactive = { fg = "#8aadf4", bg = "#363a4f" }
 
 [mode]
-normal_main = { bg = "blue", fg = "black", bold = true }
-normal_alt = { bg = "#181a22", fg = "blue", bold = true }
-select_main = { bg = "yellow", fg = "black", bold = true }
-select_alt = { bg = "#181a22", fg = "blue", bold = true }
-unset_main = { bg = "red", fg = "black", bold = true }
-unset_alt = { bg = "#181a22", fg = "blue", bold = true }
+normal_main = { bg = "blue", fg = "#000000", bold = true }
+normal_alt = { bg = "#181a22", fg = "blue", bold = false }
+select_main = { bg = "yellow", fg = "#000000", bold = true }
+select_alt = { bg = "#181a22", fg = "blue", bold = false }
+unset_main = { bg = "red", fg = "#000000", bold = true }
+unset_alt = { bg = "#181a22", fg = "blue", bold = false }
 
 [help]
 hovered = { bg = "#181a22", bold = true }
-footer = { fg = "gray", bg = "black" }

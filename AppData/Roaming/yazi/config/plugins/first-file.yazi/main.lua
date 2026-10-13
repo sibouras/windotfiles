@@ -3,17 +3,20 @@ return {
   entry = function()
     local cur = cx.active.current
     local files = cur.files
-    local target_index = nil
 
     -- Find first non directory index
     for i = 1, #files do
       if not files[i].cha.is_dir then
-        target_index = i
-        break
+        ya.emit('reveal', { files[i].url })
+        return
       end
     end
 
-    local delta = target_index - cur.cursor
-    ya.mgr_emit('arrow', { delta - 1 })
+    ya.notify({
+      title = 'Goto first file',
+      content = 'No files here',
+      level = 'warn',
+      timeout = 3,
+    })
   end,
 }

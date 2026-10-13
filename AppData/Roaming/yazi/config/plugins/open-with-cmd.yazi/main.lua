@@ -9,11 +9,7 @@ return {
 
     if event == 1 then
       local s = ya.target_family() == 'windows' and ' %s' or ' %s'
-      ya.mgr_emit('shell', {
-        value .. s,
-        block = block,
-        orphan = not block,
-      })
+      ya.emit('shell', { value .. s, block = block, orphan = not block })
     end
   end,
 }

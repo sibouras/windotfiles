@@ -7,6 +7,7 @@ sort_dir_first = true
 show_hidden = true
 show_symlink = true
 linemode = "size"
+scrolloff = 0
 
 [preview]
 max_width = 1000
@@ -55,7 +56,7 @@ prepend_previewers = [
 ]
 prepend_fetchers = [
   # mime-ext plugin: https://github.com/yazi-rs/plugins/tree/main/mime-ext.yazi
-  { id = "mime", url = "local://*", run = "mime-ext.local", prio = "high" },
-  { id = "git", url = "*", run = "git" },
-  { id = "git", url = "*/", run = "git" },
+  { group = "mime", url = "local://*", run = "mime-ext.local", prio = "high" },
+  # { group = "git", url = "*", run = "git" },
+  # { group = "git", url = "*/", run = "git" },
 ]
