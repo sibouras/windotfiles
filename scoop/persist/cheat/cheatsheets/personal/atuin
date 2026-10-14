@@ -1,3 +1,6 @@
+# Delete history entries matching the configured exclusion filters
+atuin history prune
+
 # delete duplicates
 atuin history dedup --before now --dupkeep=1
 
