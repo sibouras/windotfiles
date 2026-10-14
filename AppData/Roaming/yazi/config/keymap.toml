@@ -2,7 +2,7 @@
 prepend_keymap = [
   { on = "1", run = "plugin change-ratio -- 2 4 4" },
   { on = "2", run = "plugin change-ratio -- 1 4 0" },
-  { on = "3", run = "plugin change-ratio -- 0 1 3" },
+  { on = "3", run = "plugin change-ratio -- 0 2 4" },
   { on = "4", run = "plugin change-ratio -- 0 0 1" },
   # { on = "F", run = "plugin zoom-preview", desc = "Zoom or restore preview pane" },
   # { on = "T", run = "plugin toggle-pane min-preview", desc = "Hide or show preview pane" },
@@ -12,6 +12,8 @@ prepend_keymap = [
   { on = "e", run = "plugin open-with-cmd block", desc = "Execute command in the terminal" },
   { on = "E", run = "plugin open-with-cmd", desc = "Execute command" },
   { on = ["g", "s"], run = "plugin first-file", desc = "Jump to the first file" },
+  { on = ["g", "r"], run = "shell -- ya emit cd $(git rev-parse --show-toplevel)", desc = "cd back to the root of git repo", for = "linux" },
+  { on = ["g", "r"], run = 'shell -- nu --no-std-lib -c "ya emit cd (git rev-parse --show-toplevel)"', desc = "cd back to the root of git repo", for = "windows" },
   { on = "<C-t>", run = "app:theme", desc = "Reload theme" },
   # H/M/L Vim-like motions
   { on = "H", run = "arrow 0vp", desc = "High: Move cursor to visible viewport top" },
