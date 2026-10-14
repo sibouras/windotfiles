@@ -5,7 +5,7 @@ gui:
     selectedLineBgColor:
       - '#292e42' # set to `default` to have no background colour
   statusPanelView: allBranchesLog
-  useHunkModeInStagingView: true # If true, hunk selection mode will be enabled by default when entering the stage view
+  useHunkModeInDiffView: true # If true, hunk selection mode will be enabled by default when entering the stage view
   shrinkSidePanelsToContent: false # If true, don't give a side panel more height than it needs to show its content
 git:
   diffRenderers:
