@@ -19,49 +19,9 @@
             "command":
             {
                 "action": "sendInput",
-                "input": "\u001b[18;8~"
-            },
-            "id": "User.sendInput.ctrl+;"
-        },
-        {
-            "command":
-            {
-                "action": "sendInput",
-                "input": "\u001b[13;2u"
-            },
-            "id": "User.sendInput.shift+enter"
-        },
-        {
-            "command":
-            {
-                "action": "sendInput",
-                "input": "\u001b[13;5u"
-            },
-            "id": "User.sendInput.ctrl+enter"
-        },
-        {
-            "command":
-            {
-                "action": "sendInput",
                 "input": "\u0017"
             },
             "id": "User.sendInput.ctrl+backspace"
-        },
-        {
-            "command":
-            {
-                "action": "sendInput",
-                "input": "\u001b[17;8~"
-            },
-            "id": "User.sendInput.ctrl+i"
-        },
-        {
-            "command":
-            {
-                "action": "sendInput",
-                "input": "\u001b[15;8~"
-            },
-            "id": "User.sendInput.ctrl+space"
         }
     ],
     "centerOnLaunch": true,
@@ -82,28 +42,8 @@
             "keys": "ctrl+alt+p"
         },
         {
-            "id": "User.sendInput.ctrl+enter",
-            "keys": "ctrl+enter"
-        },
-        {
-            "id": "User.sendInput.shift+enter",
-            "keys": "shift+enter"
-        },
-        {
-            "id": "User.sendInput.ctrl+;",
-            "keys": "ctrl+;"
-        },
-        {
             "id": "User.sendInput.ctrl+backspace",
             "keys": "ctrl+backspace"
-        },
-        {
-            "id": "User.sendInput.ctrl+i",
-            "keys": "ctrl+i"
-        },
-        {
-            "id": "User.sendInput.ctrl+space",
-            "keys": "ctrl+space"
         },
         {
             "id": "Terminal.PasteFromClipboard",
