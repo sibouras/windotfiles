@@ -186,8 +186,8 @@ OnChangeDesktop(wParam, lParam, msg, hwnd) {
 OldDesktop := 0
 Alt & `;:: MoveOrGotoDesktopNumber(OldDesktop - 1)
 
-Alt & 9:: GoToPrevDesktop()
-Alt & 0:: GoToNextDesktop()
+Alt & [:: GoToPrevDesktop()
+Alt & ]:: GoToNextDesktop()
 Alt & 1:: MoveOrGotoDesktopNumber(0)
 Alt & 2:: MoveOrGotoDesktopNumber(1)
 Alt & 3:: MoveOrGotoDesktopNumber(2)

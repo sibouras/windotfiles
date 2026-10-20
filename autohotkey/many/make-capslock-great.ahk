@@ -28,19 +28,24 @@ $!q:: WinClose, A
 CapsLock & q:: q
 CapsLock & 0:: 9
 
-; 9:: BS ; this remaps 9 and the modifier keys
-; only remap 9, not the modifier keys(i'm using !9 in another script)
-; https://www.autohotkey.com/docs/v1/misc/Remap.htm#actually
-9::
-  SetKeyDelay -1
-  Send {BS DownR}
-return
-9 up::
-  SetKeyDelay -1
-  Send {BS up}
-return
+9:: BS ; this remaps 9 and the modifier keys
++9:: (
 
-; CapsLock & 9::^BS ; this sends an extra character in system informer
+; only remap 9, not the modifier keys
+; https://www.autohotkey.com/docs/v1/misc/Remap.htm#actually
+; 9::
+;   SetKeyDelay -1
+;   Send {BS DownR}
+; return
+; 9 up::
+;   SetKeyDelay -1
+;   Send {BS up}
+; return
+
+; this keeps sending ctrl(test in https://en.key-test.ru/)
+; also sends an extra character in system informer
+; CapsLock & 9:: ^BS
+
 CapsLock & 9::
   SetKeyDelay -1
   Send {Ctrl down}{BS DownR}
