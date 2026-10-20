@@ -54,12 +54,6 @@ ProcessExist(Name){
   !s::Send, {Esc}^s
 #IfWinActive
 
-#If WinActive("ahk_exe nvy.exe") || WinActive("ahk_exe neovide.exe")
-  ^BS::Send, ^{w}
-  ^i::Send, !^+{F6}
-  ^;::Send, !^+{F7}
-#IfWinActive
-
 #If WinActive("ahk_exe alacritty.exe") || WinActive("ahk_exe windowsterminal.exe")
   XButton1::Send ^o
   XButton2::Send ^i
@@ -72,13 +66,6 @@ ProcessExist(Name){
 #IfWinActive, ahk_exe WindowsTerminal.exe
   !,::Send, ^+{Tab}
   !.::Send, ^{Tab}
-#IfWinActive
-
-#IfWinActive,ahk_class SUMATRA_PDF_FRAME
-  !,::Send, ^{PgUp}
-  !.::Send, ^{PgDn}
-  !+,::Send, ^+{PgUp}
-  !+.::Send, ^+{PgDn}
 #IfWinActive
 
 ; CapsLock & Space::^!+1 ; launch switcheroo
@@ -101,6 +88,10 @@ ProcessExist(Name){
   k:: Send {WheelUp}
   !WheelDown:: Send, !{WheelDown}
   !WheelUp:: Send, !{WheelUp}
+  !,::Send, ^{PgUp}
+  !.::Send, ^{PgDn}
+  !+,::Send, ^+{PgUp}
+  !+.::Send, ^+{PgDn}
 
   ; strip newlines
   $^c::
